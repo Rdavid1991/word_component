@@ -60,7 +60,7 @@ export const App = () => {
 	}
 
 	const fetchData = async () => {
-	
+
 		var requestOptions = {
 			method: 'POST',
 			redirect: 'follow',
@@ -68,20 +68,20 @@ export const App = () => {
 		};
 
 		let response = await fetch(`http://localhost:8081/api_memo?dirigido=${form.to}&asunto=${form.subject}&solicitado=${form.from}`, requestOptions)
-		console.log("respomnse" , await response.json())
+		console.log("respomnse", await response.json())
 		//return await response.json();
 	}
 
 
 	return (
 		<>
-			<h1 className='text-center'>Generar numero de memos y notas</h1>
-			<form className='p-4' onSubmit={handleSubmit}>
+			<h1 className='text-center px-4'>Generar numero de memos y notas</h1>
+			<form className='px-4' onSubmit={handleSubmit}>
 				<div className="mb-3">
-					<label htmlFor="to" className="form-label">Dirigido a</label>
+					<label htmlFor="to" className="form-label fw-bold">Dirigido a</label>
 					<input
 						type="text"
-						className="form-control"
+						className="form-control form-control-sm"
 						id="to"
 						onChange={handleInputChange}
 						value={form.to}
@@ -89,20 +89,20 @@ export const App = () => {
 					/>
 				</div>
 				<div className="mb-3">
-					<label htmlFor="subject" className="form-label">Asunto</label>
+					<label htmlFor="subject" className="form-label fw-bold">Asunto</label>
 					<input
 						type="text"
-						className="form-control"
+						className="form-control form-control-sm"
 						id="subject"
 						onChange={handleInputChange}
 						value={form.subject}
 					/>
 				</div>
 				<div className="mb-3">
-					<label htmlFor="from" className="form-label">Solicitado por</label>
+					<label htmlFor="from" className="form-label fw-bold">Solicitado por</label>
 					<input
 						type="text"
-						className="form-control"
+						className="form-control form-control-sm"
 						id="from"
 						onChange={handleInputChange}
 						value={form.from}
@@ -110,12 +110,61 @@ export const App = () => {
 				</div>
 				<button
 					type="submit"
-					className="btn btn-primary"
-
+					className="btn btn-sm btn-secondary"
 				>
 					Guardar
 				</button>
 			</form>
+			<hr />
+
+			<h1 className='text-center'>Rechazar numero</h1>
+
+			<form className='px-4' onSubmit={() => { }}>
+				<div className="mb-3">
+					<label htmlFor="to" className="form-label fw-bold">Numero a rechazar</label>
+					<input
+						type="text"
+						className="form-control form-control-sm"
+						id="to"
+						onChange={handleInputChange}
+						value={form.to}
+
+					/>
+				</div>
+
+				<button
+					type="submit"
+					className="btn btn-sm btn-secondary"
+				>
+					buscar
+				</button>
+			</form>
+
+			<form className="p-4">
+				<p className="fw-bold">Dirigido a:
+					<span className="fw-light">
+						data
+					</span>
+				</p>
+				<p className="fw-bold">Asunto:
+					<span className="fw-light">
+						data
+					</span>
+				</p>
+				<p className="fw-bold">Solicitado por:
+					<span className="fw-light">
+						data
+					</span>
+				</p>
+				<button
+					type="submit"
+					className="btn btn-sm btn-secondary"
+				>
+					Rechazar
+				</button>
+			</form>
+
+
 		</>
 	);
 };
