@@ -67,7 +67,7 @@ export const App = () => {
 			mode: "no-cors"
 		};
 
-		let response = await fetch(`http://localhost:8081/api_memo?dirigido=${form.to}&asunto=${form.subject}&solicitado=${form.from}`, requestOptions)
+		let response = await fetch(`http://localhost:8080/api?dirigido=${form.to}&asunto=${form.subject}&solicitado=${form.from}`, requestOptions)
 		console.log("respomnse", await response.json())
 		//return await response.json();
 	}
@@ -77,6 +77,14 @@ export const App = () => {
 		<>
 			<h1 className='text-center px-4'>Generar numero de memos y notas</h1>
 			<form className='px-4' onSubmit={handleSubmit}>
+				<div className="mb-3">
+					<label htmlFor="to" className="form-label fw-bold">Memo o Notas?</label>
+					<select name="type" className="form-select form-select-sm">
+						<option selected>Seleccione ¿memo o nota?</option>
+						<option value="1">Memo</option>
+						<option value="2">Nota</option>
+					</select>
+				</div>
 				<div className="mb-3">
 					<label htmlFor="to" className="form-label fw-bold">Dirigido a</label>
 					<input

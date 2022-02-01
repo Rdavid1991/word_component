@@ -121,3 +121,5 @@ class HandlerActionsMemo extends ManagementDB
 
 $handler = new HandlerActionsMemo();
 $handler->find();
+
+
