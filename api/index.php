@@ -1,6 +1,6 @@
 <?php
-header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Headers: *");
+header("Access-Control-Allow-Origin: */");
+header("Access-Control-Allow-Headers: */");
 
 require_once(dirname(__FILE__) . "/connection.php");
 
@@ -88,9 +88,9 @@ class HandlerActionsMemo extends ManagementDB
             $result = parent::insert_query($update, [1]);
         }
 
-        $dirigido = $_GET["dirigido"];
-        $asunto = $_GET["asunto"];
-        $solicitado = $_GET["solicitado"];
+        $dirigido = $_POST["dirigido"];
+        $asunto = $_POST["asunto"];
+        $solicitado = $_POST["solicitado"];
 
         $sql = "INSERT INTO [dbo].[memo]
            ([asunto]
@@ -121,5 +121,3 @@ class HandlerActionsMemo extends ManagementDB
 
 $handler = new HandlerActionsMemo();
 $handler->find();
-
-

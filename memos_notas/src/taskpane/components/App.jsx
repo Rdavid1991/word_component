@@ -9,9 +9,9 @@ moment.locale("es")
 export const App = () => {
 
 	const [form, setForm] = useState({
-		to: "prueba",
-		subject: "prueba",
-		from: "prueba"
+		to: "",
+		subject: "",
+		from: ""
 	});
 
 
@@ -42,11 +42,20 @@ export const App = () => {
 					subjectControl.items.length > 0 &&
 					dateControl.items.length > 0
 				) {
-					fetchData();
-					numControl.items[0].insertText("078", "Replace");
-					yearControl.items[0].insertText("2022", "Replace");
-					subjectControl.items[0].insertText(form.subject, "Replace");
-					dateControl.items[0].insertText(moment().format('LL'), "Replace");
+					const response = await fetchData();
+					if(response){
+						console.log(response.id.toString());
+						numControl.items[0].insertText(response.id.toString(), "Replace");
+						yearControl.items[0].insertText("2022", "Replace");
+						subjectControl.items[0].insertText(form.subject, "Replace");
+						dateControl.items[0].insertText(moment().format('LL'), "Replace");
+					}else{
+						Swal.fire(
+							'Hay un problema',
+							'Error al consultar base de datos',
+							'error'
+						)
+					}
 				} else {
 					Swal.fire(
 						'Hay un problema',
@@ -61,15 +70,20 @@ export const App = () => {
 
 	const fetchData = async () => {
 
+		const formdata = new FormData()
+		formdata.append("dirigido", form.to)
+		formdata.append("asunto", form.subject)
+		formdata.append("solicitado", form.from)
 		var requestOptions = {
 			method: 'POST',
-			redirect: 'follow',
-			mode: "no-cors"
+			body: formdata
 		};
 
-		let response = await fetch(`http://localhost:8080/api?dirigido=${form.to}&asunto=${form.subject}&solicitado=${form.from}`, requestOptions)
-		console.log("respomnse", await response.json())
-		//return await response.json();
+		let response = await fetch(`http://172.20.70.46:8080/api/`, requestOptions)
+		if (response.ok) {
+			return await response.json();
+		}
+		return false
 	}
 
 
