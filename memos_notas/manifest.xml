@@ -2,9 +2,9 @@
 <OfficeApp xmlns="http://schemas.microsoft.com/office/appforoffice/1.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bt="http://schemas.microsoft.com/office/officeappbasictypes/1.0" xmlns:ov="http://schemas.microsoft.com/office/taskpaneappversionoverrides" xsi:type="TaskPaneApp">
   <Id>7b7e1f02-cf04-4d1e-8197-d72394681101</Id>
   <Version>1.0.0.0</Version>
-  <ProviderName>Contoso</ProviderName>
+  <ProviderName>Mides</ProviderName>
   <DefaultLocale>en-US</DefaultLocale>
-  <DisplayName DefaultValue="NumeroMemosNotas"/>
+  <DisplayName DefaultValue="Generar numero de memos y notas"/>
   <Description DefaultValue="A template to get started."/>
   <IconUrl DefaultValue="https://localhost:3000/assets/icon-32.png"/>
   <HighResolutionIconUrl DefaultValue="https://localhost:3000/assets/icon-64.png"/>
@@ -73,7 +73,7 @@
       </bt:Urls>
       <bt:ShortStrings>
         <bt:String id="GetStarted.Title" DefaultValue="Get started with your sample add-in!"/>
-        <bt:String id="CommandsGroup.Label" DefaultValue="Commands Group"/>
+        <bt:String id="CommandsGroup.Label" DefaultValue="Memos y notas"/>
         <bt:String id="TaskpaneButton.Label" DefaultValue="Memos y notas"/>
       </bt:ShortStrings>
       <bt:LongStrings>

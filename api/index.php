@@ -70,6 +70,16 @@ class HandlerActionsMemo extends ManagementDB
         parent::__destruct();
     }
 
+    public function getReject()
+    {
+        $sql = "SELECT *
+          FROM [dbo].[memo] 
+          WHERE [last] = 1 AND [id] = " . $_GET["element"];
+
+        $result = parent::select_query($sql);
+        echo json_encode($result);
+    }
+
     public function find()
     {
 
@@ -120,4 +130,10 @@ class HandlerActionsMemo extends ManagementDB
 }
 
 $handler = new HandlerActionsMemo();
-$handler->find();
+
+if (isset($_GET["element"])) {
+    $handler->getReject();
+} else {
+
+    $handler->find();
+}
