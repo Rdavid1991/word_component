@@ -108,20 +108,11 @@ export const MemoAndNotesForm = () => {
 
     return (
         <>
-            <h1 className='text-center px-2 fw-bold'>Generar numero de memos y notas</h1>
             <form className='px-2' onSubmit={handleSubmit}>
                 <div className="mb-3">
-                    <label htmlFor="to" className="form-label fw-bold">Memo o Notas?</label>
-                    <select name="type" className="form-select form-select-sm" required={true}>
-                        <option selected>Seleccione ¿memo o nota?</option>
-                        <option value="1">Memo</option>
-                        <option value="2">Nota</option>
-                    </select>
-                </div>
-                <div className="mb-3">
                     <label htmlFor="to" className="form-label fw-bold">Dirigido a</label>
-                    <div class="input-group mb-3">
-                        <span class="input-group-text"><i class="far fa-paper-plane"></i></span>
+                    <div className="input-group mb-3">
+                        <span className="input-group-text"><i className="far fa-paper-plane"></i></span>
                         <input
                             type="text"
                             className="form-control form-control-sm"
@@ -130,15 +121,14 @@ export const MemoAndNotesForm = () => {
                             required={true}
                             onChange={handleInputChange}
                             value={form.to}
-
                         />
                     </div>
                 </div>
                 <div className="mb-3">
                     <label htmlFor="subject" className="form-label fw-bold">Asunto</label>
-                    <div class="input-group mb-3">
+                    <div className="input-group mb-3">
 
-                        <span class="input-group-text"><i class="fas fa-comments"></i></span>
+                        <span className="input-group-text"><i className="fas fa-comments"></i></span>
                         <input
                             type="text"
                             className="form-control form-control-sm"
@@ -152,8 +142,8 @@ export const MemoAndNotesForm = () => {
                 </div>
                 <div className="mb-3">
                     <label htmlFor="from" className="form-label fw-bold">Solicitado por</label>
-                    <div class="input-group mb-3">
-                        <span class="input-group-text"><i class="fas fa-user-edit"></i></span>
+                    <div className="input-group mb-3">
+                        <span className="input-group-text"><i className="fas fa-user-edit"></i></span>
                         <input
                             type="text"
                             className="form-control form-control-sm"

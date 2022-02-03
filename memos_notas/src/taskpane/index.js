@@ -1,8 +1,9 @@
-import {App} from "./components/App.jsx";
+import { App } from "./components/App.jsx";
 import { AppContainer } from "react-hot-loader";
 import { initializeIcons } from "@fluentui/font-icons-mdl2";
 import * as React from "react";
 import * as ReactDOM from "react-dom";
+import { BrowserRouter } from "react-router-dom";
 /* global document, Office, module, require */
 
 initializeIcons();
@@ -14,7 +15,9 @@ const title = "Contoso Task Pane Add-in";
 const render = (Component) => {
   ReactDOM.render(
     <AppContainer>
+
       <Component />
+
     </AppContainer>,
     document.getElementById("container")
   );

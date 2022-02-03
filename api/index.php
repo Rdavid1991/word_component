@@ -127,12 +127,56 @@ class HandlerActionsMemo extends ManagementDB
 
         //http_response_code(202);
     }
+
+    public function save_document()
+    {
+
+        $type = $_POST["type"];
+        $document = $_POST["document"];
+
+        $sql = "SELECT * FROM [dbo].[document] where [id] =" . $type;
+
+        $result = parent::select_query($sql);
+
+        if ($result) {
+            $sql = "UPDATE [dbo].[document]
+            SET [doc] = ?
+            WHERE [id] = ?";
+
+            $result = parent::insert_query($sql, [$document, $type]);
+        } else {
+
+            $sql = "INSERT INTO [dbo].[document] ([id],[doc])
+            VALUES (?,?)";
+
+            $result = parent::insert_query($sql, [$type, $document]);
+        }
+
+        echo $result;
+    }
+
+    public function get_document()
+    {
+
+        $type = $_POST["type"];
+
+
+        $sql = "SELECT * FROM [dbo].[document] where [id] ='" . $type . "'";
+
+        $result = parent::select_query($sql);
+
+        echo json_encode($result);
+    }
 }
 
 $handler = new HandlerActionsMemo();
 
 if (isset($_GET["element"])) {
     $handler->getReject();
+} else if (isset($_POST["document"]) && isset($_POST["type"])) {
+    $handler->save_document();
+} else if (isset($_GET["type"])) {
+    $handler->get_document();
 } else {
 
     $handler->find();

@@ -59,9 +59,9 @@ export const RejectMemoAndNotesNumber = () => {
             <form className='px-2' onSubmit={handleSearchData}>
                 <div className="mb-3">
                     <label htmlFor="to" className="form-label fw-bold">Numero a rechazar</label>
-                    <div class="input-group mb-3">
+                    <div className="input-group mb-3">
 
-                        <span class="input-group-text"><i class="fas fa-search"></i></span>
+                        <span className="input-group-text"><i className="fas fa-search"></i></span>
                         <input
                             type="text"
                             className="form-control form-control-sm"
