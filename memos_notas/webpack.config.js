@@ -69,7 +69,7 @@ module.exports = async (env, options) => {
           },
           {
             from: "src/taskpane/webfonts/*",
-            to: "../webfonts/[name][ext][query]"
+            to: "/webfonts/[name][ext][query]"
           },
           {
             from: "manifest*.xml",
