@@ -1,5 +1,6 @@
 import React from 'react';
 import { useState } from 'react';
+import Swal from 'sweetalert2';
 
 const initialState = {
     id: "",
@@ -28,7 +29,13 @@ export const RejectMemoAndNotesNumber = () => {
                     from: result.solicitado_por
                 })
             } else {
-                setRejectInfo(initialState)
+                Swal.fire(
+                    'Hay un problema',
+                    'No existe el registro que busca o ya no se puede rechazar',
+                    'warning'
+                ).then(() => {
+                    setRejectInfo(initialState)
+                })
             }
         }
     }
@@ -82,7 +89,7 @@ export const RejectMemoAndNotesNumber = () => {
 
             {
                 rejectInfo.subject.length > 0 ?
-                    <form className="px-2"
+                    <form className="px-2 mt-4"
                         onSubmit={handleRejectInfo}
                     >
                         <p className="fw-bold">Dirigido a:&nbsp;

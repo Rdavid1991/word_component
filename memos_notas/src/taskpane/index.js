@@ -3,7 +3,6 @@ import { AppContainer } from "react-hot-loader";
 import { initializeIcons } from "@fluentui/font-icons-mdl2";
 import * as React from "react";
 import * as ReactDOM from "react-dom";
-import { BrowserRouter } from "react-router-dom";
 /* global document, Office, module, require */
 
 initializeIcons();
@@ -28,6 +27,7 @@ Office.onReady(() => {
   isOfficeInitialized = true;
   render(App);
 });
+
 
 /* Initial render showing a progress bar */
 render(App);
