@@ -1,12 +1,15 @@
 
 import React, { useEffect, useState } from 'react';
 import { MemoAndNotesForm } from './MemoAndNotesForm.jsx';
+import { Recipients } from './Recipients.jsx';
 import { RejectMemoAndNotesNumber } from './RejectMemoAndNotesNumber.jsx';
 import { SaveDoc } from './SaveDoc.jsx';
 import { SelectMemoOrNotes } from './SelectMemoOrNotes.jsx';
 
 
 export const App = () => {
+
+	console.log("llega");
 
 	const insertDoc = async (memoOrNotes) => {
 
@@ -35,19 +38,33 @@ export const App = () => {
 
 	return (
 		<>
-			<h1 className='text-center px-2 fw-bold'>Generar numero de memos y notas</h1>
-			<SelectMemoOrNotes
-				insertDoc={insertDoc}
-			/>
-			<div className="shadow p-3 m-3 bg-body radius-50" >
-				<MemoAndNotesForm />
-			</div>
+			<nav>
+				<div className="nav nav-tabs" id="nav-tab" role="tablist">
+					<button className="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button">Inicio</button>
+					<button className="nav-link" id="nav-recipients-tab" data-bs-toggle="tab" data-bs-target="#nav-recipients" type="button">Destinatarios</button>
+				</div>
+			</nav>
+			<div className="tab-content" id="nav-tabContent">
+				<div className="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+					<h3 className='text-center px-2 fw-bold'>Generar numero de memos y notas</h3>
+					<SelectMemoOrNotes
+						insertDoc={insertDoc}
+					/>
+					<div className="shadow p-3 m-3 bg-body radius-50" >
+						<MemoAndNotesForm />
+					</div>
 
-			<div className="shadow p-3 m-3 bg-body radius-50" >
-				<RejectMemoAndNotesNumber />
-			</div>
-			<div className="shadow p-3 m-3 bg-body radius-50" >
-				<SaveDoc />
+					<div className="shadow p-3 m-3 bg-body radius-50" >
+						<RejectMemoAndNotesNumber />
+					</div>
+					<div className="shadow p-3 m-3 bg-body radius-50" >
+						<SaveDoc />
+					</div>
+				</div>
+				<div className="tab-pane fade" id="nav-recipients">
+
+					<Recipients />
+				</div>
 			</div>
 		</>
 	);
