@@ -24,7 +24,7 @@ export const Recipients = () => {
                         <div className="mb-3">
                             <label htmlFor="name" className="form-label fw-bold">Nombre</label>
                             <div className="input-group mb-3">
-                                <span className="input-group-text"><i className="far fa-paper-plane"></i></span>
+                                <span className="input-group-text"><i class="fas fa-user"></i></span>
                                 <input
                                     type="text"
                                     className="form-control form-control-sm"
@@ -39,7 +39,7 @@ export const Recipients = () => {
                         <div className="mb-3">
                             <label htmlFor="jobTitle" className="form-label fw-bold">Cargo</label>
                             <div className="input-group mb-3">
-                                <span className="input-group-text"><i className="far fa-paper-plane"></i></span>
+                                <span className="input-group-text"><i class="fas fa-wrench"></i></span>
                                 <input
                                     type="text"
                                     className="form-control form-control-sm"
@@ -54,7 +54,7 @@ export const Recipients = () => {
                         <div className="mb-3">
                             <label htmlFor="archetype" className="form-label fw-bold">Arquetipo</label>
                             <div className="input-group mb-3">
-                                <span className="input-group-text"><i className="far fa-paper-plane"></i></span>
+                                <span className="input-group-text"><i class="fas fa-user-tie"></i></span>
                                 <input
                                     type="text"
                                     className="form-control form-control-sm"
@@ -65,6 +65,10 @@ export const Recipients = () => {
                                     value={form.archetype}
                                 />
                             </div>
+                        </div>
+
+                        <div className="mb-3">
+                            <button className="btn btn-secondary">Guardar</button>
                         </div>
 
                     </form>
