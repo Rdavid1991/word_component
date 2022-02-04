@@ -28,6 +28,7 @@ Office.onReady(() => {
   render(App);
 });
 
+
 /* Initial render showing a progress bar */
 render(App);
 
