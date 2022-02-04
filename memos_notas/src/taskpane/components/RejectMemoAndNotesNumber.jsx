@@ -61,7 +61,7 @@ export const RejectMemoAndNotesNumber = () => {
 
     return (
         <>
-            <h1 className='text-center fw-bold'>Rechazar numero</h1>
+            <h3 className='text-center fw-bold'>Rechazar numero</h3>
 
             <form className='px-2' onSubmit={handleSearchData}>
                 <div className="mb-3">
