@@ -49,7 +49,7 @@ class ManagementDB extends Connection
             }
 
             sqlsrv_free_stmt($query_result);
-            return sizeof($array_items) > 1 ? $array_items : $array_items[0];
+            return (sizeof($array_items) > 1 ? $array_items : (sizeof($array_items) ? $array_items[0] : null));
         }
         error_log("Error en base de datos: " . json_encode(sqlsrv_errors()));
         $errorselect = json_encode(sqlsrv_errors());
@@ -158,7 +158,7 @@ class HandlerActionsMemo extends ManagementDB
     public function get_document()
     {
 
-        $type = $_POST["type"];
+        $type = $_GET["type"];
 
 
         $sql = "SELECT * FROM [dbo].[document] where [id] ='" . $type . "'";
