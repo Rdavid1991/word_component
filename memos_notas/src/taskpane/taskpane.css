@@ -81,5 +81,9 @@ b {
 }
 
 .radius-50 {
-    border-radius: 40px;
+    border-radius: 20px;
+}
+
+i {
+    pointer-events: none;
 }

@@ -1,6 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
 import Swal from 'sweetalert2';
+import { globals } from '../../globals';
 
 const initialState = {
     id: "",
@@ -16,7 +17,7 @@ export const RejectMemoAndNotesNumber = () => {
 
     const handleSearchData = async (e) => {
         e.preventDefault();
-        let response = await fetch(`http://172.20.70.46:8080/api/index.php?element=${searchNumber}`, {})
+        let response = await fetch(`${globals.apiUrl}?element=${searchNumber}`, {})
         if (response.ok) {
             const result = await response.json();
             if (result) {

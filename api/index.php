@@ -167,17 +167,82 @@ class HandlerActionsMemo extends ManagementDB
 
         echo json_encode($result);
     }
+
+    public function set_addressee()
+    {
+        if (isset($_POST["name"]) && isset($_POST["jobTitle"]) && isset($_POST["archetype"]) && isset($_POST["department"])) {
+
+            $sql = "INSERT INTO [dbo].[addressee] ([name],[jobTitle],[archetype],[department])
+            VALUES  (?,?,?,?)";
+
+            $result = parent::insert_query($sql, [
+                $_POST["name"],
+                $_POST["jobTitle"],
+                $_POST["archetype"],
+                $_POST["department"]
+            ]);
+
+            if ($result) {
+                $msj = (object) array(
+                    "title" => "Hecho",
+                    "text" => "Los datos se han guardado correctamente",
+                    "icon" => "success"
+                );
+                echo  json_encode($msj);
+            }else{
+                $msj = (object) array(
+                    "title" => "Oops!!!",
+                    "text" => "A ocurrido un error.",
+                    "icon" => "error"
+                );
+                echo  json_encode($msj);
+            }
+
+        } else {
+            $msj = (object) array(
+                "title" => "Algo salio mal",
+                "text" => "no se puede guardar los datos, hacen falta parámetros",
+                "icon" => 'warning'
+            );
+            echo  json_encode($msj);
+        }
+    }
+
+    public function get_addressee(){
+
+        $sql = "SELECT * FROM [dbo].[addressee]";
+
+        $result = parent::select_query($sql);
+
+        echo json_encode($result);
+    }
 }
 
 $handler = new HandlerActionsMemo();
 
-if (isset($_GET["element"])) {
-    $handler->getReject();
-} else if (isset($_POST["document"]) && isset($_POST["type"])) {
-    $handler->save_document();
-} else if (isset($_GET["type"])) {
-    $handler->get_document();
-} else {
+switch ($_GET["action"]) {
+    case "save_addressee":
+        $handler->set_addressee();
+        break;
+    case "get_addressee":
+        $handler->get_addressee();
+        break;
+    case "set_number":
+        $handler->find();
+        break;
+    case "get_type":
+        $handler->get_document();
+        break;
 
-    $handler->find();
+    default:
+        if (isset($_GET["element"])) {
+            $handler->getReject();
+        } else if (isset($_POST["document"]) && isset($_POST["type"])) {
+            $handler->save_document();
+        } else if (isset($_GET["type"])) {
+        } else {
+
+            
+        }
+        break;
 }

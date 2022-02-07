@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Swal from 'sweetalert2';
+import { globals } from '../../globals';
 
 export const SaveDoc = () => {
 
@@ -44,7 +45,7 @@ export const SaveDoc = () => {
             body: formdata
         };
 
-        let response = await fetch(`http://172.20.70.46:8080/api/`, requestOptions)
+        let response = await fetch(`${globals.apiUrl}`, requestOptions)
         if (response.ok) {
             return await response.json();
         }
