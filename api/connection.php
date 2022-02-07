@@ -10,7 +10,7 @@ define(
     )
 );
 
-define("SERVER", "192.168.1.107");
+define("SERVER", "172.20.70.46");
 
 
 class Connection

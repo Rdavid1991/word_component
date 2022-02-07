@@ -70,11 +70,11 @@ class HandlerActionsMemo extends ManagementDB
         parent::__destruct();
     }
 
-    public function getReject()
+    public function get_reject_info()
     {
         $sql = "SELECT *
           FROM [dbo].[memo] 
-          WHERE [last] = 1 AND [id] = " . $_GET["element"];
+          WHERE [last] = 1 AND [id] = " . $_GET["info"];
 
         $result = parent::select_query($sql);
         echo json_encode($result);
@@ -115,7 +115,7 @@ class HandlerActionsMemo extends ManagementDB
                ?
                )";
 
-        $result = parent::insert_query($sql, [$dirigido, $asunto, $solicitado, 1]);
+        $result = parent::insert_query($sql, [$asunto, $solicitado, $dirigido,   1]);
 
         $sql = "SELECT id
         FROM [dbo].[memo] 
@@ -239,6 +239,32 @@ class HandlerActionsMemo extends ManagementDB
 
         echo json_encode($result);
     }
+
+    public function reject_info()
+    {
+
+        $update = "UPDATE [dbo].[memo]
+            SET [last] = 3
+            WHERE [id] = ?";
+
+        $result = parent::insert_query($update, [$_GET["info"]]);
+
+        if ($result) {
+            $msj = (object) array(
+                "title" => "Hecho",
+                "text" => "Se a rechazado el ?? numero" . $_GET["info"],
+                "icon" => "success"
+            );
+            echo  json_encode($msj);
+        } else {
+            $msj = (object) array(
+                "title" => "Oops!!!",
+                "text" => "A ocurrido un error.",
+                "icon" => "error"
+            );
+            echo  json_encode($msj);
+        }
+    }
 }
 
 $handler = new HandlerActionsMemo();
@@ -259,12 +285,14 @@ switch ($_GET["action"]) {
     case "save_document":
         $handler->save_document();
         break;
+    case "get_reject_info":
+        $handler->get_reject_info();
+        break;
+    case "reject_info":
+        $handler->reject_info();
+        break;
 
     default:
-        if (isset($_GET["element"])) {
-            $handler->getReject();
-        } else if (isset($_GET["type"])) {
-        } else {
-        }
+     
         break;
 }

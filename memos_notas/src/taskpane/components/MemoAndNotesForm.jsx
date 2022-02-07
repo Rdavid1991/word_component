@@ -4,6 +4,7 @@ import Swal from 'sweetalert2';
 import moment from 'moment';
 import 'moment/locale/es-us';
 import { globals } from '../../globals';
+import { isMemo } from '../utils';
 moment.locale("es")
 
 const initialState = {
@@ -12,8 +13,7 @@ const initialState = {
     from: ""
 }
 
-export const MemoAndNotesForm = ({ addresseeState }) => {
-
+export const MemoAndNotesForm = ({ addresseeState, memoOrNoteState }) => {
 
     /**
      * addresseeState structure
@@ -31,7 +31,7 @@ export const MemoAndNotesForm = ({ addresseeState }) => {
     const [buttonDisabled, setButtonDisabled] = useState(true);
 
     useEffect(() => {
-        if (form.from.length > 0 && form.from.length > 0 && form.from.length > 0) {
+        if (form.to.length > 0 && form.subject.length > 0 && form.from.length > 0) {
             setButtonDisabled(false)
         } else {
             setButtonDisabled(true)
@@ -41,6 +41,7 @@ export const MemoAndNotesForm = ({ addresseeState }) => {
 
 
     const handleInputChange = ({ target }) => {
+        console.log(target.value);
         setForm({
             ...form,
             [target.id]: target.value
@@ -51,54 +52,89 @@ export const MemoAndNotesForm = ({ addresseeState }) => {
         e.preventDefault();
 
         Word.run((context) => {
-            const numControl = context.document.body.contentControls.getByTag("num");
+            /**
+             * Obtener variables dinámicas
+             */
+            const numMemoOrNoteControl = context.document.body.contentControls.getByTag(
+                isMemo(memoOrNoteState)
+                    ? "num_memo"
+                    : "num_note"
+            );
             const yearControl = context.document.body.contentControls.getByTag("year");
-            const subjectControl = context.document.body.contentControls.getByTag("subject");
             const dateControl = context.document.body.contentControls.getByTag("date");
-            const addresseeNameControl = context.document.body.contentControls.getByTag("addresseeName");
-            const addresseeJobTitle = context.document.body.contentControls.getByTag("addresseeJobTitle");
 
-            context.load(numControl)
+            /**
+             * Obtener variables del memo o nota
+             */
+            const requestControl = context.document.body.contentControls.getByTag("request");
+            const subjectControl = context.document.body.contentControls.getByTag("subject");
+
+            /**
+             * Obtener variables de destinatario
+             */
+            const addresseeNameControl = context.document.body.contentControls.getByTag("addressee_name");
+            const addresseeJobTitleControl = context.document.body.contentControls.getByTag("addressee_job_title");
+            const addresseeArchetypeControl = context.document.body.contentControls.getByTag("addressee_archetype");
+            const addresseeDepartmentControl = context.document.body.contentControls.getByTag("addressee_department");
+
+            /**
+             * Cargar variables dinamicas
+             */
+            context.load(numMemoOrNoteControl)
             context.load(yearControl)
-            context.load(subjectControl)
             context.load(dateControl)
+
+            /**
+             * Cargar variables de memo o notas
+             */
+            context.load(requestControl)
+            context.load(subjectControl)
+
+            /**
+             * Cargar variables destinatario
+             */
             context.load(addresseeNameControl)
-            context.load(addresseeJobTitle)
+            context.load(addresseeJobTitleControl)
+            context.load(addresseeArchetypeControl)
+            context.load(addresseeDepartmentControl)
 
             return context.sync().then(async () => {
-                if (numControl.items.length > 0 &&
-                    yearControl.items.length > 0 &&
-                    subjectControl.items.length > 0 &&
-                    dateControl.items.length > 0
-                ) {
-                    const response = await fetchData();
-                    if (response) {
-                        console.log(response.id.toString());
-                        numControl.items[0].insertText(response.id.toString(), "Replace");
-                        yearControl.items[0].insertText("2022", "Replace");
-                        subjectControl.items[0].insertText(form.subject, "Replace");
-                        dateControl.items[0].insertText(moment().format('LL'), "Replace");
-                        addresseeNameControl.items[0].insertText(addresseeState[form.to].name,"Replace")
-                        addresseeJobTitle.items[0].insertText(addresseeState[form.to].jobTitle,"Replace")
 
-                        Swal.fire(
-                            'Hecho',
-                            'La información esta lista',
-                            'success'
-                        )
+                const response = await fetchData();
+                if (response) {
 
-                        setForm(initialState);
-                    } else {
-                        Swal.fire(
-                            'Hay un problema',
-                            'Error al consultar base de datos',
-                            'error'
-                        )
-                    }
+                    /**
+                     * insertar texto variables dinámicas
+                     */
+                    numMemoOrNoteControl.items[0]?.insertText(response.id.toString(), "Replace");
+                    yearControl.items[0]?.insertText(moment().year(), "Replace");
+                    dateControl.items[0]?.insertText(moment().format('LL'), "Replace");
+
+                    /**
+                     * insertar texto variables memos o notas
+                     */
+                    subjectControl.items[0]?.insertText(form.subject, "Replace");
+                    requestControl.items[0]?.insertText(form.from, "Replace")
+
+                    /**
+                     * insertar texto variables destinatario
+                     */
+                    addresseeNameControl.items[0]?.insertText(addresseeState[form.to].name, "Replace")
+                    addresseeJobTitleControl.items[0]?.insertText(addresseeState[form.to].jobTitle, "Replace")
+                    addresseeArchetypeControl.items[0]?.insertText(addresseeState[form.to].archetype, "Replace")
+                    addresseeDepartmentControl.items[0]?.insertText(addresseeState[form.to].department, "Replace")
+
+                    Swal.fire(
+                        'Hecho',
+                        'La información esta lista',
+                        'success'
+                    )
+
+                    setForm(initialState);
                 } else {
                     Swal.fire(
                         'Hay un problema',
-                        'Las variables no están definidas, cargue la plantilla correcta o cree las variables',
+                        'Error al consultar base de datos',
                         'error'
                     )
                 }
@@ -110,7 +146,7 @@ export const MemoAndNotesForm = ({ addresseeState }) => {
     const fetchData = async () => {
 
         const formdata = new FormData()
-        formdata.append("dirigido", form.to)
+        formdata.append("dirigido", addresseeState[form.to].department)
         formdata.append("asunto", form.subject)
         formdata.append("solicitado", form.from)
         var requestOptions = {
@@ -133,17 +169,17 @@ export const MemoAndNotesForm = ({ addresseeState }) => {
                     <div className="input-group mb-3">
                         <span className="input-group-text"><i className="far fa-paper-plane"></i></span>
                         <select
-                            value={form.to}
+                            defaultValue={form.to}
                             className="form-select form-select-sm"
                             id="to"
                             placeholder="A quien a dirigido"
                             required={true}
                             onChange={handleInputChange}
                         >
-                            
+                            <option value="" disabled>Seleccione un destinatario</option>
                             {
                                 addresseeState.map((item, index) => (
-                                    <option value={index}>{item.department}</option>
+                                    <option key={index} value={index}>{item.department}</option>
                                 ))
                             }
 
