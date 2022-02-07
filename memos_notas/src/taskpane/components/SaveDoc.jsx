@@ -17,17 +17,13 @@ export const SaveDoc = () => {
         }).then((result) => {
             if (result.isConfirmed) {
                 Word.run((context) => {
-                    
+
                     const body = context.document.body
                     const bodyHtml = body.getOoxml()
-                    return context.sync().then(() => {
-                        if (saveDoc(bodyHtml.value, saveMemoOrNotes)) {
-                            Swal.fire(
-                                'Hecho',
-                                'La información esta lista',
-                                'success'
-                            )
-                        }
+                    return context.sync().then(async() => {
+
+                        Swal.fire(await saveDoc(bodyHtml.value, saveMemoOrNotes))
+                        
                     })
                 })
             }
@@ -45,7 +41,7 @@ export const SaveDoc = () => {
             body: formdata
         };
 
-        let response = await fetch(`${globals.apiUrl}`, requestOptions)
+        let response = await fetch(`${globals.apiUrl}?action=save_document`, requestOptions)
         if (response.ok) {
             return await response.json();
         }

@@ -131,28 +131,51 @@ class HandlerActionsMemo extends ManagementDB
     public function save_document()
     {
 
-        $type = $_POST["type"];
-        $document = $_POST["document"];
+        if (isset($_POST["document"]) && isset($_POST["type"])) {
+            $type = $_POST["type"];
+            $document = $_POST["document"];
 
-        $sql = "SELECT * FROM [dbo].[document] where [id] =" . $type;
+            $sql = "SELECT * FROM [dbo].[document] where [id] =" . $type;
 
-        $result = parent::select_query($sql);
+            $result = parent::select_query($sql);
 
-        if ($result) {
-            $sql = "UPDATE [dbo].[document]
-            SET [doc] = ?
-            WHERE [id] = ?";
+            if ($result) {
+                $sql = "UPDATE [dbo].[document]
+                SET [doc] = ?
+                WHERE [id] = ?";
 
-            $result = parent::insert_query($sql, [$document, $type]);
+                $result = parent::insert_query($sql, [$document, $type]);
+            } else {
+
+                $sql = "INSERT INTO [dbo].[document] ([id],[doc])
+                VALUES (?,?)";
+
+                $result = parent::insert_query($sql, [$type, $document]);
+            }
+
+            if ($result) {
+                $msj = (object) array(
+                    "title" => "Hecho",
+                    "text" => "Los datos se han guardado correctamente",
+                    "icon" => "success"
+                );
+                echo  json_encode($msj);
+            } else {
+                $msj = (object) array(
+                    "title" => "Oops!!!",
+                    "text" => "A ocurrido un error.",
+                    "icon" => "error"
+                );
+                echo  json_encode($msj);
+            }
         } else {
-
-            $sql = "INSERT INTO [dbo].[document] ([id],[doc])
-            VALUES (?,?)";
-
-            $result = parent::insert_query($sql, [$type, $document]);
+            $msj = (object) array(
+                "title" => "Algo salio mal",
+                "text" => "no se puede guardar los datos, hacen falta parámetros",
+                "icon" => 'warning'
+            );
+            echo  json_encode($msj);
         }
-
-        echo $result;
     }
 
     public function get_document()
@@ -189,7 +212,7 @@ class HandlerActionsMemo extends ManagementDB
                     "icon" => "success"
                 );
                 echo  json_encode($msj);
-            }else{
+            } else {
                 $msj = (object) array(
                     "title" => "Oops!!!",
                     "text" => "A ocurrido un error.",
@@ -197,7 +220,6 @@ class HandlerActionsMemo extends ManagementDB
                 );
                 echo  json_encode($msj);
             }
-
         } else {
             $msj = (object) array(
                 "title" => "Algo salio mal",
@@ -208,7 +230,8 @@ class HandlerActionsMemo extends ManagementDB
         }
     }
 
-    public function get_addressee(){
+    public function get_addressee()
+    {
 
         $sql = "SELECT * FROM [dbo].[addressee]";
 
@@ -233,16 +256,15 @@ switch ($_GET["action"]) {
     case "get_type":
         $handler->get_document();
         break;
+    case "save_document":
+        $handler->save_document();
+        break;
 
     default:
         if (isset($_GET["element"])) {
             $handler->getReject();
-        } else if (isset($_POST["document"]) && isset($_POST["type"])) {
-            $handler->save_document();
         } else if (isset($_GET["type"])) {
         } else {
-
-            
         }
         break;
 }

@@ -58,6 +58,7 @@ export const Addressees = ({ addresseeState, getAddressesOfDB, setStateAddressee
             department: addresseeState[index].department,
             edit: true
         })
+        scrollTo(0,0)
     }
 
     return (
@@ -171,7 +172,7 @@ export const Addressees = ({ addresseeState, getAddressesOfDB, setStateAddressee
 
                         addresseeState.map((item, index) => {
 
-                            if (searchState.length > 0 && new RegExp(searchState).test(item.name)) {
+                            if (searchState.length > 0 && new RegExp(searchState,"i").test(item.name)) {
                                 return (
                                     <div className="card shadow-sm p-3 mb-2 bg-body">
                                         <div className="card-body">
