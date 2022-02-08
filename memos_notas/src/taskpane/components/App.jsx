@@ -6,15 +6,13 @@ import { Addressees } from './Addressees.jsx';
 import { RejectMemoAndNotesNumber } from './RejectMemoAndNotesNumber.jsx';
 import { SaveDoc } from './SaveDoc.jsx';
 import { SelectMemoOrNotes } from './SelectMemoOrNotes.jsx';
-import { InfoHelp } from './InfoHelp.jsx';
+import { InfoHelp } from './infoHelp/InfoHelp.jsx';
 
 
 export const App = () => {
 
 	const [addresseeState, setStateAddressee] = useState([]);
 	const [memoOrNoteState, setMemoOrNoteState] = useState(0);
-
-	
 
 	useEffect(() => {
 		fetchAddresses();

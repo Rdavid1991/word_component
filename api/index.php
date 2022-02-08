@@ -83,31 +83,21 @@ class HandlerActionsMemo extends ManagementDB
     public function find()
     {
 
+        $count_number = $this->get_count_numbers();
 
-        $sql = "SELECT *
-          FROM [dbo].[memo] 
-          WHERE [last] = 1";
+        if (intval($_GET["type"]) === 1) {
 
-        $result = parent::select_query($sql);
 
-        if ($result) {
-            $update = "UPDATE [dbo].[memo]
-            SET [last] = 0
-            WHERE [last] = ?";
+            $dirigido = $_POST["dirigido"];
+            $asunto = $_POST["asunto"];
+            $solicitado = $_POST["solicitado"];
 
-            $result = parent::insert_query($update, [1]);
-        }
-
-        $dirigido = $_POST["dirigido"];
-        $asunto = $_POST["asunto"];
-        $solicitado = $_POST["solicitado"];
-
-        $sql = "INSERT INTO [dbo].[memo]
+            $sql = "INSERT INTO [dbo].[memo]
            ([asunto]
            ,[solicitado_por]
            ,[dirigido_a]
-           ,[last])
-        VALUES
+           ,[number])
+            VALUES
            (
                ?,
                ?,
@@ -115,15 +105,20 @@ class HandlerActionsMemo extends ManagementDB
                ?
                )";
 
-        $result = parent::insert_query($sql, [$asunto, $solicitado, $dirigido,   1]);
+            $result = parent::insert_query($sql, [$asunto, $solicitado, $dirigido,   $count_number->memorandum]);
 
-        $sql = "SELECT id
-        FROM [dbo].[memo] 
-        WHERE [last] = 1";
+            if ($result) {
+                $this->save_count_numbers(($count_number->memorandum + 1),$count_number->notes);
+            }
 
-        $result = parent::select_query($sql);
+            $sql = "SELECT [number]
+            FROM [dbo].[memo] 
+            WHERE [last] = 1";
 
-        echo json_encode($result);
+            $result = parent::select_query($sql);
+
+            echo json_encode($result);
+        }
 
         //http_response_code(202);
     }
@@ -265,6 +260,53 @@ class HandlerActionsMemo extends ManagementDB
             echo  json_encode($msj);
         }
     }
+
+    public function save_count_numbers($memo, $note)
+    {
+        $result = $this->get_count_numbers();
+        if ($result) {
+            $update = "UPDATE [dbo].[number_memo_notes]
+                        SET [memorandum] = ? ,[notes] = ?
+                        WHERE [id] = ?";
+            $result = parent::insert_query($update, [$memo, $note, $result->id]);
+            if ($result) {
+                return (object) array(
+                    "title" => "Hecho",
+                    "text" => "Se ha guardado la información correctamente",
+                    "icon" => "success"
+                );
+            } else {
+                return (object) array(
+                    "title" => "Oops!!!",
+                    "text" => "A ocurrido un error.",
+                    "icon" => "error"
+                );
+            }
+        } else {
+            $update = "INSERT INTO [dbo].[number_memo_notes]([memorandum],[notes])
+                        VALUES(?,?)";
+            $result = parent::insert_query($update, [$_POST["memo"], $_POST["note"]]);
+            if ($result) {
+                return (object) array(
+                    "title" => "Hecho",
+                    "text" => "Se ha guardado la información correctamente",
+                    "icon" => "success"
+                );
+            } else {
+                return (object) array(
+                    "title" => "Oops!!!",
+                    "text" => "A ocurrido un error.",
+                    "icon" => "error"
+                );
+            }
+        }
+    }
+
+    public function get_count_numbers()
+    {
+        $sql = "SELECT * FROM [dbo].[number_memo_notes]";
+        return parent::select_query($sql);
+    }
 }
 
 $handler = new HandlerActionsMemo();
@@ -291,8 +333,16 @@ switch ($_GET["action"]) {
     case "reject_info":
         $handler->reject_info();
         break;
+    case "save_count_numbers":
+        $result = $handler->save_count_numbers($_POST["memo"], $_POST["note"]);
+        echo json_encode($result);
+        break;
+    case "get_count_numbers":
+        $result = $handler->get_count_numbers();
+        echo json_encode($result);
+        break;
 
     default:
-     
+
         break;
 }

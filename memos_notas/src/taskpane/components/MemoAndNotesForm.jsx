@@ -100,7 +100,7 @@ export const MemoAndNotesForm = ({ addresseeState, memoOrNoteState }) => {
 
             return context.sync().then(async () => {
 
-                const response = await fetchData();
+                const response = await fetchData(memoOrNoteState);
                 if (response) {
 
                     /**
@@ -143,7 +143,12 @@ export const MemoAndNotesForm = ({ addresseeState, memoOrNoteState }) => {
         })
     }
 
-    const fetchData = async () => {
+    const fetchData = async (memoOrNoteState) => {
+
+        /**
+         * 1 = memo
+         * 2 = note
+         */
 
         const formdata = new FormData()
         formdata.append("dirigido", addresseeState[form.to].department)
@@ -154,7 +159,7 @@ export const MemoAndNotesForm = ({ addresseeState, memoOrNoteState }) => {
             body: formdata
         };
 
-        let response = await fetch(`${globals.apiUrl}?action=set_number`, requestOptions)
+        let response = await fetch(`${globals.apiUrl}?action=set_number&type=${memoOrNoteState}`, requestOptions)
         if (response.ok) {
             return await response.json();
         }
