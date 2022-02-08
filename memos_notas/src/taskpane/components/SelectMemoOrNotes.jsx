@@ -55,7 +55,7 @@ export const SelectMemoOrNotes = ({setMemoOrNoteState}) => {
                     required={true}
                     onChange={handleSelectChange}
                 >
-                    <option defaultValue={0}>Seleccione ¿memo o nota?</option>
+                    <option value="0">Seleccione ¿memo o nota?</option>
                     <option value="1">Memo</option>
                     <option value="2">Nota</option>
                 </select>

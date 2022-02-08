@@ -111,16 +111,8 @@ class HandlerActionsMemo extends ManagementDB
                 $this->save_count_numbers(($count_number->memorandum + 1),$count_number->notes);
             }
 
-            $sql = "SELECT [number]
-            FROM [dbo].[memo] 
-            WHERE [last] = 1";
-
-            $result = parent::select_query($sql);
-
-            echo json_encode($result);
-        }
-
-        //http_response_code(202);
+            echo json_encode((object) ["id" => $count_number->memorandum]);
+        };
     }
 
     public function save_document()

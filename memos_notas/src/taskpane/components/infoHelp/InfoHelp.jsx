@@ -1,49 +1,21 @@
-
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import Swal from 'sweetalert2';
-import { getNumber, saveNumber } from './functions';
+import PropTypes from 'prop-types';
 
-
-const initialState = {
-    note: "1",
-    memo: "1"
-}
-export const InfoHelp = () => {
-
-    const [form, setForm] = useState(initialState);
-
-    useEffect(() => {
-        (async () => {
-            
-            let result = await getNumber()
-            if (result) {
-                setForm({
-                    note: result.notes,
-                    memo: result.memorandum
-                })
-            } else {
-                result = await saveNumber(form);
-                console.log(result);
-            }
-        })()
-
-    }, []);
-
+export const InfoHelp = ({ numberState, setNumberState, saveNumber }) => {
 
     const handleInputChange = ({ target }) => {
-        setForm({
-            ...form,
-            [target.id]: target.value
+        setNumberState({
+            ...numberState,
+            [target.id]: parseInt(target.value)
         })
     };
 
     const handleSaveNumber = async (e) => {
         e.preventDefault();
-        const result = await saveNumber(form);
-        console.log({result});
-        Swal.fire(result);
+        const saveNumberResult = await saveNumber(numberState);
+        Swal.fire(saveNumberResult)
     }
-
 
     return (
         <div className="p-3 m-3">
@@ -60,7 +32,7 @@ export const InfoHelp = () => {
                             placeholder="Número de memorandum"
                             required={true}
                             onChange={handleInputChange}
-                            value={form.memo}
+                            value={numberState.memo}
                         />
                     </div>
                     <div className="form-text">
@@ -78,7 +50,7 @@ export const InfoHelp = () => {
                             placeholder="Número de notas"
                             required={true}
                             onChange={handleInputChange}
-                            value={form.note}
+                            value={numberState.note}
                         />
                     </div>
                     <div className="form-text">
@@ -157,4 +129,14 @@ export const InfoHelp = () => {
 
         </div>
     );
+};
+
+
+InfoHelp.propTypes = {
+    numberState: PropTypes.shape({
+        note: PropTypes.number,
+        memo: PropTypes.number
+    }).isRequired,
+    setNumberState: PropTypes.func.isRequired,
+    saveNumber: PropTypes.func.isRequired
 };

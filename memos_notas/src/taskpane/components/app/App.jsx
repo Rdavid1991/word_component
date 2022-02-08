@@ -1,22 +1,46 @@
 
 import React, { useEffect, useState } from 'react';
-import { globals } from '../../globals.js';
-import { MemoAndNotesForm } from './MemoAndNotesForm.jsx';
-import { Addressees } from './Addressees.jsx';
-import { RejectMemoAndNotesNumber } from './RejectMemoAndNotesNumber.jsx';
-import { SaveDoc } from './SaveDoc.jsx';
-import { SelectMemoOrNotes } from './SelectMemoOrNotes.jsx';
-import { InfoHelp } from './infoHelp/InfoHelp.jsx';
+import { globals } from '../../../globals.js';
+import { MemoAndNotesForm } from '../memoAndNotesForm/MemoAndNotesForm.jsx';
+import { Addressees } from '../Addressees.jsx';
+import { RejectMemoAndNotesNumber } from '../RejectMemoAndNotesNumber.jsx';
+import { SaveDoc } from '../SaveDoc.jsx';
+import { SelectMemoOrNotes } from '../SelectMemoOrNotes.jsx';
+import { InfoHelp } from '../infoHelp/InfoHelp.jsx';
+import { getNumber, saveNumber } from './functions/index.js';
 
-
+const initialNumber = {
+	note: 1,
+	memo: 1
+}
 export const App = () => {
 
 	const [addresseeState, setStateAddressee] = useState([]);
 	const [memoOrNoteState, setMemoOrNoteState] = useState(0);
+	const [numberState, setNumberState] = useState(initialNumber);
 
 	useEffect(() => {
-		fetchAddresses();
+
+		(async () => {
+			fetchAddresses();
+			fetchNumbers()
+
+		})()
 	}, []);
+
+	const fetchNumbers = async () => {
+		let result = await getNumber()
+		console.log(result);
+		if (result) {
+			setNumberState({
+				note: parseInt(result.notes),
+				memo: parseInt(result.memorandum)
+			})
+		} else {
+			result = await saveNumber(numberState);
+			console.log(result);
+		}
+	}
 
 	const fetchAddresses = async () => {
 		const result = await getAddressesOfDB()
@@ -53,6 +77,7 @@ export const App = () => {
 						<MemoAndNotesForm
 							addresseeState={addresseeState}
 							memoOrNoteState={memoOrNoteState}
+							fetchNumbers={fetchNumbers}
 						/>
 					</div>
 
@@ -72,7 +97,11 @@ export const App = () => {
 				</div>
 				<div className="tab-pane fade" id="nav-info-help">
 
-					<InfoHelp />
+					<InfoHelp
+						numberState={numberState}
+						setNumberState={setNumberState}
+						saveNumber={saveNumber}
+					/>
 				</div>
 			</div>
 		</>

@@ -1,4 +1,4 @@
-import { App } from "./components/App.jsx";
+import { App } from "./components/app/App.jsx";
 import { AppContainer } from "react-hot-loader";
 import { initializeIcons } from "@fluentui/font-icons-mdl2";
 import * as React from "react";
