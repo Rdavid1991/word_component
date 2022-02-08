@@ -1,7 +1,14 @@
 USE [memos&notas]
 GO
+ALTER TABLE [dbo].[note] DROP CONSTRAINT [DF_note_state]
+GO
+ALTER TABLE [dbo].[memo] DROP CONSTRAINT [DF_memo_state]
+GO
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[number_memo_notes]') AND type in (N'U'))
 DROP TABLE [dbo].[number_memo_notes]
+GO
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[note]') AND type in (N'U'))
+DROP TABLE [dbo].[note]
 GO
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[memo]') AND type in (N'U'))
 DROP TABLE [dbo].[memo]
@@ -127,12 +134,28 @@ CREATE TABLE [dbo].[memo](
 	[asunto] [nvarchar](50) NOT NULL,
 	[solicitado_por] [nvarchar](50) NOT NULL,
 	[dirigido_a] [nvarchar](50) NOT NULL,
-	[last] [tinyint] NOT NULL,
 	[number] [tinyint] NOT NULL,
-	[date] [nvarchar](50) NULL
+	[date] [nvarchar](50) NULL,
+	[state] [nchar](1) NOT NULL
 ) ON [PRIMARY]
 GO
 ALTER TABLE [dbo].[memo] SET (LOCK_ESCALATION = AUTO)
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[note](
+	[id] [tinyint] IDENTITY(1,1) NOT NULL,
+	[asunto] [nvarchar](50) NOT NULL,
+	[solicitado_por] [nvarchar](50) NOT NULL,
+	[dirigido_a] [nvarchar](50) NOT NULL,
+	[number] [tinyint] NOT NULL,
+	[date] [nvarchar](50) NULL,
+	[state] [nchar](1) NOT NULL
+) ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[note] SET (LOCK_ESCALATION = AUTO)
 GO
 SET ANSI_NULLS ON
 GO
@@ -145,6 +168,10 @@ CREATE TABLE [dbo].[number_memo_notes](
 ) ON [PRIMARY]
 GO
 ALTER TABLE [dbo].[number_memo_notes] SET (LOCK_ESCALATION = AUTO)
+GO
+ALTER TABLE [dbo].[memo] ADD  CONSTRAINT [DF_memo_state]  DEFAULT ((1)) FOR [state]
+GO
+ALTER TABLE [dbo].[note] ADD  CONSTRAINT [DF_note_state]  DEFAULT ((1)) FOR [state]
 GO
 USE [master]
 GO
