@@ -29,8 +29,7 @@ export const App = () => {
 	}, []);
 
 	const fetchNumbers = async () => {
-		let result = await getNumber()
-		console.log(result);
+		let result = await getNumber();
 		if (result) {
 			setNumberState({
 				note: parseInt(result.notes),
@@ -82,7 +81,10 @@ export const App = () => {
 					</div>
 
 					<div className="shadow p-3 m-3 bg-body radius-50" >
-						<RejectMemoAndNotesNumber />
+						<RejectMemoAndNotesNumber
+							memoOrNoteState={memoOrNoteState}
+							fetchNumbers={fetchNumbers}
+						/>
 					</div>
 					<div className="shadow p-3 m-3 bg-body radius-50" >
 						<SaveDoc />

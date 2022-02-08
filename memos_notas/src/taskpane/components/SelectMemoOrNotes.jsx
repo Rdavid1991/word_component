@@ -13,15 +13,11 @@ export const SelectMemoOrNotes = ({setMemoOrNoteState}) => {
             if (result) {
                 Word.run(function (context) {
 
-                    // Create a proxy object for the document body.
                     const body = context.document.body;
-
+                    
                     body.clear();
-                    //Queue a command to insert HTML in to the beginning of the body.
-                    body.insertOoxml(result.doc, Word.InsertLocation.start);
+                    body.insertOoxml(result.doc.toString(), Word.InsertLocation.start);
 
-                    // Synchronize the document state by executing the queued commands,
-                    // and return a promise to indicate task completion.
                     return context.sync().then(function () {
                         Swal.fire(
                             "Hecho",

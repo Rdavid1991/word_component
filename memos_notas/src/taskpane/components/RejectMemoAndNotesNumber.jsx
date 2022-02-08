@@ -2,6 +2,7 @@ import React from 'react';
 import { useState } from 'react';
 import Swal from 'sweetalert2';
 import { globals } from '../../globals';
+import PropTypes from "prop-types"
 
 const initialState = {
     id: "",
@@ -10,49 +11,65 @@ const initialState = {
     from: ""
 }
 
-export const RejectMemoAndNotesNumber = () => {
+export const RejectMemoAndNotesNumber = ({ memoOrNoteState, fetchNumbers }) => {
 
     const [searchNumber, setSearchNumber] = useState("");
     const [rejectInfo, setRejectInfo] = useState(initialState);
 
     const handleSearchData = async (e) => {
         e.preventDefault();
-        let response = await fetch(`${globals.apiUrl}?action=get_reject_info&info=${searchNumber}`, {})
-        if (response.ok) {
-            const result = await response.json();
-            if (result) {
-                console.log(result);
-                //{ "id": 154, "asunto": "Bueno funciona", "solicitado_por": "test", "dirigido_a": "esteban", "last": 1 }
-                setRejectInfo({
-                    id: result.id,
-                    to: result.dirigido_a,
-                    subject: result.asunto,
-                    from: result.solicitado_por
-                })
-            } else {
-                Swal.fire(
-                    'Hay un problema',
-                    'No existe el registro que busca o ya no se puede rechazar',
-                    'warning'
-                ).then(() => {
-                    setRejectInfo(initialState)
-                })
+
+        if (parseInt(memoOrNoteState) > 0) {
+            let response = await fetch(`${globals.apiUrl}?action=get_reject_info&info=${searchNumber}&type=${memoOrNoteState}`, {})
+            if (response.ok) {
+                const result = await response.json();
+                if (result) {
+                    console.log(result);
+                    //{ "id": 154, "asunto": "Bueno funciona", "solicitado_por": "test", "dirigido_a": "esteban", "last": 1 }
+                    setRejectInfo({
+                        id: result.id,
+                        to: result.dirigido_a,
+                        subject: result.asunto,
+                        from: result.solicitado_por
+                    })
+                } else {
+                    Swal.fire(
+                        'Hay un problema',
+                        'No existe el registro que busca o ya no se puede rechazar',
+                        'warning'
+                    ).then(() => {
+                        setRejectInfo(initialState)
+                    })
+                }
             }
+        } else {
+            Swal.fire(
+                "Debe seleccionar",
+                "Es memo o nota? para buscar ",
+                "question"
+            )
         }
     }
 
     const handleRejectInfo = async (e) => {
         e.preventDefault();
-        let response = await fetch(`${globals.apiUrl}?action=reject_info&info=${searchNumber}`, {})
+
+
+
+        let response = await fetch(`${globals.apiUrl}?action=reject_info&info=${searchNumber}&type=${memoOrNoteState}`, {})
         if (response.ok) {
             const result = await response.json();
             if (result) {
                 Swal.fire(result).then(() => {
                     setSearchNumber("")
                     setRejectInfo(initialState)
+                }).then((params) => {
+                    fetchNumbers();
                 })
             }
         }
+
+
     }
 
     return (
@@ -116,3 +133,8 @@ export const RejectMemoAndNotesNumber = () => {
         </>
     );
 };
+
+RejectMemoAndNotesNumber.prototype = {
+    memoOrNoteState: PropTypes.string.isRequired,
+    fetchNumbers: PropTypes.func.isRequired
+}

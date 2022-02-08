@@ -26,7 +26,7 @@ export const InfoHelp = ({ numberState, setNumberState, saveNumber }) => {
                     <div className="input-group mb-3">
                         <span className="input-group-text"><i className="fas fa-user"></i></span>
                         <input
-                            type="text"
+                            type="number"
                             className="form-control form-control-sm"
                             id="memo"
                             placeholder="Número de memorandum"
@@ -44,7 +44,7 @@ export const InfoHelp = ({ numberState, setNumberState, saveNumber }) => {
                     <div className="input-group mb-3">
                         <span className="input-group-text"><i className="fas fa-user"></i></span>
                         <input
-                            type="text"
+                            type="number"
                             className="form-control form-control-sm"
                             id="note"
                             placeholder="Número de notas"

@@ -72,12 +72,14 @@ class HandlerActionsMemo extends ManagementDB
 
     public function get_reject_info()
     {
-        $sql = "SELECT *
-          FROM [dbo].[memo] 
-          WHERE [last] = 1 AND [id] = " . $_GET["info"];
+        if (intval($_GET["type"]) === 1) {
+            $sql = "SELECT *
+              FROM [dbo].[memo] 
+              WHERE [state] = 1 AND [number] = " . $_GET["info"];
 
-        $result = parent::select_query($sql);
-        echo json_encode($result);
+            $result = parent::select_query($sql);
+            echo json_encode($result);
+        }
     }
 
     public function find()
@@ -87,6 +89,11 @@ class HandlerActionsMemo extends ManagementDB
 
         if (intval($_GET["type"]) === 1) {
 
+            $sql = "UPDATE [dbo].[memo]
+            SET [state] = 0
+            WHERE [state] = 1";
+
+            parent::insert_query($sql, []);
 
             $dirigido = $_POST["dirigido"];
             $asunto = $_POST["asunto"];
@@ -96,23 +103,58 @@ class HandlerActionsMemo extends ManagementDB
            ([asunto]
            ,[solicitado_por]
            ,[dirigido_a]
-           ,[number])
+           ,[number]
+           ,[state])
             VALUES
            (
+               ?,
                ?,
                ?,
                ?,
                ?
                )";
 
-            $result = parent::insert_query($sql, [$asunto, $solicitado, $dirigido,   $count_number->memorandum]);
+            $result = parent::insert_query($sql, [$asunto, $solicitado, $dirigido,   $count_number->memorandum, 1]);
 
             if ($result) {
-                $this->save_count_numbers(($count_number->memorandum + 1),$count_number->notes);
+                $this->save_count_numbers(($count_number->memorandum + 1), $count_number->notes);
             }
 
             echo json_encode((object) ["id" => $count_number->memorandum]);
-        };
+        }else if (intval($_GET["type"]) === 2) {
+            $sql = "UPDATE [dbo].[note]
+            SET [state] = 0
+            WHERE [state] = 1";
+
+            parent::insert_query($sql, []);
+
+            $dirigido = $_POST["dirigido"];
+            $asunto = $_POST["asunto"];
+            $solicitado = $_POST["solicitado"];
+
+            $sql = "INSERT INTO [dbo].[note]
+           ([asunto]
+           ,[solicitado_por]
+           ,[dirigido_a]
+           ,[number]
+           ,[state])
+            VALUES
+           (
+               ?,
+               ?,
+               ?,
+               ?,
+               ?
+               )";
+
+            $result = parent::insert_query($sql, [$asunto, $solicitado, $dirigido,   $count_number->notes, 1]);
+
+            if ($result) {
+                $this->save_count_numbers(($count_number->memorandum), $count_number->notes + 1);
+            }
+
+            echo json_encode((object) ["id" => $count_number->notes]);
+        }
     }
 
     public function save_document()
@@ -230,26 +272,57 @@ class HandlerActionsMemo extends ManagementDB
     public function reject_info()
     {
 
-        $update = "UPDATE [dbo].[memo]
-            SET [last] = 3
-            WHERE [id] = ?";
+        if (intval($_GET["type"]) === 1) {
 
-        $result = parent::insert_query($update, [$_GET["info"]]);
+            $update = "UPDATE [dbo].[memo]
+            SET [state] = 3
+            WHERE [number] = ?";
 
-        if ($result) {
-            $msj = (object) array(
-                "title" => "Hecho",
-                "text" => "Se a rechazado el ?? numero" . $_GET["info"],
-                "icon" => "success"
-            );
-            echo  json_encode($msj);
-        } else {
-            $msj = (object) array(
-                "title" => "Oops!!!",
-                "text" => "A ocurrido un error.",
-                "icon" => "error"
-            );
-            echo  json_encode($msj);
+            $result = parent::insert_query($update, [$_GET["info"]]);
+
+            if ($result) {
+                $count_number = $this->get_count_numbers();
+                $this->save_count_numbers((intval($_GET["info"])), $count_number->notes);
+
+                $msj = (object) array(
+                    "title" => "Hecho",
+                    "text" => "Se a rechazado el memo numero" . $_GET["info"],
+                    "icon" => "success"
+                );
+                echo  json_encode($msj);
+            } else {
+                $msj = (object) array(
+                    "title" => "Oops!!!",
+                    "text" => "A ocurrido un error.",
+                    "icon" => "error"
+                );
+                echo  json_encode($msj);
+            }
+        } else if (intval($_GET["type"]) === 2) {
+            $update = "UPDATE [dbo].[note]
+            SET [state] = 3
+            WHERE [number] = ?";
+
+            $result = parent::insert_query($update, [$_GET["info"]]);
+
+            if ($result) {
+                $count_number = $this->get_count_numbers();
+                $this->save_count_numbers($count_number->memo, intval($_GET["info"]));
+
+                $msj = (object) array(
+                    "title" => "Hecho",
+                    "text" => "Se a rechazado el memo numero" . $_GET["info"],
+                    "icon" => "success"
+                );
+                echo  json_encode($msj);
+            } else {
+                $msj = (object) array(
+                    "title" => "Oops!!!",
+                    "text" => "A ocurrido un error.",
+                    "icon" => "error"
+                );
+                echo  json_encode($msj);
+            }
         }
     }
 

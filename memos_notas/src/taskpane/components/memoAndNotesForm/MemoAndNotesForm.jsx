@@ -46,9 +46,17 @@ export const MemoAndNotesForm = ({ addresseeState, memoOrNoteState, fetchNumbers
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        await loadWordVars(addresseeState, memoOrNoteState, form)
-        fetchNumbers()
-        setForm(initialState);
+        if(parseInt(memoOrNoteState) > 0 ){
+            await loadWordVars(addresseeState, memoOrNoteState, form)
+            fetchNumbers()
+            setForm(initialState);
+        }else{
+            Swal.fire(
+                "Debe seleccionar",
+                "Es memo o nota?",
+                "question"
+            )
+        }
     }
 
     return (

@@ -1,14 +1,14 @@
 //@ts-check
 import moment from 'moment';
 import { globals } from '../../../../globals';
-import { isMemo } from '../../../utils';
+import { addZeroToLeft, isMemo } from '../../../utils';
 import 'moment/locale/es-us';
 import Swal from 'sweetalert2';
 moment.locale("es")
 
 const loadWordVars = async (addresseeState, memoOrNoteState, form) => {
 
-    Word.run(async (context) => {
+    await Word.run(async (context) => {
         /**
          * Obtener variables dinámicas
          */
@@ -59,11 +59,10 @@ const loadWordVars = async (addresseeState, memoOrNoteState, form) => {
         await context.sync();
         const response = await fetchData(addresseeState, memoOrNoteState, form);
         if (response) {
-
             /**
              * insertar texto variables dinámicas
              */
-            numMemoOrNoteControl.items[0].insertText(response.id.toString(), "Replace");
+            numMemoOrNoteControl.items[0]?.insertText(addZeroToLeft(response.id.toString()), "Replace");
             yearControl.items[0]?.insertText(moment().year().toString(), "Replace");
             dateControl.items[0]?.insertText(moment().format('LL').toString(), "Replace");
 
