@@ -1,5 +1,8 @@
 USE [memos&notas]
 GO
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[number_memo_notes]') AND type in (N'U'))
+DROP TABLE [dbo].[number_memo_notes]
+GO
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[memo]') AND type in (N'U'))
 DROP TABLE [dbo].[memo]
 GO
@@ -124,10 +127,24 @@ CREATE TABLE [dbo].[memo](
 	[asunto] [nvarchar](50) NOT NULL,
 	[solicitado_por] [nvarchar](50) NOT NULL,
 	[dirigido_a] [nvarchar](50) NOT NULL,
-	[last] [tinyint] NOT NULL
+	[last] [tinyint] NOT NULL,
+	[number] [tinyint] NOT NULL,
+	[date] [nvarchar](50) NULL
 ) ON [PRIMARY]
 GO
 ALTER TABLE [dbo].[memo] SET (LOCK_ESCALATION = AUTO)
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[number_memo_notes](
+	[id] [tinyint] IDENTITY(1,1) NOT NULL,
+	[memorandum] [tinyint] NOT NULL,
+	[notes] [tinyint] NOT NULL
+) ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[number_memo_notes] SET (LOCK_ESCALATION = AUTO)
 GO
 USE [master]
 GO
