@@ -9,6 +9,7 @@ moment.locale("es")
 const loadWordVars = async (addresseeState, memoOrNoteState, form) => {
     try {
         await Word.run(async (context) => {
+            console.log(Office.context);
             /**
              * Obtener variables dinámicas
              */
@@ -94,7 +95,7 @@ const loadWordVars = async (addresseeState, memoOrNoteState, form) => {
                 );
             }
         })
-    } catch(e) {
+    } catch (e) {
         Swal.fire(
             "Hecho",
             "No se puede editar el documento, revise si el documento actual no tiene controles bloqueados.",

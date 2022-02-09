@@ -11,28 +11,29 @@ export const SelectMemoOrNotes = ({ setMemoOrNoteState }) => {
         if (response.ok) {
             const result = await response.json();
             if (result) {
-                try {
-                    Word.run(function (context) {
 
-                        const body = context.document.body;
-                        body.clear();
-                        body.insertOoxml(result.doc.toString(), Word.InsertLocation.start);
 
-                        return context.sync().then(function () {
-                            Swal.fire(
-                                "Hecho",
-                                "Documento cargado satisfactoriamente",
-                                "success"
-                            )
-                        });
-                    })
-                } catch (error) {
-                    Swal.fire(
-                        "Hecho",
-                        "No se puede cargar documento, revise si el documento actual no tiene controles bloqueados.",
-                        "error"
-                    )
-                }
+                Word.run(function (context) {
+
+                    const body = context.document.body;
+                    body.clear();
+                    body.insertOoxml(result.doc.toString(), Word.InsertLocation.start);
+
+                    return context.sync().then(function () {
+                        Swal.fire(
+                            "Hecho",
+                            "Documento cargado satisfactoriamente",
+                            "success"
+                        )
+                    }).catch((error) => {
+                        Swal.fire(
+                            "Hecho",
+                            "No se puede cargar documento, revise si el documento actual no tiene controles bloqueados.",
+                            "error"
+                        )
+
+                    });
+                })
             } else {
                 Swal.fire(
                     "Oops!!!",

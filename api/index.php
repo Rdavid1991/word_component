@@ -79,12 +79,12 @@ class HandlerActionsMemo extends ManagementDB
 
             $result = parent::select_query($sql);
             echo json_encode($result);
-        }else{
+        } else {
             if (intval($_GET["type"]) === 2) {
                 $sql = "SELECT *
                   FROM [dbo].[note] 
                   WHERE [state] = 1 AND [number] = " . $_GET["info"];
-    
+
                 $result = parent::select_query($sql);
                 echo json_encode($result);
             }
@@ -130,7 +130,7 @@ class HandlerActionsMemo extends ManagementDB
             }
 
             echo json_encode((object) ["id" => $count_number->memorandum]);
-        }else if (intval($_GET["type"]) === 2) {
+        } else if (intval($_GET["type"]) === 2) {
             $sql = "UPDATE [dbo].[note]
             SET [state] = 0
             WHERE [state] = 1";
@@ -267,6 +267,49 @@ class HandlerActionsMemo extends ManagementDB
             echo  json_encode($msj);
         }
     }
+    public function edit_addressee()
+    {
+        if (isset($_POST["name"]) && isset($_POST["jobTitle"]) && isset($_POST["archetype"]) && isset($_POST["department"])) {
+
+            $sql = "UPDATE [dbo].[addressee]
+            SET [name] = ?
+               ,[jobTitle] = ?
+               ,[archetype] = ?
+               ,[department] = ?
+            WHERE [id]=?";
+
+            $result = parent::insert_query($sql, [
+                $_POST["name"],
+                $_POST["jobTitle"],
+                $_POST["archetype"],
+                $_POST["department"],
+                $_POST["id"]
+            ]);
+
+            if ($result) {
+                $msj = (object) array(
+                    "title" => "Hecho",
+                    "text" => "Los datos se han guardado correctamente",
+                    "icon" => "success"
+                );
+                echo  json_encode($msj);
+            } else {
+                $msj = (object) array(
+                    "title" => "Oops!!!",
+                    "text" => "A ocurrido un error.",
+                    "icon" => "error"
+                );
+                echo  json_encode($msj);
+            }
+        } else {
+            $msj = (object) array(
+                "title" => "Algo salio mal",
+                "text" => "no se puede guardar los datos, hacen falta parámetros",
+                "icon" => 'warning'
+            );
+            echo  json_encode($msj);
+        }
+    }
 
     public function get_addressee()
     {
@@ -275,7 +318,31 @@ class HandlerActionsMemo extends ManagementDB
 
         $result = parent::select_query($sql);
 
+
         echo json_encode($result);
+    }
+
+    public function delete_addressee()
+    {
+        $sql = "DELETE FROM [dbo].[addressee] WHERE [id]=?";
+
+        $result = parent::insert_query($sql, [$_POST["id"]]);
+
+        if ($result) {
+            $msj = (object) array(
+                "title" => "Hecho",
+                "text" => "Los datos se han borrado correctamente",
+                "icon" => "success"
+            );
+            echo  json_encode($msj);
+        } else {
+            $msj = (object) array(
+                "title" => "Oops!!!",
+                "text" => "A ocurrido un error.",
+                "icon" => "error"
+            );
+            echo  json_encode($msj);
+        }
     }
 
     public function reject_info()
@@ -389,8 +456,14 @@ switch ($_GET["action"]) {
     case "save_addressee":
         $handler->set_addressee();
         break;
+    case "edit_addressee":
+        $handler->edit_addressee();
+        break;
     case "get_addressee":
         $handler->get_addressee();
+        break;
+    case "delete_addressee":
+        $handler->delete_addressee();
         break;
     case "set_number":
         $handler->find();

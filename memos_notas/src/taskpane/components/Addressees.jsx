@@ -3,6 +3,7 @@ import Swal from 'sweetalert2';
 import { globals } from "../../globals"
 
 const initialState = {
+    id: "",
     name: "",
     jobTitle: "",
     archetype: "",
@@ -23,8 +24,8 @@ export const Addressees = ({ addresseeState, fetchAddresses }) => {
 
     const handleSaveAddressees = async (e) => {
         e.preventDefault();
-        const result = await saveAddressees()
-        Swal.fire(result).then(async () => {
+        const json = await saveAddressees()
+        Swal.fire(json).then(async () => {
             setForm(initialState)
             fetchAddresses()
         });
@@ -33,6 +34,7 @@ export const Addressees = ({ addresseeState, fetchAddresses }) => {
     const saveAddressees = async (docXml, type) => {
 
         const formdata = new FormData()
+        formdata.append("id", form.id)
         formdata.append("name", form.name)
         formdata.append("jobTitle", form.jobTitle)
         formdata.append("archetype", form.archetype)
@@ -42,7 +44,7 @@ export const Addressees = ({ addresseeState, fetchAddresses }) => {
             body: formdata
         };
 
-        let response = await fetch(`${globals.apiUrl}?action=save_addressee`, requestOptions)
+        let response = await fetch(`${globals.apiUrl}?action=${form.edit ? "edit" : "save"}_addressee`, requestOptions)
         if (response.ok) {
             return await response.json();
         }
@@ -51,6 +53,7 @@ export const Addressees = ({ addresseeState, fetchAddresses }) => {
 
     const handlerEdit = (index) => {
         setForm({
+            id: addresseeState[index].id,
             name: addresseeState[index].name,
             jobTitle: addresseeState[index].jobTitle,
             archetype: addresseeState[index].archetype,
@@ -58,6 +61,41 @@ export const Addressees = ({ addresseeState, fetchAddresses }) => {
             edit: true
         })
         scrollTo(0, 0)
+    }
+
+    const handlerDelete = (index) => {
+        Swal.fire({
+            title: 'Esta seguro(a)?',
+            text: `Desea borrar a <span class="fw-bold">${addresseeState[index].name}</span>`,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Si, hacerlo'
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                 const formData = new FormData();
+                formData.append("id", addresseeState[index].id)
+
+                var requestOptions = {
+                    method: 'POST',
+                    body: formData
+                };
+
+                let response = await fetch(`${globals.apiUrl}?action=delete_addressee`, requestOptions)
+                if (response.ok) {
+                    const json = await response.json();
+                    if (json) {
+                        Swal.fire(json).then(() => {
+                            fetchAddresses()
+                        })
+                    }
+                }
+
+            }
+        }).catch((error) => {
+            console.log(error);
+        })
     }
 
     return (
@@ -185,7 +223,7 @@ export const Addressees = ({ addresseeState, fetchAddresses }) => {
                                             <p className="fw-bold m-0 text-muted">Cargo: <span className="fw-light">{item.jobTitle}</span></p>
                                             <p className="fw-bold m-0 text-muted">Departamento: <span className="fw-light">{item.department}</span></p>
                                             <button className="btn btn-sm btn-secondary m-1" onClick={() => handlerEdit(index)}><i className="far fa-edit"></i></button>
-                                            <button className="btn btn-sm btn-secondary m-1"><i className="fas fa-trash-alt"></i></button>
+                                            <button className="btn btn-sm btn-secondary m-1" onClick={() => handlerDelete(index)}><i className="fas fa-trash-alt"></i></button>
                                         </div>
                                     </div>
 
@@ -199,7 +237,7 @@ export const Addressees = ({ addresseeState, fetchAddresses }) => {
                                             <p className="fw-bold m-0 text-muted">Cargo: <span className="fw-light">{item.jobTitle}</span></p>
                                             <p className="fw-bold m-0 text-muted">Departamento: <span className="fw-light">{item.department}</span></p>
                                             <button className="btn btn-sm btn-secondary m-1" onClick={() => handlerEdit(index)}><i className="far fa-edit"></i></button>
-                                            <button className="btn btn-sm btn-secondary m-1"><i className="fas fa-trash-alt"></i></button>
+                                            <button className="btn btn-sm btn-secondary m-1" onClick={() => handlerDelete(index)}><i className="fas fa-trash-alt"></i></button>
                                         </div>
                                     </div>
                                 )
