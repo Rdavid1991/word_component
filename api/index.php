@@ -79,6 +79,15 @@ class HandlerActionsMemo extends ManagementDB
 
             $result = parent::select_query($sql);
             echo json_encode($result);
+        }else{
+            if (intval($_GET["type"]) === 2) {
+                $sql = "SELECT *
+                  FROM [dbo].[note] 
+                  WHERE [state] = 1 AND [number] = " . $_GET["info"];
+    
+                $result = parent::select_query($sql);
+                echo json_encode($result);
+            }
         }
     }
 

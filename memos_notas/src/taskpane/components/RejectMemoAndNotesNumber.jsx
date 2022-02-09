@@ -51,25 +51,35 @@ export const RejectMemoAndNotesNumber = ({ memoOrNoteState, fetchNumbers }) => {
         }
     }
 
-    const handleRejectInfo = async (e) => {
+    const handleRejectInfo = (e) => {
         e.preventDefault();
 
+        Swal.fire({
+            title: 'Esta seguro(a)?',
+            text: `Va a rechazar ${memoOrNoteState === 1 ? "un memo" : "una nota"} este cambio no se puede revertir`,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Si, hacerlo'
+        }).then(async(result) => {
+            if (result.isConfirmed) {
 
+                let response = await fetch(`${globals.apiUrl}?action=reject_info&info=${searchNumber}&type=${memoOrNoteState}`, {})
+                if (response.ok) {
+                    const result = await response.json();
+                    if (result) {
+                        Swal.fire(result).then(() => {
+                            setSearchNumber("")
+                            setRejectInfo(initialState)
+                        }).then((params) => {
+                            fetchNumbers();
+                        })
+                    }
+                }
 
-        let response = await fetch(`${globals.apiUrl}?action=reject_info&info=${searchNumber}&type=${memoOrNoteState}`, {})
-        if (response.ok) {
-            const result = await response.json();
-            if (result) {
-                Swal.fire(result).then(() => {
-                    setSearchNumber("")
-                    setRejectInfo(initialState)
-                }).then((params) => {
-                    fetchNumbers();
-                })
             }
-        }
-
-
+        })
     }
 
     return (
