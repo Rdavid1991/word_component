@@ -3,11 +3,12 @@ import PropTypes from 'prop-types';
 import Swal from 'sweetalert2';
 
 import { loadWordVars } from './functions';
+import { localStorageKeyUser } from '../../utils';
 
 const initialState = {
     to: "",
     subject: "",
-    from: ""
+    from: JSON.parse(localStorage.getItem(localStorageKeyUser)).user
 }
 
 export const MemoAndNotesForm = ({ addresseeState, memoOrNoteState, fetchNumbers}) => {
@@ -112,6 +113,7 @@ export const MemoAndNotesForm = ({ addresseeState, memoOrNoteState, fetchNumbers
                             required={true}
                             onChange={handleInputChange}
                             value={form.from}
+                            disabled
                         />
                     </div>
                 </div>

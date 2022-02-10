@@ -1,5 +1,8 @@
 //@ts-check
 
+
+const localStorageKeyUser = "infoUser"
+
 /**
  * 
  * @param {String} memo 
@@ -37,5 +40,6 @@ const addZeroToLeft = (digit) => {
 export {
     isMemo,
     isNote,
-    addZeroToLeft
+    addZeroToLeft,
+    localStorageKeyUser
 }
