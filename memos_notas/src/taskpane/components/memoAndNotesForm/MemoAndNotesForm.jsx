@@ -8,10 +8,10 @@ import { localStorageKeyUser } from '../../utils';
 const initialState = {
     to: "",
     subject: "",
-    from: JSON.parse(localStorage.getItem(localStorageKeyUser)).user
+    from: ""
 }
 
-export const MemoAndNotesForm = ({ addresseeState, memoOrNoteState, fetchNumbers}) => {
+export const MemoAndNotesForm = ({ addresseeState, memoOrNoteState, fetchNumbers }) => {
 
     /**
      * addresseeState structure
@@ -35,7 +35,14 @@ export const MemoAndNotesForm = ({ addresseeState, memoOrNoteState, fetchNumbers
             setButtonDisabled(true)
         }
 
-    }, [form]);
+        setForm({
+            ...form,
+            from: localStorage.hasOwnProperty(localStorageKeyUser)
+                ? JSON.parse(localStorage.getItem(localStorageKeyUser)).user
+                : ""
+        })
+
+    }, [form,addresseeState]);
 
 
     const handleInputChange = ({ target }) => {
@@ -47,11 +54,11 @@ export const MemoAndNotesForm = ({ addresseeState, memoOrNoteState, fetchNumbers
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if(parseInt(memoOrNoteState) > 0 ){
+        if (parseInt(memoOrNoteState) > 0) {
             await loadWordVars(addresseeState, memoOrNoteState, form)
             fetchNumbers()
             setForm(initialState);
-        }else{
+        } else {
             Swal.fire(
                 "Debe seleccionar",
                 "Es memo o nota?",
