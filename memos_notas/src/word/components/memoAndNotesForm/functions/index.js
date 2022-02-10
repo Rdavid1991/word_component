@@ -1,15 +1,14 @@
 //@ts-check
 import moment from 'moment';
 import { globals } from '../../../../globals';
-import { addZeroToLeft, isMemo } from '../../../utils';
+import { addZeroToLeft, getLocalStorageUserEmail, getLocalStorageUserInitials, isMemo } from '../../../utils';
 import 'moment/locale/es-us';
 import Swal from 'sweetalert2';
-moment.locale("es")
+moment.locale("es-mx")
 
 const loadWordVars = async (addresseeState, memoOrNoteState, form) => {
     try {
         await Word.run(async (context) => {
-            console.log(Office.context);
             /**
              * Obtener variables dinámicas
              */
@@ -34,13 +33,16 @@ const loadWordVars = async (addresseeState, memoOrNoteState, form) => {
             const addresseeJobTitleControl = context.document.body.contentControls.getByTag("addressee_job_title");
             const addresseeArchetypeControl = context.document.body.contentControls.getByTag("addressee_archetype");
             const addresseeDepartmentControl = context.document.body.contentControls.getByTag("addressee_department");
+            const initialsControl = context.document.body.contentControls.getByTag("initials");
 
+        
             /**
              * Cargar variables dinamicas
              */
             context.load(numMemoOrNoteControl)
             context.load(yearControl)
             context.load(dateControl)
+            context.load(initialsControl)
 
             /**
              * Cargar variables de memo o notas
@@ -66,6 +68,9 @@ const loadWordVars = async (addresseeState, memoOrNoteState, form) => {
                 numMemoOrNoteControl.items[0]?.insertText(addZeroToLeft(response.id.toString()), "Replace");
                 yearControl.items[0]?.insertText(moment().year().toString(), "Replace");
                 dateControl.items[0]?.insertText(moment().format('LL').toString(), "Replace");
+                initialsControl.items[0]?.insertText(getLocalStorageUserInitials(), "Replace");
+
+                console.log("control",initialsControl.items.length)
 
                 /**
                  * insertar texto variables memos o notas
@@ -98,7 +103,7 @@ const loadWordVars = async (addresseeState, memoOrNoteState, form) => {
     } catch (e) {
         Swal.fire(
             "Hecho",
-            "No se puede editar el documento, revise si el documento actual no tiene controles bloqueados.",
+            "No se puede editar el documento, revise si el documento actual no tiene controles bloqueados." + e,
             "error"
         )
     }
@@ -114,7 +119,8 @@ const fetchData = async (addresseeState, memoOrNoteState, form) => {
     const formdata = new FormData()
     formdata.append("dirigido", addresseeState[form.to].department)
     formdata.append("asunto", form.subject)
-    formdata.append("solicitado", form.from)
+    formdata.append("solicitado", getLocalStorageUserEmail())
+    formdata.append("date", moment().format('L'))
     var requestOptions = {
         method: 'POST',
         body: formdata

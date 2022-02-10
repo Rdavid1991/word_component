@@ -3,12 +3,12 @@ import PropTypes from 'prop-types';
 import Swal from 'sweetalert2';
 
 import { loadWordVars } from './functions';
-import { localStorageKeyUser } from '../../utils';
+import { getLocalStorageUserName } from '../../utils';
 
 const initialState = {
     to: "",
     subject: "",
-    from: ""
+    from: getLocalStorageUserName()
 }
 
 export const MemoAndNotesForm = ({ addresseeState, memoOrNoteState, fetchNumbers }) => {
@@ -35,14 +35,15 @@ export const MemoAndNotesForm = ({ addresseeState, memoOrNoteState, fetchNumbers
             setButtonDisabled(true)
         }
 
+    }, [form]);
+
+    useEffect(() => {
         setForm({
             ...form,
-            from: localStorage.hasOwnProperty(localStorageKeyUser)
-                ? JSON.parse(localStorage.getItem(localStorageKeyUser)).user
-                : ""
+            from: getLocalStorageUserName()
         })
+    }, [addresseeState])
 
-    }, [form,addresseeState]);
 
 
     const handleInputChange = ({ target }) => {
@@ -82,7 +83,7 @@ export const MemoAndNotesForm = ({ addresseeState, memoOrNoteState, fetchNumbers
                             required={true}
                             onChange={handleInputChange}
                         >
-                            <option value="">Seleccione un destinatario</option>
+                            <option disabled value="">Seleccione un destinatario</option>
                             {
                                 addresseeState.map((item, index) => (
                                     <option key={index} value={index}>{item.department}</option>

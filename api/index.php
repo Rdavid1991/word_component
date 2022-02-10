@@ -107,12 +107,14 @@ class HandlerActionsMemo extends ManagementDB
             $dirigido = $_POST["dirigido"];
             $asunto = $_POST["asunto"];
             $solicitado = $_POST["solicitado"];
+            $date = $_POST["date"];
 
             $sql = "INSERT INTO [dbo].[memo]
            ([asunto]
            ,[solicitado_por]
            ,[dirigido_a]
            ,[number]
+           ,[date]
            ,[state])
             VALUES
            (
@@ -120,10 +122,11 @@ class HandlerActionsMemo extends ManagementDB
                ?,
                ?,
                ?,
+               ?,
                ?
                )";
 
-            $result = parent::insert_query($sql, [$asunto, $solicitado, $dirigido,   $count_number->memorandum, 1]);
+            $result = parent::insert_query($sql, [$asunto, $solicitado, $dirigido,   $count_number->memorandum, $date, 1]);
 
             if ($result) {
                 $this->save_count_numbers(($count_number->memorandum + 1), $count_number->notes);
@@ -140,12 +143,14 @@ class HandlerActionsMemo extends ManagementDB
             $dirigido = $_POST["dirigido"];
             $asunto = $_POST["asunto"];
             $solicitado = $_POST["solicitado"];
+            $date = $_POST["date"];
 
             $sql = "INSERT INTO [dbo].[note]
            ([asunto]
            ,[solicitado_por]
            ,[dirigido_a]
            ,[number]
+           ,[date]
            ,[state])
             VALUES
            (
@@ -153,10 +158,11 @@ class HandlerActionsMemo extends ManagementDB
                ?,
                ?,
                ?,
+               ?,
                ?
                )";
 
-            $result = parent::insert_query($sql, [$asunto, $solicitado, $dirigido,   $count_number->notes, 1]);
+            $result = parent::insert_query($sql, [$asunto, $solicitado, $dirigido,   $count_number->notes, $date, 1]);
 
             if ($result) {
                 $this->save_count_numbers(($count_number->memorandum), $count_number->notes + 1);

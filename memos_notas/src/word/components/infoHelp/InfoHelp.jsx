@@ -1,6 +1,7 @@
 import React from 'react';
 import Swal from 'sweetalert2';
 import PropTypes from 'prop-types';
+import { Icon } from '@fluentui/react';
 
 export const InfoHelp = ({ numberState, setNumberState, saveNumber }) => {
 
@@ -13,8 +14,20 @@ export const InfoHelp = ({ numberState, setNumberState, saveNumber }) => {
 
     const handleSaveNumber = async (e) => {
         e.preventDefault();
-        const saveNumberResult = await saveNumber(numberState);
-        Swal.fire(saveNumberResult)
+        const { isConfirmed } = await Swal.fire({
+            title: "Cuidado",
+            text: "va a cambiar el numero inicial de los memos o notas, verifique que sea el numero correcto antes de continuar",
+            icon: "question",
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Continuar'
+        })
+
+        if (isConfirmed) {
+            const saveNumberResult = await saveNumber(numberState);
+            await Swal.fire(saveNumberResult)
+        }
     }
 
     return (
@@ -79,6 +92,10 @@ export const InfoHelp = ({ numberState, setNumberState, saveNumber }) => {
                     <tr>
                         <td className="fw-bold">Solicitado por</td>
                         <td>request</td>
+                    </tr>
+                    <tr>
+                        <td className="fw-bold">Iniciales</td>
+                        <td>initials</td>
                     </tr>
                     <tr>
                         <td className="fw-bold">Año</td>

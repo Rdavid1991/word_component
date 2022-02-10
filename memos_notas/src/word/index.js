@@ -1,4 +1,5 @@
-import { App } from "./components/app/App.jsx";
+
+import { Home } from "./components/home/Home.jsx";
 import { AppContainer } from "react-hot-loader";
 import { initializeIcons } from "@fluentui/font-icons-mdl2";
 import * as React from "react";
@@ -25,12 +26,12 @@ const render = (Component) => {
 /* Render application after Office initializes */
 Office.onReady(() => {
   isOfficeInitialized = true;
-  render(App);
+  render(Home);
 });
 
 
 /* Initial render showing a progress bar */
-render(App);
+render(Home);
 
 // if (module.hot) {
 //   module.hot.accept("./components/App", () => {

@@ -1,6 +1,5 @@
 
 import React, { useEffect, useState } from 'react';
-import { renderToString } from "react-dom/server"
 import { globals } from '../../../globals.js';
 import { MemoAndNotesForm } from '../memoAndNotesForm/MemoAndNotesForm.jsx';
 import { Addressees } from '../Addressees.jsx';
@@ -9,14 +8,17 @@ import { SaveDoc } from '../SaveDoc.jsx';
 import { SelectMemoOrNotes } from '../SelectMemoOrNotes.jsx';
 import { InfoHelp } from '../infoHelp/InfoHelp.jsx';
 import { getNumber, saveNumber } from './functions/index.js';
-import Swal from 'sweetalert2';
-import { localStorageKeyUser } from '../../utils/index.js';
+import { HomeInsertUser } from './functions/HomeInsertUser.js';
+import { ErrorAlert } from '../../utils/ErrorAlert.js';
+
+
 
 const initialNumber = {
 	note: 1,
 	memo: 1
 }
-export const App = () => {
+
+export const Home = () => {
 
 	const [addresseeState, setStateAddressee] = useState([]);
 	const [memoOrNoteState, setMemoOrNoteState] = useState(0);
@@ -25,63 +27,9 @@ export const App = () => {
 	useEffect(() => {
 
 		(async () => {
+			await HomeInsertUser(fetchAddresses, fetchNumbers);
+		})()
 
-			let user = "";
-			let email = "";
-
-			if (localStorage.hasOwnProperty(localStorageKeyUser)) {
-				fetchAddresses();
-				fetchNumbers()
-			} else {
-				const alertHtml = () => {
-
-					return (
-						<>
-							<p>Para continuar ingrese la información solicitada</p>
-							<div className="mb-3 px-3">
-								<label for="swal-input1" className="form-label fw-bold">Nombre</label>
-								<input type="text" value={user} id="swal-input1" className="form-control form-control-sm" />
-							</div>
-							<div className="mb-3 px-3">
-								<label for="swal-input1" className="form-label fw-bold">Correo</label>
-								<input type="text" value={email} id="swal-input2" className="form-control form-control-sm" />
-							</div>
-						</>
-					)
-				}
-
-				while (true) {
-					const { value } = await Swal.fire({
-						title: 'Ingrese su información',
-						allowOutsideClick: false,
-						html: renderToString(alertHtml()),
-						focusConfirm: false,
-						preConfirm: () => {
-							return {
-								user: document.getElementById('swal-input1').value,
-								email: document.getElementById('swal-input2').value
-							}
-						}
-					})
-
-					user = value.user.toString();
-					email = value.email.toString();
-
-					if (value.user.toString().length > 0 && value.email.toString().length > 0 && new RegExp("@mides.gob.pa", "g").test(value.email.toString())) {
-						localStorage.setItem(localStorageKeyUser, JSON.stringify(value))
-						fetchAddresses();
-						fetchNumbers()
-						break;
-					} else {
-						await Swal.fire("Complete la información")
-					}
-				}
-
-			}
-
-		})().catch((err) => {
-			console.log(err);
-		})
 	}, []);
 
 	const fetchNumbers = async () => {

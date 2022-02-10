@@ -37,9 +37,31 @@ const addZeroToLeft = (digit) => {
     }
 };
 
+/**
+ * @returns {string}
+ */
+const getLocalStorageUserName = () => localStorage.hasOwnProperty(localStorageKeyUser)
+    ? JSON.parse(localStorage.getItem(localStorageKeyUser)).user
+    : ""
+
+const getLocalStorageUserEmail = () => localStorage.hasOwnProperty(localStorageKeyUser)
+    ? JSON.parse(localStorage.getItem(localStorageKeyUser)).email
+    : ""
+
+/**
+ * 
+ * @returns {string}
+ */
+const getLocalStorageUserInitials = () => localStorage.hasOwnProperty(localStorageKeyUser)
+    ? JSON.parse(localStorage.getItem(localStorageKeyUser)).initials
+    : ""
+
 export {
     isMemo,
     isNote,
     addZeroToLeft,
+    getLocalStorageUserName,
+    getLocalStorageUserEmail,
+    getLocalStorageUserInitials,
     localStorageKeyUser
 }

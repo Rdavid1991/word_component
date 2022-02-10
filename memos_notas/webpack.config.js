@@ -21,7 +21,7 @@ module.exports = async (env, options) => {
     entry: {
       polyfill: ["core-js/stable", "regenerator-runtime/runtime"],
       vendor: ["react", "react-dom", "core-js", "@fluentui/react"],
-      taskpane: ["react-hot-loader/patch", "./src/taskpane/index.js"],
+      taskpane: ["react-hot-loader/patch", "./src/word/index.js"],
       commands: "./src/commands/commands.js",
     },
     output: {
@@ -68,7 +68,7 @@ module.exports = async (env, options) => {
             to: "assets/[name][ext][query]",
           },
           {
-            from: "src/taskpane/webfonts/*",
+            from: "src/word/webfonts/*",
             to: "../webfonts/[name][ext][query]"
           },
           {
@@ -86,7 +86,7 @@ module.exports = async (env, options) => {
       }),
       new HtmlWebpackPlugin({
         filename: "taskpane.html",
-        template: "./src/taskpane/taskpane.html",
+        template: "./src/word/taskpane.html",
         chunks: ["taskpane", "vendor", "polyfill"],
       }),
       new HtmlWebpackPlugin({
