@@ -1,15 +1,18 @@
+//@ts-check
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import Swal from 'sweetalert2';
 
 import { loadWordVars } from './functions';
 import { getLocalStorageUserName } from '../../utils';
+import { useForm } from '../../hooks/useForm';
 
 const initialState = {
     to: "",
     subject: "",
     from: getLocalStorageUserName()
 }
+
 
 export const MemoAndNotesForm = ({ addresseeState, memoOrNoteState, fetchNumbers }) => {
 
@@ -24,8 +27,7 @@ export const MemoAndNotesForm = ({ addresseeState, memoOrNoteState, fetchNumbers
      *  }
      */
 
-    const [form, setForm] = useState(initialState);
-
+    const [form, setForm, handleInputChange, reset] = useForm(initialState)
     const [buttonDisabled, setButtonDisabled] = useState(true);
 
     useEffect(() => {
@@ -44,21 +46,12 @@ export const MemoAndNotesForm = ({ addresseeState, memoOrNoteState, fetchNumbers
         })
     }, [addresseeState])
 
-
-
-    const handleInputChange = ({ target }) => {
-        setForm({
-            ...form,
-            [target.id]: target.value
-        })
-    }
-
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (parseInt(memoOrNoteState) > 0) {
             await loadWordVars(addresseeState, memoOrNoteState, form)
             fetchNumbers()
-            setForm(initialState);
+            reset();
         } else {
             Swal.fire(
                 "Debe seleccionar",

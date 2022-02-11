@@ -8,9 +8,9 @@ import { ControlsVariables } from '../../../utils/controlsVariables';
 moment.locale("es-mx")
 
 /**
- * 
+ * Obtener controles del documento y agruparlos por sección: encabezado, cuerpo, pie de pagina
  * @param {Word.RequestContext} context 
- * @returns {object}
+ * @returns {object} Retornar JSOn con nombre de la etiqueta como llave. Ejemplo: [tag] :{body: [control], footer:[control],header:[control]}
  */
 const getControlsByTag = (context) => {
 
@@ -50,8 +50,8 @@ const loadControls = (context, controls) => {
     return controls;
 }
 
-
 /**
+ * Insertar texto en el control
  * @param {Object} control
  * @param {Word.ContentControlCollection} control.body 
  * @param {Word.ContentControlCollection} control.header 
@@ -64,6 +64,19 @@ const insertTextControl = (control, text) => {
     control.footer.items[0]?.insertText(text, "Replace")
 }
 
+/**
+ * Cargar documento 
+ * @param {Object[]} addresseeState 
+ * @param {string} addresseeState[].name
+ * @param {string} addresseeState[].jobTitle
+ * @param {string} addresseeState[].archetype
+ * @param {string} addresseeState[].department
+ * @param {number} memoOrNoteState 
+ * @param {Object} form 
+ * @param {string} form.from - Remitente de memo o nota
+ * @param {string} form.subject - Asunto de memo o nota
+ * @param {string} form.to - Posición en el array addresseeState
+ */
 const loadWordVars = async (addresseeState, memoOrNoteState, form) => {
     try {
         await Word.run(async (context) => {
@@ -117,23 +130,7 @@ const loadWordVars = async (addresseeState, memoOrNoteState, form) => {
                         default:
                             break;
                     }
-
                 })
-
-
-                // /**
-                //  * insertar texto variables memos o notas
-                //  */
-                // subjectControl.items[0]?.insertText(form.subject, "Replace");
-                // requestControl.items[0]?.insertText(form.from, "Replace");
-
-                // /**
-                //  * insertar texto variables destinatario
-                //  */
-                // addresseeNameControl.items[0]?.insertText(addresseeState[form.to].name, "Replace");
-                // addresseeJobTitleControl.items[0]?.insertText(addresseeState[form.to].jobTitle, "Replace");
-                // addresseeArchetypeControl.items[0]?.insertText(addresseeState[form.to].archetype, "Replace");
-                // addresseeDepartmentControl.items[0]?.insertText(addresseeState[form.to].department, "Replace");
 
                 Swal.fire(
                     'Hecho',
@@ -158,6 +155,13 @@ const loadWordVars = async (addresseeState, memoOrNoteState, form) => {
     }
 };
 
+/**
+ * 
+ * @param {Array} addresseeState 
+ * @param {number} memoOrNoteState 
+ * @param {Object} form 
+ * @returns 
+ */
 const fetchData = async (addresseeState, memoOrNoteState, form) => {
 
     /**
@@ -165,14 +169,14 @@ const fetchData = async (addresseeState, memoOrNoteState, form) => {
      * 2 = note
      */
 
-    const formdata = new FormData()
-    formdata.append("dirigido", addresseeState[form.to].department)
-    formdata.append("asunto", form.subject)
-    formdata.append("solicitado", getLocalStorageUserEmail())
-    formdata.append("date", moment().format('L'))
+    const formData = new FormData()
+    formData.append("dirigido", addresseeState[form.to].department)
+    formData.append("asunto", form.subject)
+    formData.append("solicitado", getLocalStorageUserEmail())
+    formData.append("date", moment().format('L'))
     var requestOptions = {
         method: 'POST',
-        body: formdata
+        body: formData
     };
 
     let response = await fetch(`${globals.apiUrl}?action=set_number&type=${memoOrNoteState}`, requestOptions)

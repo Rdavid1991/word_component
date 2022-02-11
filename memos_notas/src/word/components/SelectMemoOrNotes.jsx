@@ -1,11 +1,14 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Swal from 'sweetalert2';
 import { globals } from '../../globals';
+import { LoaderContext } from '../context/loaderContext';
 
 export const SelectMemoOrNotes = ({ setMemoOrNoteState }) => {
 
-    const insertDoc = async (memoOrNotes) => {
+    const setLoader = useContext(LoaderContext)
 
+    const insertDoc = async (memoOrNotes) => {
+        setLoader(true)
         const response = await fetch(`${globals.apiUrl}?action=get_type&type=${memoOrNotes}`, {})
 
         if (response.ok) {
@@ -22,27 +25,29 @@ export const SelectMemoOrNotes = ({ setMemoOrNoteState }) => {
                     body.clear();
                     header.clear();
                     footer.clear();
-                    
+
                     body.insertOoxml(JSON.parse(result.doc).body.toString(), Word.InsertLocation.start);
                     header.insertOoxml(JSON.parse(result.doc).header.toString(), Word.InsertLocation.start);
                     footer.insertOoxml(JSON.parse(result.doc).footer.toString(), Word.InsertLocation.start);
 
                     return context.sync().then(function () {
+                        setLoader(false)
                         Swal.fire(
                             "Hecho",
                             "Documento cargado satisfactoriamente",
                             "success"
                         )
                     }).catch((error) => {
+                        setLoader(false)
                         Swal.fire(
                             "Hecho",
                             "No se puede cargar documento, revise si el documento actual no tiene controles bloqueados.",
                             "error"
                         )
-
                     });
                 })
             } else {
+                setLoader(false)
                 Swal.fire(
                     "Oops!!!",
                     "Documento no encontrado o no existe",

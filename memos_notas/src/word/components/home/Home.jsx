@@ -9,9 +9,7 @@ import { SelectMemoOrNotes } from '../SelectMemoOrNotes.jsx';
 import { InfoHelp } from '../infoHelp/InfoHelp.jsx';
 import { getNumber, saveNumber } from './functions/index.js';
 import { HomeInsertUser } from './functions/HomeInsertUser.js';
-import { ErrorAlert } from '../../utils/ErrorAlert.js';
-
-
+import { LoaderContext } from '../../context/loaderContext.js';
 
 const initialNumber = {
 	note: 1,
@@ -23,6 +21,7 @@ export const Home = () => {
 	const [addresseeState, setStateAddressee] = useState([]);
 	const [memoOrNoteState, setMemoOrNoteState] = useState(0);
 	const [numberState, setNumberState] = useState(initialNumber);
+	const [loader, setLoader] = useState(false)
 
 	useEffect(() => {
 
@@ -61,9 +60,11 @@ export const Home = () => {
 		return false
 	}
 
-	return (
-		<>
 
+
+	return (
+		<LoaderContext.Provider value={setLoader}>
+			<div className={`loader loader-default ${loader ? "is-active" : ""} `}></div>
 			<nav>
 				<div className="nav nav-tabs" id="nav-tab" role="tablist">
 					<button className="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button">Inicio</button>
@@ -111,7 +112,7 @@ export const Home = () => {
 					/>
 				</div>
 			</div>
-		</>
+		</LoaderContext.Provider>
 	);
 
 };
