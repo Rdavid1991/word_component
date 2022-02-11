@@ -19,11 +19,13 @@ export const SaveDoc = () => {
                 Word.run((context) => {
 
                     const body = context.document.body
-                    const bodyHtml = body.getOoxml()
-                    return context.sync().then(async() => {
+                    const docBody = body.getOoxml()
+                    const docFooter = context.document.sections.getFirst().getFooter("Primary").getOoxml()
+                    const docHeader = context.document.sections.getFirst().getHeader("Primary").getOoxml()
+                    return context.sync().then(async () => {
 
-                        Swal.fire(await saveDoc(bodyHtml.value, saveMemoOrNotes))
-                        
+                        Swal.fire(await saveDoc(docBody.value, docFooter.value, docHeader.value, saveMemoOrNotes))
+
                     })
                 })
             }
@@ -31,10 +33,12 @@ export const SaveDoc = () => {
 
     };
 
-    const saveDoc = async (docXml, type) => {
+    const saveDoc = async (docBody, docFooter, docHeader, type) => {
 
         const formdata = new FormData()
-        formdata.append("document", docXml)
+        formdata.append("body", docBody)
+        formdata.append("footer", docFooter)
+        formdata.append("header", docHeader)
         formdata.append("type", type)
         var requestOptions = {
             method: 'POST',

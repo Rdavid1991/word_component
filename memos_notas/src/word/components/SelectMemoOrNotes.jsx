@@ -16,8 +16,16 @@ export const SelectMemoOrNotes = ({ setMemoOrNoteState }) => {
                 Word.run(function (context) {
 
                     const body = context.document.body;
+                    const header = context.document.sections.getFirst().getHeader("Primary");
+                    const footer = context.document.sections.getFirst().getFooter("Primary");
+
                     body.clear();
-                    body.insertOoxml(result.doc.toString(), Word.InsertLocation.start);
+                    header.clear();
+                    footer.clear();
+                    
+                    body.insertOoxml(JSON.parse(result.doc).body.toString(), Word.InsertLocation.start);
+                    header.insertOoxml(JSON.parse(result.doc).header.toString(), Word.InsertLocation.start);
+                    footer.insertOoxml(JSON.parse(result.doc).footer.toString(), Word.InsertLocation.start);
 
                     return context.sync().then(function () {
                         Swal.fire(

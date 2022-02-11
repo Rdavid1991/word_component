@@ -4,87 +4,136 @@ import { globals } from '../../../../globals';
 import { addZeroToLeft, getLocalStorageUserEmail, getLocalStorageUserInitials, isMemo } from '../../../utils';
 import 'moment/locale/es-us';
 import Swal from 'sweetalert2';
+import { ControlsVariables } from '../../../utils/controlsVariables';
 moment.locale("es-mx")
+
+/**
+ * 
+ * @param {Word.RequestContext} context 
+ * @returns {object}
+ */
+const getControlsByTag = (context) => {
+
+    let arrayControls = {}
+
+    Object.values(ControlsVariables).forEach((tag) => {
+
+        arrayControls = {
+            ...arrayControls,
+            [tag]: {
+                body: context.document.body.contentControls.getByTag(tag),
+                footer: context.document.sections.getFirst().getFooter("Primary").contentControls.getByTag(tag),
+                header: context.document.sections.getFirst().getHeader("Primary").contentControls.getByTag(tag)
+            }
+        }
+    });
+    return arrayControls;
+}
+
+/**
+ * @param {Word.RequestContext} context 
+ * @param {Object[]} controls
+ * @param {Word.ContentControl} controls[].body
+ * @param {Word.ContentControl} controls[].footer
+ * @param {Word.ContentControl} controls[].header
+ * @returns {object}
+ */
+const loadControls = (context, controls) => {
+
+    Object.values(ControlsVariables).forEach((tag) => {
+        context.load(controls[tag].body)
+        context.load(controls[tag].footer)
+        context.load(controls[tag].header)
+
+    });
+
+    return controls;
+}
+
+
+/**
+ * @param {Object} control
+ * @param {Word.ContentControlCollection} control.body 
+ * @param {Word.ContentControlCollection} control.header 
+ * @param {Word.ContentControlCollection} control.footer
+ * @param {string} text
+ */
+const insertTextControl = (control, text) => {
+    control.body.items[0]?.insertText(text, "Replace")
+    control.header.items[0]?.insertText(text, "Replace")
+    control.footer.items[0]?.insertText(text, "Replace")
+}
 
 const loadWordVars = async (addresseeState, memoOrNoteState, form) => {
     try {
         await Word.run(async (context) => {
-            /**
-             * Obtener variables dinámicas
-             */
-            const numMemoOrNoteControl = context.document.body.contentControls.getByTag(
-                isMemo(memoOrNoteState)
-                    ? "num_memo"
-                    : "num_note"
-            );
-            const yearControl = context.document.body.contentControls.getByTag("year");
-            const dateControl = context.document.body.contentControls.getByTag("date");
 
-            /**
-             * Obtener variables del memo o nota
-             */
-            const requestControl = context.document.body.contentControls.getByTag("request");
-            const subjectControl = context.document.body.contentControls.getByTag("subject");
-
-            /**
-             * Obtener variables de destinatario
-             */
-            const addresseeNameControl = context.document.body.contentControls.getByTag("addressee_name");
-            const addresseeJobTitleControl = context.document.body.contentControls.getByTag("addressee_job_title");
-            const addresseeArchetypeControl = context.document.body.contentControls.getByTag("addressee_archetype");
-            const addresseeDepartmentControl = context.document.body.contentControls.getByTag("addressee_department");
-            const initialsControl = context.document.body.contentControls.getByTag("initials");
-
-        
-            /**
-             * Cargar variables dinamicas
-             */
-            context.load(numMemoOrNoteControl)
-            context.load(yearControl)
-            context.load(dateControl)
-            context.load(initialsControl)
-
-            /**
-             * Cargar variables de memo o notas
-             */
-            context.load(requestControl)
-            context.load(subjectControl)
-
-            /**
-             * Cargar variables destinatario
-             */
-            context.load(addresseeNameControl)
-            context.load(addresseeJobTitleControl)
-            context.load(addresseeArchetypeControl)
-            context.load(addresseeDepartmentControl)
-
+            const controls = loadControls(context, getControlsByTag(context))
 
             await context.sync();
             const response = await fetchData(addresseeState, memoOrNoteState, form);
             if (response) {
-                /**
-                 * insertar texto variables dinámicas
-                 */
-                numMemoOrNoteControl.items[0]?.insertText(addZeroToLeft(response.id.toString()), "Replace");
-                yearControl.items[0]?.insertText(moment().year().toString(), "Replace");
-                dateControl.items[0]?.insertText(moment().format('LL').toString(), "Replace");
-                initialsControl.items[0]?.insertText(getLocalStorageUserInitials(), "Replace");
 
-                console.log("control",initialsControl.items.length)
+                Object.entries(controls).map((entry) => {
 
-                /**
-                 * insertar texto variables memos o notas
-                 */
-                subjectControl.items[0]?.insertText(form.subject, "Replace");
-                requestControl.items[0]?.insertText(form.from, "Replace");
+                    const [key, control] = entry
 
-                /**
-                 * insertar texto variables destinatario
-                 */
-                addresseeNameControl.items[0]?.insertText(addresseeState[form.to].name, "Replace");
-                addresseeJobTitleControl.items[0]?.insertText(addresseeState[form.to].jobTitle, "Replace");
-                addresseeArchetypeControl.items[0]?.insertText(addresseeState[form.to].archetype, "Replace");
-                addresseeDepartmentControl.items[0]?.insertText(addresseeState[form.to].department, "Replace");
+                    switch (key) {
+
+                        case ControlsVariables.num_memo:
+                            insertTextControl(control, addZeroToLeft(response.id.toString()))
+                            break;
+                        case ControlsVariables.num_note:
+                            insertTextControl(control, addZeroToLeft(response.id.toString()))
+                            break;
+                        case ControlsVariables.year:
+                            insertTextControl(control, moment().year().toString())
+                            break;
+                        case ControlsVariables.date:
+                            insertTextControl(control, moment().format('LL').toString())
+                            break;
+                        case ControlsVariables.request:
+                            insertTextControl(control, form.from)
+                            break;
+                        case ControlsVariables.subject:
+                            insertTextControl(control, form.subject)
+                            break;
+                        case ControlsVariables.addressee_name:
+                            insertTextControl(control, addresseeState[form.to].name)
+                            break;
+                        case ControlsVariables.addressee_job_title:
+                            insertTextControl(control, addresseeState[form.to].jobTitle)
+                            break;
+                        case ControlsVariables.addressee_archetype:
+                            insertTextControl(control, addresseeState[form.to].archetype)
+                            break;
+                        case ControlsVariables.addressee_department:
+                            insertTextControl(control, addresseeState[form.to].department)
+                            break;
+                        case ControlsVariables.initials:
+                            insertTextControl(control, getLocalStorageUserInitials())
+                            break;
+
+                        default:
+                            break;
+                    }
+
+                })
+
+
+                // /**
+                //  * insertar texto variables memos o notas
+                //  */
+                // subjectControl.items[0]?.insertText(form.subject, "Replace");
+                // requestControl.items[0]?.insertText(form.from, "Replace");
+
+                // /**
+                //  * insertar texto variables destinatario
+                //  */
+                // addresseeNameControl.items[0]?.insertText(addresseeState[form.to].name, "Replace");
+                // addresseeJobTitleControl.items[0]?.insertText(addresseeState[form.to].jobTitle, "Replace");
+                // addresseeArchetypeControl.items[0]?.insertText(addresseeState[form.to].archetype, "Replace");
+                // addresseeDepartmentControl.items[0]?.insertText(addresseeState[form.to].department, "Replace");
 
                 Swal.fire(
                     'Hecho',

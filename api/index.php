@@ -175,9 +175,13 @@ class HandlerActionsMemo extends ManagementDB
     public function save_document()
     {
 
-        if (isset($_POST["document"]) && isset($_POST["type"])) {
+        if (isset($_POST["type"])) {
             $type = $_POST["type"];
-            $document = $_POST["document"];
+            $document = json_encode((object) [
+                "body" => $_POST["body"],
+                "footer" => $_POST["footer"],
+                "header" => $_POST["header"]
+            ]);
 
             $sql = "SELECT * FROM [dbo].[document] where [id] =" . $type;
 
