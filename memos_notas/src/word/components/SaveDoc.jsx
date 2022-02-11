@@ -1,9 +1,14 @@
-import React, { useState, useEffect } from 'react';
+//@ts-check
+import React from 'react';
 import Swal from 'sweetalert2';
 import { globals } from '../../globals';
 
 export const SaveDoc = () => {
 
+    /**
+     * Preparar el documento y sus partes para guardarlo
+     * @param {number} saveMemoOrNotes - Numero de tipo de documento 1 = memo, 2 = nota
+     */
     const handleSaveDoc = (saveMemoOrNotes) => {
 
         Swal.fire({
@@ -33,13 +38,21 @@ export const SaveDoc = () => {
 
     };
 
+    /**
+     * Guardar documento
+     * @param {string} docBody - Cuerpo del documento
+     * @param {string} docFooter - Pie de pagina del documento
+     * @param {string} docHeader - Encabezado de documento
+     * @param {number} type 
+     * @returns 
+     */
     const saveDoc = async (docBody, docFooter, docHeader, type) => {
 
         const formdata = new FormData()
         formdata.append("body", docBody)
         formdata.append("footer", docFooter)
         formdata.append("header", docHeader)
-        formdata.append("type", type)
+        formdata.append("type", String(type))
         var requestOptions = {
             method: 'POST',
             body: formdata
@@ -55,9 +68,7 @@ export const SaveDoc = () => {
     return (
         <>
             <div className="px-2">
-
                 <h3 className="text-center fw-bold">Crear o guardar plantilla</h3>
-
                 <div className="row mb-4">
                     <button
                         className="btn btn-success"
@@ -65,7 +76,6 @@ export const SaveDoc = () => {
                     >Guardar plantilla de notas</button>
                 </div>
                 <div className="row">
-
                     <button
                         className="btn btn-success"
                         onClick={() => handleSaveDoc(1)}
