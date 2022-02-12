@@ -1,7 +1,7 @@
 //@ts-check
 import moment from 'moment';
 import { globals } from '../../../../globals';
-import { addZeroToLeft, getLocalStorageUserEmail, getLocalStorageUserInitials, isMemo } from '../../../utils';
+import { addZeroToLeft, getLocalStorageUserEmail, getLocalStorageUserInitials } from '../../../utils';
 import 'moment/locale/es-us';
 import Swal from 'sweetalert2';
 import { ControlsVariables } from '../../../utils/controlsVariables';
@@ -71,88 +71,65 @@ const insertTextControl = (control, text) => {
  * @param {string} addresseeState[].jobTitle
  * @param {string} addresseeState[].archetype
  * @param {string} addresseeState[].department
- * @param {number} memoOrNoteState 
  * @param {Object} form 
  * @param {string} form.from - Remitente de memo o nota
  * @param {string} form.subject - Asunto de memo o nota
  * @param {string} form.to - Posición en el array addresseeState
  */
-const loadWordVars = async (addresseeState, memoOrNoteState, form) => {
-    try {
-        await Word.run(async (context) => {
+const loadWordVars = async (addresseeState, id, form) => {
 
-            const controls = loadControls(context, getControlsByTag(context))
 
-            await context.sync();
-            const response = await fetchData(addresseeState, memoOrNoteState, form);
-            if (response) {
+    await Word.run(async (context) => {
 
-                Object.entries(controls).map((entry) => {
+        const controls = loadControls(context, getControlsByTag(context))
 
-                    const [key, control] = entry
+        await context.sync();
 
-                    switch (key) {
+        Object.entries(controls).map((entry) => {
 
-                        case ControlsVariables.num_memo:
-                            insertTextControl(control, addZeroToLeft(response.id.toString()))
-                            break;
-                        case ControlsVariables.num_note:
-                            insertTextControl(control, addZeroToLeft(response.id.toString()))
-                            break;
-                        case ControlsVariables.year:
-                            insertTextControl(control, moment().year().toString())
-                            break;
-                        case ControlsVariables.date:
-                            insertTextControl(control, moment().format('LL').toString())
-                            break;
-                        case ControlsVariables.request:
-                            insertTextControl(control, form.from)
-                            break;
-                        case ControlsVariables.subject:
-                            insertTextControl(control, form.subject)
-                            break;
-                        case ControlsVariables.addressee_name:
-                            insertTextControl(control, addresseeState[form.to].name)
-                            break;
-                        case ControlsVariables.addressee_job_title:
-                            insertTextControl(control, addresseeState[form.to].jobTitle)
-                            break;
-                        case ControlsVariables.addressee_archetype:
-                            insertTextControl(control, addresseeState[form.to].archetype)
-                            break;
-                        case ControlsVariables.addressee_department:
-                            insertTextControl(control, addresseeState[form.to].department)
-                            break;
-                        case ControlsVariables.initials:
-                            insertTextControl(control, getLocalStorageUserInitials())
-                            break;
+            const [key, control] = entry
 
-                        default:
-                            break;
-                    }
-                })
+            switch (key) {
 
-                Swal.fire(
-                    'Hecho',
-                    'La información esta lista',
-                    'success'
-                );
+                case ControlsVariables.num_memo:
+                    insertTextControl(control, addZeroToLeft(id.toString()))
+                    break;
+                case ControlsVariables.num_note:
+                    insertTextControl(control, addZeroToLeft(id.toString()))
+                    break;
+                case ControlsVariables.year:
+                    insertTextControl(control, moment().year().toString())
+                    break;
+                case ControlsVariables.date:
+                    insertTextControl(control, moment().format('LL').toString())
+                    break;
+                case ControlsVariables.request:
+                    insertTextControl(control, form.from)
+                    break;
+                case ControlsVariables.subject:
+                    insertTextControl(control, form.subject)
+                    break;
+                case ControlsVariables.addressee_name:
+                    insertTextControl(control, addresseeState[form.to].name)
+                    break;
+                case ControlsVariables.addressee_job_title:
+                    insertTextControl(control, addresseeState[form.to].jobTitle)
+                    break;
+                case ControlsVariables.addressee_archetype:
+                    insertTextControl(control, addresseeState[form.to].archetype)
+                    break;
+                case ControlsVariables.addressee_department:
+                    insertTextControl(control, addresseeState[form.to].department)
+                    break;
+                case ControlsVariables.initials:
+                    insertTextControl(control, getLocalStorageUserInitials())
+                    break;
 
-            } else {
-                Swal.fire(
-                    'Hay un problema',
-                    'Error al consultar base de datos',
-                    'error'
-                );
+                default:
+                    break;
             }
         })
-    } catch (e) {
-        Swal.fire(
-            "Hecho",
-            "No se puede editar el documento, revise si el documento actual no tiene controles bloqueados." + e,
-            "error"
-        )
-    }
+    });
 };
 
 /**
@@ -188,5 +165,6 @@ const fetchData = async (addresseeState, memoOrNoteState, form) => {
 }
 
 export {
-    loadWordVars
+    loadWordVars,
+    fetchData
 }

@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import Swal from 'sweetalert2';
 import { globals } from "../../globals"
+import { LoaderContext } from '../context/loaderContext';
 
 const initialState = {
     id: "",
@@ -11,6 +12,8 @@ const initialState = {
     edit: false
 }
 export const Addressees = ({ addresseeState, fetchAddresses }) => {
+
+    const setLoader = useContext(LoaderContext)
 
     const [form, setForm] = useState(initialState);
     const [searchState, setSearchState] = useState("");
@@ -24,7 +27,9 @@ export const Addressees = ({ addresseeState, fetchAddresses }) => {
 
     const handleSaveAddressees = async (e) => {
         e.preventDefault();
+        setLoader(true)
         const json = await saveAddressees()
+        setLoader(false)
         Swal.fire(json).then(async () => {
             setForm(initialState)
             fetchAddresses()
@@ -66,7 +71,7 @@ export const Addressees = ({ addresseeState, fetchAddresses }) => {
     const handlerDelete = (index) => {
         Swal.fire({
             title: 'Esta seguro(a)?',
-            text: `Desea borrar a <span class="fw-bold">${addresseeState[index].name}</span>`,
+            html: `Desea borrar a <span class="fw-bold">${addresseeState[index].name}</span>`,
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
@@ -74,18 +79,20 @@ export const Addressees = ({ addresseeState, fetchAddresses }) => {
             confirmButtonText: 'Si, hacerlo'
         }).then(async (result) => {
             if (result.isConfirmed) {
-                 const formData = new FormData();
+                setLoader(true)
+                const formData = new FormData();
                 formData.append("id", addresseeState[index].id)
-
+                
                 var requestOptions = {
                     method: 'POST',
                     body: formData
                 };
-
+                
                 let response = await fetch(`${globals.apiUrl}?action=delete_addressee`, requestOptions)
                 if (response.ok) {
                     const json = await response.json();
                     if (json) {
+                        setLoader(false)
                         Swal.fire(json).then(() => {
                             fetchAddresses()
                         })

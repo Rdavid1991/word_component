@@ -4,7 +4,7 @@ import React from 'react'
 import Swal from 'sweetalert2';
 import { renderToString } from 'react-dom/server';
 import { getLocalStorageUserEmail, getLocalStorageUserInitials, getLocalStorageUserName, localStorageKeyUser } from '../../../utils';
-import { ErrorAlert } from '../../../utils/ErrorAlert';
+import { AlertError } from '../../../utils/Alerts';
 
 
 /**
@@ -85,7 +85,7 @@ export const HomeInsertUser = async (fetchAddresses, fetchNumbers) => {
 						await Swal.fire("Complete la información")
 					}
 				} catch (error) {
-					await ErrorAlert(error)
+					await AlertError(error)
 				}
 			}
 		}

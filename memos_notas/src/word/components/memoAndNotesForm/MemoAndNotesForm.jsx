@@ -1,11 +1,12 @@
 //@ts-check
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import Swal from 'sweetalert2';
-
-import { loadWordVars } from './functions';
+import { fetchData, loadWordVars } from './functions';
 import { getLocalStorageUserName } from '../../utils';
 import { useForm } from '../../hooks/useForm';
+import { LoaderContext } from '../../context/loaderContext';
+import { AlertError, AlertSuccess, AlertWarning } from '../../utils/Alerts';
 
 const initialState = {
     to: "",
@@ -13,9 +14,9 @@ const initialState = {
     from: getLocalStorageUserName()
 }
 
-
 export const MemoAndNotesForm = ({ addresseeState, memoOrNoteState, fetchNumbers }) => {
 
+    const setLoader = useContext(LoaderContext)
     /**
      * addresseeState structure
      *  {
@@ -49,15 +50,23 @@ export const MemoAndNotesForm = ({ addresseeState, memoOrNoteState, fetchNumbers
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (parseInt(memoOrNoteState) > 0) {
-            await loadWordVars(addresseeState, memoOrNoteState, form)
+            setLoader(true)
+
+            const response = await fetchData(addresseeState, memoOrNoteState, form);
+            if (response) {
+                await loadWordVars(addresseeState, response.id, form)
+                    .catch((err) => AlertError("No se puede editar el documento, revise si el documento actual no tiene controles bloqueados. " + err,))
+                setLoader(false)
+                AlertSuccess('La información esta lista')
+            } else {
+                setLoader(false)
+                await AlertError('Error al consultar base de datos');
+            }
+
             fetchNumbers()
             reset();
         } else {
-            Swal.fire(
-                "Debe seleccionar",
-                "Es memo o nota?",
-                "question"
-            )
+            await AlertWarning("Es memo o nota?")
         }
     }
 

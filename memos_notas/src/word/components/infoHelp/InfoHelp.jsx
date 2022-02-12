@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Swal from 'sweetalert2';
 import PropTypes from 'prop-types';
-import { Icon } from '@fluentui/react';
-import { useForm } from '../../hooks/useForm';
+import { LoaderContext } from '../../context/loaderContext';
 
 export const InfoHelp = ({ numberState, setNumberState, saveNumber }) => {
 
+    const setLoader = useContext(LoaderContext)
     const handleInputChange = ({ target }) => {
         setNumberState({
             ...numberState,
@@ -26,7 +26,9 @@ export const InfoHelp = ({ numberState, setNumberState, saveNumber }) => {
         })
 
         if (isConfirmed) {
+            setLoader(true)
             const saveNumberResult = await saveNumber(numberState);
+            setLoader(false)
             await Swal.fire(saveNumberResult)
         }
     }

@@ -46,9 +46,12 @@ export const Home = () => {
 
 	const fetchAddresses = async () => {
 		const result = await getAddressesOfDB()
+		console.log({result});
 		if (result) {
 			const array = Array.isArray(result) ? result : [result];
 			setStateAddressee(array)
+		}else{
+			setStateAddressee([])
 		}
 	}
 

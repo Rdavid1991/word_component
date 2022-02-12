@@ -1,15 +1,20 @@
 //@ts-check
-import React from 'react';
+import React, { useContext } from 'react';
 import Swal from 'sweetalert2';
 import { globals } from '../../globals';
+import { LoaderContext } from '../context/loaderContext';
 
 export const SaveDoc = () => {
+
+    const setLoader = useContext(LoaderContext)
 
     /**
      * Preparar el documento y sus partes para guardarlo
      * @param {number} saveMemoOrNotes - Numero de tipo de documento 1 = memo, 2 = nota
      */
     const handleSaveDoc = (saveMemoOrNotes) => {
+
+
 
         Swal.fire({
             title: 'Esta seguro(a)?',
@@ -21,6 +26,9 @@ export const SaveDoc = () => {
             confirmButtonText: 'Si, hacerlo'
         }).then((result) => {
             if (result.isConfirmed) {
+
+                setLoader(true)
+
                 Word.run((context) => {
 
                     const body = context.document.body
@@ -29,7 +37,9 @@ export const SaveDoc = () => {
                     const docHeader = context.document.sections.getFirst().getHeader("Primary").getOoxml()
                     return context.sync().then(async () => {
 
-                        Swal.fire(await saveDoc(docBody.value, docFooter.value, docHeader.value, saveMemoOrNotes))
+                        const response = await saveDoc(docBody.value, docFooter.value, docHeader.value, saveMemoOrNotes)
+                        setLoader(false)
+                        Swal.fire(response)
 
                     })
                 })
