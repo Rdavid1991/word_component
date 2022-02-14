@@ -1,2 +1,6 @@
-Remove-Item -Force -Recurse .\dist
-Rename-Item -Force .\build dist
+
+$Folder = '.\dist'
+if (Test-Path -Path $Folder) {
+    Remove-Item -Force -Recurse $Folder 
+} 
+Rename-Item -Force .\build\ dist
