@@ -1,3 +1,7 @@
+body{
+  overflow: hidden;
+}
+
 .radius-50 {
   border-radius: 20px;
 }
@@ -14,3 +18,4 @@ i {
   overflow-y: auto;
   height: 100%;
 }
+
