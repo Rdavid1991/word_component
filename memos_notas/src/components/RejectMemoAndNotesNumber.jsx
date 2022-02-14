@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
 import Swal from 'sweetalert2';
-import PropTypes from "prop-types"
+//import PropTypes from "prop-types"
 import { globals } from 'src/globals';
 
 
@@ -145,7 +145,7 @@ export const RejectMemoAndNotesNumber = ({ memoOrNoteState, fetchNumbers }) => {
 	);
 };
 
-RejectMemoAndNotesNumber.prototype = {
-	memoOrNoteState: PropTypes.string.isRequired,
-	fetchNumbers: PropTypes.func.isRequired
-}
+// RejectMemoAndNotesNumber.prototype = {
+// 	memoOrNoteState: PropTypes.string.isRequired,
+// 	fetchNumbers: PropTypes.func.isRequired
+// }

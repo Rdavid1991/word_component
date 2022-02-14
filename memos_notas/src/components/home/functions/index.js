@@ -14,13 +14,13 @@ const getNumber = async () => {
 
 /**
  * @param {Object} numbers 
- * @param {string} numbers.memo
- * @param {string} numbers.note
+ * @param {number} numbers.memo
+ * @param {number} numbers.note
  */
 const saveNumber = async (numbers) => {
     const formData = new FormData()
-    formData.append("memo", numbers.memo)
-    formData.append("note", numbers.note)
+    formData.append("memo", String(numbers.memo))
+    formData.append("note", String(numbers.note))
     var requestOptions = {
         method: 'POST',
         body: formData

@@ -1,3 +1,4 @@
+//@ts-check
 import React, { useEffect, useState } from "react";
 import { MemoAndNotesForm } from "../memoAndNotesForm/MemoAndNotesForm.jsx";
 import { Addressees } from "../addressees/Addressees.jsx";
@@ -8,6 +9,7 @@ import { HomeInsertUser } from "./functions/HomeInsertUser.js";
 import { LoaderContext } from "src/context/loaderContext.js";
 import { RejectMemoAndNotesNumber } from "../RejectMemoAndNotesNumber.jsx";
 import { InfoHelp } from "../infoHelp/InfoHelp.jsx";
+import { globals } from "src/globals.js";
 
 
 const initialNumber = {

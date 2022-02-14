@@ -1,6 +1,6 @@
 //@ts-check
 import React, { useContext, useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
+//import PropTypes from 'prop-types';
 import { fetchData, loadWordVars } from './functions';
 import { LoaderContext } from 'src/context/loaderContext';
 import { getLocalStorageUserName } from 'src/utils';
@@ -21,10 +21,10 @@ export const MemoAndNotesForm = ({ addresseeState, memoOrNoteState, fetchNumbers
      * addresseeState structure
      *  {
      *      "id": 1,
-     *      "name": "asd",
-     *      "jobTitle": "asd",
-     *      "archetype": "asd",
-     *      "department": "asdd"
+     *      "name": "",
+     *      "jobTitle": "",
+     *      "archetype": "",
+     *      "department": ""
      *  }
      */
 
@@ -139,8 +139,8 @@ export const MemoAndNotesForm = ({ addresseeState, memoOrNoteState, fetchNumbers
     );
 };
 
-MemoAndNotesForm.prototype = {
-    addresseeState: PropTypes.array.isRequired,
-    memoOrNoteState: PropTypes.string.isRequired,
-    fetchNumbers: PropTypes.func.isRequired,
-}
+// MemoAndNotesForm.prototype = {
+//     addresseeState: PropTypes.array.isRequired,
+//     memoOrNoteState: PropTypes.string.isRequired,
+//     fetchNumbers: PropTypes.func.isRequired,
+// }
