@@ -1,6 +1,6 @@
 <?php
-header("Access-Control-Allow-Origin: */");
-header("Access-Control-Allow-Headers: */");
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Headers: *");
 
 require_once(dirname(__FILE__) . "/connection.php");
 
@@ -393,11 +393,11 @@ class HandlerActionsMemo extends ManagementDB
 
             if ($result) {
                 $count_number = $this->get_count_numbers();
-                $this->save_count_numbers($count_number->memo, intval($_GET["info"]));
+                $this->save_count_numbers($count_number->notes, intval($_GET["info"]));
 
                 $msj = (object) array(
                     "title" => "Hecho",
-                    "text" => "Se a rechazado el memo numero" . $_GET["info"],
+                    "text" => "Se a rechazado la nota numero " . $_GET["info"],
                     "icon" => "success"
                 );
                 echo  json_encode($msj);

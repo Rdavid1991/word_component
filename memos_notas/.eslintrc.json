@@ -1,8 +1,26 @@
 {
-  "plugins": [
-    "office-addins"
-  ],
-  "extends": [
-    "plugin:office-addins/react"
-  ]
+    "env": {
+        "browser": true,
+        "es2021": true
+    },
+    "extends": [
+        "eslint:recommended",
+        "plugin:react/recommended"
+    ],
+    "parserOptions": {
+        "ecmaFeatures": {
+            "jsx": true
+        },
+        "ecmaVersion": "latest",
+        "sourceType": "module"
+    },
+    "plugins": [
+        "react"
+    ],
+    "rules": {
+        "react/prop-types": 0,
+        "no-undef": 0,
+   
+        "no-constant-condition": 0
+    }
 }

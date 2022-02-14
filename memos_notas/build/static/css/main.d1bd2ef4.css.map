@@ -1,0 +1,1 @@
+{"version":3,"file":"static/css/main.d1bd2ef4.css","mappings":"AAAA,WACE,kBACF,CAEA,EACE,mBACF,CAEA,WACE,WACF,CAEA,aAEE,WAAY,CADZ,eAEF","sources":["App.css"],"sourcesContent":[".radius-50 {\n  border-radius: 20px;\n}\n\ni {\n  pointer-events: none;\n}\n\n#container {\n  height: 94vh;\n}\n\n.tab-content{\n  overflow-y: auto;\n  height: 100%;\n}\n"],"names":[],"sourceRoot":""}

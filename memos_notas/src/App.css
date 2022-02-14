@@ -1,0 +1,16 @@
+.radius-50 {
+  border-radius: 20px;
+}
+
+i {
+  pointer-events: none;
+}
+
+#container {
+  height: 94vh;
+}
+
+.tab-content{
+  overflow-y: auto;
+  height: 100%;
+}
