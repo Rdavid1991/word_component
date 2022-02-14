@@ -3,7 +3,7 @@ import { useState } from 'react';
 /**
  * 
  * @param {*} initialState estado inicial 
- * @returns {array} [values, handleInputChange, reset]
+ * @returns {array} [values, setValues, handleInputChange, reset]
  */
 export const useForm = (initialState = {}) => {
 

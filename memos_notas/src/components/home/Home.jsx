@@ -10,6 +10,7 @@ import { LoaderContext } from "src/context/loaderContext.js";
 import { RejectMemoAndNotesNumber } from "../RejectMemoAndNotesNumber.jsx";
 import { InfoHelp } from "../infoHelp/InfoHelp.jsx";
 import { globals } from "src/globals.js";
+import { Template } from "../templates/Template.jsx";
 
 
 const initialNumber = {
@@ -87,6 +88,15 @@ export const Home = () => {
           </button>
           <button
             className="nav-link"
+            id="nav-template-tab"
+            data-bs-toggle="tab"
+            data-bs-target="#nav-template"
+            type="button"
+          >
+            Plantillas
+          </button>
+          <button
+            className="nav-link"
             id="nav-info-help-tab"
             data-bs-toggle="tab"
             data-bs-target="#nav-info-help"
@@ -137,6 +147,9 @@ export const Home = () => {
             setNumberState={setNumberState}
             saveNumber={saveNumber}
           />
+        </div>
+        <div className="tab-pane fade" id="nav-template">
+          <Template />
         </div>
       </div>
     </LoaderContext.Provider>
