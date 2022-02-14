@@ -1,7 +1,9 @@
 import React, { useContext } from 'react';
+import { LoaderContext } from 'src/context/loaderContext';
+import { globals } from 'src/globals';
 import Swal from 'sweetalert2';
-import { globals } from '../globals';
-import { LoaderContext } from '../context/loaderContext';
+
+
 
 export const SelectMemoOrNotes = ({ setMemoOrNoteState }) => {
 

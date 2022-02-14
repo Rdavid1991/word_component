@@ -2,10 +2,11 @@
 import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { fetchData, loadWordVars } from './functions';
-import { getLocalStorageUserName } from '../../utils';
-import { useForm } from '../../hooks/useForm';
-import { LoaderContext } from '../../context/loaderContext';
-import { AlertError, AlertSuccess, AlertWarning } from '../../utils/Alerts';
+import { LoaderContext } from 'src/context/loaderContext';
+import { getLocalStorageUserName } from 'src/utils';
+import { useForm } from 'src/hooks/useForm';
+import { AlertError, AlertSuccess, AlertWarning } from 'src/utils/Alerts';
+
 
 const initialState = {
     to: "",
@@ -70,71 +71,71 @@ export const MemoAndNotesForm = ({ addresseeState, memoOrNoteState, fetchNumbers
     }
 
     return (
-        <>
-            <form className='px-2' onSubmit={handleSubmit}>
-                <div className="mb-3">
-                    <label htmlFor="to" className="form-label fw-bold">Dirigido a</label>
-                    <div className="input-group mb-3">
-                        <span className="input-group-text"><i className="far fa-paper-plane"></i></span>
-                        <select
-                            value={form.to}
-                            className="form-select form-select-sm"
-                            id="to"
-                            placeholder="A quien a dirigido"
-                            required={true}
-                            onChange={handleInputChange}
-                        >
-                            <option disabled value="">Seleccione un destinatario</option>
-                            {
-                                addresseeState.map((item, index) => (
-                                    <option key={index} value={index}>{item.department}</option>
-                                ))
-                            }
 
-                        </select>
-                    </div>
-                </div>
-                <div className="mb-3">
-                    <label htmlFor="subject" className="form-label fw-bold">Asunto</label>
-                    <div className="input-group mb-3">
+        <form className='px-2' onSubmit={handleSubmit}>
+            <div className="mb-3">
+                <label htmlFor="to" className="form-label fw-bold">Dirigido a</label>
+                <div className="input-group mb-3">
+                    <span className="input-group-text"><i className="far fa-paper-plane"></i></span>
+                    <select
+                        value={form.to}
+                        className="form-select form-select-sm"
+                        id="to"
+                        placeholder="A quien a dirigido"
+                        required={true}
+                        onChange={handleInputChange}
+                    >
+                        <option disabled value="">Seleccione un destinatario</option>
+                        {
+                            addresseeState.map((item, index) => (
+                                <option key={index} value={index}>{item.department}</option>
+                            ))
+                        }
 
-                        <span className="input-group-text"><i className="fas fa-comments"></i></span>
-                        <input
-                            type="text"
-                            className="form-control form-control-sm"
-                            id="subject"
-                            placeholder="Asunto"
-                            required={true}
-                            onChange={handleInputChange}
-                            value={form.subject}
-                        />
-                    </div>
+                    </select>
                 </div>
-                <div className="mb-3">
-                    <label htmlFor="from" className="form-label fw-bold">Solicitado por</label>
-                    <div className="input-group mb-3">
-                        <span className="input-group-text"><i className="fas fa-user-edit"></i></span>
-                        <input
-                            type="text"
-                            className="form-control form-control-sm"
-                            id="from"
-                            placeholder="Quien lo solicita"
-                            required={true}
-                            onChange={handleInputChange}
-                            value={form.from}
-                            disabled
-                        />
-                    </div>
+            </div>
+            <div className="mb-3">
+                <label htmlFor="subject" className="form-label fw-bold">Asunto</label>
+                <div className="input-group mb-3">
+
+                    <span className="input-group-text"><i className="fas fa-comments"></i></span>
+                    <input
+                        type="text"
+                        className="form-control form-control-sm"
+                        id="subject"
+                        placeholder="Asunto"
+                        required={true}
+                        onChange={handleInputChange}
+                        value={form.subject}
+                    />
                 </div>
-                <button
-                    type="submit"
-                    className="btn btn-sm btn-secondary"
-                    disabled={buttonDisabled}
-                >
-                    Guardar
-                </button>
-            </form>
-        </>
+            </div>
+            <div className="mb-3">
+                <label htmlFor="from" className="form-label fw-bold">Solicitado por</label>
+                <div className="input-group mb-3">
+                    <span className="input-group-text"><i className="fas fa-user-edit"></i></span>
+                    <input
+                        type="text"
+                        className="form-control form-control-sm"
+                        id="from"
+                        placeholder="Quien lo solicita"
+                        required={true}
+                        onChange={handleInputChange}
+                        value={form.from}
+                        disabled
+                    />
+                </div>
+            </div>
+            <button
+                type="submit"
+                className="btn btn-sm btn-secondary"
+                disabled={buttonDisabled}
+            >
+                Guardar
+            </button>
+        </form>
+
     );
 };
 

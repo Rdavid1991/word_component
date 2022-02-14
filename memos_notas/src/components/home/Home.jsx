@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { globals } from "../../globals";
 import { MemoAndNotesForm } from "../memoAndNotesForm/MemoAndNotesForm.jsx";
 import { Addressees } from "../addressees/Addressees.jsx";
-import { RejectMemoAndNotesNumber } from "../RejectMemoAndNotesNumber.jsx";
 import { SaveDoc } from "../SaveDoc.jsx";
 import { SelectMemoOrNotes } from "../SelectMemoOrNotes.jsx";
-import { InfoHelp } from "../infoHelp/InfoHelp.jsx";
 import { getNumber, saveNumber } from "./functions/index.js";
 import { HomeInsertUser } from "./functions/HomeInsertUser.js";
-import { LoaderContext } from "../../context/loaderContext.js";
+import { LoaderContext } from "src/context/loaderContext.js";
+import { RejectMemoAndNotesNumber } from "../RejectMemoAndNotesNumber.jsx";
+import { InfoHelp } from "../infoHelp/InfoHelp.jsx";
+
 
 const initialNumber = {
   note: 1,

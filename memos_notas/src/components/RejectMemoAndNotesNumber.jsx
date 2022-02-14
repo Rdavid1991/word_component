@@ -2,7 +2,8 @@ import React from 'react';
 import { useState } from 'react';
 import Swal from 'sweetalert2';
 import PropTypes from "prop-types"
-import { globals } from '../globals';
+import { globals } from 'src/globals';
+
 
 const initialState = {
 	id: "",
@@ -22,7 +23,7 @@ export const RejectMemoAndNotesNumber = ({ memoOrNoteState, fetchNumbers }) => {
 		if (parseInt(memoOrNoteState) > 0) {
 			let response = await fetch(`${globals.apiUrl}?action=get_reject_info&info=${searchNumber}&type=${memoOrNoteState}`, {})
 			if (response.ok) {
-				
+
 				const result = await response.json();
 				if (result) {
 					//{ "id": 154, "asunto": "Bueno funciona", "solicitado_por": "test", "dirigido_a": "esteban", "last": 1 }

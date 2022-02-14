@@ -1,7 +1,11 @@
 import React, { useContext } from 'react';
 import Swal from 'sweetalert2';
 import PropTypes from 'prop-types';
-import { LoaderContext } from '../../context/loaderContext';
+import { globals } from 'src/globals';
+import { LoaderContext } from 'src/context/loaderContext';
+
+
+
 
 export const InfoHelp = ({ numberState, setNumberState, saveNumber }) => {
 
@@ -35,6 +39,16 @@ export const InfoHelp = ({ numberState, setNumberState, saveNumber }) => {
 
     return (
         <div className="p-3 m-3">
+
+            <div className="mb-3">
+                <div className="row">
+                    <a href={globals.memoUrl} className="link-info">Ir a lista de memos en SharePoint</a>
+                </div>
+                <div className="row">
+                    <a href={globals.notaUrl} className="link-info">Ir a lista de notas en SharePoint</a>
+                </div>
+            </div>
+
             <h3 className="text-center px-2 fw-bold" >Números de memos y notas</h3>
             <form onSubmit={handleSaveNumber}>
                 <div className="mb-3">

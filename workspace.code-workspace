@@ -9,5 +9,13 @@
 		{
 			"path": "."
 		}
-	]
+	],
+	"settings": {
+		"cSpell.words": [
+			"addins",
+			"browserslist",
+			"firefox",
+			"sweetalert"
+		]
+	}
 }
