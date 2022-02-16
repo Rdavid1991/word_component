@@ -4,9 +4,6 @@ ALTER TABLE [dbo].[note] DROP CONSTRAINT [DF_note_state]
 GO
 ALTER TABLE [dbo].[memo] DROP CONSTRAINT [DF_memo_state]
 GO
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[template_field]') AND type in (N'U'))
-DROP TABLE [dbo].[template_field]
-GO
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[number_memo_notes]') AND type in (N'U'))
 DROP TABLE [dbo].[number_memo_notes]
 GO
@@ -29,7 +26,7 @@ GO
 CREATE DATABASE [memos&notas]
  CONTAINMENT = NONE
  ON  PRIMARY 
-( NAME = N'memos&notas', FILENAME = N'/var/opt/mssql/data/memos&notas.mdf' , SIZE = 8192KB , MAXSIZE = UNLIMITED, FILEGROWTH = 65536KB )
+( NAME = N'memos&notas', FILENAME = N'/var/opt/mssql/data/memos&notas.mdf' , SIZE = 73728KB , MAXSIZE = UNLIMITED, FILEGROWTH = 65536KB )
  LOG ON 
 ( NAME = N'memos&notas_log', FILENAME = N'/var/opt/mssql/data/memos&notas_log.ldf' , SIZE = 73728KB , MAXSIZE = 2048GB , FILEGROWTH = 65536KB )
  WITH CATALOG_COLLATION = DATABASE_DEFAULT
@@ -124,9 +121,12 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[document](
-	[id] [tinyint] NULL,
+	[id] [tinyint] IDENTITY(1,1) NOT NULL,
+	[name] [nvarchar](50) NULL,
 	[doc] [nvarchar](max) NULL
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[document] SET (LOCK_ESCALATION = AUTO)
 GO
 SET ANSI_NULLS ON
 GO
@@ -171,19 +171,6 @@ CREATE TABLE [dbo].[number_memo_notes](
 ) ON [PRIMARY]
 GO
 ALTER TABLE [dbo].[number_memo_notes] SET (LOCK_ESCALATION = AUTO)
-GO
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE TABLE [dbo].[template_field](
-	[id] [tinyint] IDENTITY(1,1) NOT NULL,
-	[name] [nvarchar](50) NULL,
-	[variable] [nvarchar](50) NULL,
-	[type] [nvarchar](10) NULL
-) ON [PRIMARY]
-GO
-ALTER TABLE [dbo].[template_field] SET (LOCK_ESCALATION = AUTO)
 GO
 ALTER TABLE [dbo].[memo] ADD  CONSTRAINT [DF_memo_state]  DEFAULT ((1)) FOR [state]
 GO
