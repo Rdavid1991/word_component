@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import Swal from 'sweetalert2';
 import PropTypes from 'prop-types';
 import { globals } from 'src/globals';
-import { LoaderContext } from 'src/context/loaderContext';
+import { LoaderContext } from 'src/context/context';
 
 
 

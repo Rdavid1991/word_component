@@ -447,8 +447,11 @@ switch ($_GET["action"]) {
         $result = $handler->get_count_numbers();
         echo json_encode($result);
         break;
-    case "save_template_field":
-        $template->save_template_field();
+    case "save_template_doc":
+        $template->save_template_doc();
+        break;
+    case "get_template_doc":
+        $template->get_template_doc();
         break;
 
     default:

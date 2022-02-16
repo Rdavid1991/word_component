@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import Swal from 'sweetalert2';
-import { LoaderContext } from '../../context/loaderContext';
+import { LoaderContext } from '../../context/context';
 import { AlertConfirmQuestion } from '../../utils/Alerts';
 import { deleteAddressees, saveAddressees } from './functions';
 

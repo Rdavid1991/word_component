@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { LoaderContext } from 'src/context/loaderContext';
+import { LoaderContext } from 'src/context/context';
 import { globals } from 'src/globals';
 import Swal from 'sweetalert2';
 

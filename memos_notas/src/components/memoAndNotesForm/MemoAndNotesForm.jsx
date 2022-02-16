@@ -2,7 +2,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 //import PropTypes from 'prop-types';
 import { fetchData, loadWordVars } from './functions';
-import { LoaderContext } from 'src/context/loaderContext';
+import { LoaderContext } from 'src/context/context';
 import { getLocalStorageUserName } from 'src/utils';
 import { useForm } from 'src/hooks/useForm';
 import { AlertError, AlertSuccess, AlertWarning } from 'src/utils/Alerts';

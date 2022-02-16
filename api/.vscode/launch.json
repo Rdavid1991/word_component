@@ -9,7 +9,7 @@
             "type": "php",
             "request": "launch",
             "pathMappings": {
-                "/var/www/html/api/": "${workspaceFolder}"
+                //"/var/www/html/api/": "${workspaceFolder}"
             },
             "port": 9003
         },

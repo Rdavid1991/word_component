@@ -1,0 +1,79 @@
+//@ts-check
+import React, { useContext } from 'react'
+import { LoaderContext, TemplateContext } from 'src/context/context';
+import { useForm } from 'src/hooks/useForm';
+import { apiRequest } from 'src/utils/apiRequest';
+import Swal from 'sweetalert2';
+import { getDocument } from './function/documents';
+
+const initialState = {
+    name: ""
+}
+
+
+export const TemplateCreate = () => {
+
+    const [values, setValues, handleInputChange, reset] = useForm(initialState);
+    const setLoader = useContext(LoaderContext);
+    const fetchTemplate = useContext(TemplateContext);
+    /**
+     * Encargarse de guardar el documento
+     * @param {React.MouseEvent<HTMLFormElement, MouseEvent>} e 
+     */
+    const handleSaveDocument = async (e) => {
+        e.preventDefault();
+
+        const document = await getDocument();
+        if (document) {
+            setLoader(true)
+            const response = await apiRequest()
+                .post("?action=save_template_doc", { ...values, "document": document });
+            if (response) {
+                setLoader(false)
+                fetchTemplate();
+                await Swal.fire(response);
+                reset();
+            }
+            setLoader(false)
+        }
+    }
+
+    return (
+        <>
+            <div className="px-3">
+                <h3 className="fw-bold text-center">Crear plantillas de documentos</h3>
+            </div>
+
+            <form
+                className="row g-3"
+                onSubmit={handleSaveDocument}
+            >
+                <div
+                    className="col-md-4">
+                    <label
+                        htmlFor="name"
+                        className="form-label">Nombre</label>
+                    <input
+                        type="text"
+                        className="form-control form-select-sm"
+                        id="name"
+                        onChange={handleInputChange}
+                        value={values.name}
+                        placeholder="Nombre de plantilla"
+                        required
+                    />
+                </div>
+
+                <div
+                    className="col-12">
+                    <button
+                        className="btn btn-sm btn-primary"
+                        type="submit"
+                    >
+                        Guardar
+                    </button>
+                </div>
+            </form>
+        </>
+    )
+}

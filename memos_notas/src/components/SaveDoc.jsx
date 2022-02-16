@@ -1,6 +1,6 @@
 //@ts-check
 import React, { useContext } from 'react';
-import { LoaderContext } from 'src/context/loaderContext';
+import { LoaderContext } from 'src/context/context';
 import { globals } from 'src/globals';
 import Swal from 'sweetalert2';
 
@@ -17,35 +17,7 @@ export const SaveDoc = () => {
 
 
 
-        Swal.fire({
-            title: 'Esta seguro(a)?',
-            text: `Va a sobrescribir ${saveMemoOrNotes === 1 ? "un memo" : "una nota"} este cambio no se puede revertir`,
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Si, hacerlo'
-        }).then((result) => {
-            if (result.isConfirmed) {
-
-                setLoader(true)
-
-                Word.run((context) => {
-
-                    const body = context.document.body
-                    const docBody = body.getOoxml()
-                    const docFooter = context.document.sections.getFirst().getFooter("Primary").getOoxml()
-                    const docHeader = context.document.sections.getFirst().getHeader("Primary").getOoxml()
-                    return context.sync().then(async () => {
-
-                        const response = await saveDoc(docBody.value, docFooter.value, docHeader.value, saveMemoOrNotes)
-                        setLoader(false)
-                        Swal.fire(response)
-
-                    })
-                })
-            }
-        })
+        
 
     };
 

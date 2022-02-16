@@ -15,21 +15,28 @@ class DocTemplate extends ManagementDB
         parent::__destruct();
     }
 
-    public function save_template_field()
+    public function save_template_doc()
     {
-        $sql = "INSERT INTO [dbo].[template_field]
-        (
-            [name]
-            ,[variable]
-            ,[type]
-        )
-        VALUES
-        (?,?,?)";
+        $sql = "INSERT INTO [dbo].[document]([name],[doc])
+                VALUES (?,?)";
 
-        $response = parent::insert_query($sql, [$_POST["name"], $_POST["variable"], $_POST["dataType"]]);
+        $response = parent::insert_query($sql, [$_POST["name"], $_POST["document"]]);
 
         if ($response) {
             echo Message::success();
         }
     }
+    
+    public function get_template_doc()
+    {
+        $sql = "SELECT * FROM [dbo].[document]";
+
+        $response = parent::select_query($sql, []);
+
+        if ($response) {
+            echo Message::success();
+        }
+    }
+
+
 }

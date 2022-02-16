@@ -6,7 +6,7 @@ import { SaveDoc } from "../SaveDoc.jsx";
 import { SelectMemoOrNotes } from "../SelectMemoOrNotes.jsx";
 import { getNumber, saveNumber } from "./functions/index.js";
 import { HomeInsertUser } from "./functions/HomeInsertUser.js";
-import { LoaderContext } from "src/context/loaderContext.js";
+import { LoaderContext } from "src/context/context.js";
 import { RejectMemoAndNotesNumber } from "../RejectMemoAndNotesNumber.jsx";
 import { InfoHelp } from "../infoHelp/InfoHelp.jsx";
 import { globals } from "src/globals.js";

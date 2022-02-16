@@ -7,35 +7,49 @@ export const apiRequest = () => {
 
         /**
          * 
-         * @param {string} url 
-         * @param  {object} params 
+         * @param {string} route 
+         * @param {Object} params 
          */
         post: async (route, params) => {
 
             const formData = new FormData();
 
-            Object.entries(params).map((entry) => {
-                const [key, value] = entry
+            Object.entries(params).map(([key, value]) => {
                 formData.append(key, value)
             })
 
-            const response = await fetch(globals.apiUrl + route, {
-                method: "POST",
-                body: formData
-            }).catch((error) => {
+            try {
+                const response = await fetch(globals.apiUrl + route, {
+                    method: "POST",
+                    body: formData
+                })
+                if (response.ok) {
+                    return await response.json()
+                } else {
+                    AlertError(`${response.status} ${response.statusText}`)
+                    return false;
+                }
+            } catch (error) {
                 AlertError(error)
+            }
+            return false;
+        },
+
+        get: async (route, params) => {
+
+            let paramsString = "";
+
+            Object.entries(params).map(([key, value]) => {
+                paramsString += `&${key}=${value}`
             })
 
-            if (response.ok) {
-                try {
-                    return await response.json()
-                } catch (error) {
-                    await AlertError(error)
-                    return false
-                }
-            }
-            await AlertError("Fallo la conexión")
-            return  false;
+
+            const response = await fetch(`${globals.apiUrl}?action=${route}${paramsString}`, {
+                method: "GET",
+            })
+
+            return response
         }
     }
 }
+

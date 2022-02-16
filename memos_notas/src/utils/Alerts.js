@@ -24,6 +24,11 @@ const AlertSuccess = async (success) => {
     })
 }
 
+/**
+ * Alerta de confirmación
+ * @param {string} question Pregunta de acción a realizar
+ * @returns 
+ */
 const AlertConfirmQuestion = async (question) => {
     return await Swal.fire({
         title: 'Esta seguro(a)?',
