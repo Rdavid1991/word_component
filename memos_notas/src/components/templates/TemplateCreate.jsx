@@ -1,6 +1,6 @@
 //@ts-check
 import React, { useContext } from 'react'
-import { LoaderContext, TemplateContext } from 'src/context/context';
+import { context } from 'src/context/context';
 import { useForm } from 'src/hooks/useForm';
 import { apiRequest } from 'src/utils/apiRequest';
 import Swal from 'sweetalert2';
@@ -15,7 +15,7 @@ const initialState = {
 export const TemplateCreate = ({fetchTemplate}) => {
 
     const [values, setValues, handleInputChange, reset] = useForm(initialState);
-    const setLoader = useContext(LoaderContext);
+    const {setLoader} = useContext(context);
     /**
      * Encargarse de guardar el documento
      * @param {React.MouseEvent<HTMLFormElement, MouseEvent>} e 

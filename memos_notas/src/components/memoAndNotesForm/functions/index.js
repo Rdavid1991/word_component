@@ -1,4 +1,5 @@
 //@ts-check
+/* global Word */
 import moment from "moment";
 import { globals } from "../../../globals";
 import {
@@ -124,7 +125,6 @@ const loadWordVars = async (addresseeState, id, form) => {
         case ControlsVariables.initials:
           insertTextControl(control, getLocalStorageUserInitials());
           break;
-
         default:
           break;
       }

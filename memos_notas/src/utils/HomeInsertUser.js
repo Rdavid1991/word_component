@@ -3,23 +3,16 @@
 import React from 'react'
 import Swal from 'sweetalert2';
 import { renderToString } from 'react-dom/server';
-import { getLocalStorageUserEmail, getLocalStorageUserInitials, getLocalStorageUserName, localStorageKeyUser } from '../../../utils';
-import { AlertError } from '../../../utils/Alerts';
+import { getLocalStorageUserEmail, getLocalStorageUserInitials, getLocalStorageUserName, localStorageKeyUser } from '.';
+import { AlertError } from './Alerts';
 
-
-/**
- * @param {function} fetchAddresses 
- * @param {function} fetchNumbers 
- */
-export const HomeInsertUser = async (fetchAddresses, fetchNumbers) => {
+export const HomeInsertUser = async () => {
 
 	let user = "";
 	let email = "";
 
-	if (getLocalStorageUserName() && getLocalStorageUserEmail() && getLocalStorageUserInitials()) {
-		fetchAddresses();
-		fetchNumbers()
-	} else {
+	if (!getLocalStorageUserName() && !getLocalStorageUserEmail() && !getLocalStorageUserInitials()) {
+
 		const alertHtml = () => {
 
 			return (
@@ -77,8 +70,6 @@ export const HomeInsertUser = async (fetchAddresses, fetchNumbers) => {
 						...value,
 						initials: `${arrayUser[0].charAt(0)}${arrayUser[1].charAt(0)}`
 					}))
-					fetchAddresses();
-					fetchNumbers()
 					break;
 				} else {
 					await Swal.fire("Complete la información")

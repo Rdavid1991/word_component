@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import Swal from 'sweetalert2';
-import { LoaderContext } from '../../context/context';
+import { context } from '../../context/context';
 import { AlertConfirmQuestion } from '../../utils/Alerts';
 import { deleteAddressees, saveAddressees } from './functions';
 
@@ -14,7 +14,7 @@ const initialState = {
 }
 export const Addressees = ({ addresseeState, fetchAddresses }) => {
 
-    const setLoader = useContext(LoaderContext)
+    const {setLoader} = useContext(context)
 
     const [form, setForm] = useState(initialState);
     const [searchState, setSearchState] = useState("");

@@ -2,14 +2,14 @@ import React, { useContext } from 'react';
 import Swal from 'sweetalert2';
 import PropTypes from 'prop-types';
 import { globals } from 'src/globals';
-import { LoaderContext } from 'src/context/context';
+import { context } from 'src/context/context';
 
 
 
 
 export const InfoHelp = ({ numberState, setNumberState, saveNumber }) => {
 
-    const setLoader = useContext(LoaderContext)
+    const {setLoader} = useContext(context)
     const handleInputChange = ({ target }) => {
         setNumberState({
             ...numberState,

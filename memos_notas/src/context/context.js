@@ -1,5 +1,4 @@
 import { createContext } from 'react'
 
-export const LoaderContext = createContext(null)
+export const context = createContext(null)
 
-export const TemplateContext = createContext(null)
