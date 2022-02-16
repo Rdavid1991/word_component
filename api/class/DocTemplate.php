@@ -26,7 +26,7 @@ class DocTemplate extends ManagementDB
             echo Message::success();
         }
     }
-    
+
     public function get_template_doc()
     {
         $sql = "SELECT * FROM [dbo].[document]";
@@ -34,9 +34,7 @@ class DocTemplate extends ManagementDB
         $response = parent::select_query($sql, []);
 
         if ($response) {
-            echo Message::success();
+            echo json_encode((object)["data" => $response]);
         }
     }
-
-
 }
