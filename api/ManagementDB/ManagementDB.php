@@ -46,7 +46,7 @@ class ManagementDB extends Connection
             }
 
             sqlsrv_free_stmt($query_result);
-            return (sizeof($array_items) > 1 ? $array_items : (sizeof($array_items) ? $array_items[0] : null));
+            return $array_items;
         }
         error_log("Error en base de datos: " . json_encode(sqlsrv_errors()));
         $errorselect = json_encode(sqlsrv_errors());
