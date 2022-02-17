@@ -7,15 +7,15 @@ import Swal from 'sweetalert2';
 import { getDocument } from './function/documents';
 
 const initialState = {
-    name: ""
+    name: "",
+    type:""
 }
 
 
-export const TemplateCreate = () => {
+export const TemplateCreate = ({fetchTemplate}) => {
 
     const [values, setValues, handleInputChange, reset] = useForm(initialState);
     const setLoader = useContext(LoaderContext);
-    const fetchTemplate = useContext(TemplateContext);
     /**
      * Encargarse de guardar el documento
      * @param {React.MouseEvent<HTMLFormElement, MouseEvent>} e 
@@ -48,8 +48,7 @@ export const TemplateCreate = () => {
                 className="row g-3"
                 onSubmit={handleSaveDocument}
             >
-                <div
-                    className="col-md-4">
+                <div className="col-md-4">
                     <label
                         htmlFor="name"
                         className="form-label">Nombre</label>
@@ -62,6 +61,13 @@ export const TemplateCreate = () => {
                         placeholder="Nombre de plantilla"
                         required
                     />
+                </div>
+
+                <div className="col-md-4">
+                    <select id="type">
+                        <option value="memo">Memorandum</option>
+                        <option value="nota">Nota</option>
+                    </select>
                 </div>
 
                 <div
