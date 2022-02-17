@@ -16,7 +16,7 @@ const initialState = {
 
 export const MemoAndNotesForm = ({ addresseeState, memoOrNoteState, fetchNumbers }) => {
 
-    const {setLoader} = useContext(context)
+    const {showLoader} = useContext(context)
     /**
      * addresseeState structure
      *  {
@@ -50,16 +50,16 @@ export const MemoAndNotesForm = ({ addresseeState, memoOrNoteState, fetchNumbers
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (parseInt(memoOrNoteState) > 0) {
-            setLoader(true)
+            showLoader(true)
 
             const response = await fetchData(addresseeState, memoOrNoteState, form);
             if (response) {
                 await loadWordVars(addresseeState, response.id, form)
                     .catch((err) => AlertError("No se puede editar el documento, revise si el documento actual no tiene controles bloqueados. " + err,))
-                setLoader(false)
+                showLoader(false)
                 AlertSuccess('La información esta lista')
             } else {
-                setLoader(false)
+                showLoader(false)
                 await AlertError('Error al consultar base de datos');
             }
 

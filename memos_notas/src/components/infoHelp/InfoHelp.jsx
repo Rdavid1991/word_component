@@ -9,7 +9,7 @@ import { context } from 'src/context/context';
 
 export const InfoHelp = ({ numberState, setNumberState, saveNumber }) => {
 
-    const {setLoader} = useContext(context)
+    const {showLoader} = useContext(context)
     const handleInputChange = ({ target }) => {
         setNumberState({
             ...numberState,
@@ -30,9 +30,9 @@ export const InfoHelp = ({ numberState, setNumberState, saveNumber }) => {
         })
 
         if (isConfirmed) {
-            setLoader(true)
+            showLoader(true)
             const saveNumberResult = await saveNumber(numberState);
-            setLoader(false)
+            showLoader(false)
             await Swal.fire(saveNumberResult)
         }
     }

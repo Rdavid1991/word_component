@@ -1,5 +1,5 @@
 import "./App.css";
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { context } from "./context/context";
 import { TabNav } from "./components/tabsNav/TabNav";
 
@@ -7,13 +7,22 @@ const initialState = [];
 export const App = () => {
 
   const [loader, setLoader] = useState(false);
-  const [documentsState, setDocumentsState] = useState(initialState);
+  const [documents, setDocuments] = useState(initialState);
+
+  const showLoader = useCallback((show) => {
+    setLoader(show)
+  }, [loader])
+
+  const loadDocuments = useCallback((arrayDocuments) => {
+    setDocuments(arrayDocuments)
+  }, [documents])
+
 
   return (
     <context.Provider value={{
-      setLoader,
-      setDocumentsState,
-      documentsState
+      showLoader,
+      loadDocuments,
+      documents
     }}>
 
       <div id="container">

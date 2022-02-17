@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 
 
-export const TemplateList = ({ fetchTemplate, documentsState }) => {
+export const TemplateList = ({ fetchTemplate, documents }) => {
 
 
   const [searchState, setSearchState] = useState("")
@@ -18,7 +18,7 @@ export const TemplateList = ({ fetchTemplate, documentsState }) => {
   return (
     <>
       {
-        documentsState.map((item, index) => {
+        documents.map((item, index) => {
 
           if (searchState.length > 0 &&
             new RegExp(searchState, "i").test(item.name)

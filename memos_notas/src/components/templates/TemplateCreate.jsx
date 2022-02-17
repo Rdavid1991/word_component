@@ -15,7 +15,7 @@ const initialState = {
 export const TemplateCreate = ({fetchTemplate}) => {
 
     const [values, setValues, handleInputChange, reset] = useForm(initialState);
-    const {setLoader} = useContext(context);
+    const {showLoader} = useContext(context);
     /**
      * Encargarse de guardar el documento
      * @param {React.MouseEvent<HTMLFormElement, MouseEvent>} e 
@@ -25,16 +25,16 @@ export const TemplateCreate = ({fetchTemplate}) => {
 
         const document = await getDocument();
         if (document) {
-            setLoader(true)
+            showLoader(true)
             const response = await apiRequest()
                 .post("?action=save_template_doc", { ...values, "document": document });
             if (response) {
-                setLoader(false)
+                showLoader(false)
                 fetchTemplate();
                 await Swal.fire(response);
                 reset();
             }
-            setLoader(false)
+            showLoader(false)
         }
     }
 

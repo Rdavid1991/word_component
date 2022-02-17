@@ -9,14 +9,14 @@ import { TemplateList } from './TemplateList'
 
 export const Template = () => {
 
-    const { setLoader, setDocumentsState, documentsState } = useContext(context)
+    const { showLoader, loadDocuments, documents } = useContext(context)
 
 
     const handlerFetchTemplate = async () => {
-        setLoader(true)
+        showLoader(true)
         const template = await fetchTemplate()
-        setLoader(false)
-        setDocumentsState(template.data)
+        showLoader(false)
+        loadDocuments(template.data)
     }
 
     return (
@@ -25,7 +25,7 @@ export const Template = () => {
                 <TemplateCreate fetchTemplate={handlerFetchTemplate} />
             </div>
             <div className="shadow p-3 m-3 bg-body radius-50">
-                <TemplateList fetchTemplate={handlerFetchTemplate} documentsState={documentsState} />
+                <TemplateList fetchTemplate={handlerFetchTemplate} documents={documents} />
             </div>
         </>
     )

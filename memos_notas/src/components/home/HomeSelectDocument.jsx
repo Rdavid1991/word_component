@@ -4,10 +4,10 @@ import { context } from 'src/context/context';
 import { writeDocument } from './functions/writeDocument';
 
 export const SelectMemoOrNotes = ({ setMemoOrNoteState }) => {
-    const { documentsState } = useContext(context)
+    const { documents } = useContext(context)
 
     const handleSelectChange = ({ target }) => {
-        const template = JSON.parse(documentsState.find(item => parseInt(item.id) === parseInt(target.value)).doc)
+        const template = JSON.parse(documents.find(item => parseInt(item.id) === parseInt(target.value)).doc)
         writeDocument(template);
     }
 
@@ -22,7 +22,7 @@ export const SelectMemoOrNotes = ({ setMemoOrNoteState }) => {
                     onChange={handleSelectChange}
                 >
                     {
-                        documentsState.map((item, index) => (
+                        documents.map((item, index) => (
                             <option key={index} value={item.id}>{item.name}</option>
                         ))
                     }

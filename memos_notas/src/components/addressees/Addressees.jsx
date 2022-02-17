@@ -14,7 +14,7 @@ const initialState = {
 }
 export const Addressees = ({ addresseeState, fetchAddresses }) => {
 
-    const {setLoader} = useContext(context)
+    const {showLoader} = useContext(context)
 
     const [form, setForm] = useState(initialState);
     const [searchState, setSearchState] = useState("");
@@ -28,9 +28,9 @@ export const Addressees = ({ addresseeState, fetchAddresses }) => {
 
     const handleSaveAddressees = async (e) => {
         e.preventDefault();
-        setLoader(true)
+        showLoader(true)
         const json = await saveAddressees(form)
-        setLoader(false)
+        showLoader(false)
         Swal.fire(json).then(async () => {
             setForm(initialState)
             fetchAddresses()
@@ -54,10 +54,10 @@ export const Addressees = ({ addresseeState, fetchAddresses }) => {
             `Desea borrar a <span class="fw-bold">${addresseeState[index].name}</span>`
         ).then(async (result) => {
             if (result.isConfirmed) {
-                setLoader(true)
+                showLoader(true)
                 const json = await deleteAddressees(addresseeState[index].id)
                 if (json) {
-                    setLoader(false)
+                    showLoader(false)
                     Swal.fire(json).then(() => {
                         fetchAddresses()
                     })
