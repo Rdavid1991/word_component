@@ -16,6 +16,8 @@
   "homepage": "./",
   "scripts": {
     "start": "react-scripts start",
+    "start-db-container": "docker-compose up -d",
+    "stop-db-container": "docker-compose down",
     "build": "react-scripts build && powershell ./script.ps1",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
