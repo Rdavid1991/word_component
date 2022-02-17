@@ -10,11 +10,6 @@ export const TemplateList = ({ fetchTemplate, documents }) => {
   //id: 1
   //name:
 
-  useEffect(() => {
-    fetchTemplate();
-  }, [])
-
-
   return (
     <>
       {

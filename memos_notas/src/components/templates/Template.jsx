@@ -1,14 +1,19 @@
 //@ts-check
-import React, { useContext, useState } from 'react'
+import React, { useContext } from 'react'
 import { context } from 'src/context/context'
-import { apiRequest } from 'src/utils/apiRequest'
+import { useForm } from 'src/hooks/useForm'
 import { fetchTemplate } from 'src/utils/FetchTemplate'
 import { TemplateCreate } from './TemplateCreate'
 import { TemplateList } from './TemplateList'
 
+const initialState = {
+    name: "",
+    type: ""
+}
 
 export const Template = () => {
 
+    const [values, setValues, handleInputChange, reset] = useForm(initialState);
     const { showLoader, loadDocuments, documents } = useContext(context)
 
 
@@ -22,10 +27,18 @@ export const Template = () => {
     return (
         <>
             <div className="shadow p-3 m-3 bg-body radius-50">
-                <TemplateCreate fetchTemplate={handlerFetchTemplate} />
+                <TemplateCreate
+                    fetchTemplate={handlerFetchTemplate}
+                    values={values}
+                    reset={reset}
+                    handleInputChange={handleInputChange}
+                />
             </div>
             <div className="shadow p-3 m-3 bg-body radius-50">
-                <TemplateList fetchTemplate={handlerFetchTemplate} documents={documents} />
+                <TemplateList
+                    fetchTemplate={handlerFetchTemplate}
+                    documents={documents}
+                />
             </div>
         </>
     )
