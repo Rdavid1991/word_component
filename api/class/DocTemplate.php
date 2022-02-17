@@ -32,9 +32,6 @@ class DocTemplate extends ManagementDB
         $sql = "SELECT * FROM [dbo].[document]";
 
         $response = parent::select_query($sql, []);
-
-        if ($response) {
-            echo json_encode((object)["data" => $response]);
-        }
+        echo json_encode((object)["data" => $response]);
     }
 }
