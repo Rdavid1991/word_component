@@ -1,14 +1,14 @@
 //@ts-check
 /* global Word */
 import moment from "moment";
-import { globals } from "../../../globals";
+import { globals } from "src/globals";
 import {
   addZeroToLeft,
   getLocalStorageUserEmail,
   getLocalStorageUserInitials,
-} from "../../../utils";
+} from "src/utils";
 import "moment/locale/es-us";
-import { ControlsVariables } from "../../../utils/ControlsVariables"
+import { ControlsVariables } from "src/utils/constants";
 moment.locale("es-mx");
 
 /**

@@ -2,6 +2,7 @@
 import React, { useContext } from 'react'
 import { context } from 'src/context/context';
 import { apiRequest } from 'src/utils/apiRequest';
+import { typeOfDocuments } from 'src/utils/constants';
 import { getDocument } from 'src/utils/documents';
 import Swal from 'sweetalert2';
 
@@ -63,9 +64,15 @@ const TemplateCreate = ({ handlerFetchTemplate, values, reset, handleInputChange
                 <div className="mb-3">
                     <select id="type"
                         className="form-select form-select-sm"
+                        value={values.type}
+                        onChange={handleInputChange}
                     >
-                        <option value="memo">Memorandum</option>
-                        <option value="nota">Nota</option>
+                        <option disabled value="">Seleccione un tipo</option>
+                        {
+                            Object.entries(typeOfDocuments).map(([key, value], index) => (
+                                <option key={index} value={key}>{value}</option>
+                            ))
+                        }
                     </select>
                 </div>
 

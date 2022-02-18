@@ -17,10 +17,10 @@ class DocTemplate extends ManagementDB
 
     public function save_template_doc()
     {
-        $sql = "INSERT INTO [dbo].[document]([name],[doc])
-                VALUES (?,?)";
+        $sql = "INSERT INTO [dbo].[document]([name],[type],[doc])
+                VALUES (?,?,?)";
 
-        $response = parent::insert_query($sql, [$_POST["name"], $_POST["document"]]);
+        $response = parent::insert_query($sql, [$_POST["name"], $_POST["type"], $_POST["document"]]);
 
         if ($response) {
             echo Message::success();
@@ -31,10 +31,11 @@ class DocTemplate extends ManagementDB
     {
         $sql = "UPDATE [dbo].[document]
                 SET [name] = ?,
-                    [doc] = ?
+                    [doc] = ?,
+                    [type] = ?
                 WHERE [id] = ?";
 
-        $response = parent::insert_query($sql, [$_POST["name"], $_POST["document"], $_POST["id"]]);
+        $response = parent::insert_query($sql, [$_POST["name"], $_POST["document"], $_POST["type"], $_POST["id"]]);
 
         if ($response) {
             echo Message::success();

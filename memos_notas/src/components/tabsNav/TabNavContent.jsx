@@ -27,19 +27,19 @@ export const TabNavContent = () => {
 
     const fetchNumbers = async () => {
         let result = await getNumber();
+        console.log({result});
         if (result) {
             setNumberState({
-                note: parseInt(result.notes),
-                memo: parseInt(result.memorandum),
+                note: result[0].notes,
+                memo: result[0].memorandum,
             });
         } else {
-            result = await saveNumber(numberState);
+            await saveNumber(numberState);
         }
     };
 
     const fetchAddresses = async () => {
         const result = await getAddressesOfDB();
-        console.log({ result });
         if (result) {
             const array = Array.isArray(result) ? result : [result];
             setStateAddressee(array);

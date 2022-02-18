@@ -9,11 +9,13 @@ import { context } from 'src/context/context';
 
 export const InfoHelp = ({ numberState, setNumberState, saveNumber }) => {
 
-    const {showLoader} = useContext(context)
+    console.log(numberState);
+
+    const { showLoader } = useContext(context)
     const handleInputChange = ({ target }) => {
         setNumberState({
             ...numberState,
-            [target.id]: parseInt(target.value)
+            [target.id]: target.value
         })
     };
 
@@ -163,14 +165,4 @@ export const InfoHelp = ({ numberState, setNumberState, saveNumber }) => {
 
         </div>
     );
-};
-
-
-InfoHelp.propTypes = {
-    numberState: PropTypes.shape({
-        note: PropTypes.number,
-        memo: PropTypes.number
-    }).isRequired,
-    setNumberState: PropTypes.func.isRequired,
-    saveNumber: PropTypes.func.isRequired
 };
