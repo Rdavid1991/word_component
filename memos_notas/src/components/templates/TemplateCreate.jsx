@@ -6,7 +6,7 @@ import { getDocument } from 'src/utils/documents';
 import Swal from 'sweetalert2';
 
 
-const TemplateCreate = ({ fetchTemplate, values, reset, handleInputChange }) => {
+const TemplateCreate = ({ handlerFetchTemplate, values, reset, handleInputChange }) => {
 
     const { showLoader } = useContext(context);
     /**
@@ -20,10 +20,10 @@ const TemplateCreate = ({ fetchTemplate, values, reset, handleInputChange }) => 
         if (document) {
             showLoader(true)
             const response = await apiRequest()
-                .post(`?action=${values.edit? "edit": "save"}_template_doc`, { ...values, "document": document });
+                .post(`${values.edit ? "edit" : "save"}_template_doc`, { ...values, "document": document });
             if (response) {
+                handlerFetchTemplate();
                 showLoader(false)
-                fetchTemplate();
                 await Swal.fire(response);
                 reset();
             }
@@ -31,7 +31,7 @@ const TemplateCreate = ({ fetchTemplate, values, reset, handleInputChange }) => 
         }
     }
 
-    const handleReset = ()=> reset();
+    const handleReset = () => reset();
 
 
     return (
@@ -41,11 +41,11 @@ const TemplateCreate = ({ fetchTemplate, values, reset, handleInputChange }) => 
             </div>
 
             <form
-                className="row g-3"
+                className="g-3"
                 onSubmit={handleSaveDocument}
                 onReset={handleReset}
             >
-                <div className="col-md-4">
+                <div className="mb-3">
                     <label
                         htmlFor="name"
                         className="form-label">Nombre</label>
@@ -60,23 +60,25 @@ const TemplateCreate = ({ fetchTemplate, values, reset, handleInputChange }) => 
                     />
                 </div>
 
-                <div className="col-md-4">
-                    <select id="type">
+                <div className="mb-3">
+                    <select id="type"
+                        className="form-select form-select-sm"
+                    >
                         <option value="memo">Memorandum</option>
                         <option value="nota">Nota</option>
                     </select>
                 </div>
 
-                <div
-                    className="col-12">
+                <div className="mb-3">
+
                     <button
-                        className="btn btn-sm btn-primary"
+                        className="btn btn-sm btn-primary mx-1"
                         type="submit"
                     >
                         Guardar
                     </button>
                     <button
-                        className="btn btn-sm btn-primary"
+                        className="btn btn-sm btn-primary mx-1"
                         type="reset"
                     >
                         Limpiar campos

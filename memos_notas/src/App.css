@@ -16,6 +16,7 @@ i {
 
 .tab-content{
   overflow-y: auto;
+  scroll-behavior: smooth;
   height: 100%;
 }
 

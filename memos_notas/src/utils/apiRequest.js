@@ -8,7 +8,7 @@ export const apiRequest = () => {
         /**
          * 
          * @param {string} route 
-         * @param {Object} params 
+         * @param {Object<string,number>} params
          */
         post: async (route, params) => {
 
@@ -19,7 +19,7 @@ export const apiRequest = () => {
             })
 
             try {
-                const response = await fetch(globals.apiUrl + route, {
+                const response = await fetch(`${globals.apiUrl}?action=${route}`, {
                     method: "POST",
                     body: formData
                 })
@@ -35,6 +35,11 @@ export const apiRequest = () => {
             return false;
         },
 
+        /**
+         * 
+         * @param {string} route
+         * @param {Object<string,number>} params
+         */
         get: async (route, params) => {
 
             let paramsString = "";
@@ -42,7 +47,6 @@ export const apiRequest = () => {
             Object.entries(params).map(([key, value]) => {
                 paramsString += `&${key}=${value}`
             })
-
 
             const response = await fetch(`${globals.apiUrl}?action=${route}${paramsString}`, {
                 method: "GET",

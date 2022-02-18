@@ -80,7 +80,7 @@ class HandlerActionsMemo extends ManagementDB
                 $this->save_count_numbers(($count_number->memorandum + 1), $count_number->notes);
             }
 
-            echo json_encode((object) ["id" => $count_number->memorandum]);
+            echo json_encode((object) ["id" => $count_number->memorandum] );
         } else if (intval($_GET["type"]) === 2) {
             $sql = "UPDATE [dbo].[note]
             SET [state] = 0
@@ -450,8 +450,14 @@ switch ($_GET["action"]) {
     case "save_template_doc":
         $template->save_template_doc();
         break;
+    case "edit_template_doc":
+        $template->edit_template_doc();
+        break;
     case "get_template_doc":
         $template->get_template_doc();
+        break;
+    case "delete_template_doc":
+        $template->delete_template_doc();
         break;
 
     default:

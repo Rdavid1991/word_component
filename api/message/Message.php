@@ -11,4 +11,13 @@ class Message
             "icon" => "success"
         ));
     }
+
+    public static function successDelete()
+    {
+        return json_encode((object) array(
+            "title" => "Hecho",
+            "text" => "El registro se a borrado satisfactoriamente",
+            "icon" => "success"
+        ));
+    }
 }

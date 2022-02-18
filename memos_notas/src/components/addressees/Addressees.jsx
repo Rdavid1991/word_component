@@ -46,7 +46,7 @@ export const Addressees = ({ addresseeState, fetchAddresses }) => {
             department: addresseeState[index].department,
             edit: true
         })
-        scrollTo(0, 0)
+        document.querySelector(".tab-content").scrollTo(0,0)
     }
 
     const handlerDelete = (index) => {
