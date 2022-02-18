@@ -1,21 +1,14 @@
 //@ts-check
 import React, { useContext } from 'react'
 import { context } from 'src/context/context';
-import { useForm } from 'src/hooks/useForm';
 import { apiRequest } from 'src/utils/apiRequest';
+import { getDocument } from 'src/utils/documents';
 import Swal from 'sweetalert2';
-import { getDocument } from './function/documents';
-
-const initialState = {
-    name: "",
-    type:""
-}
 
 
-export const TemplateCreate = ({fetchTemplate}) => {
+const TemplateCreate = ({ fetchTemplate, values, reset, handleInputChange }) => {
 
-    const [values, setValues, handleInputChange, reset] = useForm(initialState);
-    const {showLoader} = useContext(context);
+    const { showLoader } = useContext(context);
     /**
      * Encargarse de guardar el documento
      * @param {React.MouseEvent<HTMLFormElement, MouseEvent>} e 
@@ -27,7 +20,7 @@ export const TemplateCreate = ({fetchTemplate}) => {
         if (document) {
             showLoader(true)
             const response = await apiRequest()
-                .post("?action=save_template_doc", { ...values, "document": document });
+                .post(`?action=${values.edit? "edit": "save"}_template_doc`, { ...values, "document": document });
             if (response) {
                 showLoader(false)
                 fetchTemplate();
@@ -38,6 +31,9 @@ export const TemplateCreate = ({fetchTemplate}) => {
         }
     }
 
+    const handleReset = ()=> reset();
+
+
     return (
         <>
             <div className="px-3">
@@ -47,6 +43,7 @@ export const TemplateCreate = ({fetchTemplate}) => {
             <form
                 className="row g-3"
                 onSubmit={handleSaveDocument}
+                onReset={handleReset}
             >
                 <div className="col-md-4">
                     <label
@@ -78,8 +75,16 @@ export const TemplateCreate = ({fetchTemplate}) => {
                     >
                         Guardar
                     </button>
+                    <button
+                        className="btn btn-sm btn-primary"
+                        type="reset"
+                    >
+                        Limpiar campos
+                    </button>
                 </div>
             </form>
         </>
     )
 }
+
+export default React.memo(TemplateCreate)

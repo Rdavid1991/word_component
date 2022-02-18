@@ -1,7 +1,7 @@
 //@ts-check
 import React, { useContext } from 'react';
 import { context } from 'src/context/context';
-import { writeDocument } from './functions/writeDocument';
+import { writeDocument } from 'src/utils/documents';
 
 export const SelectMemoOrNotes = ({ setMemoOrNoteState }) => {
     const { documents } = useContext(context)

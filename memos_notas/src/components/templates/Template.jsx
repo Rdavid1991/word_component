@@ -1,14 +1,16 @@
 //@ts-check
-import React, { useContext } from 'react'
+import React, { useCallback, useContext } from 'react'
 import { context } from 'src/context/context'
 import { useForm } from 'src/hooks/useForm'
+import { writeDocument } from 'src/utils/documents'
 import { fetchTemplate } from 'src/utils/FetchTemplate'
-import { TemplateCreate } from './TemplateCreate'
-import { TemplateList } from './TemplateList'
+import TemplateCreate from './TemplateCreate'
+import TemplateList from './TemplateList'
 
 const initialState = {
     name: "",
-    type: ""
+    type: "",
+    edit: false
 }
 
 export const Template = () => {
@@ -24,6 +26,27 @@ export const Template = () => {
         loadDocuments(template.data)
     }
 
+    const handlerEdit = useCallback((id) => {
+
+        /**
+         * 
+         * @param {Object} item 
+         * @param {string } item.id 
+         * @returns 
+         */
+        const filterDocument = (item) => parseInt(item.id) === parseInt(id);
+        const documentObject = documents.find(filterDocument)
+
+        const document = JSON.parse(documentObject.doc)
+
+        setValues({
+            name: documentObject.name
+        })
+
+        writeDocument(document)
+
+    }, [documents])
+
     return (
         <>
             <div className="shadow p-3 m-3 bg-body radius-50">
@@ -36,8 +59,8 @@ export const Template = () => {
             </div>
             <div className="shadow p-3 m-3 bg-body radius-50">
                 <TemplateList
-                    fetchTemplate={handlerFetchTemplate}
                     documents={documents}
+                    handlerEdit={handlerEdit}
                 />
             </div>
         </>
