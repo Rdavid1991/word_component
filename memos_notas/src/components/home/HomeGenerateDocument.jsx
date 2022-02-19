@@ -1,6 +1,5 @@
 //@ts-check
 import React, { useContext, useEffect, useState } from 'react';
-//import PropTypes from 'prop-types';
 import { fetchData, loadWordVars } from './functions';
 import { context } from 'src/context/context';
 import { getLocalStorageUserName } from 'src/utils';
@@ -12,11 +11,10 @@ const initialState = {
     to: "",
     subject: "",
     from: getLocalStorageUserName()
-}
+};
+const HomeGenerateDocument = ({ addresseeState, memoOrNoteState, fetchNumbers }) => {
 
-export const MemoAndNotesForm = ({ addresseeState, memoOrNoteState, fetchNumbers }) => {
-
-    const {showLoader} = useContext(context)
+    const { showLoader } = useContext(context);
     /**
      * addresseeState structure
      *  {
@@ -28,14 +26,14 @@ export const MemoAndNotesForm = ({ addresseeState, memoOrNoteState, fetchNumbers
      *  }
      */
 
-    const [form, setForm, handleInputChange, reset] = useForm(initialState)
+    const [form, setForm, handleInputChange, reset] = useForm(initialState);
     const [buttonDisabled, setButtonDisabled] = useState(true);
 
     useEffect(() => {
         if (form.to.length > 0 && form.subject.length > 0 && form.from.length > 0) {
-            setButtonDisabled(false)
+            setButtonDisabled(false);
         } else {
-            setButtonDisabled(true)
+            setButtonDisabled(true);
         }
 
     }, [form]);
@@ -44,31 +42,36 @@ export const MemoAndNotesForm = ({ addresseeState, memoOrNoteState, fetchNumbers
         setForm({
             ...form,
             from: getLocalStorageUserName()
-        })
-    }, [addresseeState])
+        });
+    }, [addresseeState]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (parseInt(memoOrNoteState) > 0) {
-            showLoader(true)
+            showLoader(true);
 
-            const response = await fetchData(addresseeState, memoOrNoteState, form);
-            if (response) {
-                await loadWordVars(addresseeState, response.id, form)
-                    .catch((err) => AlertError("No se puede editar el documento, revise si el documento actual no tiene controles bloqueados. " + err,))
-                showLoader(false)
-                AlertSuccess('La información esta lista')
+            const { data } = await fetchData(addresseeState, memoOrNoteState, form);
+
+            if (data.length > 0) {
+                showLoader(false);
+                loadWordVars(addresseeState, data[0].id, form)
+                    .then(() => {
+                        AlertSuccess('La información esta lista');
+                    })
+                    .catch((err) => {
+                        AlertError("No se puede editar el documento" + err,);
+                    });
             } else {
-                showLoader(false)
-                await AlertError('Error al consultar base de datos');
+                showLoader(false);
+                await AlertError('Error al consultar base de datos o no existen registros');
             }
 
-            fetchNumbers()
+            fetchNumbers();
             reset();
         } else {
-            await AlertWarning("Es memo o nota?")
+            await AlertWarning("Es memo o nota?");
         }
-    }
+    };
 
     return (
 
@@ -139,8 +142,4 @@ export const MemoAndNotesForm = ({ addresseeState, memoOrNoteState, fetchNumbers
     );
 };
 
-// MemoAndNotesForm.prototype = {
-//     addresseeState: PropTypes.array.isRequired,
-//     memoOrNoteState: PropTypes.string.isRequired,
-//     fetchNumbers: PropTypes.func.isRequired,
-// }
+export default React.memo(HomeGenerateDocument);

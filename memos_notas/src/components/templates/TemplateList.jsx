@@ -1,10 +1,10 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 
 
 const TemplateList = ({ documents, handlerEdit, handlerDelete }) => {
 
 
-	const [searchState, setSearchState] = useState("")
+	const [searchState, setSearchState] = useState("");
 
 	console.log("Recarga");
 	//doc: "{\"body\":\"<?xml version=\\\"1.0\\\" standalone=
@@ -15,17 +15,17 @@ const TemplateList = ({ documents, handlerEdit, handlerDelete }) => {
 	 * @param {React.MouseEvent<HTMLFormElement, MouseEvent>} e
 	 */
 	const onClickEdit = ({ target }) => {
-		handlerEdit(target.dataset.id)
-		target.focus({ preventScroll: true })
-	}
+		handlerEdit(target.dataset.id);
+		target.focus({ preventScroll: true });
+	};
 
 	/**
 	 * @param {React.MouseEvent<HTMLFormElement, MouseEvent>} e
 	 */
 	const onClickDelete = ({ target }) => {
-		handlerDelete(target.dataset.id)
-		target.focus({ preventScroll: true })
-	}
+		handlerDelete(target.dataset.id);
+		target.focus({ preventScroll: true });
+	};
 
 	return (
 		<>
@@ -57,7 +57,7 @@ const TemplateList = ({ documents, handlerEdit, handlerDelete }) => {
 									<p className="fw-bold m-0 text-muted">Tipo: <span className="fw-light">{item.id}</span></p>
 								</div>
 							</div>
-						)
+						);
 					} else if (searchState.length <= 0) {
 						return (
 							<div key={index} className="card shadow-sm p-3 mb-2 bg-body">
@@ -68,12 +68,12 @@ const TemplateList = ({ documents, handlerEdit, handlerDelete }) => {
 									<button className="btn btn-sm btn-secondary m-1" data-id={item.id} onClick={onClickDelete}><i className="fas fa-trash-alt"></i></button>
 								</div>
 							</div>
-						)
+						);
 					}
 				})
 			}
 		</>
-	)
-}
+	);
+};
 
-export default React.memo(TemplateList)
+export default React.memo(TemplateList);

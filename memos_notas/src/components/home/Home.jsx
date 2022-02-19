@@ -1,8 +1,8 @@
 //@ts-check
 import React, { useState } from "react";
-import { MemoAndNotesForm } from "../memoAndNotesForm/MemoAndNotesForm.jsx";
-import { SelectMemoOrNotes } from "./HomeSelectDocument.jsx";
-import { RejectMemoAndNotesNumber } from "../RejectMemoAndNotesNumber.jsx";
+import HomeGenerateDocument from "./HomeGenerateDocument.jsx";
+import HomeSelectDocument from "./HomeSelectDocument.jsx";
+import RejectConsecutiveNumber from "./RejectConsecutiveNumber.jsx";
 
 export const Home = ({ addresseeState, fetchNumbers }) => {
 	const [memoOrNoteState, setMemoOrNoteState] = useState(0);
@@ -12,9 +12,9 @@ export const Home = ({ addresseeState, fetchNumbers }) => {
 			<h3 className="text-center px-2 fw-bold">
 				Generar numero de memos y notas
 			</h3>
-			<SelectMemoOrNotes setMemoOrNoteState={setMemoOrNoteState} />
+			<HomeSelectDocument setMemoOrNoteState={setMemoOrNoteState} />
 			<div className="shadow p-3 m-3 bg-body radius-50">
-				<MemoAndNotesForm
+				<HomeGenerateDocument
 					addresseeState={addresseeState}
 					memoOrNoteState={memoOrNoteState}
 					fetchNumbers={fetchNumbers}
@@ -22,7 +22,7 @@ export const Home = ({ addresseeState, fetchNumbers }) => {
 			</div>
 
 			<div className="shadow p-3 m-3 bg-body radius-50">
-				<RejectMemoAndNotesNumber
+				<RejectConsecutiveNumber
 					memoOrNoteState={memoOrNoteState}
 					fetchNumbers={fetchNumbers}
 				/>

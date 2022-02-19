@@ -74,13 +74,15 @@ class HandlerActionsMemo extends ManagementDB
                ?
                )";
 
-            $result = parent::insert_query($sql, [$asunto, $solicitado, $dirigido,   $count_number->memorandum, $date, 1]);
+            $result = parent::insert_query($sql, [$asunto, $solicitado, $dirigido,   $count_number[0]->memorandum, $date, 1]);
 
             if ($result) {
-                $this->save_count_numbers(($count_number->memorandum + 1), $count_number->notes);
+                $this->save_count_numbers(($count_number[0]->memorandum + 1), $count_number[0]->notes);
             }
 
-            echo json_encode((object) ["id" => $count_number->memorandum] );
+            $data = ["data" => [(object) ["id" => $count_number[0]->memorandum]]];
+
+            echo json_encode($data );
         } else if (intval($_GET["type"]) === 2) {
             $sql = "UPDATE [dbo].[note]
             SET [state] = 0
@@ -110,13 +112,15 @@ class HandlerActionsMemo extends ManagementDB
                ?
                )";
 
-            $result = parent::insert_query($sql, [$asunto, $solicitado, $dirigido,   $count_number->notes, $date, 1]);
+            $result = parent::insert_query($sql, [$asunto, $solicitado, $dirigido,   $count_number[0]->notes, $date, 1]);
 
             if ($result) {
-                $this->save_count_numbers(($count_number->memorandum), $count_number->notes + 1);
+                $this->save_count_numbers(($count_number[0]->memorandum), $count_number[0]->notes + 1);
             }
 
-            echo json_encode((object) ["id" => $count_number->notes]);
+            $data = ["data" => [(object) ["id" => $count_number[0]->notes]]];
+
+            echo json_encode($data);
         }
     }
 
@@ -367,7 +371,7 @@ class HandlerActionsMemo extends ManagementDB
             $update = "UPDATE [dbo].[number_memo_notes]
                         SET [memorandum] = ? ,[notes] = ?
                         WHERE [id] = ?";
-            $result = parent::insert_query($update, [$memo, $note, $result->id]);
+            $result = parent::insert_query($update, [$memo, $note, $result[0]->id]);
             if ($result) {
                 return (object) array(
                     "title" => "Hecho",
@@ -445,7 +449,9 @@ switch ($_GET["action"]) {
         break;
     case "get_count_numbers":
         $result = $handler->get_count_numbers();
-        echo json_encode($result);
+        echo json_encode([
+            "data" => $result
+        ]);
         break;
     case "save_template_doc":
         $template->save_template_doc();

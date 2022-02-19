@@ -1,22 +1,21 @@
 import React, { useContext } from 'react';
 import Swal from 'sweetalert2';
-import PropTypes from 'prop-types';
 import { globals } from 'src/globals';
 import { context } from 'src/context/context';
 
 
 
 
-export const InfoHelp = ({ numberState, setNumberState, saveNumber }) => {
+const InfoHelp = ({ numberState, setNumberState, saveNumber }) => {
 
     console.log(numberState);
 
-    const { showLoader } = useContext(context)
+    const { showLoader } = useContext(context);
     const handleInputChange = ({ target }) => {
         setNumberState({
             ...numberState,
             [target.id]: target.value
-        })
+        });
     };
 
     const handleSaveNumber = async (e) => {
@@ -29,15 +28,15 @@ export const InfoHelp = ({ numberState, setNumberState, saveNumber }) => {
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
             confirmButtonText: 'Continuar'
-        })
+        });
 
         if (isConfirmed) {
-            showLoader(true)
+            showLoader(true);
             const saveNumberResult = await saveNumber(numberState);
-            showLoader(false)
-            await Swal.fire(saveNumberResult)
+            showLoader(false);
+            await Swal.fire(saveNumberResult);
         }
-    }
+    };
 
     return (
         <div className="p-3 m-3">
@@ -166,3 +165,5 @@ export const InfoHelp = ({ numberState, setNumberState, saveNumber }) => {
         </div>
     );
 };
+
+export default React.memo(InfoHelp);

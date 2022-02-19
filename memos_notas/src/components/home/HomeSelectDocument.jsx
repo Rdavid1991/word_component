@@ -5,23 +5,23 @@ import { AlertError, AlertSuccess } from 'src/utils/Alerts';
 import { typeOfDocuments } from 'src/utils/constants';
 import { writeDocument } from 'src/utils/documents';
 
-export const SelectMemoOrNotes = ({ setMemoOrNoteState }) => {
-    const { documents } = useContext(context)
+const HomeSelectDocument = ({ setMemoOrNoteState }) => {
+    const { documents } = useContext(context);
 
     const handleSelectChange = ({ target }) => {
-        const template = JSON.parse(documents.find(item => parseInt(item.id) === parseInt(target.value)).doc)
-        const documentType = target.children[target.selectedIndex].dataset.type
+        const template = JSON.parse(documents.find(item => parseInt(item.id) === parseInt(target.value)).doc);
+        const documentType = target.children[target.selectedIndex].dataset.type;
 
-        setMemoOrNoteState(documentType)
+        setMemoOrNoteState(documentType);
 
         writeDocument(template)
             .then(async () => {
                 await AlertSuccess("Documento cargado satisfactoriamente");
             }).
             catch(async (error) => {
-                await AlertError("No se puede cargar documento, revise si el documento actual no tiene controles bloqueados. " + error)
+                await AlertError("No se puede cargar documento, revise si el documento actual no tiene controles bloqueados. " + error);
             });
-    }
+    };
 
     return (
         <form className="px-2">
@@ -49,3 +49,5 @@ export const SelectMemoOrNotes = ({ setMemoOrNoteState }) => {
         </form >
     );
 };
+
+export default React.memo(HomeSelectDocument);

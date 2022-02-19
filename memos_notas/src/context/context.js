@@ -1,4 +1,4 @@
-import { createContext } from 'react'
+import { createContext } from 'react';
 
-export const context = createContext(null)
+export const context = createContext(null);
 

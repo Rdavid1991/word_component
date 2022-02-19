@@ -11,4 +11,4 @@ export const ControlsVariables = {
     addressee_archetype: "addressee_archetype",
     addressee_department: "addressee_department",
     initials: "initials"
-}
+};

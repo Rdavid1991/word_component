@@ -1,7 +1,7 @@
-/* eslint-disable no-prototype-builtins */
+
 //@ts-check
 
-const localStorageKeyUser = "infoUser"
+const localStorageKeyUser = "infoUser";
 
 /**
  * 
@@ -9,8 +9,8 @@ const localStorageKeyUser = "infoUser"
  * @returns {Boolean}
  */
 const isMemo = (memo) => {
-    return parseInt(memo) === 1 ? true : false
-}
+    return parseInt(memo) === 1 ? true : false;
+};
 
 /**
  *
@@ -18,8 +18,8 @@ const isMemo = (memo) => {
  * @returns {Boolean}
  */
 const isNote = (note) => {
-    return parseInt(note) === 2 ? true : false
-}
+    return parseInt(note) === 2 ? true : false;
+};
 
 /**
  * @param {Number | String} digit 
@@ -42,11 +42,11 @@ const addZeroToLeft = (digit) => {
  */
 const getLocalStorageUserName = () => localStorage.hasOwnProperty(localStorageKeyUser)
     ? JSON.parse(localStorage.getItem(localStorageKeyUser)).user
-    : ""
+    : "";
 
 const getLocalStorageUserEmail = () => localStorage.hasOwnProperty(localStorageKeyUser)
     ? JSON.parse(localStorage.getItem(localStorageKeyUser)).email
-    : ""
+    : "";
 
 /**
  * 
@@ -54,7 +54,7 @@ const getLocalStorageUserEmail = () => localStorage.hasOwnProperty(localStorageK
  */
 const getLocalStorageUserInitials = () => localStorage.hasOwnProperty(localStorageKeyUser)
     ? JSON.parse(localStorage.getItem(localStorageKeyUser)).initials
-    : ""
+    : "";
 
 export {
     isMemo,
@@ -64,4 +64,4 @@ export {
     getLocalStorageUserEmail,
     getLocalStorageUserInitials,
     localStorageKeyUser
-}
+};

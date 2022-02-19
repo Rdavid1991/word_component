@@ -21,6 +21,9 @@
         "react/prop-types": 0,
         "no-undef": "warn",
         "no-unused-vars":"warn",
-        "no-constant-condition": "warn"
+        "no-constant-condition": "warn",
+        "no-prototype-builtins": 0,
+        "semi" : "error",
+        "semi-spacing": "error"
     }
 }
