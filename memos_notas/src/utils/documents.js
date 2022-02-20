@@ -10,8 +10,7 @@ export const getDocument = async () => {
 
         return Word.run(async (context) => {
 
-            const body = context.document.body;
-            const docBody = body.getOoxml();
+            const docBody = context.document.body.getOoxml();
             const docFooter = context.document.sections.getFirst().getFooter("Primary").getOoxml();
             const docHeader = context.document.sections.getFirst().getHeader("Primary").getOoxml();
             await context.sync();

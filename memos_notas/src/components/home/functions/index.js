@@ -167,4 +167,16 @@ const fetchData = async (addresseeState, memoOrNoteState, form) => {
   return false;
 };
 
-export { loadWordVars, fetchData };
+
+/**
+ * 
+ * @param {EventTarget & HTMLSelectElement} target 
+ */
+const selectedDocumentType = (target) => {
+
+  const children = target.children[target.selectedIndex];
+  // @ts-ignore
+  return children.dataset.type;
+};
+
+export { loadWordVars, fetchData, selectedDocumentType };

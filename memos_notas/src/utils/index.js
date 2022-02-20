@@ -1,4 +1,4 @@
-
+/* eslint-disable no-prototype-builtins */
 //@ts-check
 
 const localStorageKeyUser = "infoUser";

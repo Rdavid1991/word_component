@@ -11,10 +11,10 @@ const initialState = {
     archetype: "",
     department: "",
     edit: false
-}
+};
 export const Addressees = ({ addresseeState, fetchAddresses }) => {
 
-    const {showLoader} = useContext(context)
+    const {showLoader} = useContext(context);
 
     const [form, setForm] = useState(initialState);
     const [searchState, setSearchState] = useState("");
@@ -23,17 +23,17 @@ export const Addressees = ({ addresseeState, fetchAddresses }) => {
         setForm({
             ...form,
             [target.id]: target.value
-        })
-    }
+        });
+    };
 
     const handleSaveAddressees = async (e) => {
         e.preventDefault();
-        showLoader(true)
-        const json = await saveAddressees(form)
-        showLoader(false)
+        showLoader(true);
+        const json = await saveAddressees(form);
+        showLoader(false);
         Swal.fire(json).then(async () => {
-            setForm(initialState)
-            fetchAddresses()
+            setForm(initialState);
+            fetchAddresses();
         });
     };
 
@@ -45,28 +45,28 @@ export const Addressees = ({ addresseeState, fetchAddresses }) => {
             archetype: addresseeState[index].archetype,
             department: addresseeState[index].department,
             edit: true
-        })
-        document.querySelector(".tab-content").scrollTo(0,0)
-    }
+        });
+        document.querySelector(".tab-content").scrollTo(0,0);
+    };
 
     const handlerDelete = (index) => {
         AlertConfirmQuestion(
             `Desea borrar a <span class="fw-bold">${addresseeState[index].name}</span>`
         ).then(async (result) => {
             if (result.isConfirmed) {
-                showLoader(true)
-                const json = await deleteAddressees(addresseeState[index].id)
+                showLoader(true);
+                const json = await deleteAddressees(addresseeState[index].id);
                 if (json) {
-                    showLoader(false)
+                    showLoader(false);
                     Swal.fire(json).then(() => {
-                        fetchAddresses()
-                    })
+                        fetchAddresses();
+                    });
                 }
             }
         }).catch((error) => {
             console.log(error);
-        })
-    }
+        });
+    };
 
     return (
         <>
@@ -197,7 +197,7 @@ export const Addressees = ({ addresseeState, fetchAddresses }) => {
                                         </div>
                                     </div>
 
-                                )
+                                );
                             } else if (searchState.length <= 0) {
                                 return (
                                     <div key={index} className="card shadow-sm p-3 mb-2 bg-body">
@@ -210,7 +210,7 @@ export const Addressees = ({ addresseeState, fetchAddresses }) => {
                                             <button className="btn btn-sm btn-secondary m-1" onClick={() => handlerDelete(index)}><i className="fas fa-trash-alt"></i></button>
                                         </div>
                                     </div>
-                                )
+                                );
                             }
                         })
                     }

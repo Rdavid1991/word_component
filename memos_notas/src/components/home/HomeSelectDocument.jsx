@@ -4,15 +4,15 @@ import { context } from 'src/context/context';
 import { AlertError, AlertSuccess } from 'src/utils/Alerts';
 import { typeOfDocuments } from 'src/utils/constants';
 import { writeDocument } from 'src/utils/documents';
+import { selectedDocumentType } from './functions';
 
 const HomeSelectDocument = ({ setMemoOrNoteState }) => {
     const { documents } = useContext(context);
 
     const handleSelectChange = ({ target }) => {
         const template = JSON.parse(documents.find(item => parseInt(item.id) === parseInt(target.value)).doc);
-        const documentType = target.children[target.selectedIndex].dataset.type;
 
-        setMemoOrNoteState(documentType);
+        setMemoOrNoteState(selectedDocumentType(target));
 
         writeDocument(template)
             .then(async () => {
@@ -33,6 +33,7 @@ const HomeSelectDocument = ({ setMemoOrNoteState }) => {
                     required={true}
                     onChange={handleSelectChange}
                 >
+                    <option disabled selected>Seleccione una plantilla</option>
                     {
                         documents.map((item, index) => (
                             <option

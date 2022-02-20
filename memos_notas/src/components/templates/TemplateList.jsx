@@ -5,8 +5,6 @@ const TemplateList = ({ documents, handlerEdit, handlerDelete }) => {
 
 
 	const [searchState, setSearchState] = useState("");
-
-	console.log("Recarga");
 	//doc: "{\"body\":\"<?xml version=\\\"1.0\\\" standalone=
 	//id: 1
 	//name:

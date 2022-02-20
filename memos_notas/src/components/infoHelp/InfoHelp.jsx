@@ -8,8 +8,6 @@ import { context } from 'src/context/context';
 
 const InfoHelp = ({ numberState, setNumberState, saveNumber }) => {
 
-    console.log(numberState);
-
     const { showLoader } = useContext(context);
     const handleInputChange = ({ target }) => {
         setNumberState({

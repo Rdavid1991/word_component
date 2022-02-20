@@ -23,9 +23,9 @@ const RejectConsecutiveNumber = ({ memoOrNoteState, fetchNumbers }) => {
 		if (parseInt(memoOrNoteState) > 0) {
 			let response = await fetch(`${globals.apiUrl}?action=get_reject_info&info=${searchNumber}&type=${memoOrNoteState}`, {});
 			if (response.ok) {
-
+				
 				const result = await response.json();
-				if (result) {
+				if (result.length > 0) {
 					//{ "id": 154, "asunto": "Bueno funciona", "solicitado_por": "test", "dirigido_a": "esteban", "last": 1 }
 					setRejectInfo({
 						id: result.id,
@@ -55,6 +55,7 @@ const RejectConsecutiveNumber = ({ memoOrNoteState, fetchNumbers }) => {
 	const handleRejectInfo = (e) => {
 		e.preventDefault();
 
+
 		Swal.fire({
 			title: 'Esta seguro(a)?',
 			text: `Va a rechazar ${memoOrNoteState === 1 ? "un memo" : "una nota"} este cambio no se puede revertir`,
@@ -67,6 +68,7 @@ const RejectConsecutiveNumber = ({ memoOrNoteState, fetchNumbers }) => {
 			if (result.isConfirmed) {
 
 				let response = await fetch(`${globals.apiUrl}?action=reject_info&info=${searchNumber}&type=${memoOrNoteState}`, {});
+				
 				if (response.ok) {
 					const result = await response.json();
 					if (result) {
@@ -81,6 +83,7 @@ const RejectConsecutiveNumber = ({ memoOrNoteState, fetchNumbers }) => {
 
 			}
 		});
+
 	};
 
 	return (
