@@ -12,8 +12,8 @@ const renderApp = (App) => {
 		</React.StrictMode>,
 		document.getElementById("root")
 	);
-}
+};
 
 Office.onReady(() => {
-	renderApp(App)
-})
+	renderApp(App);
+});

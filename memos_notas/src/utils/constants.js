@@ -11,10 +11,10 @@ export const ControlsVariables = {
     addressee_archetype: "addressee_archetype",
     addressee_department: "addressee_department",
     initials: "initials"
-}
+};
 
 export const typeOfDocuments = {
     1: "Memorandum",
     2: "Nota"
-}
+};
 

@@ -1,5 +1,5 @@
 //@ts-check
-import { globals } from "../../../globals"
+import { globals } from "../../../globals";
 
 
 /**
@@ -15,40 +15,40 @@ import { globals } from "../../../globals"
  */
 const saveAddressees = async (form) => {
 
-    const formdata = new FormData()
-    formdata.append("id", form.id)
-    formdata.append("name", form.name)
-    formdata.append("jobTitle", form.jobTitle)
-    formdata.append("archetype", form.archetype)
-    formdata.append("department", form.department)
+    const formdata = new FormData();
+    formdata.append("id", form.id);
+    formdata.append("name", form.name);
+    formdata.append("jobTitle", form.jobTitle);
+    formdata.append("archetype", form.archetype);
+    formdata.append("department", form.department);
     var requestOptions = {
         method: 'POST',
         body: formdata
     };
 
-    let response = await fetch(`${globals.apiUrl}?action=${form.edit ? "edit" : "save"}_addressee`, requestOptions)
+    let response = await fetch(`${globals.apiUrl}?action=${form.edit ? "edit" : "save"}_addressee`, requestOptions);
     if (response.ok) {
         return await response.json();
     }
-    return false
-}
+    return false;
+};
 
 const deleteAddressees = async (id) => {
     const formData = new FormData();
-    formData.append("id", id)
+    formData.append("id", id);
 
     var requestOptions = {
         method: 'POST',
         body: formData
     };
 
-    let response = await fetch(`${globals.apiUrl}?action=delete_addressee`, requestOptions)
+    let response = await fetch(`${globals.apiUrl}?action=delete_addressee`, requestOptions);
     if (response.ok) {
         return  await response.json();
     }
-}
+};
 
 export {
     saveAddressees,
     deleteAddressees
-}
+};

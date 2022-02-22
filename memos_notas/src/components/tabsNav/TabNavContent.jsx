@@ -1,16 +1,17 @@
-import React, { useEffect, useState } from 'react'
-import { globals } from 'src/globals'
-import { HomeInsertUser } from 'src/utils/HomeInsertUser'
-import { Addressees } from '../addressees/Addressees'
-import { getNumber, saveNumber } from '../home/functions'
-import { Home } from '../home/Home'
-import { InfoHelp } from '../infoHelp/InfoHelp'
-import { Template } from '../templates/Template'
+//@ts-check
+import React, { useEffect, useState } from 'react';
+import { globals } from 'src/globals';
+import { HomeInsertUser } from 'src/utils/HomeInsertUser';
+import { getNumber, saveNumber } from 'src/utils/numBerConsecutive';
+import { Addressees } from '../addressees/Addressees';
+import { Home } from '../home/Home';
+import { Template } from '../templates/Template';
+import InfoHelp from '../infoHelp/InfoHelp';
 
 
 const initialNumber = {
-    note: 1,
-    memo: 1,
+    note: "1",
+    memo: "1",
 };
 export const TabNavContent = () => {
 
@@ -26,12 +27,11 @@ export const TabNavContent = () => {
     }, []);
 
     const fetchNumbers = async () => {
-        let result = await getNumber();
-        console.log({result});
-        if (result) {
+        let { data } = await getNumber();
+        if (data.length > 0) {
             setNumberState({
-                note: result[0].notes,
-                memo: result[0].memorandum,
+                note: data[0].notes,
+                memo: data[0].memorandum,
             });
         } else {
             await saveNumber(numberState);
@@ -62,7 +62,7 @@ export const TabNavContent = () => {
             <div className="tab-pane fade active show" id="nav-home">
                 <Home
                     addresseeState={addresseeState}
-                    fetchAddresses={fetchAddresses}
+                    fetchNumbers={fetchNumbers}
                 />
             </div>
             <div className="tab-pane fade" id="nav-addressees">
@@ -82,5 +82,5 @@ export const TabNavContent = () => {
                 <Template />
             </div>
         </div>
-    )
-}
+    );
+};

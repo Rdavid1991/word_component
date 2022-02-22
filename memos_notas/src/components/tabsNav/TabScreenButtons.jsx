@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 
 const TabScreenButtons = () => {
     return (
@@ -42,7 +42,7 @@ const TabScreenButtons = () => {
                 </button>
             </div>
         </nav>
-    )
-}
+    );
+};
 
-export default React.memo(TabScreenButtons)
+export default React.memo(TabScreenButtons);

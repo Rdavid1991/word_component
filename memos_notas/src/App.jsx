@@ -12,21 +12,21 @@ export const App = () => {
 
 	useEffect(() => {
 		(async () => {
-			showLoader(true)
-			const template = await fetchTemplate()
-			showLoader(false)
-			loadDocuments(template.data)
-		})()
-	}, [])
+			showLoader(true);
+			const template = await fetchTemplate();
+			showLoader(false);
+			loadDocuments(template.data);
+		})();
+	}, []);
 
 
 	const showLoader = useCallback((show) => {
-		setLoader(show)
-	}, [loader])
+		setLoader(show);
+	}, [loader]);
 
 	const loadDocuments = useCallback((arrayDocuments) => {
-		setDocuments(arrayDocuments)
-	}, [documents])
+		setDocuments(arrayDocuments);
+	}, [documents]);
 
 
 	return (
@@ -42,4 +42,4 @@ export const App = () => {
 			</div>
 		</context.Provider>
 	);
-}
+};

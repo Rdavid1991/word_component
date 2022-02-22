@@ -1,5 +1,5 @@
 //@ts-check
-import React, { useContext } from 'react'
+import React, { useContext } from 'react';
 import { context } from 'src/context/context';
 import { apiRequest } from 'src/utils/apiRequest';
 import { typeOfDocuments } from 'src/utils/constants';
@@ -19,18 +19,18 @@ const TemplateCreate = ({ handlerFetchTemplate, values, reset, handleInputChange
 
         const document = await getDocument();
         if (document) {
-            showLoader(true)
+            showLoader(true);
             const response = await apiRequest()
                 .post(`${values.edit ? "edit" : "save"}_template_doc`, { ...values, "document": document });
             if (response) {
                 handlerFetchTemplate();
-                showLoader(false)
+                showLoader(false);
                 await Swal.fire(response);
                 reset();
             }
-            showLoader(false)
+            showLoader(false);
         }
-    }
+    };
 
     const handleReset = () => reset();
 
@@ -93,7 +93,7 @@ const TemplateCreate = ({ handlerFetchTemplate, values, reset, handleInputChange
                 </div>
             </form>
         </>
-    )
-}
+    );
+};
 
-export default React.memo(TemplateCreate)
+export default React.memo(TemplateCreate);

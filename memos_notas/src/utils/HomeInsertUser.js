@@ -1,6 +1,6 @@
 //@ts-check
 
-import React from 'react'
+import React from 'react';
 import Swal from 'sweetalert2';
 import { renderToString } from 'react-dom/server';
 import { getLocalStorageUserEmail, getLocalStorageUserInitials, getLocalStorageUserName, localStorageKeyUser } from '.';
@@ -37,10 +37,10 @@ export const HomeInsertUser = async () => {
 							placeholder="usuario@mides.gob.pa" />
 					</div>
 				</>
-			)
-		}
+			);
+		};
 
-		let loop = true
+		let loop = true;
 		while (loop) {
 			try {
 
@@ -55,28 +55,28 @@ export const HomeInsertUser = async () => {
 							user: document.getElementById('swal-input1').value,
 							// @ts-ignore
 							email: document.getElementById('swal-input2').value
-						}
+						};
 					}
-				})
+				});
 
 				user = value.user.toString();
 				email = value.email.toString();
 
-				const arrayUser = value.user.split(/\s/)
+				const arrayUser = value.user.split(/\s/);
 
 				if (arrayUser.length >= 2 && value.email.toString().length > 0 && new RegExp("@mides.gob.pa", "g").test(value.email.toString())) {
 
 					localStorage.setItem(localStorageKeyUser, JSON.stringify({
 						...value,
 						initials: `${arrayUser[0].charAt(0)}${arrayUser[1].charAt(0)}`
-					}))
+					}));
 					break;
 				} else {
-					await Swal.fire("Complete la información")
+					await Swal.fire("Complete la información");
 				}
 			} catch (error) {
-				await AlertError(error)
+				await AlertError(error);
 			}
 		}
 	}
-}
+};

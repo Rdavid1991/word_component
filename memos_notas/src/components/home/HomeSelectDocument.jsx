@@ -4,24 +4,24 @@ import { context } from 'src/context/context';
 import { AlertError, AlertSuccess } from 'src/utils/Alerts';
 import { typeOfDocuments } from 'src/utils/constants';
 import { writeDocument } from 'src/utils/documents';
+import { selectedDocumentType } from './functions';
 
-export const SelectMemoOrNotes = ({ setMemoOrNoteState }) => {
-    const { documents } = useContext(context)
+const HomeSelectDocument = ({ setMemoOrNoteState }) => {
+    const { documents } = useContext(context);
 
     const handleSelectChange = ({ target }) => {
-        const template = JSON.parse(documents.find(item => parseInt(item.id) === parseInt(target.value)).doc)
-        const documentType = target.children[target.selectedIndex].dataset.type
+        const template = JSON.parse(documents.find(item => parseInt(item.id) === parseInt(target.value)).doc);
 
-        setMemoOrNoteState(documentType)
+        setMemoOrNoteState(selectedDocumentType(target));
 
         writeDocument(template)
             .then(async () => {
                 await AlertSuccess("Documento cargado satisfactoriamente");
             }).
             catch(async (error) => {
-                await AlertError("No se puede cargar documento, revise si el documento actual no tiene controles bloqueados. " + error)
+                await AlertError("No se puede cargar documento, revise si el documento actual no tiene controles bloqueados. " + error);
             });
-    }
+    };
 
     return (
         <form className="px-2">
@@ -33,6 +33,7 @@ export const SelectMemoOrNotes = ({ setMemoOrNoteState }) => {
                     required={true}
                     onChange={handleSelectChange}
                 >
+                    <option disabled selected>Seleccione una plantilla</option>
                     {
                         documents.map((item, index) => (
                             <option
@@ -49,3 +50,5 @@ export const SelectMemoOrNotes = ({ setMemoOrNoteState }) => {
         </form >
     );
 };
+
+export default React.memo(HomeSelectDocument);

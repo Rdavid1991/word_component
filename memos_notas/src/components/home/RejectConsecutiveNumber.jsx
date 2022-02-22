@@ -10,9 +10,9 @@ const initialState = {
 	to: "",
 	subject: "",
 	from: ""
-}
+};
 
-export const RejectMemoAndNotesNumber = ({ memoOrNoteState, fetchNumbers }) => {
+const RejectConsecutiveNumber = ({ memoOrNoteState, fetchNumbers }) => {
 
 	const [searchNumber, setSearchNumber] = useState("");
 	const [rejectInfo, setRejectInfo] = useState(initialState);
@@ -21,26 +21,26 @@ export const RejectMemoAndNotesNumber = ({ memoOrNoteState, fetchNumbers }) => {
 		e.preventDefault();
 
 		if (parseInt(memoOrNoteState) > 0) {
-			let response = await fetch(`${globals.apiUrl}?action=get_reject_info&info=${searchNumber}&type=${memoOrNoteState}`, {})
+			let response = await fetch(`${globals.apiUrl}?action=get_reject_info&info=${searchNumber}&type=${memoOrNoteState}`, {});
 			if (response.ok) {
-
+				
 				const result = await response.json();
-				if (result) {
+				if (result.length > 0) {
 					//{ "id": 154, "asunto": "Bueno funciona", "solicitado_por": "test", "dirigido_a": "esteban", "last": 1 }
 					setRejectInfo({
 						id: result.id,
 						to: result.dirigido_a,
 						subject: result.asunto,
 						from: result.solicitado_por
-					})
+					});
 				} else {
 					Swal.fire(
 						'Hay un problema',
 						'No existe el registro que busca o ya no se puede rechazar',
 						'warning'
 					).then(() => {
-						setRejectInfo(initialState)
-					})
+						setRejectInfo(initialState);
+					});
 				}
 			}
 		} else {
@@ -48,12 +48,13 @@ export const RejectMemoAndNotesNumber = ({ memoOrNoteState, fetchNumbers }) => {
 				"Debe seleccionar",
 				"Es memo o nota? para buscar ",
 				"question"
-			)
+			);
 		}
-	}
+	};
 
 	const handleRejectInfo = (e) => {
 		e.preventDefault();
+
 
 		Swal.fire({
 			title: 'Esta seguro(a)?',
@@ -66,22 +67,24 @@ export const RejectMemoAndNotesNumber = ({ memoOrNoteState, fetchNumbers }) => {
 		}).then(async (result) => {
 			if (result.isConfirmed) {
 
-				let response = await fetch(`${globals.apiUrl}?action=reject_info&info=${searchNumber}&type=${memoOrNoteState}`, {})
+				let response = await fetch(`${globals.apiUrl}?action=reject_info&info=${searchNumber}&type=${memoOrNoteState}`, {});
+				
 				if (response.ok) {
 					const result = await response.json();
 					if (result) {
 						Swal.fire(result).then(() => {
-							setSearchNumber("")
-							setRejectInfo(initialState)
+							setSearchNumber("");
+							setRejectInfo(initialState);
 						}).then(() => {
 							fetchNumbers();
-						})
+						});
 					}
 				}
 
 			}
-		})
-	}
+		});
+
+	};
 
 	return (
 		<>
@@ -145,7 +148,5 @@ export const RejectMemoAndNotesNumber = ({ memoOrNoteState, fetchNumbers }) => {
 	);
 };
 
-// RejectMemoAndNotesNumber.prototype = {
-// 	memoOrNoteState: PropTypes.string.isRequired,
-// 	fetchNumbers: PropTypes.func.isRequired
-// }
+
+export default React.memo(RejectConsecutiveNumber);
