@@ -56,6 +56,14 @@ const getLocalStorageUserInitials = () => localStorage.hasOwnProperty(localStora
     ? JSON.parse(localStorage.getItem(localStorageKeyUser)).initials
     : "";
 
+/**
+ * 
+ * @returns {string}
+ */
+const getLocalStorageUserDepartment = () => localStorage.hasOwnProperty(localStorageKeyUser)
+    ? JSON.parse(localStorage.getItem(localStorageKeyUser)).department
+    : "";
+
 export {
     isMemo,
     isNote,
@@ -63,5 +71,6 @@ export {
     getLocalStorageUserName,
     getLocalStorageUserEmail,
     getLocalStorageUserInitials,
+    getLocalStorageUserDepartment,
     localStorageKeyUser
 };
