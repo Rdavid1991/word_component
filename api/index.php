@@ -4,6 +4,7 @@ header("Access-Control-Allow-Headers: *");
 
 require_once(dirname(__FILE__) . "/ManagementDB/ManagementDB.php");
 require_once(dirname(__FILE__) . "/class/DocTemplate.php");
+require_once(dirname(__FILE__) . "/class/Options.php");
 
 class HandlerActionsMemo extends ManagementDB
 {
@@ -80,7 +81,7 @@ class HandlerActionsMemo extends ManagementDB
                 $this->save_count_numbers(($count_number->memorandum + 1), $count_number->notes);
             }
 
-            echo json_encode((object) ["id" => $count_number->memorandum] );
+            echo json_encode((object) ["id" => $count_number->memorandum]);
         } else if (intval($_GET["type"]) === 2) {
             $sql = "UPDATE [dbo].[note]
             SET [state] = 0
@@ -410,6 +411,7 @@ class HandlerActionsMemo extends ManagementDB
 
 $handler = new HandlerActionsMemo();
 $template = new DocTemplate();
+$options = new Options();
 
 switch ($_GET["action"]) {
     case "save_addressee":
@@ -458,6 +460,9 @@ switch ($_GET["action"]) {
         break;
     case "delete_template_doc":
         $template->delete_template_doc();
+        break;
+    case "get_options_department":
+        $options->get_department();
         break;
 
     default:
