@@ -1,11 +1,13 @@
+import { getLocalStorageUserDepartment } from ".";
 import { apiRequest } from "./apiRequest";
 
 export const fetchTemplate = async () => {
-    let json;
-    const response = await apiRequest().get("get_template_doc", {});
+
+    const department_owner = getLocalStorageUserDepartment();
+
+    const response = await apiRequest().get("get_template_doc", {department_owner});
     if (response.ok) {
-        json = await response.json();
-        return json;
+        return await response.json();
     }
     return false;
 };

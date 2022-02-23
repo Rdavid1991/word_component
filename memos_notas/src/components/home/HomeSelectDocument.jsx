@@ -1,5 +1,5 @@
 //@ts-check
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { context } from 'src/context/context';
 import { AlertError, AlertSuccess } from 'src/utils/Alerts';
 import { typeOfDocuments } from 'src/utils/constants';
@@ -9,7 +9,10 @@ import { selectedDocumentType } from './functions';
 const HomeSelectDocument = ({ setMemoOrNoteState }) => {
     const { documents } = useContext(context);
 
+    const [selectedState, setSelectedState] = useState("");
+
     const handleSelectChange = ({ target }) => {
+        setSelectedState(target.value);
         const template = JSON.parse(documents.find(item => parseInt(item.id) === parseInt(target.value)).doc);
 
         setMemoOrNoteState(selectedDocumentType(target));
@@ -32,8 +35,9 @@ const HomeSelectDocument = ({ setMemoOrNoteState }) => {
                     className="form-select form-select-sm"
                     required={true}
                     onChange={handleSelectChange}
+                    value={selectedState}
                 >
-                    <option disabled defaultValue="">Seleccione una plantilla</option>
+                    <option disabled value="">Seleccione una plantilla</option>
                     {
                         documents.map((item, index) => (
                             <option

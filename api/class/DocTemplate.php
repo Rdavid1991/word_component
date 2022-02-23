@@ -17,10 +17,10 @@ class DocTemplate extends ManagementDB
 
     public function save_template_doc()
     {
-        $sql = "INSERT INTO [dbo].[document]([name],[type],[doc])
-                VALUES (?,?,?)";
+        $sql = "INSERT INTO [dbo].[document]([name],[type],[doc],[department_owner_id])
+                VALUES (?,?,?,?)";
 
-        $response = parent::insert_query($sql, [$_POST["name"], $_POST["type"], $_POST["document"]]);
+        $response = parent::insert_query($sql, [$_POST["name"], $_POST["type"], $_POST["document"], $_POST["department_owner"]]);
 
         if ($response) {
             echo Message::success();
@@ -59,9 +59,9 @@ class DocTemplate extends ManagementDB
 
     public function get_template_doc()
     {
-        $sql = "SELECT * FROM [dbo].[document]";
+        $sql = "SELECT * FROM [dbo].[document] WHERE [department_owner_id] = ?";
 
-        $response = parent::select_query($sql, []);
+        $response = parent::select_query($sql, [$_GET["department_owner"]]);
         echo json_encode((object)["data" => $response]);
     }
 }

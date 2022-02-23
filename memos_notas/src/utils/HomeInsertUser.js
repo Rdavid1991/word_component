@@ -59,8 +59,9 @@ export const HomeInsertUser = async () => {
 							<select
 								id='user_department'
 								className="form-select form-select-sm"
+								value={department}
 							>
-								<option disabled defaultValue="">Seleccione un departamento</option>
+								<option disabled value="">Seleccione un departamento</option>
 								{
 									json.data.map((item, index) => (
 										<option key={index} value={item.id}>{item.name}</option>
