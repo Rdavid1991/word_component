@@ -58,9 +58,9 @@ export const Addressees = ({ addresseeState, fetchAddresses }) => {
 
     return (
         <>
-            <div className="shadow p-3 m-3 bg-body radius-50" >
+            <div className="px-3" >
                 <div className="px-2">
-                    <h3 className="fw-bold text-center mb-4">Agregar destinatarios</h3>
+                    <h3 className="fw-bold mb-3">Agregar destinatarios</h3>
                     <form onSubmit={handleSaveAddressees} onReset={() => setForm(initialState)}>
                         <div className="mb-3">
                             <label htmlFor="name" className="form-label fw-bold">Nombre</label>
@@ -131,9 +131,10 @@ export const Addressees = ({ addresseeState, fetchAddresses }) => {
                     </form>
                 </div>
             </div>
-            <div className="shadow p-1 m-3 bg-body radius-50" >
+            <div className="px-3"><hr /></div>
+            <div className="px-3" >
                 <div className="px-2">
-                    <h3 className="fw-bold text-center mb-4">Lista de destinatarios</h3>
+                    <h3 className="fw-bold mb-4">Lista de destinatarios</h3>
                     <div className="input-group mb-3">
                         <input
                             type="text"
@@ -174,7 +175,7 @@ export const Addressees = ({ addresseeState, fetchAddresses }) => {
                                 new RegExp(searchState, "i").test(item.department)
                             ) {
                                 return (
-                                    <div key={index} className="card shadow-sm p-3 mb-2 bg-body">
+                                    <div key={index} className="card p-3 mb-2 bg-body">
                                         <div className="card-body">
                                             <h6 className="fw-bold card-title">Nombre: <span className="fw-light">{item.name}</span></h6>
                                             <p className="fw-bold m-0 text-muted">Arquetipo: <span className="fw-light">{item.archetype}</span></p>
@@ -188,7 +189,7 @@ export const Addressees = ({ addresseeState, fetchAddresses }) => {
                                 );
                             } else if (searchState.length <= 0) {
                                 return (
-                                    <div key={index} className="card shadow-sm p-3 mb-2 bg-body">
+                                    <div key={index} className="card p-3 mb-2 bg-body">
                                         <div className="card-body">
                                             <h6 className="fw-bold card-title">Nombre: <span className="fw-light">{item.name}</span></h6>
                                             <p className="fw-bold m-0 text-muted">Arquetipo: <span className="fw-light">{item.archetype}</span></p>

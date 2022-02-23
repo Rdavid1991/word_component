@@ -34,7 +34,7 @@ const InfoHelp = ({ numberState, setNumberState, saveNumber }) => {
     };
 
     return (
-        <div className="p-3 m-3">
+        <div className="px-3">
 
             <div className="mb-3">
                 <div className="row">
@@ -89,7 +89,7 @@ const InfoHelp = ({ numberState, setNumberState, saveNumber }) => {
             </form>
             <hr />
             <h2>Variables</h2>
-            <h3 className="text-center px-2 fw-bold" >Generar numero de memos y notas</h3>
+            <h3 className="fw-bold" >Generar numero de memos y notas</h3>
             <table className="table">
                 <thead>
                     <tr>

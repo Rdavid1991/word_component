@@ -27,7 +27,7 @@ const HomeSelectDocument = ({ setMemoOrNoteState }) => {
     };
 
     return (
-        <form className="px-2">
+        <form>
             <div className="mb-3">
                 <label htmlFor="to" className="form-label fw-bold">Memo o Notas?</label>
                 <select

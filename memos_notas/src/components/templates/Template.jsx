@@ -79,7 +79,7 @@ export const Template = () => {
 
     return (
         <>
-            <div className="shadow p-3 m-3 bg-body radius-50">
+            <div className="px-3 pt-3">
                 <TemplateCreate
                     handlerFetchTemplate={handlerFetchTemplate}
                     values={values}
@@ -87,7 +87,8 @@ export const Template = () => {
                     handleInputChange={handleInputChange}
                 />
             </div>
-            <div className="shadow p-3 m-3 bg-body radius-50">
+            <div className="px-3"><hr /></div>
+            <div className="px-3">
                 <TemplateList
                     documents={documents}
                     handlerEdit={handlerEdit}

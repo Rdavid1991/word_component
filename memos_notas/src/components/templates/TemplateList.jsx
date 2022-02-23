@@ -26,10 +26,11 @@ const TemplateList = ({ documents, handlerEdit, handlerDelete }) => {
 	};
 
 	return (
-		<>
-			<h3 className="fw-bold text-center mb-4">Lista de plantillas</h3>
+		<div className="mb-5">
+			<h3 className="fw-bold">Lista de plantillas</h3>
 			<div className="input-group mb-3">
 				<input
+					placeholder="Buscar plantilla"
 					type="text"
 					className="form-control form-control-sm"
 					required={true}
@@ -49,16 +50,18 @@ const TemplateList = ({ documents, handlerEdit, handlerDelete }) => {
 						new RegExp(searchState, "i").test(item.name)
 					) {
 						return (
-							<div key={index} className="card shadow-sm p-3 mb-2 bg-body">
+							<div key={index} className="card p-1 mb-2 bg-body">
 								<div className="card-body">
 									<h6 className="fw-bold card-title">Nombre: <span className="fw-light">{item.name}</span></h6>
-									<p className="fw-bold m-0 text-muted">Tipo: <span className="fw-light">{item.id}</span></p>
+									<p className="fw-bold text-muted">Tipo: <span className="fw-light">{item.id}</span></p>
+									<button className="btn btn-sm btn-secondary m-1" data-id={item.id} onClick={onClickEdit}><i className="far fa-edit"></i></button>
+									<button className="btn btn-sm btn-secondary m-1" data-id={item.id} onClick={onClickDelete}><i className="fas fa-trash-alt"></i></button>
 								</div>
 							</div>
 						);
 					} else if (searchState.length <= 0) {
 						return (
-							<div key={index} className="card shadow-sm p-3 mb-2 bg-body">
+							<div key={index} className="card p-1 mb-2 bg-body">
 								<div className="card-body">
 									<h6 className="fw-bold card-title">Nombre: <span className="fw-light">{item.name}</span></h6>
 									<p className="fw-bold m-0 text-muted">Tipo: <span className="fw-light">{item.id}</span></p>
@@ -70,7 +73,7 @@ const TemplateList = ({ documents, handlerEdit, handlerDelete }) => {
 					}
 				})
 			}
-		</>
+		</div>
 	);
 };
 

@@ -78,6 +78,8 @@ class DocumentHistory extends ManagementDB
             $asunto = $_POST["asunto"];
             $solicitado = $_POST["solicitado"];
             $date = $_POST["date"];
+            $department_owner = $_POST["department_owner"];
+           
 
             $sql = "INSERT INTO [dbo].[memo]
            ([asunto]
@@ -85,9 +87,11 @@ class DocumentHistory extends ManagementDB
            ,[dirigido_a]
            ,[number]
            ,[date]
-           ,[state])
+           ,[state]
+           ,[department_owner_id])
             VALUES
            (
+               ?,
                ?,
                ?,
                ?,
@@ -96,7 +100,7 @@ class DocumentHistory extends ManagementDB
                ?
                )";
 
-            $result = parent::insert_query($sql, [$asunto, $solicitado, $dirigido,   $count_number[0]->memorandum, $date, 1]);
+            $result = parent::insert_query($sql, [$asunto, $solicitado, $dirigido,   $count_number[0]->memorandum, $date, 1, $department_owner]);
 
             if ($result) {
                 $this->save_count_numbers(($count_number[0]->memorandum + 1), $count_number[0]->notes);
@@ -116,6 +120,7 @@ class DocumentHistory extends ManagementDB
             $asunto = $_POST["asunto"];
             $solicitado = $_POST["solicitado"];
             $date = $_POST["date"];
+            $department_owner = $_POST["department_owner"];
 
             $sql = "INSERT INTO [dbo].[note]
            ([asunto]
@@ -123,9 +128,11 @@ class DocumentHistory extends ManagementDB
            ,[dirigido_a]
            ,[number]
            ,[date]
-           ,[state])
+           ,[state]
+           ,[department_owner_id])
             VALUES
            (
+               ?,
                ?,
                ?,
                ?,
@@ -134,7 +141,7 @@ class DocumentHistory extends ManagementDB
                ?
                )";
 
-            $result = parent::insert_query($sql, [$asunto, $solicitado, $dirigido,   $count_number[0]->notes, $date, 1]);
+            $result = parent::insert_query($sql, [$asunto, $solicitado, $dirigido,   $count_number[0]->notes, $date, 1, $department_owner]);
 
             if ($result) {
                 $this->save_count_numbers(($count_number[0]->memorandum), $count_number[0]->notes + 1);

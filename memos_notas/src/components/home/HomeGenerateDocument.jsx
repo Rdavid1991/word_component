@@ -75,7 +75,9 @@ const HomeGenerateDocument = ({ addresseeState, memoOrNoteState, fetchNumbers })
 
     return (
 
-        <form className='px-2' onSubmit={handleSubmit}>
+        <form
+            onSubmit={handleSubmit}
+        >
             <div className="mb-3">
                 <label htmlFor="to" className="form-label fw-bold">Dirigido a</label>
                 <div className="input-group mb-3">

@@ -17,23 +17,26 @@ export const Home = ({ addresseeState, fetchNumbers }) => {
 					fetchNumbers={fetchNumbers}
 				/>
 			);
+		}else{
+			return(
+				<HomeOtherDocument/>
+			);
 		}
 	};
 
 	return (
 		<>
-			<h3 className="text-center px-2 fw-bold">
-				Generar numero de memos y notas
-			</h3>
-			<HomeSelectDocument setMemoOrNoteState={setMemoOrNoteState} />
-			<div className="shadow p-3 m-3 bg-body radius-50">
-
+			<div className="px-3">
+				<h3 className="fw-bold">
+					Generar numero de memos y notas
+				</h3>
+				<HomeSelectDocument setMemoOrNoteState={setMemoOrNoteState} />
 				{
 					renderFormTypeDocument()
 				}
 			</div>
-
-			<div className="shadow p-3 m-3 bg-body radius-50">
+			<div className="px-3"><hr /></div>
+			<div className="px-3">
 				<RejectConsecutiveNumber
 					memoOrNoteState={memoOrNoteState}
 					fetchNumbers={fetchNumbers}

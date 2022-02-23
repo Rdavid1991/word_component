@@ -4,11 +4,13 @@ import moment from "moment";
 import { globals } from "src/globals";
 import {
   addZeroToLeft,
+  getLocalStorageUserDepartment,
   getLocalStorageUserEmail,
   getLocalStorageUserInitials,
 } from "src/utils";
 import "moment/locale/es-us";
 import { ControlsVariables } from "src/utils/constants";
+import { apiRequest } from "src/utils/apiRequest";
 moment.locale("es-mx");
 
 /**
@@ -146,21 +148,15 @@ const fetchData = async (addresseeState, memoOrNoteState, form) => {
    * 2 = note
    */
 
-  const formData = new FormData();
-  formData.append("dirigido", addresseeState[form.to].department);
-  formData.append("asunto", form.subject);
-  formData.append("solicitado", getLocalStorageUserEmail());
-  formData.append("date", moment().format("L"));
-  var requestOptions = {
-    method: "POST",
-    body: formData,
+  const params = {
+    "dirigido": addresseeState[form.to].department,
+    "asunto": form.subject,
+    "solicitado": getLocalStorageUserEmail(),
+    "date": moment().format("L"),
+    "department_owner" : getLocalStorageUserDepartment()
   };
 
-  let response = await fetch(
-    `${globals.apiUrl}?action=set_number&type=${memoOrNoteState}`,
-    requestOptions
-  );
-
+  const response = await apiRequest().post(`set_number&type=${memoOrNoteState}`, params);
   if (response.ok) {
     return await response.json();
   }

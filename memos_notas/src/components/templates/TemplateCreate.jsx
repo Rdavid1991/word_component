@@ -49,19 +49,15 @@ const TemplateCreate = ({ handlerFetchTemplate, values, reset, handleInputChange
 
     return (
         <>
-            <div className="px-3">
-                <h3 className="fw-bold text-center">Crear plantillas de documentos</h3>
-            </div>
+
+            <h3 className="fw-bold">Crear plantillas de documentos</h3>
 
             <form
-                className="g-3"
                 onSubmit={handleSaveDocument}
                 onReset={handleReset}
             >
                 <div className="mb-3">
-                    <label
-                        htmlFor="name"
-                        className="form-label">Nombre</label>
+                    <label htmlFor="name" className="form-label fw-bold">Nombre</label>
                     <input
                         type="text"
                         className="form-control form-select-sm"
@@ -74,6 +70,7 @@ const TemplateCreate = ({ handlerFetchTemplate, values, reset, handleInputChange
                 </div>
 
                 <div className="mb-3">
+                    <label htmlFor="type" className="form-label fw-bold">Tipo de documento</label>
                     <select id="type"
                         className="form-select form-select-sm"
                         value={values.type}
@@ -90,7 +87,6 @@ const TemplateCreate = ({ handlerFetchTemplate, values, reset, handleInputChange
                 </div>
 
                 <div className="mb-3">
-
                     <button
                         className="btn btn-sm btn-primary mx-1"
                         type="submit"
