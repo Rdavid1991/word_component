@@ -1,9 +1,9 @@
-/* eslint-disable no-undef */
+//@ts-check
+/* global Office */
 import React from "react";
 import ReactDOM from "react-dom";
 import { App } from "./App";
 
-/* global Office */
 
 const renderApp = (App) => {
 	ReactDOM.render(

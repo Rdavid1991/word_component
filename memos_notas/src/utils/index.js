@@ -38,6 +38,18 @@ const addZeroToLeft = (digit) => {
 };
 
 /**
+ * Verificar si existe usuario en el almacenamiento local
+ * return
+ */
+ const existUser = () => localStorage.hasOwnProperty(localStorageKeyUser) ? true : false;
+
+/**
+ * Verificar si no existe usuario en el almacenamiento local
+ * return
+ */
+const notExistUser = () => !localStorage.hasOwnProperty(localStorageKeyUser) ? true : false;
+
+/**
  * @returns {string}
  */
 const getLocalStorageUserName = () => localStorage.hasOwnProperty(localStorageKeyUser)
@@ -68,6 +80,8 @@ export {
     isMemo,
     isNote,
     addZeroToLeft,
+    existUser,
+    notExistUser,
     getLocalStorageUserName,
     getLocalStorageUserEmail,
     getLocalStorageUserInitials,

@@ -387,9 +387,9 @@ class HandlerActionsMemo extends ManagementDB
                 );
             }
         } else {
-            $update = "INSERT INTO [dbo].[number_memo_notes]([memorandum],[notes])
-                        VALUES(?,?)";
-            $result = parent::insert_query($update, [$_POST["memo"], $_POST["note"]]);
+            $update = "INSERT INTO [dbo].[number_memo_notes]([memorandum],[notes],[department])
+                        VALUES(?,?,?)";
+            $result = parent::insert_query($update, [$_POST["memo"], $_POST["note"],$_POST["department"]]);
             if ($result) {
                 return (object) array(
                     "title" => "Hecho",
@@ -408,8 +408,8 @@ class HandlerActionsMemo extends ManagementDB
 
     public function get_count_numbers()
     {
-        $sql = "SELECT * FROM [dbo].[number_memo_notes]";
-        return parent::select_query($sql);
+        $sql = "SELECT * FROM [dbo].[number_memo_notes] WHERE department = ?";
+        return parent::select_query($sql, [$_GET["department"]??$_POST["department"]]);
     }
 }
 

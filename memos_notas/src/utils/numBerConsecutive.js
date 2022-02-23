@@ -1,8 +1,13 @@
 //@ts-check
+import { localStorageKeyUser } from ".";
 import { apiRequest } from "./apiRequest";
 
+
 const getNumber = async () => {
-    const response = await apiRequest().get("get_count_numbers", {});
+    
+    const department = JSON.parse(localStorage.getItem(localStorageKeyUser)).department;
+    
+    const response = await apiRequest().get("get_count_numbers", { department });
     if (response.ok) {
         return await response.json();
     }
@@ -15,7 +20,8 @@ const getNumber = async () => {
  * @param {string} numbers.note
  */
 const saveNumber = async (numbers) => {
-    apiRequest().post("save_count_numbers", numbers);
+    const department = JSON.parse(localStorage.getItem(localStorageKeyUser)).department;
+    apiRequest().post("save_count_numbers", {...numbers, department});
 };
 
 export {

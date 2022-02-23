@@ -3,9 +3,6 @@ import Swal from 'sweetalert2';
 import { globals } from 'src/globals';
 import { context } from 'src/context/context';
 
-
-
-
 const InfoHelp = ({ numberState, setNumberState, saveNumber }) => {
 
     const { showLoader } = useContext(context);

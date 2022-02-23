@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { globals } from 'src/globals';
 import { HomeInsertUser } from 'src/utils/HomeInsertUser';
-import { getNumber, saveNumber } from 'src/utils/numBerConsecutive';
+import { getNumber, saveNumber } from 'src/utils/numberConsecutive';
 import { Addressees } from '../addressees/Addressees';
 import { Home } from '../home/Home';
 import { Template } from '../templates/Template';
