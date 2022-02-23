@@ -88,7 +88,7 @@ const HomeGenerateDocument = ({ addresseeState, memoOrNoteState, fetchNumbers })
                         required={true}
                         onChange={handleInputChange}
                     >
-                        <option disabled value="">Seleccione un destinatario</option>
+                        <option disabled defaultValue="">Seleccione un destinatario</option>
                         {
                             addresseeState.map((item, index) => (
                                 <option key={index} value={index}>{item.department}</option>

@@ -7,6 +7,8 @@ import { Addressees } from '../addressees/Addressees';
 import { Home } from '../home/Home';
 import { Template } from '../templates/Template';
 import InfoHelp from '../infoHelp/InfoHelp';
+import { apiRequest } from 'src/utils/apiRequest';
+import { getLocalStorageUserDepartment } from 'src/utils';
 
 
 const initialNumber = {
@@ -49,7 +51,10 @@ export const TabNavContent = () => {
     };
 
     const getAddressesOfDB = async () => {
-        let response = await fetch(`${globals.apiUrl}?action=get_addressee`, {});
+
+        const department_owner = getLocalStorageUserDepartment();
+
+        let response = await apiRequest().get("get_addressee", {department_owner});
         if (response.ok) {
             return await response.json();
         }

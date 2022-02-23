@@ -1,5 +1,6 @@
 //@ts-check
 import { globals } from "src/globals";
+import Swal from "sweetalert2";
 import { AlertError } from "./Alerts";
 
 export const apiRequest = () => {
@@ -9,7 +10,7 @@ export const apiRequest = () => {
         /**
          * 
          * @param {string} route 
-         * @param {Object<string,string>} params
+         * @param {Object<string,any>} params
          */
         post: async (route, params) => {
 
@@ -19,21 +20,10 @@ export const apiRequest = () => {
                 formData.append(key, value);
             });
 
-            try {
-                const response = await fetch(`${globals.apiUrl}?action=${route}`, {
-                    method: "POST",
-                    body: formData
-                });
-                if (response.ok) {
-                    return await response.json();
-                } else {
-                    AlertError(`${response.status} ${response.statusText}`);
-                    return false;
-                }
-            } catch (error) {
-                AlertError(error);
-            }
-            return false;
+            return await fetch(`${globals.apiUrl}?action=${route}`, {
+                method: "POST",
+                body: formData
+            });
         },
 
         /**

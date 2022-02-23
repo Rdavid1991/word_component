@@ -15,9 +15,9 @@ class Options extends ManagementDB
         parent::__destruct();
     }
 
-    public function get_department()
+    public function get_department_owner()
     {
-        $sql = "SELECT * FROM [dbo].[department]";
+        $sql = "SELECT * FROM [dbo].[department_owner]";
 
         $query_result = parent::select_query($sql);
 

@@ -2,7 +2,7 @@
 import React, { useCallback, useContext } from 'react';
 import { context } from 'src/context/context';
 import { useForm } from 'src/hooks/useForm';
-import { AlertConfirmQuestion, AlertSuccess } from 'src/utils/Alerts';
+import { AlertConfirmQuestion, AlertError, AlertSuccess } from 'src/utils/Alerts';
 import { apiRequest } from 'src/utils/apiRequest';
 import { writeDocument } from 'src/utils/documents';
 import { fetchTemplate } from 'src/utils/FetchTemplate';
@@ -60,11 +60,19 @@ export const Template = () => {
         const { isConfirmed } = await AlertConfirmQuestion("Va a borrar un elemento ¿desea continuar?");
 
         if (isConfirmed) {
-            showLoader(true);
-            const result = await apiRequest().post("delete_template_doc", { id });
-            await handlerFetchTemplate();
-            await Swal.fire(result);
-        }else{
+            try {
+                showLoader(true);
+                const response = await apiRequest().post("delete_template_doc", { id });
+                if (response.ok) {
+                    await handlerFetchTemplate();
+                    await Swal.fire(await response.json());
+                } else {
+                    AlertError(`No de pudo borrar la plantilla: ${response.status} - ${response.statusText}`);
+                }
+            } catch (error) {
+                AlertError(error);
+            }
+        } else {
             AlertSuccess("La acción a sido cancelada");
         }
     }, [documents]);

@@ -1,30 +1,4 @@
-USE [memos&notas]
-GO
-ALTER TABLE [dbo].[note] DROP CONSTRAINT [DF_note_state]
-GO
-ALTER TABLE [dbo].[memo] DROP CONSTRAINT [DF_memo_state]
-GO
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[number_memo_notes]') AND type in (N'U'))
-DROP TABLE [dbo].[number_memo_notes]
-GO
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[note]') AND type in (N'U'))
-DROP TABLE [dbo].[note]
-GO
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[memo]') AND type in (N'U'))
-DROP TABLE [dbo].[memo]
-GO
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[document]') AND type in (N'U'))
-DROP TABLE [dbo].[document]
-GO
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[department]') AND type in (N'U'))
-DROP TABLE [dbo].[department]
-GO
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[addressee]') AND type in (N'U'))
-DROP TABLE [dbo].[addressee]
-GO
 USE [master]
-GO
-DROP DATABASE [memos&notas]
 GO
 CREATE DATABASE [memos&notas]
  CONTAINMENT = NONE
@@ -116,7 +90,8 @@ CREATE TABLE [dbo].[addressee](
 	[name] [nvarchar](150) NOT NULL,
 	[jobTitle] [text] NOT NULL,
 	[archetype] [nvarchar](50) NOT NULL,
-	[department] [text] NOT NULL
+	[department] [text] NOT NULL,
+	[department_owner_id] [tinyint] NULL
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
 ALTER TABLE [dbo].[addressee] SET (LOCK_ESCALATION = AUTO)
@@ -125,9 +100,13 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE TABLE [dbo].[department](
-	[id] [tinyint] NULL,
-	[name] [nvarchar](150) NULL
+CREATE TABLE [dbo].[department_owner](
+	[id] [tinyint] NOT NULL,
+	[name] [nvarchar](150) NULL,
+ CONSTRAINT [PK_department_owner] PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
 SET ANSI_NULLS ON
@@ -182,20 +161,25 @@ GO
 CREATE TABLE [dbo].[number_memo_notes](
 	[id] [tinyint] IDENTITY(1,1) NOT NULL,
 	[memorandum] [tinyint] NOT NULL,
-	[notes] [tinyint] NOT NULL
+	[notes] [tinyint] NOT NULL,
+	[department_owner_id] [tinyint] NULL
 ) ON [PRIMARY]
 GO
 ALTER TABLE [dbo].[number_memo_notes] SET (LOCK_ESCALATION = AUTO)
 GO
 SET IDENTITY_INSERT [dbo].[addressee] ON 
 GO
-INSERT [dbo].[addressee] ([id], [name], [jobTitle], [archetype], [department]) VALUES (1, N'Test', N'asd', N'asd', N'asd')
+INSERT [dbo].[addressee] ([id], [name], [jobTitle], [archetype], [department], [department_owner_id]) VALUES (1, N'Test', N'asd', N'asd', N'asd', 1)
 GO
-INSERT [dbo].[addressee] ([id], [name], [jobTitle], [archetype], [department]) VALUES (2, N'Test', N'asd', N'asd', N'asd')
+INSERT [dbo].[addressee] ([id], [name], [jobTitle], [archetype], [department], [department_owner_id]) VALUES (2, N'Test', N'asd', N'asd', N'asd', 1)
+GO
+INSERT [dbo].[addressee] ([id], [name], [jobTitle], [archetype], [department], [department_owner_id]) VALUES (3, N'Test', N'asd', N'asd', N'asd', 2)
 GO
 SET IDENTITY_INSERT [dbo].[addressee] OFF
 GO
-INSERT [dbo].[department] ([id], [name]) VALUES (1, N'Informática')
+INSERT [dbo].[department_owner] ([id], [name]) VALUES (1, N'Informática')
+GO
+INSERT [dbo].[department_owner] ([id], [name]) VALUES (2, N'Despacho superior')
 GO
 SET IDENTITY_INSERT [dbo].[document] ON 
 GO
@@ -205,13 +189,20 @@ SET IDENTITY_INSERT [dbo].[document] OFF
 GO
 SET IDENTITY_INSERT [dbo].[number_memo_notes] ON 
 GO
-INSERT [dbo].[number_memo_notes] ([id], [memorandum], [notes]) VALUES (1, 1, 1)
+INSERT [dbo].[number_memo_notes] ([id], [memorandum], [notes], [department_owner_id]) VALUES (2, 12, 1, 1)
+GO
+INSERT [dbo].[number_memo_notes] ([id], [memorandum], [notes], [department_owner_id]) VALUES (3, 1, 1, 2)
 GO
 SET IDENTITY_INSERT [dbo].[number_memo_notes] OFF
 GO
 ALTER TABLE [dbo].[memo] ADD  CONSTRAINT [DF_memo_state]  DEFAULT ((1)) FOR [state]
 GO
 ALTER TABLE [dbo].[note] ADD  CONSTRAINT [DF_note_state]  DEFAULT ((1)) FOR [state]
+GO
+ALTER TABLE [dbo].[addressee]  WITH CHECK ADD  CONSTRAINT [FK_addressee_PK_department_owner] FOREIGN KEY([department_owner_id])
+REFERENCES [dbo].[department_owner] ([id])
+GO
+ALTER TABLE [dbo].[addressee] CHECK CONSTRAINT [FK_addressee_PK_department_owner]
 GO
 USE [master]
 GO

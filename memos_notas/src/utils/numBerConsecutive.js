@@ -1,13 +1,13 @@
 //@ts-check
 import { localStorageKeyUser } from ".";
+import { AlertError } from "./Alerts";
 import { apiRequest } from "./apiRequest";
-
 
 const getNumber = async () => {
     
-    const department = JSON.parse(localStorage.getItem(localStorageKeyUser)).department;
+    const department_owner = JSON.parse(localStorage.getItem(localStorageKeyUser)).department;
     
-    const response = await apiRequest().get("get_count_numbers", { department });
+    const response = await apiRequest().get("get_count_numbers", { department_owner });
     if (response.ok) {
         return await response.json();
     }
@@ -20,8 +20,16 @@ const getNumber = async () => {
  * @param {string} numbers.note
  */
 const saveNumber = async (numbers) => {
-    const department = JSON.parse(localStorage.getItem(localStorageKeyUser)).department;
-    apiRequest().post("save_count_numbers", {...numbers, department});
+    try {
+        const department_owner = JSON.parse(localStorage.getItem(localStorageKeyUser)).department;
+        const response = await apiRequest().post("save_count_numbers", {...numbers, department_owner});
+        if (!response.ok) {
+            AlertError(`No se pudo guardar consecutivo: ${response.status} - ${response.statusText}`);
+        }
+    } catch (error) {
+        AlertError(error);
+    }
+    
 };
 
 export {

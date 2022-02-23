@@ -33,7 +33,7 @@ const HomeSelectDocument = ({ setMemoOrNoteState }) => {
                     required={true}
                     onChange={handleSelectChange}
                 >
-                    <option disabled selected>Seleccione una plantilla</option>
+                    <option disabled defaultValue="">Seleccione una plantilla</option>
                     {
                         documents.map((item, index) => (
                             <option

@@ -1,6 +1,6 @@
+//@ts-check
 import React, { useContext, useState } from 'react';
-import Swal from 'sweetalert2';
-import { context } from '../../context/context';
+import { context } from 'src/context/context';
 import { AlertConfirmQuestion } from '../../utils/Alerts';
 import { deleteAddressees, saveAddressees } from './functions';
 
@@ -14,7 +14,8 @@ const initialState = {
 };
 export const Addressees = ({ addresseeState, fetchAddresses }) => {
 
-    const {showLoader} = useContext(context);
+    const { showLoader } = useContext(context);
+
 
     const [form, setForm] = useState(initialState);
     const [searchState, setSearchState] = useState("");
@@ -28,13 +29,9 @@ export const Addressees = ({ addresseeState, fetchAddresses }) => {
 
     const handleSaveAddressees = async (e) => {
         e.preventDefault();
-        showLoader(true);
-        const json = await saveAddressees(form);
-        showLoader(false);
-        Swal.fire(json).then(async () => {
-            setForm(initialState);
-            fetchAddresses();
-        });
+        await saveAddressees(form, showLoader);
+        setForm(initialState);
+        fetchAddresses();
     };
 
     const handlerEdit = (index) => {
@@ -46,26 +43,17 @@ export const Addressees = ({ addresseeState, fetchAddresses }) => {
             department: addresseeState[index].department,
             edit: true
         });
-        document.querySelector(".tab-content").scrollTo(0,0);
+        document.querySelector(".tab-content").scrollTo(0, 0);
     };
 
-    const handlerDelete = (index) => {
-        AlertConfirmQuestion(
+    const handlerDelete = async (index) => {
+        const { isConfirmed } = await AlertConfirmQuestion(
             `Desea borrar a <span class="fw-bold">${addresseeState[index].name}</span>`
-        ).then(async (result) => {
-            if (result.isConfirmed) {
-                showLoader(true);
-                const json = await deleteAddressees(addresseeState[index].id);
-                if (json) {
-                    showLoader(false);
-                    Swal.fire(json).then(() => {
-                        fetchAddresses();
-                    });
-                }
-            }
-        }).catch((error) => {
-            console.log(error);
-        });
+        );
+        if (isConfirmed) {
+            await deleteAddressees(addresseeState[index].id, showLoader);
+            fetchAddresses();
+        }
     };
 
     return (

@@ -1,6 +1,7 @@
 //@ts-check
 import React, { useContext } from 'react';
 import { context } from 'src/context/context';
+import { AlertError } from 'src/utils/Alerts';
 import { apiRequest } from 'src/utils/apiRequest';
 import { typeOfDocuments } from 'src/utils/constants';
 import { getDocument } from 'src/utils/documents';
@@ -19,16 +20,23 @@ const TemplateCreate = ({ handlerFetchTemplate, values, reset, handleInputChange
 
         const document = await getDocument();
         if (document) {
-            showLoader(true);
-            const response = await apiRequest()
+            try {
+                showLoader(true);
+                const response = await apiRequest()
                 .post(`${values.edit ? "edit" : "save"}_template_doc`, { ...values, "document": document });
-            if (response) {
-                handlerFetchTemplate();
-                showLoader(false);
-                await Swal.fire(response);
-                reset();
+                if (response.ok) {
+                    handlerFetchTemplate();
+                    showLoader(false);
+                    await Swal.fire(await response.json());
+                    reset();
+                }else{
+                    showLoader(false); 
+                    AlertError(`No se pudo guardar la plantilla: ${response.status} - ${response.statusText}`);
+                }
+            } catch (error) {
+                showLoader(false); 
+                AlertError(error);
             }
-            showLoader(false);
         }
     };
 
@@ -67,7 +75,7 @@ const TemplateCreate = ({ handlerFetchTemplate, values, reset, handleInputChange
                         value={values.type}
                         onChange={handleInputChange}
                     >
-                        <option disabled value="">Seleccione un tipo</option>
+                        <option disabled defaultValue="">Seleccione un tipo</option>
                         {
                             Object.entries(typeOfDocuments).map(([key, value], index) => (
                                 <option key={index} value={key}>{value}</option>

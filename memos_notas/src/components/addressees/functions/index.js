@@ -1,5 +1,10 @@
 //@ts-check
-import { globals } from "../../../globals";
+import { useContext } from "react";
+import { context } from "src/context/context";
+import { AlertError } from "src/utils/Alerts";
+import { getLocalStorageUserDepartment } from "src/utils";
+import { apiRequest } from "src/utils/apiRequest";
+import Swal from "sweetalert2";
 
 
 /**
@@ -11,40 +16,47 @@ import { globals } from "../../../globals";
  * @param {string} form.jobTitle 
  * @param {string} form.archetype 
  * @param {string} form.department 
- * @returns 
+ * @param {Function} showLoader Invocar spinner de carga
  */
-const saveAddressees = async (form) => {
+const saveAddressees = async (form, showLoader) => {
 
-    const formdata = new FormData();
-    formdata.append("id", form.id);
-    formdata.append("name", form.name);
-    formdata.append("jobTitle", form.jobTitle);
-    formdata.append("archetype", form.archetype);
-    formdata.append("department", form.department);
-    var requestOptions = {
-        method: 'POST',
-        body: formdata
-    };
+    const department_owner = getLocalStorageUserDepartment();
 
-    let response = await fetch(`${globals.apiUrl}?action=${form.edit ? "edit" : "save"}_addressee`, requestOptions);
-    if (response.ok) {
-        return await response.json();
+    try {
+        showLoader(true);
+        const route = `${form.edit ? "edit" : "save"}_addressee`;
+        let response = await apiRequest().post(route, { ...form, department_owner });
+        showLoader(false);
+        if (response.ok) {
+            await Swal.fire(await response.json());
+        } else {
+            await AlertError(`No se pudo guardar el destinatario: ${response.status} ${response.statusText}`);
+        }
+    } catch (error) {
+        showLoader(false);
+        await AlertError(error);
     }
-    return false;
 };
 
-const deleteAddressees = async (id) => {
-    const formData = new FormData();
-    formData.append("id", id);
-
-    var requestOptions = {
-        method: 'POST',
-        body: formData
-    };
-
-    let response = await fetch(`${globals.apiUrl}?action=delete_addressee`, requestOptions);
-    if (response.ok) {
-        return  await response.json();
+/**
+ * Borrar destinatarios
+ * @param {String|Number} id 
+ * @param {Function} showLoader Invocar spinner de carga
+ */
+const deleteAddressees = async (id, showLoader) => {
+   
+    try {
+        showLoader(true);
+        let response = await apiRequest().post("delete_addressee", { id });
+        showLoader(false);
+        if (response.ok) {
+            await Swal.fire(await response.json());
+        } else {
+            await AlertError(`No se pudo borrar el destinatario: ${response.status} ${response.statusText}`);
+        }
+    } catch (error) {
+        showLoader(false);
+        await AlertError(error);
     }
 };
 

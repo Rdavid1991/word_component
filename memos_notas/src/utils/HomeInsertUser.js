@@ -28,7 +28,7 @@ export const HomeInsertUser = async () => {
 
 			const alertHtml = async () => {
 				let json;
-				const result = await apiRequest().get("get_options_department", {});
+				const result = await apiRequest().get("get_options_department_owner", {});
 				if (result.ok) {
 					json = await result.json();
 				}
@@ -59,9 +59,8 @@ export const HomeInsertUser = async () => {
 							<select
 								id='user_department'
 								className="form-select form-select-sm"
-								value={department}
 							>
-								<option disabled selected value="">Seleccione un departamento</option>
+								<option disabled defaultValue="">Seleccione un departamento</option>
 								{
 									json.data.map((item, index) => (
 										<option key={index} value={item.id}>{item.name}</option>
@@ -100,8 +99,6 @@ export const HomeInsertUser = async () => {
 					department = value.department.toString();
 
 					const arrayUser = value.user.split(/\s/);
-
-					console.log(value.department);
 
 					if (value.department.toString().length > 0 && arrayUser.length >= 2 && value.email.toString().length > 0 && new RegExp("@mides.gob.pa", "g").test(value.email.toString())) {
 
