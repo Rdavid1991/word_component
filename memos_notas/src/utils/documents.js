@@ -34,7 +34,7 @@ export const getDocument = async () => {
      * @param {string}  template.footer 
      */
 export const writeDocument = async (template) => {
-    return Word.run(async (context) => {
+    return await Word.run(async (context) => {
 
         const body = context.document.body;
         const header = context.document.sections.getFirst().getHeader("Primary");

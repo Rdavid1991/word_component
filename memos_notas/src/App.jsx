@@ -9,6 +9,7 @@ export const App = () => {
 
 	const [loader, setLoader] = useState(false);
 	const [documents, setDocuments] = useState(initialState);
+	const [controls, setControlsState] = useState([]);
 
 	useEffect(() => {
 		(async () => {
@@ -28,12 +29,17 @@ export const App = () => {
 		setDocuments(arrayDocuments);
 	}, [documents]);
 
+	const setControls = useCallback((controls) => {
+		setControlsState(controls);
+	}, [controls]);
 
 	return (
 		<context.Provider value={{
 			showLoader,
 			loadDocuments,
-			documents
+			documents,
+			setControls,
+			controls
 		}}>
 
 			<div id="container">

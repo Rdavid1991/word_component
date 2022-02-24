@@ -5,9 +5,10 @@ import { AlertError, AlertSuccess } from 'src/utils/Alerts';
 import { typeOfDocuments } from 'src/utils/constants';
 import { writeDocument } from 'src/utils/documents';
 import { selectedDocumentType } from './functions';
+import { parametersOfDocuments } from './functions/parametersOfDocuments';
 
-const HomeSelectDocument = ({ setMemoOrNoteState }) => {
-    const { documents } = useContext(context);
+const HomeSelectDocument = ({ setMemoOrNoteState, memoOrNoteState }) => {
+    const { documents, setControls } = useContext(context);
 
     const [selectedState, setSelectedState] = useState("");
 
@@ -20,8 +21,9 @@ const HomeSelectDocument = ({ setMemoOrNoteState }) => {
         writeDocument(template)
             .then(async () => {
                 await AlertSuccess("Documento cargado satisfactoriamente");
-            }).
-            catch(async (error) => {
+                setControls(await parametersOfDocuments());
+            })
+            .catch(async (error) => {
                 await AlertError("No se puede cargar documento, revise si el documento actual no tiene controles bloqueados. " + error);
             });
     };

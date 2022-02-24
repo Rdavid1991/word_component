@@ -7,10 +7,10 @@ import HomeSelectDocument from "./HomeSelectDocument.jsx";
 import RejectConsecutiveNumber from "./RejectConsecutiveNumber.jsx";
 
 export const Home = ({ addresseeState, fetchNumbers }) => {
-	const [memoOrNoteState, setMemoOrNoteState] = useState(0);
+	const [memoOrNoteState, setMemoOrNoteState] = useState(-1);
 
 	const renderFormTypeDocument = () => {
-		if (String(memoOrNoteState) == Object.keys(typeOfDocuments)[0] || String(memoOrNoteState) == Object.keys(typeOfDocuments)[1]) {
+		if (String(memoOrNoteState) == Object.keys(typeOfDocuments)[1] || String(memoOrNoteState) == Object.keys(typeOfDocuments)[2]) {
 			return (
 				<HomeGenerateDocument
 					addresseeState={addresseeState}
@@ -18,7 +18,7 @@ export const Home = ({ addresseeState, fetchNumbers }) => {
 					fetchNumbers={fetchNumbers}
 				/>
 			);
-		} else {
+		} else if (String(memoOrNoteState) == Object.keys(typeOfDocuments)[0]) {
 			return (
 				<HomeOtherDocument />
 			);
@@ -31,7 +31,10 @@ export const Home = ({ addresseeState, fetchNumbers }) => {
 				<h3 className="fw-bold">
 					Generar numero de memos y notas
 				</h3>
-				<HomeSelectDocument setMemoOrNoteState={setMemoOrNoteState} />
+				<HomeSelectDocument
+					setMemoOrNoteState={setMemoOrNoteState}
+					memoOrNoteState={memoOrNoteState}
+				/>
 				{
 					renderFormTypeDocument()
 				}

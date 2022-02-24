@@ -1,6 +1,9 @@
 /* eslint-disable no-prototype-builtins */
 //@ts-check
 
+import { AlertError } from "./Alerts";
+import { apiRequest } from "./apiRequest";
+
 const localStorageKeyUser = "infoUser";
 
 /**
@@ -38,10 +41,24 @@ const addZeroToLeft = (digit) => {
 };
 
 /**
+ * Obtener los departamentos a los que pertenece un usuario
+ * @returns 
+ */
+export const getDepartmentOwner = async () => {
+    const response = await apiRequest().get("get_options_department_owner", {});
+    if (response.ok) {
+        const json = await response.json();
+        return json.data;
+    }
+    AlertError(`Error al cagar departamentos: ${response.status} - ${response.statusText}`);
+    return [];
+};
+
+/**
  * Verificar si existe usuario en el almacenamiento local
  * return
  */
- const existUser = () => localStorage.hasOwnProperty(localStorageKeyUser) ? true : false;
+const existUser = () => localStorage.hasOwnProperty(localStorageKeyUser) ? true : false;
 
 /**
  * Verificar si no existe usuario en el almacenamiento local

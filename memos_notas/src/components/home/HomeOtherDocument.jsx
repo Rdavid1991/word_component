@@ -1,27 +1,21 @@
 //@ts-check
 /* global Word */
-import React, { useEffect, useState } from 'react';
+import React, { useContext } from 'react';
+import { context } from 'src/context/context';
 import { useForm } from 'src/hooks/useForm';
-import { parametersOfDocuments } from './functions/parametersOfDocuments';
 
-const initialState ={};
+const initialState = {};
 
 const HomeOtherDocument = () => {
 
-    const [controls, setControls] = useState([]);
+
     const [values, setValues, handleInputChange, reset] = useForm(initialState);
 
-    console.log(values);
-
-    useEffect(() => {
-        parametersOfDocuments().then((result) => {
-            setControls(result);
-        });
-    }, []);
+    const { controls } = useContext(context);
+    console.log(controls);
 
     /**
-     * 
-     * @param {React.MouseEvent<HTMLFormElement, MouseEvent>} e  
+     * @param {React.ChangeEvent<HTMLFormElement>} e  
      */
     const handleSetToDocument = (e) => {
         e.preventDefault();
@@ -33,10 +27,10 @@ const HomeOtherDocument = () => {
 
             await context.sync();
 
-            Object.entries(values).map((entry, index) => {
+            Object.entries(values).map((entry) => {
                 const [key, value] = entry;
-
-                control?.items[index].insertText(value, "Replace");
+                const item = control?.items.find(item => item.tag === key);
+                item.insertText(value, "Replace");
             });
 
         });
@@ -60,7 +54,7 @@ const HomeOtherDocument = () => {
                                     placeholder={control.title}
                                     required={true}
                                     onChange={handleInputChange}
-                                    value={values[control.tag] ||""}
+                                    value={values[control.tag] || ""}
                                 />
                             </div>
                         </div>

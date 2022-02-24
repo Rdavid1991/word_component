@@ -1,7 +1,7 @@
 //@ts-check
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { context } from 'src/context/context';
-import { getLocalStorageUserDepartment } from 'src/utils';
+import { getDepartmentOwner, getLocalStorageUserDepartment } from 'src/utils';
 import { AlertError } from 'src/utils/Alerts';
 import { apiRequest } from 'src/utils/apiRequest';
 import { typeOfDocuments } from 'src/utils/constants';
@@ -12,6 +12,19 @@ import Swal from 'sweetalert2';
 const TemplateCreate = ({ handlerFetchTemplate, values, reset, handleInputChange }) => {
 
     const { showLoader } = useContext(context);
+    const [departmentOwnerState, setDepartmentOwnerState] = useState([]);
+
+
+    useEffect(() => {
+        (async () => {
+            if (getLocalStorageUserDepartment() == "0") {
+                const data = await getDepartmentOwner();
+                setDepartmentOwnerState(data);
+            }
+        })();
+    }, []);
+
+
     /**
      * Encargarse de guardar el documento
      * @param {React.MouseEvent<HTMLFormElement, MouseEvent>} e 
@@ -45,6 +58,32 @@ const TemplateCreate = ({ handlerFetchTemplate, values, reset, handleInputChange
     };
 
     const handleReset = () => reset();
+
+    const renderSelectDepartment = () => {
+        if (getLocalStorageUserDepartment() == "0") {
+
+            return (
+                <div className="mb-3">
+                    <label htmlFor="owner" className="form-label fw-bold">Pertenece a</label>
+                    <select id="owner"
+                        className="form-select form-select-sm"
+                        value={values?.owner || ""}
+                        onChange={handleInputChange}
+                        required
+                    >
+                        <option disabled value="">Seleccione un tipo</option>
+                        {
+                            departmentOwnerState.map((item, index) => (
+                                <option key={index} value={item.id}>{item.name}</option>
+                            ))
+                        }
+                    </select>
+                </div>
+            );
+        } else {
+            return null;
+        }
+    };
 
 
     return (
@@ -85,6 +124,7 @@ const TemplateCreate = ({ handlerFetchTemplate, values, reset, handleInputChange
                         }
                     </select>
                 </div>
+                {renderSelectDepartment()}
 
                 <div className="mb-3">
                     <button

@@ -14,6 +14,7 @@ export const ControlsVariables = {
 };
 
 export const typeOfDocuments = {
+    0: "Otros",
     1: "Memorandum",
     2: "Nota"
 };
