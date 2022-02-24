@@ -16,9 +16,30 @@
 			"browserslist",
 			"builtins",
 			"firefox",
+			"formdata",
 			"swal",
 			"sweetalert"
-		]
+		],
+		"workbench.colorCustomizations": {
+			"activityBar.activeBackground": "#f0d696",
+			"activityBar.activeBorder": "#18a77e",
+			"activityBar.background": "#f0d696",
+			"activityBar.foreground": "#15202b",
+			"activityBar.inactiveForeground": "#15202b99",
+			"activityBarBadge.background": "#18a77e",
+			"activityBarBadge.foreground": "#e7e7e7",
+			"sash.hoverBorder": "#f0d696",
+			"statusBar.background": "#e9c46a",
+			"statusBar.foreground": "#15202b",
+			"statusBarItem.hoverBackground": "#e2b23e",
+			"statusBarItem.remoteBackground": "#e9c46a",
+			"statusBarItem.remoteForeground": "#15202b",
+			"titleBar.activeBackground": "#e9c46a",
+			"titleBar.activeForeground": "#15202b",
+			"titleBar.inactiveBackground": "#e9c46a99",
+			"titleBar.inactiveForeground": "#15202b99"
+		},
+		"peacock.color": "#E9C46A"
 	},
 	"launch": {
 		"configurations": [

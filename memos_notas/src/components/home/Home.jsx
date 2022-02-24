@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { typeOfDocuments } from "src/utils/constants.js";
 import HomeGenerateDocument from "./HomeGenerateDocument.jsx";
-import { HomeOtherDocument } from "./HomeOtherDocument.jsx";
+import HomeOtherDocument from "./HomeOtherDocument.jsx";
 import HomeSelectDocument from "./HomeSelectDocument.jsx";
 import RejectConsecutiveNumber from "./RejectConsecutiveNumber.jsx";
 
@@ -18,9 +18,9 @@ export const Home = ({ addresseeState, fetchNumbers }) => {
 					fetchNumbers={fetchNumbers}
 				/>
 			);
-		}else{
-			return(
-				<HomeOtherDocument/>
+		} else {
+			return (
+				<HomeOtherDocument />
 			);
 		}
 	};
