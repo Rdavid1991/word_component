@@ -46,7 +46,8 @@ export const Template = () => {
         setValues({
             ...values,
             name: documentObject.name,
-            id: documentObject.id,
+            type: documentObject.type,
+            owner: documentObject.department_owner_id,
             edit: true
         });
 

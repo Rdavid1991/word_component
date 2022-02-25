@@ -59,6 +59,10 @@ const TemplateCreate = ({ handlerFetchTemplate, values, reset, handleInputChange
 
     const handleReset = () => reset();
 
+    /**
+     * Solo se muestra si tiene acceso para crear plantillas para otros
+     * @returns 
+     */
     const renderSelectDepartment = () => {
         if (getLocalStorageUserDepartment() == "0") {
 
@@ -71,7 +75,7 @@ const TemplateCreate = ({ handlerFetchTemplate, values, reset, handleInputChange
                         onChange={handleInputChange}
                         required
                     >
-                        <option disabled value="">Seleccione un tipo</option>
+                        <option disabled value="">Seleccione un departamento</option>
                         {
                             departmentOwnerState.map((item, index) => (
                                 <option key={index} value={item.id}>{item.name}</option>
@@ -116,7 +120,7 @@ const TemplateCreate = ({ handlerFetchTemplate, values, reset, handleInputChange
                         onChange={handleInputChange}
                         required
                     >
-                        <option disabled value="">Seleccione un tipo</option>
+                        <option>Seleccione un tipo</option>
                         {
                             Object.entries(typeOfDocuments).map(([key, value], index) => (
                                 <option key={index} value={key}>{value}</option>

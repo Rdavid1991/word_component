@@ -12,7 +12,6 @@ const HomeOtherDocument = () => {
     const [values, setValues, handleInputChange, reset] = useForm(initialState);
 
     const { controls } = useContext(context);
-    console.log(controls);
 
     /**
      * @param {React.ChangeEvent<HTMLFormElement>} e  
@@ -39,29 +38,35 @@ const HomeOtherDocument = () => {
 
     return (
         <>
-            <form onSubmit={handleSetToDocument}>
-                {
-                    controls.map((control, index) => (
-                        <div key={index} className="mb-3">
-                            <label htmlFor={control.tag} className="form-label fw-bold">{control.title}</label>
-                            <div className="input-group mb-3">
+            {
+                controls.length > 0
+                    ?
+                    <form onSubmit={handleSetToDocument}>
+                        {
+                            controls.map((control, index) => (
+                                <div key={index} className="mb-3">
+                                    <label htmlFor={control.tag} className="form-label fw-bold">{control.title}</label>
+                                    <div className="input-group mb-3">
 
-                                <span className="input-group-text"><i className="far fa-keyboard"></i></span>
-                                <input
-                                    type="text"
-                                    className="form-control form-control-sm"
-                                    id={control.tag}
-                                    placeholder={control.title}
-                                    required={true}
-                                    onChange={handleInputChange}
-                                    value={values[control.tag] || ""}
-                                />
-                            </div>
-                        </div>
-                    ))
-                }
-                <button type="submit">guardar</button>
-            </form>
+                                        <span className="input-group-text"><i className="far fa-keyboard"></i></span>
+                                        <input
+                                            type="text"
+                                            className="form-control form-control-sm"
+                                            id={control.tag}
+                                            placeholder={control.title}
+                                            required={true}
+                                            onChange={handleInputChange}
+                                            value={values[control.tag] || ""}
+                                        />
+                                    </div>
+                                </div>
+                            ))
+                        }
+                        <button className="btn btn-sm btn-secondary" type="submit">guardar</button>
+                    </form>
+                    : 
+                    <h2 className="text-center">Esta plantilla no cuenta con variables</h2>
+            }
         </>
     );
 };

@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { getDepartmentOwner, getLocalStorageUserDepartment } from 'src/utils';
 import { typeOfDocuments } from "src/utils/constants";
 
 
@@ -6,9 +7,16 @@ const TemplateList = ({ documents, handlerEdit, handlerDelete }) => {
 
 
 	const [searchState, setSearchState] = useState("");
-	//doc: "{\"body\":\"<?xml version=\\\"1.0\\\" standalone=
-	//id: 1
-	//name:
+	const [departmentOwnerState, setDepartmentOwnerState] = useState([]);
+
+	useEffect(() => {
+		(async () => {
+			if (getLocalStorageUserDepartment() == "0") {
+				const data = await getDepartmentOwner();
+				setDepartmentOwnerState(data);
+			}
+		})();
+	}, []);
 
 	/**
 	 * @param {React.MouseEvent<HTMLFormElement, MouseEvent>} e
@@ -24,6 +32,32 @@ const TemplateList = ({ documents, handlerEdit, handlerDelete }) => {
 	const onClickDelete = ({ target }) => {
 		handlerDelete(target.dataset.id);
 		target.focus({ preventScroll: true });
+	};
+
+	console.log();
+
+	const searchElements = (item, index) => {
+		return (
+			<div key={index} className="card p-1 mb-2 bg-body">
+				<div className="card-body">
+					<h6 className="fw-bold card-title">Nombre: <span className="fw-light">{item.name}</span></h6>
+					<p className="fw-bold text-muted mb-0">Tipo: <span className="fw-light">{typeOfDocuments[item.type]}</span></p>
+					{
+						getLocalStorageUserDepartment() == 0 ?
+							<p className="fw-bold text-muted">Pertenece a:&nbsp;
+								<span
+									className="fw-light"
+								>
+									{departmentOwnerState.filter((e) => e.id == item.department_owner_id)[0].name}
+								</span>
+							</p>
+							: null
+					}
+					<button className="btn btn-sm btn-secondary m-1" data-id={item.id} onClick={onClickEdit}><i className="far fa-edit"></i></button>
+					<button className="btn btn-sm btn-secondary m-1" data-id={item.id} onClick={onClickDelete}><i className="fas fa-trash-alt"></i></button>
+				</div>
+			</div>
+		);
 	};
 
 	return (
@@ -48,29 +82,14 @@ const TemplateList = ({ documents, handlerEdit, handlerDelete }) => {
 				documents.map((item, index) => {
 
 					if (searchState.length > 0 &&
-						new RegExp(searchState, "i").test(item.name)
+						new RegExp(searchState, "i").test(item.name) ||
+						new RegExp(searchState, "i").test(typeOfDocuments[item.type]) ||
+						new RegExp(searchState, "i").test(departmentOwnerState.filter((e) => e.id == item.department_owner_id)[0].name)
+
 					) {
-						return (
-							<div key={index} className="card p-1 mb-2 bg-body">
-								<div className="card-body">
-									<h6 className="fw-bold card-title">Nombre: <span className="fw-light">{item.name}</span></h6>
-									<p className="fw-bold text-muted">Tipo: <span className="fw-light">{typeOfDocuments[item.type]}</span></p>
-									<button className="btn btn-sm btn-secondary m-1" data-id={item.id} onClick={onClickEdit}><i className="far fa-edit"></i></button>
-									<button className="btn btn-sm btn-secondary m-1" data-id={item.id} onClick={onClickDelete}><i className="fas fa-trash-alt"></i></button>
-								</div>
-							</div>
-						);
+						return searchElements(item, index);
 					} else if (searchState.length <= 0) {
-						return (
-							<div key={index} className="card p-1 mb-2 bg-body">
-								<div className="card-body">
-									<h6 className="fw-bold card-title">Nombre: <span className="fw-light">{item.name}</span></h6>
-									<p className="fw-bold m-0 text-muted">Tipo: <span className="fw-light">{typeOfDocuments[item.type]}</span></p>
-									<button className="btn btn-sm btn-secondary m-1" data-id={item.id} onClick={onClickEdit}><i className="far fa-edit"></i></button>
-									<button className="btn btn-sm btn-secondary m-1" data-id={item.id} onClick={onClickDelete}><i className="fas fa-trash-alt"></i></button>
-								</div>
-							</div>
-						);
+						return searchElements(item, index);
 					}
 				})
 			}
