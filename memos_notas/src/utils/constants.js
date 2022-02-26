@@ -14,14 +14,14 @@ export const ControlsVariables = {
 };
 
 export const DocumentPermissionRequestControls = {
-    from_hour : "from_hour",
-    from_day  : "from_day",
-    from_month: "from_month",
-    from_year : "from_year",
-    to_hour   : "to_hour",
-    to_day    : "to_day",
-    to_month  : "to_month",
-    to_year   : "to_year"
+    from_hour : "Desde - hora",
+    from_day  : "Desde - día",
+    from_month: "Desde - mes",
+    from_year : "Desde - año",
+    to_hour   : "Hasta - hora",
+    to_day    : "Hasta - día",
+    to_month  : "Hasta - mes",
+    to_year   : "Hasta - año"
 };
 
 export const typeOfDocuments = {

@@ -5,12 +5,12 @@ import { AlertConfirmQuestion } from '../../utils/Alerts';
 import { deleteAddressees, saveAddressees } from './functions';
 
 const initialState = {
-    id: "",
-    name: "",
-    jobTitle: "",
-    archetype: "",
+    id        : "",
+    name      : "",
+    jobTitle  : "",
+    archetype : "",
     department: "",
-    edit: false
+    edit      : false
 };
 export const Addressees = ({ addresseeState, fetchAddresses }) => {
 
@@ -36,12 +36,12 @@ export const Addressees = ({ addresseeState, fetchAddresses }) => {
 
     const handlerEdit = (index) => {
         setForm({
-            id: addresseeState[index].id,
-            name: addresseeState[index].name,
-            jobTitle: addresseeState[index].jobTitle,
-            archetype: addresseeState[index].archetype,
+            id        : addresseeState[index].id,
+            name      : addresseeState[index].name,
+            jobTitle  : addresseeState[index].jobTitle,
+            archetype : addresseeState[index].archetype,
             department: addresseeState[index].department,
-            edit: true
+            edit      : true
         });
         document.querySelector(".tab-content").scrollTo(0, 0);
     };

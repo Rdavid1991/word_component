@@ -21,7 +21,7 @@ moment.locale("es-mx");
 const getControlsByTag = (context, variables) => {
 	let arrayControls = {};
 
-	Object.values(variables).forEach((tag) => {
+	Object.keys(variables).forEach((tag) => {
 		arrayControls = {
 			...arrayControls,
 			[tag]: {
@@ -50,7 +50,7 @@ const getControlsByTag = (context, variables) => {
  * @returns {object}
  */
 const loadControls = (context, controls, variables) => {
-	Object.values(variables).forEach((tag) => {
+	Object.keys(variables).forEach((tag) => {
 		context.load(controls[tag].body);
 		context.load(controls[tag].footer);
 		context.load(controls[tag].header);
@@ -99,37 +99,37 @@ const loadWordVars = async (addresseeState, id, form) => {
 			const [key, control] = entry;
 
 			switch (key) {
-				case ControlsVariables.num_memo:
+				case Object.keys(ControlsVariables)[0]:
 					insertTextControl(control, addZeroToLeft(id.toString()));
 					break;
-				case ControlsVariables.num_note:
+				case Object.keys(ControlsVariables)[1]:
 					insertTextControl(control, addZeroToLeft(id.toString()));
 					break;
-				case ControlsVariables.year:
+				case Object.keys(ControlsVariables)[2]:
 					insertTextControl(control, moment().year().toString());
 					break;
-				case ControlsVariables.date:
+				case Object.keys(ControlsVariables)[3]:
 					insertTextControl(control, moment().format("LL").toString());
 					break;
-				case ControlsVariables.request:
+				case Object.keys(ControlsVariables)[4]:
 					insertTextControl(control, form.from);
 					break;
-				case ControlsVariables.subject:
+				case Object.keys(ControlsVariables)[5]:
 					insertTextControl(control, form.subject);
 					break;
-				case ControlsVariables.addressee_name:
+				case Object.keys(ControlsVariables)[6]:
 					insertTextControl(control, addresseeState[form.to].name);
 					break;
-				case ControlsVariables.addressee_job_title:
+				case Object.keys(ControlsVariables)[7]:
 					insertTextControl(control, addresseeState[form.to].jobTitle);
 					break;
-				case ControlsVariables.addressee_archetype:
+				case Object.keys(ControlsVariables)[8]:
 					insertTextControl(control, addresseeState[form.to].archetype);
 					break;
-				case ControlsVariables.addressee_department:
+				case Object.keys(ControlsVariables)[9]:
 					insertTextControl(control, addresseeState[form.to].department);
 					break;
-				case ControlsVariables.initials:
+				case Object.keys(ControlsVariables)[10]:
 					insertTextControl(control, getLocalStorageUserInitials());
 					break;
 				default:
@@ -157,29 +157,29 @@ export const DocumentPermissionRequestLoadVars = async (values) => {
 			const [key, control] = entry;
 
 			switch (key) {
-				case DPRC.from_hour:
-					insertTextControl(control,moment(values.from).format("hh:mm a"));
+				case Object.keys(DPRC)[0]:
+					insertTextControl(control, moment(values.from).format("hh:mm a"));
 					break;
-				case DPRC.from_day:
-					insertTextControl(control,moment(values.from).format("DD"));
+				case Object.keys(DPRC)[1]:
+					insertTextControl(control, moment(values.from).format("DD"));
 					break;
-				case DPRC.from_month:
-					insertTextControl(control,moment(values.from).format("MMMM"));
+				case Object.keys(DPRC)[2]:
+					insertTextControl(control, moment(values.from).format("MMMM"));
 					break;
-				case DPRC.from_year:
-					insertTextControl(control,moment(values.from).format("YYYY"));
+				case Object.keys(DPRC)[3]:
+					insertTextControl(control, moment(values.from).format("YYYY"));
 					break;
-				case DPRC.to_hour:
-					insertTextControl(control,moment(values.from).format("hh:mm a"));
+				case Object.keys(DPRC)[4]:
+					insertTextControl(control, moment(values.from).format("hh:mm a"));
 					break;
-				case DPRC.to_day:
-					insertTextControl(control,moment(values.from).format("DD"));
+				case Object.keys(DPRC)[5]:
+					insertTextControl(control, moment(values.from).format("DD"));
 					break;
-				case DPRC.to_month:
-					insertTextControl(control,moment(values.from).format("MMMM"));
+				case Object.keys(DPRC)[6]:
+					insertTextControl(control, moment(values.from).format("MMMM"));
 					break;
-				case DPRC.to_year:
-					insertTextControl(control,moment(values.from).format("YYYY"));
+				case Object.keys(DPRC)[7]:
+					insertTextControl(control, moment(values.from).format("YYYY"));
 					break;
 				default:
 					break;

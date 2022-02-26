@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import Swal from 'sweetalert2';
 import { globals } from 'src/globals';
 import { context } from 'src/context/context';
+import { DocumentPermissionRequestControls } from 'src/utils/constants';
 
 const InfoHelp = ({ numberState, setNumberState, saveNumber }) => {
 
@@ -16,13 +17,13 @@ const InfoHelp = ({ numberState, setNumberState, saveNumber }) => {
     const handleSaveNumber = async (e) => {
         e.preventDefault();
         const { isConfirmed } = await Swal.fire({
-            title: "Cuidado",
-            text: "va a cambiar el numero inicial de los memos o notas, verifique que sea el numero correcto antes de continuar",
-            icon: "question",
-            showCancelButton: true,
+            title             : "Cuidado",
+            text              : "va a cambiar el numero inicial de los memos o notas, verifique que sea el numero correcto antes de continuar",
+            icon              : "question",
+            showCancelButton  : true,
             confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Continuar'
+            cancelButtonColor : '#d33',
+            confirmButtonText : 'Continuar'
         });
 
         if (isConfirmed) {
@@ -154,6 +155,28 @@ const InfoHelp = ({ numberState, setNumberState, saveNumber }) => {
                         <td className="fw-bold">Departamento</td>
                         <td>addressee_department</td>
                     </tr>
+                </tbody>
+            </table>
+            <h3 className="text-center px-2 fw-bold" >Solicitud de permiso</h3>
+            <table className="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Campo</th>
+                        <th scope="col">Variable</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {
+                        Object.entries(DocumentPermissionRequestControls).map((entry, index) => {
+                            const [key, value] = entry;
+                            return (
+                                <tr key={index}>
+                                    <td className="fw-bold">{value}</td>
+                                    <td>{key}</td>
+                                </tr>
+                            );
+                        })
+                    }
                 </tbody>
             </table>
 
