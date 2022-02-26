@@ -24,6 +24,7 @@
         "no-constant-condition": "warn",
         "no-prototype-builtins": 0,
         "semi" : "error",
-        "semi-spacing": "error"
+        "semi-spacing": "error",
+        "key-spacing" : ["error", { "align": "colon" }]
     }
 }

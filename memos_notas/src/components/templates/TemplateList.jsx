@@ -34,9 +34,7 @@ const TemplateList = ({ documents, handlerEdit, handlerDelete }) => {
 		target.focus({ preventScroll: true });
 	};
 
-	console.log();
-
-	const searchElements = (item, index) => {
+	const searchElements = (item, index, departmentName) => {
 		return (
 			<div key={index} className="card p-1 mb-2 bg-body">
 				<div className="card-body">
@@ -48,7 +46,7 @@ const TemplateList = ({ documents, handlerEdit, handlerDelete }) => {
 								<span
 									className="fw-light"
 								>
-									{departmentOwnerState.filter((e) => e.id == item.department_owner_id)[0].name}
+									{departmentName}
 								</span>
 							</p>
 							: null
@@ -81,15 +79,17 @@ const TemplateList = ({ documents, handlerEdit, handlerDelete }) => {
 			{
 				documents.map((item, index) => {
 
+					const departmentName = departmentOwnerState.filter((e) => e.id == item.department_owner_id)[0]?.name;
+
 					if (searchState.length > 0 &&
 						new RegExp(searchState, "i").test(item.name) ||
 						new RegExp(searchState, "i").test(typeOfDocuments[item.type]) ||
-						new RegExp(searchState, "i").test(departmentOwnerState.filter((e) => e.id == item.department_owner_id)[0].name)
+						new RegExp(searchState, "i").test(departmentName)
 
 					) {
-						return searchElements(item, index);
+						return searchElements(item, index, departmentName);
 					} else if (searchState.length <= 0) {
-						return searchElements(item, index);
+						return searchElements(item, index, departmentName);
 					}
 				})
 			}
