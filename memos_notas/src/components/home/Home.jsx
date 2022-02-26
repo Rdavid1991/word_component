@@ -1,6 +1,7 @@
 //@ts-check
 import React, { useState } from "react";
 import { typeOfDocuments } from "src/utils/constants.js";
+import HomePermissionRequest from "./HomePermissionRequest.jsx";
 import HomeGenerateDocument from "./HomeGenerateDocument.jsx";
 import HomeOtherDocument from "./HomeOtherDocument.jsx";
 import HomeSelectDocument from "./HomeSelectDocument.jsx";
@@ -21,6 +22,10 @@ export const Home = ({ addresseeState, fetchNumbers }) => {
 		} else if (String(memoOrNoteState) == Object.keys(typeOfDocuments)[0]) {
 			return (
 				<HomeOtherDocument />
+			);
+		} else if (String(memoOrNoteState) == Object.keys(typeOfDocuments)[3]) {
+			return (
+				<HomePermissionRequest />
 			);
 		}
 	};
