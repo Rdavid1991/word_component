@@ -2,9 +2,10 @@ import React, { useContext } from 'react';
 import Swal from 'sweetalert2';
 import { globals } from 'src/globals';
 import { context } from 'src/context/context';
-import { DocumentPermissionRequestControls } from 'src/utils/constants';
+import { AddresseeControls, DocumentMemoOrNotesControls, DocumentPermissionRequestControls } from 'src/utils/constants';
+import { saveConsecutiveNumber } from 'src/utils/SaveAndGet';
 
-const InfoHelp = ({ numberState, setNumberState, saveNumber }) => {
+const InfoHelp = ({ numberState, setNumberState }) => {
 
     const { showLoader } = useContext(context);
     const handleInputChange = ({ target }) => {
@@ -28,9 +29,12 @@ const InfoHelp = ({ numberState, setNumberState, saveNumber }) => {
 
         if (isConfirmed) {
             showLoader(true);
-            const saveNumberResult = await saveNumber(numberState);
+            const saveNumberResult = await saveConsecutiveNumber(numberState);
             showLoader(false);
-            await Swal.fire(saveNumberResult);
+            
+            if (saveNumberResult) {
+                await Swal.fire(saveNumberResult);
+            }
         }
     };
 
@@ -99,34 +103,17 @@ const InfoHelp = ({ numberState, setNumberState, saveNumber }) => {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td className="fw-bold">Asunto</td>
-                        <td>subject</td>
-                    </tr>
-                    <tr>
-                        <td className="fw-bold">Solicitado por</td>
-                        <td>request</td>
-                    </tr>
-                    <tr>
-                        <td className="fw-bold">Iniciales</td>
-                        <td>initials</td>
-                    </tr>
-                    <tr>
-                        <td className="fw-bold">Año</td>
-                        <td>year</td>
-                    </tr>
-                    <tr>
-                        <td className="fw-bold">Fecha</td>
-                        <td>date</td>
-                    </tr>
-                    <tr>
-                        <td className="fw-bold">Numero - memo</td>
-                        <td>num_memo</td>
-                    </tr>
-                    <tr>
-                        <td className="fw-bold">Numero - nota</td>
-                        <td>num_note</td>
-                    </tr>
+                    {
+                        Object.entries(DocumentMemoOrNotesControls).map((entry, index) => {
+                            const [key, value] = entry;
+                            return (
+                                <tr key={index}>
+                                    <td className="fw-bold">{value}</td>
+                                    <td>{key}</td>
+                                </tr>
+                            );
+                        })
+                    }
                 </tbody>
             </table>
             <h3 className="text-center px-2 fw-bold" >Destinatario</h3>
@@ -138,23 +125,17 @@ const InfoHelp = ({ numberState, setNumberState, saveNumber }) => {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-
-                        <td className="fw-bold">Nombre</td>
-                        <td>addressee_name</td>
-                    </tr>
-                    <tr>
-                        <td className="fw-bold">Cargo</td>
-                        <td>addressee_job_title</td>
-                    </tr>
-                    <tr>
-                        <td className="fw-bold">Arquetipo</td>
-                        <td>addressee_archetype</td>
-                    </tr>
-                    <tr>
-                        <td className="fw-bold">Departamento</td>
-                        <td>addressee_department</td>
-                    </tr>
+                    {
+                        Object.entries(AddresseeControls).map((entry, index) => {
+                            const [key, value] = entry;
+                            return (
+                                <tr key={index}>
+                                    <td className="fw-bold">{value}</td>
+                                    <td>{key}</td>
+                                </tr>
+                            );
+                        })
+                    }
                 </tbody>
             </table>
             <h3 className="text-center px-2 fw-bold" >Solicitud de permiso</h3>

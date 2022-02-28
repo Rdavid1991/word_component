@@ -8,7 +8,7 @@ import {
 	getLocalStorageUserInitials,
 } from "src/utils";
 import "moment/locale/es-us";
-import { ControlsVariables, DocumentPermissionRequestControls } from "src/utils/constants";
+import { AddresseeControls, DocumentMemoOrNotesControls, DocumentPermissionRequestControls } from "src/utils/constants";
 import { apiRequest } from "src/utils/apiRequest";
 moment.locale("es-mx");
 
@@ -87,10 +87,13 @@ const insertTextControl = (control, text) => {
  */
 const loadWordVars = async (addresseeState, id, form) => {
 	await Word.run(async (context) => {
+
+		const memoAndNoteControls = { ...AddresseeControls, ...DocumentMemoOrNotesControls };
+
 		const controls = loadControls(
 			context,
-			getControlsByTag(context, ControlsVariables),
-			ControlsVariables
+			getControlsByTag(context, memoAndNoteControls),
+			memoAndNoteControls
 		);
 
 		await context.sync();
@@ -99,38 +102,38 @@ const loadWordVars = async (addresseeState, id, form) => {
 			const [key, control] = entry;
 
 			switch (key) {
-				case Object.keys(ControlsVariables)[0]:
+				case Object.keys(memoAndNoteControls)[0]:
 					insertTextControl(control, addZeroToLeft(id.toString()));
 					break;
-				case Object.keys(ControlsVariables)[1]:
+				case Object.keys(memoAndNoteControls)[1]:
 					insertTextControl(control, addZeroToLeft(id.toString()));
 					break;
-				case Object.keys(ControlsVariables)[2]:
+				case Object.keys(memoAndNoteControls)[2]:
 					insertTextControl(control, moment().year().toString());
 					break;
-				case Object.keys(ControlsVariables)[3]:
+				case Object.keys(memoAndNoteControls)[3]:
 					insertTextControl(control, moment().format("LL").toString());
 					break;
-				case Object.keys(ControlsVariables)[4]:
+				case Object.keys(memoAndNoteControls)[4]:
 					insertTextControl(control, form.from);
 					break;
-				case Object.keys(ControlsVariables)[5]:
+				case Object.keys(memoAndNoteControls)[5]:
 					insertTextControl(control, form.subject);
 					break;
-				case Object.keys(ControlsVariables)[6]:
+				case Object.keys(memoAndNoteControls)[6]:
+					insertTextControl(control, getLocalStorageUserInitials());
+					break;
+				case Object.keys(memoAndNoteControls)[7]:
 					insertTextControl(control, addresseeState[form.to].name);
 					break;
-				case Object.keys(ControlsVariables)[7]:
+				case Object.keys(memoAndNoteControls)[8]:
 					insertTextControl(control, addresseeState[form.to].jobTitle);
 					break;
-				case Object.keys(ControlsVariables)[8]:
+				case Object.keys(memoAndNoteControls)[9]:
 					insertTextControl(control, addresseeState[form.to].archetype);
 					break;
-				case Object.keys(ControlsVariables)[9]:
+				case Object.keys(memoAndNoteControls)[10]:
 					insertTextControl(control, addresseeState[form.to].department);
-					break;
-				case Object.keys(ControlsVariables)[10]:
-					insertTextControl(control, getLocalStorageUserInitials());
 					break;
 				default:
 					break;
@@ -170,16 +173,16 @@ export const DocumentPermissionRequestLoadVars = async (values) => {
 					insertTextControl(control, moment(values.from).format("YYYY"));
 					break;
 				case Object.keys(DPRC)[4]:
-					insertTextControl(control, moment(values.from).format("hh:mm a"));
+					insertTextControl(control, moment(values.to).format("hh:mm a"));
 					break;
 				case Object.keys(DPRC)[5]:
-					insertTextControl(control, moment(values.from).format("DD"));
+					insertTextControl(control, moment(values.to).format("DD"));
 					break;
 				case Object.keys(DPRC)[6]:
-					insertTextControl(control, moment(values.from).format("MMMM"));
+					insertTextControl(control, moment(values.to).format("MMMM"));
 					break;
 				case Object.keys(DPRC)[7]:
-					insertTextControl(control, moment(values.from).format("YYYY"));
+					insertTextControl(control, moment(values.to).format("YYYY"));
 					break;
 				default:
 					break;

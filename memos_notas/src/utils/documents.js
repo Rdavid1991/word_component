@@ -2,7 +2,7 @@
 /* global Word */
 import { AlertConfirmQuestion } from "src/utils/Alerts";
 
-export const getDocument = async () => {
+export const readDocument = async () => {
 
     const result = await AlertConfirmQuestion("¿Desea guardar nueva plantilla?");
 
@@ -16,7 +16,7 @@ export const getDocument = async () => {
             await context.sync();
 
             return JSON.stringify({
-                "body": docBody.value,
+                "body"  : docBody.value,
                 "footer": docFooter.value,
                 "header": docHeader.value,
             });

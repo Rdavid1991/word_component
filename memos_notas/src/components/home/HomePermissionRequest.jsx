@@ -18,7 +18,7 @@ const HomePermissionRequest = () => {
 	 */
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		DocumentPermissionRequestLoadVars();
+		DocumentPermissionRequestLoadVars(values);
 	};
 
 	return (

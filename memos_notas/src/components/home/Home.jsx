@@ -7,7 +7,7 @@ import HomeOtherDocument from "./HomeOtherDocument.jsx";
 import HomeSelectDocument from "./HomeSelectDocument.jsx";
 import RejectConsecutiveNumber from "./RejectConsecutiveNumber.jsx";
 
-export const Home = ({ addresseeState, fetchNumbers }) => {
+export const Home = ({ addresseeState, fetchNumbers, documents }) => {
 	const [memoOrNoteState, setMemoOrNoteState] = useState(-1);
 
 	const renderFormTypeDocument = () => {
@@ -39,6 +39,7 @@ export const Home = ({ addresseeState, fetchNumbers }) => {
 				<HomeSelectDocument
 					setMemoOrNoteState={setMemoOrNoteState}
 					memoOrNoteState={memoOrNoteState}
+					documents={documents}
 				/>
 				{
 					renderFormTypeDocument()

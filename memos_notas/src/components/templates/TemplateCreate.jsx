@@ -1,28 +1,13 @@
 //@ts-check
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import { context } from 'src/context/context';
-import { getDepartmentOwner, getLocalStorageUserDepartment } from 'src/utils';
-import { AlertError } from 'src/utils/Alerts';
-import { apiRequest } from 'src/utils/apiRequest';
+import { renderSelectDepartment } from 'src/fragments';
 import { typeOfDocuments } from 'src/utils/constants';
-import { getDocument } from 'src/utils/documents';
-import Swal from 'sweetalert2';
-
+import { saveDocumentTemplate } from 'src/utils/SaveAndGet';
 
 const TemplateCreate = ({ handlerFetchTemplate, values, reset, handleInputChange }) => {
 
-    const { showLoader } = useContext(context);
-    const [departmentOwnerState, setDepartmentOwnerState] = useState([]);
-
-
-    useEffect(() => {
-        (async () => {
-            if (getLocalStorageUserDepartment() == "0") {
-                const data = await getDepartmentOwner();
-                setDepartmentOwnerState(data);
-            }
-        })();
-    }, []);
+    const { showLoader, departmentOwnerState } = useContext(context);
 
 
     /**
@@ -31,64 +16,10 @@ const TemplateCreate = ({ handlerFetchTemplate, values, reset, handleInputChange
      */
     const handleSaveDocument = async (e) => {
         e.preventDefault();
-
-        const document = await getDocument();
-        if (document) {
-
-            const department_owner = getLocalStorageUserDepartment();
-
-            try {
-                showLoader(true);
-                const response = await apiRequest()
-                    .post(`${values.edit ? "edit" : "save"}_template_doc`, { ...values, document, department_owner });
-                if (response.ok) {
-                    handlerFetchTemplate();
-                    showLoader(false);
-                    await Swal.fire(await response.json());
-                    reset();
-                } else {
-                    showLoader(false);
-                    await AlertError(`No se pudo guardar la plantilla: ${response.status} - ${response.statusText}`);
-                }
-            } catch (error) {
-                showLoader(false);
-                await AlertError(`Error al guardar plantilla: ${error}`);
-            }
-        }
+        saveDocumentTemplate(values, handlerFetchTemplate, reset);
     };
 
     const handleReset = () => reset();
-
-    /**
-     * Solo se muestra si tiene acceso para crear plantillas para otros
-     * @returns 
-     */
-    const renderSelectDepartment = () => {
-        if (getLocalStorageUserDepartment() == "0") {
-
-            return (
-                <div className="mb-3">
-                    <label htmlFor="owner" className="form-label fw-bold">Pertenece a</label>
-                    <select id="owner"
-                        className="form-select form-select-sm"
-                        value={values?.owner || ""}
-                        onChange={handleInputChange}
-                        required
-                    >
-                        <option disabled value="">Seleccione un departamento</option>
-                        {
-                            departmentOwnerState.map((item, index) => (
-                                <option key={index} value={item.id}>{item.name}</option>
-                            ))
-                        }
-                    </select>
-                </div>
-            );
-        } else {
-            return null;
-        }
-    };
-
 
     return (
         <>
@@ -128,7 +59,8 @@ const TemplateCreate = ({ handlerFetchTemplate, values, reset, handleInputChange
                         }
                     </select>
                 </div>
-                {renderSelectDepartment()}
+                
+                {renderSelectDepartment(values, handleInputChange, departmentOwnerState)}
 
                 <div className="mb-3">
                     <button

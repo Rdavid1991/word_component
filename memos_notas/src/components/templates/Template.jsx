@@ -5,7 +5,6 @@ import { useForm } from 'src/hooks/useForm';
 import { AlertConfirmQuestion, AlertError, AlertSuccess } from 'src/utils/Alerts';
 import { apiRequest } from 'src/utils/apiRequest';
 import { writeDocument } from 'src/utils/documents';
-import { fetchTemplate } from 'src/utils/FetchTemplate';
 import Swal from 'sweetalert2';
 import TemplateCreate from './TemplateCreate';
 import TemplateList from './TemplateList';
@@ -13,21 +12,20 @@ import TemplateList from './TemplateList';
 const initialState = {
     name: "",
     type: "",
-    id: "",
+    id  : "",
     edit: false
 };
 
-export const Template = () => {
+export const Template = ({documents, fetchTemplate}) => {
 
     const [values, setValues, handleInputChange, reset] = useForm(initialState);
-    const { showLoader, loadDocuments, documents } = useContext(context);
+    const { showLoader } = useContext(context);
 
 
     const handlerFetchTemplate = async () => {
         showLoader(true);
-        const template = await fetchTemplate();
+        await fetchTemplate();
         showLoader(false);
-        loadDocuments(template.data);
     };
 
     const handlerEdit = useCallback(async (id) => {
@@ -45,10 +43,11 @@ export const Template = () => {
 
         setValues({
             ...values,
-            name: documentObject.name,
-            type: documentObject.type,
+            id   : documentObject.id,
+            name : documentObject.name,
+            type : documentObject.type,
             owner: documentObject.department_owner_id,
-            edit: true
+            edit : true
         });
 
         writeDocument(documentTemplate);

@@ -1,65 +1,77 @@
 //@ts-check
-import React, { useEffect, useState } from 'react';
-import { globals } from 'src/globals';
+import React, { useContext, useEffect, useState } from 'react';
 import { HomeInsertUser } from 'src/utils/HomeInsertUser';
-import { getNumber, saveNumber } from 'src/utils/numberConsecutive';
 import { Addressees } from '../addressees/Addressees';
 import { Home } from '../home/Home';
 import { Template } from '../templates/Template';
 import InfoHelp from '../infoHelp/InfoHelp';
-import { apiRequest } from 'src/utils/apiRequest';
-import { getLocalStorageUserDepartment } from 'src/utils';
+
+import { context } from 'src/context/context';
+import {
+    getAddresses,
+    getConsecutiveNumber,
+    getDocumentTemplate,
+    saveConsecutiveNumber,
+} from 'src/utils/SaveAndGet';
 
 
 const initialNumber = {
     note: "1",
     memo: "1",
 };
+const initialDocument = [];
+const initialAddressee = [];
 export const TabNavContent = () => {
 
-    const [addresseeState, setStateAddressee] = useState([]);
+    const { showLoader } = useContext(context);
+    const [addresseeState, setStateAddressee] = useState(initialAddressee);
+    const [documents, setDocuments] = useState(initialDocument);
     const [numberState, setNumberState] = useState(initialNumber);
 
     useEffect(() => {
         (async () => {
             await HomeInsertUser();
-            fetchAddresses();
-            fetchNumbers();
+            showLoader(true);
+            await fetchAddresses();
+            await fetchNumbers();
+            await fetchTemplate();
+            showLoader(false);
         })();
     }, []);
 
     const fetchNumbers = async () => {
-        let { data } = await getNumber();
-        if (data.length > 0) {
-            setNumberState({
-                note: data[0].notes,
-                memo: data[0].memorandum,
-            });
-        } else {
-            await saveNumber(numberState);
+        let consecutive = await getConsecutiveNumber();
+        if (consecutive) {
+            const { data } = consecutive;
+            if (data.length > 0) {
+                setNumberState({
+                    note: data[0].notes,
+                    memo: data[0].memorandum,
+                });
+            } else {
+                await saveConsecutiveNumber(numberState);
+            }
         }
     };
 
     const fetchAddresses = async () => {
-        const result = await getAddressesOfDB();
+        const result = await getAddresses();
         if (result) {
             const array = Array.isArray(result) ? result : [result];
             setStateAddressee(array);
-        } else {
-            setStateAddressee([]);
         }
     };
 
-    const getAddressesOfDB = async () => {
-
-        const department_owner = getLocalStorageUserDepartment();
-
-        let response = await apiRequest().get("get_addressee", {department_owner});
-        if (response.ok) {
-            return await response.json();
+    const fetchTemplate = async () => {
+        const templates = await getDocumentTemplate();
+        if (templates) {
+            const { data } = templates;
+            if (data.length > 0) {
+                setDocuments(data);
+            }
         }
-        return false;
     };
+
 
     return (
         <div className="tab-content" id="nav-tabContent">
@@ -68,6 +80,7 @@ export const TabNavContent = () => {
                 <Home
                     addresseeState={addresseeState}
                     fetchNumbers={fetchNumbers}
+                    documents={documents}
                 />
             </div>
             <div className="tab-pane fade" id="nav-addressees">
@@ -80,11 +93,13 @@ export const TabNavContent = () => {
                 <InfoHelp
                     numberState={numberState}
                     setNumberState={setNumberState}
-                    saveNumber={saveNumber}
                 />
             </div>
             <div className="tab-pane fade" id="nav-template">
-                <Template />
+                <Template
+                    documents={documents}
+                    fetchTemplate={fetchTemplate}
+                />
             </div>
         </div>
     );

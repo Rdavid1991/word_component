@@ -6,6 +6,7 @@ require_once(dirname(__FILE__) . "/ManagementDB/ManagementDB.php");
 require_once(dirname(__FILE__) . "/class/DocumentHistory.php");
 require_once(dirname(__FILE__) . "/class/DocTemplate.php");
 require_once(dirname(__FILE__) . "/class/Options.php");
+require_once(dirname(__FILE__) . "/class/Addressee.php");
 
 
 class HandlerActionsMemo extends ManagementDB
@@ -108,142 +109,26 @@ class HandlerActionsMemo extends ManagementDB
 
         echo json_encode($result);
     }
-
-    public function set_addressee()
-    {
-        if (isset($_POST["name"]) && isset($_POST["jobTitle"]) && isset($_POST["archetype"]) && isset($_POST["department"])) {
-
-            $sql = "INSERT INTO [dbo].[addressee] ([name],[jobTitle],[archetype],[department], [department_owner_id])
-            VALUES  (?,?,?,?,?)";
-
-            $result = parent::insert_query($sql, [
-                $_POST["name"],
-                $_POST["jobTitle"],
-                $_POST["archetype"],
-                $_POST["department"],
-                $_POST["department_owner"]
-            ]);
-
-            if ($result) {
-                $msj = (object) array(
-                    "title" => "Hecho",
-                    "text" => "Los datos se han guardado correctamente",
-                    "icon" => "success"
-                );
-                echo  json_encode($msj);
-            } else {
-                $msj = (object) array(
-                    "title" => "Oops!!!",
-                    "text" => "A ocurrido un error.",
-                    "icon" => "error"
-                );
-                echo  json_encode($msj);
-            }
-        } else {
-            $msj = (object) array(
-                "title" => "Algo salio mal",
-                "text" => "no se puede guardar los datos, hacen falta parámetros",
-                "icon" => 'warning'
-            );
-            echo  json_encode($msj);
-        }
-    }
-    public function edit_addressee()
-    {
-        if (isset($_POST["name"]) && isset($_POST["jobTitle"]) && isset($_POST["archetype"]) && isset($_POST["department"])) {
-
-            $sql = "UPDATE [dbo].[addressee]
-            SET [name] = ?
-               ,[jobTitle] = ?
-               ,[archetype] = ?
-               ,[department] = ?
-            WHERE [id]=?";
-
-            $result = parent::insert_query($sql, [
-                $_POST["name"],
-                $_POST["jobTitle"],
-                $_POST["archetype"],
-                $_POST["department"],
-                $_POST["id"]
-            ]);
-
-            if ($result) {
-                $msj = (object) array(
-                    "title" => "Hecho",
-                    "text" => "Los datos se han guardado correctamente",
-                    "icon" => "success"
-                );
-                echo  json_encode($msj);
-            } else {
-                $msj = (object) array(
-                    "title" => "Oops!!!",
-                    "text" => "A ocurrido un error.",
-                    "icon" => "error"
-                );
-                echo  json_encode($msj);
-            }
-        } else {
-            $msj = (object) array(
-                "title" => "Algo salio mal",
-                "text" => "no se puede guardar los datos, hacen falta parámetros",
-                "icon" => 'warning'
-            );
-            echo  json_encode($msj);
-        }
-    }
-
-    public function get_addressee()
-    {
-
-        $sql = "SELECT * FROM [dbo].[addressee] WHERE [department_owner_id] = ?";
-
-        $result = parent::select_query($sql,[$_GET["department_owner"]]);
-
-
-        echo json_encode($result);
-    }
-
-    public function delete_addressee()
-    {
-        $sql = "DELETE FROM [dbo].[addressee] WHERE [id]=?";
-
-        $result = parent::insert_query($sql, [$_POST["id"]]);
-
-        if ($result) {
-            $msj = (object) array(
-                "title" => "Hecho",
-                "text" => "Los datos se han borrado correctamente",
-                "icon" => "success"
-            );
-            echo  json_encode($msj);
-        } else {
-            $msj = (object) array(
-                "title" => "Oops!!!",
-                "text" => "A ocurrido un error.",
-                "icon" => "error"
-            );
-            echo  json_encode($msj);
-        }
-    }
 }
 
 $handler = new HandlerActionsMemo();
 $document_history = new DocumentHistory();
 $template = new DocTemplate();
 $options = new Options();
+$addressee = new Addressee();
 
 switch ($_GET["action"]) {
     case "save_addressee":
-        $handler->set_addressee();
+        $addressee->save_addressee();
         break;
     case "edit_addressee":
-        $handler->edit_addressee();
+        $addressee->edit_addressee();
         break;
     case "get_addressee":
-        $handler->get_addressee();
+        $addressee->get_addressee();
         break;
     case "delete_addressee":
-        $handler->delete_addressee();
+        $addressee->delete_addressee();
         break;
     case "set_number":
         $document_history->find();

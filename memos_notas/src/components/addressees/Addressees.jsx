@@ -1,8 +1,9 @@
 //@ts-check
 import React, { useContext, useState } from 'react';
 import { context } from 'src/context/context';
+import { renderSelectDepartment } from 'src/fragments';
+import { deleteAddressees, saveAddressees } from 'src/utils/SaveAndGet';
 import { AlertConfirmQuestion } from '../../utils/Alerts';
-import { deleteAddressees, saveAddressees } from './functions';
 
 const initialState = {
     id        : "",
@@ -14,8 +15,7 @@ const initialState = {
 };
 export const Addressees = ({ addresseeState, fetchAddresses }) => {
 
-    const { showLoader } = useContext(context);
-
+    const { showLoader, departmentOwnerState } = useContext(context);
 
     const [form, setForm] = useState(initialState);
     const [searchState, setSearchState] = useState("");
@@ -29,8 +29,8 @@ export const Addressees = ({ addresseeState, fetchAddresses }) => {
 
     const handleSaveAddressees = async (e) => {
         e.preventDefault();
-        await saveAddressees(form, showLoader);
-        setForm(initialState);
+        const { isSaved } = await saveAddressees(form);
+        if (isSaved) setForm(initialState);
         fetchAddresses();
     };
 
@@ -122,6 +122,8 @@ export const Addressees = ({ addresseeState, fetchAddresses }) => {
                                 />
                             </div>
                         </div>
+
+                        {renderSelectDepartment(form, handleInputChange, departmentOwnerState)}
 
                         <div className="mb-3">
                             <button className="btn btn-sm btn-secondary">Guardar</button>

@@ -7,8 +7,8 @@ import { writeDocument } from 'src/utils/documents';
 import { selectedDocumentType } from './functions';
 import { parametersOfDocuments } from './functions/parametersOfDocuments';
 
-const HomeSelectDocument = ({ setMemoOrNoteState, memoOrNoteState }) => {
-    const { documents, setControls } = useContext(context);
+const HomeSelectDocument = ({ setMemoOrNoteState, memoOrNoteState, documents }) => {
+    const { setControls } = useContext(context);
 
     const [selectedState, setSelectedState] = useState("");
 
