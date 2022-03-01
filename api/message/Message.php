@@ -20,4 +20,13 @@ class Message
             "icon" => "success"
         ));
     }
+
+    public static function errorDatabase($error)
+    {
+        return (object) array(
+            "title" => "Error",
+            "text" =>  $error,
+            "icon" => "error"
+        );
+    }
 }

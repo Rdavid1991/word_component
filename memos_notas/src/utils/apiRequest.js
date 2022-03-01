@@ -3,8 +3,6 @@ import { globals } from "src/globals";
 
 export const apiRequest = () => {
 
-    const controller = new AbortController();
-
     return {
 
         /**
@@ -20,10 +18,7 @@ export const apiRequest = () => {
                 formData.append(key, value);
             });
 
-            setTimeout(() => controller.abort(), 5000);
-
-            return await fetch(`${globals.apiUrl}?action=${route}`, {
-                signal: controller.signal,
+            return await fetch(`${globals.apiUrl}?action=${route}`, { 
                 method: "POST",
                 body  : formData
             });
@@ -42,10 +37,7 @@ export const apiRequest = () => {
                 paramsString += `&${key}=${value}`;
             });
 
-            setTimeout(() => controller.abort(), 5000);
-
             const response = await fetch(`${globals.apiUrl}?action=${route}${paramsString}`, {
-                signal: controller.signal,
                 method: "GET",
             });
 

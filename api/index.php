@@ -170,8 +170,6 @@ switch ($_GET["action"]) {
     case "get_options_department_owner":
         $options->get_department_owner();
         break;
-
     default:
-
         break;
 }

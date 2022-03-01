@@ -17,7 +17,8 @@ export const getAddresses = async () => {
         if (response.ok) {
             return await response.json();
         }
-        await AlertError(`Error al consultar destinatarios: ${response.status} - ${response.statusText}`);
+        const {message} = await response.json();
+        await AlertError(`Error al consultar destinatarios: ${message.text}`);
     } catch (error) {
         await AlertError(`Error al consultar destinatarios: ${error}`);
     }
@@ -46,7 +47,8 @@ export const saveAddressees = async (form) => {
             await Swal.fire(await response.json());
             return { isSaved: true };
         } else {
-            await AlertError(`No se pudo guardar el destinatario: ${response.status} ${response.statusText}`);
+            const {message} = await response.json();
+            await AlertError(`No se pudo guardar el destinatario: ${message.text}`);
         }
     } catch (error) {
         await AlertError(error);
@@ -68,7 +70,8 @@ export const deleteAddressees = async (id, showLoader) => {
         if (response.ok) {
             await Swal.fire(await response.json());
         } else {
-            await AlertError(`No se pudo borrar el destinatario: ${response.status} ${response.statusText}`);
+            const {message} = await response.json();
+            await AlertError(`No se pudo borrar el destinatario: ${message.text}`);
         }
     } catch (error) {
         showLoader(false);
@@ -89,7 +92,8 @@ export const getConsecutiveNumber = async () => {
         if (response.ok) {
             return await response.json();
         }
-        await AlertError(`Error al consultar consecutivo: ${response.status} - ${response.statusText}`);
+        const {message} = await response.json();
+        await AlertError(`Error al consultar consecutivo: ${message.text}`);
     } catch (error) {
         await AlertError(`Error al consultar consecutivo: ${error}`);
     }
@@ -109,14 +113,14 @@ export const saveConsecutiveNumber = async (numbers) => {
         if (response.ok) {
             return response;
         } else {
-            AlertError(`No se pudo guardar consecutivo: ${response.status} - ${response.statusText}`);
+            const {message} = await response.json();
+            AlertError(`No se pudo guardar consecutivo: ${message.text}`);
         }
     } catch (error) {
         AlertError(error);
     }
     return false;
 };
-
 
 export const getDocumentTemplate = async () => {
 
@@ -127,7 +131,8 @@ export const getDocumentTemplate = async () => {
         if (response.ok) {
             return await response.json();
         } else {
-            await AlertError(`Error al consultar plantillas: ${response.status} - ${response.statusText}`);
+            const {message} = await response.json();
+            await AlertError(`Error al consultar plantillas: ${message.text}`);
         }
     } catch (error) {
         await AlertError(`Error al consultar plantillas: ${error}`);
@@ -156,7 +161,8 @@ export const saveDocumentTemplate = async (values, handlerFetchTemplate, reset) 
                 clearDocument();
                 reset();
             } else {
-                await AlertError(`No se pudo guardar la plantilla: ${response.status} - ${response.statusText}`);
+                const {message} = await response.json();
+                await AlertError(`No se pudo guardar la plantilla: ${message.text}`);
             }
         } catch (error) {
             await AlertError(`Error al guardar plantilla: ${error}`);

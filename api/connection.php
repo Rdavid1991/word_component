@@ -1,4 +1,7 @@
 <?php
+
+require_once(dirname(__FILE__)."/message/Message.php");
+
 define(
     "CONNECTION_INFO",
     array(
@@ -6,7 +9,8 @@ define(
         "UID" => "SA",
         "PWD" => "Abcd1234.",
         'CharacterSet' => 'UTF-8',
-        'ReturnDatesAsStrings' => TRUE
+        'ReturnDatesAsStrings' => TRUE,
+        "LoginTimeout" => 5
     )
 );
 
@@ -26,9 +30,11 @@ class Connection
             $this->_db = $dbc;
             $this->_connected = true;
         } else {
-            $error = json_encode(sqlsrv_errors());
-            error_log("Error de conexión de base de datos" . json_encode(sqlsrv_errors()));
-            $this->_connected = false;
+            $arrayError = sqlsrv_errors();
+            $error = "No se pudo conectar a la base de datos: ".$arrayError[0]["message"]." ".$arrayError[1]["message"];
+            echo json_encode((object) ["message" => Message::errorDatabase($error)]);
+            http_response_code(500);
+            exit();
         }
     }
 
