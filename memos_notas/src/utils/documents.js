@@ -10,20 +10,41 @@ export const readDocument = async () => {
 
         return Word.run(async (context) => {
 
-            const docBody = context.document.body.getOoxml();
-            const docFooter = context.document.sections.getFirst().getFooter("Primary").getOoxml();
-            const docHeader = context.document.sections.getFirst().getHeader("Primary").getOoxml();
+            const docBody = context.document.body;
+            const docFooter = context.document.sections.getFirst().getFooter("Primary");
+            const docHeader = context.document.sections.getFirst().getHeader("Primary");
+
+            const docBodyOoxml = docBody.getOoxml();
+            const docFooterOoxml = docFooter.getOoxml();
+            const docHeaderOoxml = docHeader.getOoxml();
+
             await context.sync();
 
             return JSON.stringify({
-                "body"  : docBody.value,
-                "footer": docFooter.value,
-                "header": docHeader.value,
+                "body"  : docBodyOoxml.value,
+                "footer": docFooterOoxml.value,
+                "header": docHeaderOoxml.value,
             });
         });
     }
 
     return false;
+};
+
+export const clearDocument = async () => {
+
+    return Word.run(async (context) => {
+
+        const docBody = context.document.body;
+        const docFooter = context.document.sections.getFirst().getFooter("Primary");
+        const docHeader = context.document.sections.getFirst().getHeader("Primary");
+
+        docBody.clear();
+        docFooter.clear();
+        docHeader.clear();
+
+        await context.sync();
+    });
 };
 
 /**

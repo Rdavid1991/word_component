@@ -1,7 +1,7 @@
 import { getLocalStorageUserDepartment, localStorageKeyUser } from "src/utils";
 import { AlertError } from "src/utils/Alerts";
 import { apiRequest } from "src/utils/apiRequest";
-import { readDocument } from "src/utils/documents";
+import { clearDocument, readDocument } from "src/utils/documents";
 import Swal from "sweetalert2";
 
 /**
@@ -153,6 +153,7 @@ export const saveDocumentTemplate = async (values, handlerFetchTemplate, reset) 
             if (response.ok) {
                 handlerFetchTemplate();
                 await Swal.fire(await response.json());
+                clearDocument();
                 reset();
             } else {
                 await AlertError(`No se pudo guardar la plantilla: ${response.status} - ${response.statusText}`);

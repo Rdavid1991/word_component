@@ -31,11 +31,50 @@ const InfoHelp = ({ numberState, setNumberState }) => {
             showLoader(true);
             const saveNumberResult = await saveConsecutiveNumber(numberState);
             showLoader(false);
-            
+
             if (saveNumberResult) {
                 await Swal.fire(saveNumberResult);
             }
         }
+    };
+
+    /**
+     * 
+     * @param {React.MouseEvent<HTMLButtonElement>} e 
+     */
+    const HandleCopyToCLipBoard = (e) => {
+
+        const { value } = e.target.dataset;
+
+        Swal.fire({
+            title            : "Hecho",
+            html             : `<p>Se copio <b>${value}</b></p>`,
+            toast            : true,
+            timer            : 1500,
+            icon             : "success",
+            showConfirmButton: false,
+            position         : 'bottom',
+            color            : "#fff",
+            background       : "#8B8C89"
+        });
+        navigator.clipboard.writeText(value);
+    };
+
+    const renderVariables = (entry, index) => {
+        const [key, value] = entry;
+        return (
+            <tr key={index}>
+                <td className="fw-bold">{value}</td>
+                <td>{key}</td>
+                <td
+                    className="btn"
+                    data-value={key}
+                    onClick={HandleCopyToCLipBoard}
+                >
+                    <i className="far fa-copy"></i>
+                </td>
+            </tr>
+        );
     };
 
     return (
@@ -103,17 +142,7 @@ const InfoHelp = ({ numberState, setNumberState }) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {
-                        Object.entries(DocumentMemoOrNotesControls).map((entry, index) => {
-                            const [key, value] = entry;
-                            return (
-                                <tr key={index}>
-                                    <td className="fw-bold">{value}</td>
-                                    <td>{key}</td>
-                                </tr>
-                            );
-                        })
-                    }
+                    {Object.entries(DocumentMemoOrNotesControls).map(renderVariables)}
                 </tbody>
             </table>
             <h3 className="text-center px-2 fw-bold" >Destinatario</h3>
@@ -125,17 +154,7 @@ const InfoHelp = ({ numberState, setNumberState }) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {
-                        Object.entries(AddresseeControls).map((entry, index) => {
-                            const [key, value] = entry;
-                            return (
-                                <tr key={index}>
-                                    <td className="fw-bold">{value}</td>
-                                    <td>{key}</td>
-                                </tr>
-                            );
-                        })
-                    }
+                    {Object.entries(AddresseeControls).map(renderVariables)}
                 </tbody>
             </table>
             <h3 className="text-center px-2 fw-bold" >Solicitud de permiso</h3>
@@ -148,15 +167,7 @@ const InfoHelp = ({ numberState, setNumberState }) => {
                 </thead>
                 <tbody>
                     {
-                        Object.entries(DocumentPermissionRequestControls).map((entry, index) => {
-                            const [key, value] = entry;
-                            return (
-                                <tr key={index}>
-                                    <td className="fw-bold">{value}</td>
-                                    <td>{key}</td>
-                                </tr>
-                            );
-                        })
+                        Object.entries(DocumentPermissionRequestControls).map(renderVariables)
                     }
                 </tbody>
             </table>

@@ -8,7 +8,7 @@ const initialState = {};
 
 const HomeOtherDocument = () => {
 
-
+    // eslint-disable-next-line no-unused-vars
     const [values, setValues, handleInputChange, reset] = useForm(initialState);
 
     const { controls } = useContext(context);
@@ -62,7 +62,7 @@ const HomeOtherDocument = () => {
                                 </div>
                             ))
                         }
-                        <button className="btn btn-sm btn-secondary" type="submit">guardar</button>
+                        <button className="btn btn-sm btn-success" type="submit">Enviar</button>
                     </form>
                     : 
                     <h2 className="text-center">Esta plantilla no cuenta con variables</h2>

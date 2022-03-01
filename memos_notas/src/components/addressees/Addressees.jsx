@@ -108,14 +108,14 @@ export const Addressees = ({ addresseeState, fetchAddresses }) => {
                             </div>
                         </div>
                         <div className="mb-3">
-                            <label htmlFor="archetype" className="form-label fw-bold">Departamento</label>
+                            <label htmlFor="archetype" className="form-label fw-bold">Dirección / Departamento</label>
                             <div className="input-group mb-3">
                                 <span className="input-group-text"><i className="fas fa-user-tie"></i></span>
                                 <input
                                     type="text"
                                     className="form-control form-control-sm"
                                     id="department"
-                                    placeholder="Departamento"
+                                    placeholder="Dirección o departamento"
                                     required={true}
                                     onChange={handleInputChange}
                                     value={form.department}

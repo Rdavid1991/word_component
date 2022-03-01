@@ -50,6 +50,7 @@ class Addressee extends ManagementDB {
             echo  json_encode($msj);
         }
     }
+
     public function edit_addressee()
     {
         if (isset($_POST["name"]) && isset($_POST["jobTitle"]) && isset($_POST["archetype"]) && isset($_POST["department"])) {
@@ -97,7 +98,8 @@ class Addressee extends ManagementDB {
     public function get_addressee()
     {
 
-        $sql = "SELECT * FROM [dbo].[addressee] WHERE [department_owner_id] = ?";
+        $sql = "SELECT * FROM [dbo].[addressee]";
+        $sql .= $_GET["department_owner"] == "0" ? "" : "WHERE [department_owner_id] = ?";
 
         $result = parent::select_query($sql,[$_GET["department_owner"]]);
 

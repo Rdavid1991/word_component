@@ -1,6 +1,7 @@
 import moment from 'moment';
 import React from 'react';
 import { useForm } from 'src/hooks/useForm';
+import { AlertSuccess } from 'src/utils/Alerts';
 import { DocumentPermissionRequestLoadVars } from './functions';
 
 const initialState = {
@@ -10,15 +11,17 @@ const initialState = {
 
 const HomePermissionRequest = () => {
 
+	// eslint-disable-next-line no-unused-vars
 	const [values, setValues, handleInputChange, reset] = useForm(initialState);
 
 	/**
 	 * 
 	 * @param {React.FormEvent<HTMLFormElement>} e 
 	 */
-	const handleSubmit = (e) => {
+	const handleSubmit = async (e) => {
 		e.preventDefault();
-		DocumentPermissionRequestLoadVars(values);
+		await DocumentPermissionRequestLoadVars(values);
+		AlertSuccess("Los datos se han enviado al documento");
 	};
 
 	return (
