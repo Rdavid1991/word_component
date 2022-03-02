@@ -1,5 +1,5 @@
 import { getLocalStorageUserDepartment, localStorageKeyUser } from "src/utils";
-import { AlertError } from "src/utils/Alerts";
+import { AlertConfirmQuestion, AlertError, AlertSuccess } from "src/utils/Alerts";
 import { apiRequest } from "src/utils/apiRequest";
 import { clearDocument, readDocument } from "src/utils/documents";
 import Swal from "sweetalert2";
@@ -17,7 +17,7 @@ export const getAddresses = async () => {
         if (response.ok) {
             return await response.json();
         }
-        const {message} = await response.json();
+        const { message } = await response.json();
         await AlertError(`Error al consultar destinatarios: ${message.text}`);
     } catch (error) {
         await AlertError(`Error al consultar destinatarios: ${error}`);
@@ -47,13 +47,13 @@ export const saveAddressees = async (form) => {
             await Swal.fire(await response.json());
             return { isSaved: true };
         } else {
-            const {message} = await response.json();
+            const { message } = await response.json();
             await AlertError(`No se pudo guardar el destinatario: ${message.text}`);
         }
     } catch (error) {
         await AlertError(error);
     }
-    return {isSaved: false};
+    return { isSaved: false };
 };
 
 /**
@@ -70,7 +70,7 @@ export const deleteAddressees = async (id, showLoader) => {
         if (response.ok) {
             await Swal.fire(await response.json());
         } else {
-            const {message} = await response.json();
+            const { message } = await response.json();
             await AlertError(`No se pudo borrar el destinatario: ${message.text}`);
         }
     } catch (error) {
@@ -92,7 +92,7 @@ export const getConsecutiveNumber = async () => {
         if (response.ok) {
             return await response.json();
         }
-        const {message} = await response.json();
+        const { message } = await response.json();
         await AlertError(`Error al consultar consecutivo: ${message.text}`);
     } catch (error) {
         await AlertError(`Error al consultar consecutivo: ${error}`);
@@ -113,7 +113,7 @@ export const saveConsecutiveNumber = async (numbers) => {
         if (response.ok) {
             return response;
         } else {
-            const {message} = await response.json();
+            const { message } = await response.json();
             AlertError(`No se pudo guardar consecutivo: ${message.text}`);
         }
     } catch (error) {
@@ -131,7 +131,7 @@ export const getDocumentTemplate = async () => {
         if (response.ok) {
             return await response.json();
         } else {
-            const {message} = await response.json();
+            const { message } = await response.json();
             await AlertError(`Error al consultar plantillas: ${message.text}`);
         }
     } catch (error) {
@@ -161,11 +161,37 @@ export const saveDocumentTemplate = async (values, handlerFetchTemplate, reset) 
                 clearDocument();
                 reset();
             } else {
-                const {message} = await response.json();
+                const { message } = await response.json();
                 await AlertError(`No se pudo guardar la plantilla: ${message.text}`);
             }
         } catch (error) {
             await AlertError(`Error al guardar plantilla: ${error}`);
         }
+    }
+};
+
+/**
+ * 
+ * @param {Function} handlerFetchTemplate 
+ * @param {number| string} id 
+ */
+export const deleteDocumentTemplate = async (handlerFetchTemplate, id) => {
+    const { isConfirmed } = await AlertConfirmQuestion("Va a borrar un elemento ¿desea continuar?");
+
+    if (isConfirmed) {
+        try {
+            const response = await apiRequest().post("delete_template_doc", { id });
+            if (response.ok) {
+                await handlerFetchTemplate();
+                await Swal.fire(await response.json());
+            } else {
+                const { message } = await response.json();
+                AlertError(`No de pudo borrar la plantilla: ${message.text}`);
+            }
+        } catch (error) {
+            AlertError(error);
+        }
+    } else {
+        AlertSuccess("La acción a sido cancelada");
     }
 };

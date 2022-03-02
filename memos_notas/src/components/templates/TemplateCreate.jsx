@@ -16,7 +16,10 @@ const TemplateCreate = ({ handlerFetchTemplate, values, reset, handleInputChange
      */
     const handleSaveDocument = async (e) => {
         e.preventDefault();
-        saveDocumentTemplate(values, handlerFetchTemplate, reset);
+        showLoader(true);
+        await saveDocumentTemplate(values, handlerFetchTemplate, reset);
+        showLoader(false);
+
     };
 
     const handleReset = () => reset();
@@ -59,7 +62,7 @@ const TemplateCreate = ({ handlerFetchTemplate, values, reset, handleInputChange
                         }
                     </select>
                 </div>
-                
+
                 {renderSelectDepartment(values, handleInputChange, departmentOwnerState)}
 
                 <div className="mb-3">

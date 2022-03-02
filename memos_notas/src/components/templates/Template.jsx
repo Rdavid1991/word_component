@@ -2,10 +2,8 @@
 import React, { useCallback, useContext } from 'react';
 import { context } from 'src/context/context';
 import { useForm } from 'src/hooks/useForm';
-import { AlertConfirmQuestion, AlertError, AlertSuccess } from 'src/utils/Alerts';
-import { apiRequest } from 'src/utils/apiRequest';
 import { writeDocument } from 'src/utils/documents';
-import Swal from 'sweetalert2';
+import { deleteDocumentTemplate } from 'src/utils/SaveAndGet';
 import TemplateCreate from './TemplateCreate';
 import TemplateList from './TemplateList';
 
@@ -16,7 +14,7 @@ const initialState = {
     edit: false
 };
 
-export const Template = ({documents, fetchTemplate}) => {
+export const Template = ({ documents, fetchTemplate }) => {
 
     const [values, setValues, handleInputChange, reset] = useForm(initialState);
     const { showLoader } = useContext(context);
@@ -56,25 +54,7 @@ export const Template = ({documents, fetchTemplate}) => {
     }, [documents]);
 
     const handlerDelete = useCallback(async (id) => {
-
-        const { isConfirmed } = await AlertConfirmQuestion("Va a borrar un elemento ¿desea continuar?");
-
-        if (isConfirmed) {
-            try {
-                showLoader(true);
-                const response = await apiRequest().post("delete_template_doc", { id });
-                if (response.ok) {
-                    await handlerFetchTemplate();
-                    await Swal.fire(await response.json());
-                } else {
-                    AlertError(`No de pudo borrar la plantilla: ${response.status} - ${response.statusText}`);
-                }
-            } catch (error) {
-                AlertError(error);
-            }
-        } else {
-            AlertSuccess("La acción a sido cancelada");
-        }
+        deleteDocumentTemplate(handlerFetchTemplate, id);
     }, [documents]);
 
     return (
