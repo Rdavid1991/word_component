@@ -34,7 +34,7 @@ const TemplateCreate = ({ handlerFetchTemplate, values, reset, handleInputChange
                 onReset={handleReset}
             >
                 <InputText
-                    htmlId="Name"
+                    htmlId="name"
                     htmlLabel="Nombre"
                     onChange={handleInputChange}
                     value={values.name}

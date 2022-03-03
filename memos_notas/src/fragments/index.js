@@ -1,6 +1,5 @@
 import React from 'react';
 import { getLocalStorageUserDepartment } from 'src/utils';
-import PropTypes from "prop-types";
 
 /**
      * Solo se muestra si tiene acceso para crear plantillas para otros
@@ -36,23 +35,32 @@ export const renderSelectDepartment = (values, handleInputChange, departmentOwne
  * @component
  * @param {Object} props 
  * @param {String} props.htmlId 
- * @param {String} props.htmlLabel 
  * @param {Function} props.onChange
  * @param {String} props.value
+ * @param {String=} props.htmlLabel 
  * @param {String=} props.icon fontAwesome class
  * @param {String=} props.placeholder
  * @param {boolean=} props.required
  * @returns 
  */
-export const InputText = ({ htmlLabel, htmlId, onChange, value, icon = "", placeholder = "Escribir aquí", required = false }) => {
+export const InputText = ({
+    htmlId,
+    onChange,
+    value,
+    icon = "",
+    htmlLabel = "",
+    placeholder = "Escribir aquí",
+    required = false
+}) => {
 
     return (
         <div className="mb-3">
-            <label htmlFor={htmlId} className="form-label fw-bold">{htmlLabel}</label>
+            {
+                htmlLabel.length > 0 ? <label htmlFor={htmlId} className="form-label fw-bold">{htmlLabel}</label> : ""
+            }
             <div className="input-group mb-3">
                 {
-                    icon.length > 0 ? <span className="input-group-text"><i className={icon}></i></span>
-                        : ""
+                    icon.length > 0 ? <span className="input-group-text"><i className={icon}></i></span> : ""
                 }
                 <input
                     type="text"

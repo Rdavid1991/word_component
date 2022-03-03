@@ -8,9 +8,9 @@ import { AlertError, AlertSuccess, AlertWarning } from 'src/utils/Alerts';
 
 
 const initialState = {
-    to: "",
+    to     : "",
     subject: "",
-    from: getLocalStorageUserName()
+    from   : getLocalStorageUserName()
 };
 const HomeGenerateDocument = ({ addresseeState, memoOrNoteState, fetchNumbers }) => {
 

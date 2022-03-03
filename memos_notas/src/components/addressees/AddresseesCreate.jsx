@@ -43,7 +43,7 @@ export const AddresseesCreate = ({ departmentOwnerState, fetchAddresses, handleI
                         htmlLabel="Dirección / Departamento"
                         onChange={handleInputChange}
                         placeholder="Dirección o departamento del destinatario"
-                        value={form.archetype}
+                        value={form.department}
                     />
                     {renderSelectDepartment(form, handleInputChange, departmentOwnerState)}
 
@@ -51,7 +51,6 @@ export const AddresseesCreate = ({ departmentOwnerState, fetchAddresses, handleI
                         <button className="btn btn-sm btn-secondary">Guardar</button>
                         <button className="btn btn-sm btn-secondary mx-1" type="reset">Limpiar campos</button>
                     </div>
-
                 </form>
             </div>
         </div>

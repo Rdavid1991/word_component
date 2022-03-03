@@ -6,10 +6,10 @@ import { globals } from 'src/globals';
 
 
 const initialState = {
-	id: "",
-	to: "",
+	id     : "",
+	to     : "",
 	subject: "",
-	from: ""
+	from   : ""
 };
 
 const RejectConsecutiveNumber = ({ memoOrNoteState, fetchNumbers }) => {
@@ -28,10 +28,10 @@ const RejectConsecutiveNumber = ({ memoOrNoteState, fetchNumbers }) => {
 				if (result.length > 0) {
 					//{ "id": 154, "asunto": "Bueno funciona", "solicitado_por": "test", "dirigido_a": "esteban", "last": 1 }
 					setRejectInfo({
-						id: result.id,
-						to: result.dirigido_a,
+						id     : result.id,
+						to     : result.dirigido_a,
 						subject: result.asunto,
-						from: result.solicitado_por
+						from   : result.solicitado_por
 					});
 				} else {
 					Swal.fire(
@@ -57,13 +57,13 @@ const RejectConsecutiveNumber = ({ memoOrNoteState, fetchNumbers }) => {
 
 
 		Swal.fire({
-			title: 'Esta seguro(a)?',
-			text: `Va a rechazar ${memoOrNoteState === 1 ? "un memo" : "una nota"} este cambio no se puede revertir`,
-			icon: 'warning',
-			showCancelButton: true,
+			title             : 'Esta seguro(a)?',
+			text              : `Va a rechazar ${memoOrNoteState === 1 ? "un memo" : "una nota"} este cambio no se puede revertir`,
+			icon              : 'warning',
+			showCancelButton  : true,
 			confirmButtonColor: '#3085d6',
-			cancelButtonColor: '#d33',
-			confirmButtonText: 'Si, hacerlo'
+			cancelButtonColor : '#d33',
+			confirmButtonText : 'Si, hacerlo'
 		}).then(async (result) => {
 			if (result.isConfirmed) {
 
