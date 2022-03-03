@@ -31,7 +31,7 @@ class Connection
             $this->_connected = true;
         } else {
             $arrayError = sqlsrv_errors();
-            $error = "No se pudo conectar a la base de datos: ".$arrayError[0]["message"]." ".$arrayError[1]["message"];
+            $error = "No se pudo conectar a la base de datos: ".$arrayError[0]["message"];
             echo json_encode((object) ["message" => Message::errorDatabase($error)]);
             http_response_code(500);
             exit();

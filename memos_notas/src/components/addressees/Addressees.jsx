@@ -1,9 +1,10 @@
 //@ts-check
 import React, { useContext, useState } from 'react';
 import { context } from 'src/context/context';
-import { renderSelectDepartment } from 'src/fragments';
-import { deleteAddressees, saveAddressees } from 'src/utils/SaveAndGet';
+import { useForm } from 'src/hooks/useForm';
+import { deleteAddressees } from 'src/utils/SaveAndGet';
 import { AlertConfirmQuestion } from '../../utils/Alerts';
+import { AddresseesCreate } from './AddresseesCreate';
 
 const initialState = {
     id        : "",
@@ -17,22 +18,10 @@ export const Addressees = ({ addresseeState, fetchAddresses }) => {
 
     const { showLoader, departmentOwnerState } = useContext(context);
 
-    const [form, setForm] = useState(initialState);
+    const [form, setForm, handleInputChange, reset] = useForm(initialState);
     const [searchState, setSearchState] = useState("");
 
-    const handleInputChange = ({ target }) => {
-        setForm({
-            ...form,
-            [target.id]: target.value
-        });
-    };
-
-    const handleSaveAddressees = async (e) => {
-        e.preventDefault();
-        const { isSaved } = await saveAddressees(form);
-        if (isSaved) setForm(initialState);
-        fetchAddresses();
-    };
+   
 
     const handlerEdit = (index) => {
         setForm({
@@ -58,81 +47,13 @@ export const Addressees = ({ addresseeState, fetchAddresses }) => {
 
     return (
         <>
-            <div className="px-3" >
-                <div className="px-2">
-                    <h3 className="fw-bold mb-3">Agregar destinatarios</h3>
-                    <form onSubmit={handleSaveAddressees} onReset={() => setForm(initialState)}>
-                        <div className="mb-3">
-                            <label htmlFor="name" className="form-label fw-bold">Nombre</label>
-                            <div className="input-group mb-3">
-                                <span className="input-group-text"><i className="fas fa-user"></i></span>
-                                <input
-                                    type="text"
-                                    className="form-control form-control-sm"
-                                    id="name"
-                                    placeholder="Nombre"
-                                    required={true}
-                                    onChange={handleInputChange}
-                                    value={form.name}
-                                />
-                            </div>
-                        </div>
-                        <div className="mb-3">
-                            <label htmlFor="jobTitle" className="form-label fw-bold">Cargo</label>
-                            <div className="input-group mb-3">
-                                <span className="input-group-text"><i className="fas fa-wrench"></i></span>
-                                <input
-                                    type="text"
-                                    className="form-control form-control-sm"
-                                    id="jobTitle"
-                                    placeholder="Cargo"
-                                    required={true}
-                                    onChange={handleInputChange}
-                                    value={form.jobTitle}
-                                />
-                            </div>
-                        </div>
-                        <div className="mb-3">
-                            <label htmlFor="archetype" className="form-label fw-bold">Arquetipo</label>
-                            <div className="input-group mb-3">
-                                <span className="input-group-text"><i className="fas fa-user-tie"></i></span>
-                                <input
-                                    type="text"
-                                    className="form-control form-control-sm"
-                                    id="archetype"
-                                    placeholder="Ejm: Licenciado, Ingeniero, Señor(a), etc"
-                                    required={true}
-                                    onChange={handleInputChange}
-                                    value={form.archetype}
-                                />
-                            </div>
-                        </div>
-                        <div className="mb-3">
-                            <label htmlFor="archetype" className="form-label fw-bold">Dirección / Departamento</label>
-                            <div className="input-group mb-3">
-                                <span className="input-group-text"><i className="fas fa-user-tie"></i></span>
-                                <input
-                                    type="text"
-                                    className="form-control form-control-sm"
-                                    id="department"
-                                    placeholder="Dirección o departamento"
-                                    required={true}
-                                    onChange={handleInputChange}
-                                    value={form.department}
-                                />
-                            </div>
-                        </div>
-
-                        {renderSelectDepartment(form, handleInputChange, departmentOwnerState)}
-
-                        <div className="mb-3">
-                            <button className="btn btn-sm btn-secondary">Guardar</button>
-                            <button className="btn btn-sm btn-secondary mx-1" type="reset">Limpiar campos</button>
-                        </div>
-
-                    </form>
-                </div>
-            </div>
+            <AddresseesCreate
+                 departmentOwnerState={departmentOwnerState}
+                 fetchAddresses={fetchAddresses}
+                 reset={reset}
+                 handleInputChange={handleInputChange}
+                 form={form}
+            />
             <div className="px-3"><hr /></div>
             <div className="px-3" >
                 <div className="px-2">

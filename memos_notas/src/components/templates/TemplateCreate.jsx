@@ -1,7 +1,7 @@
 //@ts-check
 import React, { useContext } from 'react';
 import { context } from 'src/context/context';
-import { renderSelectDepartment } from 'src/fragments';
+import { InputText, renderSelectDepartment } from 'src/fragments';
 import { typeOfDocuments } from 'src/utils/constants';
 import { saveDocumentTemplate } from 'src/utils/SaveAndGet';
 
@@ -33,18 +33,15 @@ const TemplateCreate = ({ handlerFetchTemplate, values, reset, handleInputChange
                 onSubmit={handleSaveDocument}
                 onReset={handleReset}
             >
-                <div className="mb-3">
-                    <label htmlFor="name" className="form-label fw-bold">Nombre</label>
-                    <input
-                        type="text"
-                        className="form-control form-select-sm"
-                        id="name"
-                        onChange={handleInputChange}
-                        value={values.name}
-                        placeholder="Nombre de plantilla"
-                        required
-                    />
-                </div>
+                <InputText
+                    htmlId="Name"
+                    htmlLabel="Nombre"
+                    onChange={handleInputChange}
+                    value={values.name}
+                    placeholder="Nombre de plantilla"
+                    required={true}
+                    icon="far fa-file-alt"
+                />
 
                 <div className="mb-3">
                     <label htmlFor="type" className="form-label fw-bold">Tipo de documento</label>
