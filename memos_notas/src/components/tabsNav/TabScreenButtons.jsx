@@ -24,6 +24,15 @@ const TabScreenButtons = () => {
                 </button>
                 <button
                     className="nav-link"
+                    id="nav-info-help-tab"
+                    data-bs-toggle="tab"
+                    data-bs-target="#nav-employ"
+                    type="button"
+                >
+                    Funcionarios
+                </button>
+                <button
+                    className="nav-link"
                     id="nav-template-tab"
                     data-bs-toggle="tab"
                     data-bs-target="#nav-template"
@@ -40,6 +49,7 @@ const TabScreenButtons = () => {
                 >
                     Ayuda
                 </button>
+
             </div>
         </nav>
     );

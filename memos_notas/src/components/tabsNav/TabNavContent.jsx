@@ -13,6 +13,7 @@ import {
     getDocumentTemplate,
     saveConsecutiveNumber,
 } from 'src/utils/SaveAndGet';
+import { Employ } from '../employ/Employ';
 
 
 const initialNumber = {
@@ -32,8 +33,8 @@ export const TabNavContent = () => {
         (async () => {
             await HomeInsertUser();
             showLoader(true);
-            await fetchAddresses();
-            await fetchNumbers();
+            fetchAddresses();
+            fetchNumbers();
             await fetchTemplate();
             showLoader(false);
         })();
@@ -100,6 +101,9 @@ export const TabNavContent = () => {
                     documents={documents}
                     fetchTemplate={fetchTemplate}
                 />
+            </div>
+            <div className="tab-pane fade" id="nav-employ">
+                <Employ/>
             </div>
         </div>
     );
