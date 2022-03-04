@@ -9,7 +9,7 @@ const initialState = {
     jobTitle: "",
     position: ""
 };
-export const Functionary = () => {
+export const Functionary = ({functionaries, fetchFunctionary}) => {
 
     const [values, setValues, handleInputChange, reset] = useForm(initialState);
 
@@ -19,11 +19,14 @@ export const Functionary = () => {
         <>
             <FunctionaryCreate
                 handleInputChange={handleInputChange}
+                fetchFunctionary={fetchFunctionary}
                 values={values}
                 reset={reset}
             />
-            <div className="px-3"><hr/></div>
-            <FunctionaryList />
+            <div className="px-3 "><hr/></div>
+            <FunctionaryList
+                functionaries={functionaries}
+            />
         </>
     );
 };

@@ -117,13 +117,17 @@ $document_history = new DocumentHistory();
 $template = new DocTemplate();
 $options = new Options();
 
-if ($_GET["action"] === "save_functionary") {
-
+if (
+    $_GET["action"] === "save_functionary" ||
+    $_GET["action"] === "get_functionary"
+) {
     $functionary = new Functionary();
-
     switch ($_GET["action"]) {
         case "save_functionary":
             $functionary->save_functionary();
+            break;
+        case "get_functionary":
+            $functionary->get_functionary();
             break;
     }
 }

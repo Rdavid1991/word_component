@@ -98,6 +98,27 @@ export const saveFunctionary = async(form) => {
     return { isSaved: false };
 };
 
+/**
+ * Obtener funcinarios
+ * @returns 
+ */
+ export const getFunctionaries = async () => {
+
+    const department_owner = JSON.parse(localStorage.getItem(localStorageKeyUser)).department;
+
+    try {
+        const response = await apiRequest().get("get_functionary", { department_owner });
+        if (response.ok) {
+            return await response.json();
+        }
+        const { message } = await response.json();
+        await AlertError(`Error al consultar funcionarios: ${message.text}`);
+    } catch (error) {
+        await AlertError(`Error al consultar funcionarios: ${error}`);
+    }
+    return false;
+};
+
 
 /**
  * Obtener consecutivo

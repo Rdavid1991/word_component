@@ -30,10 +30,20 @@ class Functionary extends ManagementDB
         ]);
 
         if ($result["isInsert"]) {
+            http_response_code(201);
             echo json_encode(Message::success());
         } else if (!$result["isInsert"]) {
             http_response_code(500);
             echo json_encode(Message::errorDatabase($result["error"]));
         }
+    }
+
+    function get_functionary()
+    {
+        $sql = "SELECT * FROM [dbo].[functionary]";
+        $sql .= $_GET["department_owner"] == "0" ? "" : "WHERE [department_owner_id] = ?";
+        $result = parent::select_query($sql, [$_GET["department_owner"]]);
+
+        echo json_encode((object) ["data" => $result]);
     }
 }

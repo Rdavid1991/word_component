@@ -11,6 +11,7 @@ import {
     getAddresses,
     getConsecutiveNumber,
     getDocumentTemplate,
+    getFunctionaries,
     saveConsecutiveNumber,
 } from 'src/utils/SaveAndGet';
 import { Functionary } from '../employ/Functionary';
@@ -22,23 +23,35 @@ const initialNumber = {
 };
 const initialDocument = [];
 const initialAddressee = [];
+const initialFunctionary = [];
 export const TabNavContent = () => {
 
     const { showLoader } = useContext(context);
     const [addresseeState, setStateAddressee] = useState(initialAddressee);
     const [documents, setDocuments] = useState(initialDocument);
     const [numberState, setNumberState] = useState(initialNumber);
+    const [functionaries, setFunctionary] = useState(initialFunctionary);
 
     useEffect(() => {
         (async () => {
             await HomeInsertUser();
             showLoader(true);
-            fetchAddresses();
-            fetchNumbers();
+            await fetchNumbers();
             await fetchTemplate();
+            await fetchAddresses();
+            await fetchFunctionary();
             showLoader(false);
         })();
     }, []);
+
+    const fetchFunctionary = async () => {
+        let functionary = await getFunctionaries();
+        if (functionary) {
+            const { data } = functionary;
+            setFunctionary(data);
+        }
+    };
+
 
     const fetchNumbers = async () => {
         let consecutive = await getConsecutiveNumber();
@@ -102,8 +115,11 @@ export const TabNavContent = () => {
                     fetchTemplate={fetchTemplate}
                 />
             </div>
-            <div className="tab-pane fade" id="nav-employ">
-                <Functionary/>
+            <div className="tab-pane fade h-100" id="nav-employ">
+                <Functionary 
+                    functionaries={functionaries}
+                    fetchFunctionary={fetchFunctionary}
+                />
             </div>
         </div>
     );

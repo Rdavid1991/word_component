@@ -3,7 +3,7 @@ import { context } from 'src/context/context';
 import { ButtonReset, ButtonSubmit, InputText, renderSelectDepartment } from 'src/fragments';
 import { saveFunctionary } from 'src/utils/SaveAndGet';
 
-export const FunctionaryCreate = ({ handleInputChange, values, reset }) => {
+export const FunctionaryCreate = ({ handleInputChange, fetchFunctionary, values, reset }) => {
 
 	const { showLoader, departmentOwnerState } = useContext(context);
 
@@ -13,8 +13,13 @@ export const FunctionaryCreate = ({ handleInputChange, values, reset }) => {
 	 */
 	const handleSaveFunctionary = async (e) => {
 		e.preventDefault();
+		showLoader(true);
 		const { isSaved } = await saveFunctionary(values);
-		if (isSaved) reset();
+		if (isSaved){
+			reset();
+			fetchFunctionary();
+		} 
+		showLoader(false);
 	};
 
 
