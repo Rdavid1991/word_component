@@ -5,11 +5,23 @@ import { AlertSuccess } from 'src/utils/Alerts';
 import { DocumentPermissionRequestLoadVars } from './functions';
 
 const initialState = {
-	from: `${moment().format("YYYY-MM-DD")}T08:00`,
-	to  : `${moment().format("YYYY-MM-DD")}T16:00`
+	functionary: "",
+	from       : `${moment().format("YYYY-MM-DD")}T08:00`,
+	to         : `${moment().format("YYYY-MM-DD")}T16:00`
 };
 
-const HomePermissionRequest = () => {
+/**
+ * 
+ * @param {Object} props
+ * @param {Object[]} props.functionaries
+ * @param {String} props[].functionaries.id
+ * @param {String} props[].functionaries.name
+ * @param {String} props[].functionaries.id_card
+ * @param {String} props[].functionaries.job_title
+ * @param {String} props[].functionaries.position_number
+ * @returns 
+ */
+const HomePermissionRequest = ({ functionaries }) => {
 
 	// eslint-disable-next-line no-unused-vars
 	const [values, setValues, handleInputChange, reset] = useForm(initialState);
@@ -20,12 +32,36 @@ const HomePermissionRequest = () => {
 	 */
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-		await DocumentPermissionRequestLoadVars(values);
+		const selectedFunctionary = functionaries.find((functionary) => parseInt(functionary.id) == parseInt(values.functionary));
+
+		console.log({ selectedFunctionary, values, functionaries });
+
+		await DocumentPermissionRequestLoadVars(values, selectedFunctionary);
 		AlertSuccess("Los datos se han enviado al documento");
 	};
 
 	return (
 		<form onSubmit={handleSubmit}>
+			<div className="mb-3">
+				<label
+					forHtml="#functionary"
+					className="fw-bold form-label"
+				>
+					Funcionario
+				</label>
+				<select
+					id="functionary"
+					value={values.functionary}
+					onChange={handleInputChange}
+					className="form-select form-select-sm"
+				>
+					{
+						functionaries.map((item) => (
+							<option key={item.id} value={item.id}>{item.name}</option>
+						))
+					}
+				</select>
+			</div>
 			<div className="mb-3">
 				<label
 					forHtml="#from"

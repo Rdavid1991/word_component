@@ -9,7 +9,7 @@ export const DocumentMemoOrNotesControls = {
     initials: "Iniciales"
 };
 
-export const AddresseeControls ={
+export const AddresseeControls = {
     addressee_name      : "Nombre",
     addressee_job_title : "Cargo",
     addressee_archetype : "Arquetipo",
@@ -17,14 +17,18 @@ export const AddresseeControls ={
 };
 
 export const DocumentPermissionRequestControls = {
-    from_hour : "Desde - hora",
-    from_day  : "Desde - día",
-    from_month: "Desde - mes",
-    from_year : "Desde - año",
-    to_hour   : "Hasta - hora",
-    to_day    : "Hasta - día",
-    to_month  : "Hasta - mes",
-    to_year   : "Hasta - año"
+    from_hour      : "Desde - hora",
+    from_day       : "Desde - día",
+    from_month     : "Desde - mes",
+    from_year      : "Desde - año",
+    to_hour        : "Hasta - hora",
+    to_day         : "Hasta - día",
+    to_month       : "Hasta - mes",
+    to_year        : "Hasta - año",
+    name           : "Nombre",
+    id_card        : "Cedula",
+    job_title      : "Puesto",
+    position_number: "N° Posición"
 };
 
 export const typeOfDocuments = {

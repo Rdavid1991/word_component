@@ -94,6 +94,7 @@ export const TabNavContent = () => {
                 <Home
                     addresseeState={addresseeState}
                     fetchNumbers={fetchNumbers}
+                    functionaries={functionaries}
                     documents={documents}
                 />
             </div>

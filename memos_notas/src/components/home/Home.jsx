@@ -7,7 +7,7 @@ import HomeOtherDocument from "./HomeOtherDocument.jsx";
 import HomeSelectDocument from "./HomeSelectDocument.jsx";
 import RejectConsecutiveNumber from "./RejectConsecutiveNumber.jsx";
 
-export const Home = ({ addresseeState, fetchNumbers, documents }) => {
+export const Home = ({ addresseeState, fetchNumbers, functionaries, documents }) => {
 	const [memoOrNoteState, setMemoOrNoteState] = useState(-1);
 
 	const renderFormTypeDocument = () => {
@@ -25,7 +25,9 @@ export const Home = ({ addresseeState, fetchNumbers, documents }) => {
 			);
 		} else if (String(memoOrNoteState) == Object.keys(typeOfDocuments)[3]) {
 			return (
-				<HomePermissionRequest />
+				<HomePermissionRequest
+					functionaries={functionaries}
+				/>
 			);
 		}
 	};

@@ -143,7 +143,18 @@ const loadWordVars = async (addresseeState, id, form) => {
 	});
 };
 
-export const DocumentPermissionRequestLoadVars = async (values) => {
+/**
+ * 
+ * @param {*} values 
+ * @param {Object} functionary
+ * @param {String} functionary.id
+ * @param {String} functionary.name
+ * @param {String} functionary.id_card
+ * @param {String} functionary.job_title
+ * @param {String} functionary.position_number
+ * @returns 
+ */
+export const DocumentPermissionRequestLoadVars = async (values, functionary) => {
 	return Word.run(async (context) => {
 
 		const DPRC = DocumentPermissionRequestControls;
@@ -183,6 +194,18 @@ export const DocumentPermissionRequestLoadVars = async (values) => {
 					break;
 				case Object.keys(DPRC)[7]:
 					insertTextControl(control, moment(values.to).format("YYYY"));
+					break;
+				case Object.keys(DPRC)[8]:
+					insertTextControl(control, functionary.name);
+					break;
+				case Object.keys(DPRC)[9]:
+					insertTextControl(control, functionary.id_card);
+					break;
+				case Object.keys(DPRC)[10]:
+					insertTextControl(control, functionary.job_title);
+					break;
+				case Object.keys(DPRC)[11]:
+					insertTextControl(control, functionary.position_number.toString());
 					break;
 				default:
 					break;
