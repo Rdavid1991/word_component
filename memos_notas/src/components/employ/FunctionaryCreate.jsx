@@ -1,8 +1,9 @@
 import React, { useContext } from 'react';
 import { context } from 'src/context/context';
-import { InputText, renderSelectDepartment } from 'src/fragments';
+import { ButtonReset, ButtonSubmit, InputText, renderSelectDepartment } from 'src/fragments';
+import { saveFunctionary } from 'src/utils/SaveAndGet';
 
-export const EmployCreate = ({ handleInputChange, values, reset }) => {
+export const FunctionaryCreate = ({ handleInputChange, values, reset }) => {
 
 	const { showLoader, departmentOwnerState } = useContext(context);
 
@@ -10,8 +11,10 @@ export const EmployCreate = ({ handleInputChange, values, reset }) => {
 	 * 
 	 * @param {React.FormEvent<HTMLFormElement>} e 
 	 */
-	const handleSaveFunctionary= (e) => {
+	const handleSaveFunctionary = async (e) => {
 		e.preventDefault();
+		const { isSaved } = await saveFunctionary(values);
+		if (isSaved) reset();
 	};
 
 
@@ -26,6 +29,7 @@ export const EmployCreate = ({ handleInputChange, values, reset }) => {
 						onChange={handleInputChange}
 						placeholder="Nombre del funcionario"
 						value={values.name}
+						required={true}
 					/>
 					<InputText
 						htmlId="idCard"
@@ -33,6 +37,7 @@ export const EmployCreate = ({ handleInputChange, values, reset }) => {
 						onChange={handleInputChange}
 						placeholder="Cédula del funcionario"
 						value={values.idCard}
+						required={true}
 					/>
 					<InputText
 						htmlId="jobTitle"
@@ -40,6 +45,7 @@ export const EmployCreate = ({ handleInputChange, values, reset }) => {
 						onChange={handleInputChange}
 						placeholder="Puesto del funcionario"
 						value={values.jobTitle}
+						required={true}
 					/>
 					<InputText
 						htmlId="position"
@@ -47,12 +53,17 @@ export const EmployCreate = ({ handleInputChange, values, reset }) => {
 						onChange={handleInputChange}
 						placeholder="Numero de posición del funcionario"
 						value={values.position}
+						required={true}
 					/>
 					{renderSelectDepartment(values, handleInputChange, departmentOwnerState)}
 
 					<div className="mb-3">
-						<button className="btn btn-sm btn-secondary">Guardar</button>
-						<button className="btn btn-sm btn-secondary mx-1" type="reset">Limpiar campos</button>
+						<ButtonSubmit
+							title="Guardar"
+						/>
+						<ButtonReset
+							title="Limpiar campos"
+						/>
 					</div>
 				</form>
 			</div>

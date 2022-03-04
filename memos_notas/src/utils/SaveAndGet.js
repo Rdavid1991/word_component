@@ -79,6 +79,26 @@ export const deleteAddressees = async (id, showLoader) => {
     }
 };
 
+export const saveFunctionary = async(form) => {
+    const department_owner = getLocalStorageUserDepartment();
+
+    try {
+        const route = `${form.edit ? "edit" : "save"}_functionary`;
+        let response = await apiRequest().post(route, { ...form, department_owner });
+        if (response.ok) {
+            await Swal.fire(await response.json());
+            return { isSaved: true };
+        } else {
+            const { message } = await response.json();
+            await AlertError(`No se pudo guardar el destinatario: ${message.text}`);
+        }
+    } catch (error) {
+        await AlertError(error);
+    }
+    return { isSaved: false };
+};
+
+
 /**
  * Obtener consecutivo
  * @returns 

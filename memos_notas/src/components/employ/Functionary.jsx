@@ -1,7 +1,7 @@
 import React from 'react';
 import { useForm } from 'src/hooks/useForm';
-import { EmployCreate } from './EmployCreate';
-import { EmployList } from './EmployList';
+import { FunctionaryCreate } from './FunctionaryCreate';
+import { FunctionaryList } from './FunctionaryList';
 
 const initialState = {
     name    : "",
@@ -9,7 +9,7 @@ const initialState = {
     jobTitle: "",
     position: ""
 };
-export const Employ = () => {
+export const Functionary = () => {
 
     const [values, setValues, handleInputChange, reset] = useForm(initialState);
 
@@ -17,13 +17,13 @@ export const Employ = () => {
 
     return (
         <>
-            <EmployCreate
+            <FunctionaryCreate
                 handleInputChange={handleInputChange}
                 values={values}
                 reset={reset}
             />
             <div className="px-3"><hr/></div>
-            <EmployList />
+            <FunctionaryList />
         </>
     );
 };

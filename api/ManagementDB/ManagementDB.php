@@ -1,5 +1,5 @@
 <?php
-require_once(dirname(__FILE__)."/../connection.php");
+require_once(dirname(__FILE__) . "/../connection.php");
 
 class ManagementDB extends Connection
 {
@@ -25,12 +25,11 @@ class ManagementDB extends Connection
         if ($query_result) {
             $numRows = sqlsrv_rows_affected($query_result);
             sqlsrv_commit($this->_db);
-            return true;
+            return ["isInsert" => true];
         }
-        error_log("Error en base de datos: " . json_encode(sqlsrv_errors()));
-        $errorinsert = json_encode(sqlsrv_errors());
+        $error = sqlsrv_errors();
         sqlsrv_rollback($this->_db);
-        return false;
+        return ["isInsert" => false, "error" => "Error al insertar datos " . $error[0]["message"]];
     }
 
     protected function select_query(string $sql_query, $params = array())

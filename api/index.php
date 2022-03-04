@@ -7,6 +7,7 @@ require_once(dirname(__FILE__) . "/class/DocumentHistory.php");
 require_once(dirname(__FILE__) . "/class/DocTemplate.php");
 require_once(dirname(__FILE__) . "/class/Options.php");
 require_once(dirname(__FILE__) . "/class/Addressee.php");
+require_once(dirname(__FILE__) . "/class/Functionary.php");
 
 
 class HandlerActionsMemo extends ManagementDB
@@ -115,21 +116,43 @@ $handler = new HandlerActionsMemo();
 $document_history = new DocumentHistory();
 $template = new DocTemplate();
 $options = new Options();
-$addressee = new Addressee();
+
+if ($_GET["action"] === "save_functionary") {
+
+    $functionary = new Functionary();
+
+    switch ($_GET["action"]) {
+        case "save_functionary":
+            $functionary->save_functionary();
+            break;
+    }
+}
+
+if (
+    $_GET["action"] === "save_addressee" ||
+    $_GET["action"] === "edit_addressee" ||
+    $_GET["action"] === "get_addressee" ||
+    $_GET["action"] === "delete_addressee"
+) {
+    $addressee = new Addressee();
+
+    switch ($_GET["action"]) {
+        case "save_addressee":
+            $addressee->save_addressee();
+            break;
+        case "edit_addressee":
+            $addressee->edit_addressee();
+            break;
+        case "get_addressee":
+            $addressee->get_addressee();
+            break;
+        case "delete_addressee":
+            $addressee->delete_addressee();
+            break;
+    }
+}
 
 switch ($_GET["action"]) {
-    case "save_addressee":
-        $addressee->save_addressee();
-        break;
-    case "edit_addressee":
-        $addressee->edit_addressee();
-        break;
-    case "get_addressee":
-        $addressee->get_addressee();
-        break;
-    case "delete_addressee":
-        $addressee->delete_addressee();
-        break;
     case "set_number":
         $document_history->find();
         break;

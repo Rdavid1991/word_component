@@ -75,3 +75,39 @@ export const InputText = ({
         </div>
     );
 };
+
+/* Botones */
+
+/**
+ * 
+ * @param {Object} prop 
+ * @param {String} prop.title 
+ * @returns 
+ */
+export const ButtonSubmit = ({title}) => {
+    return (
+        <button
+            type="submit"
+            className="btn btn-sm btn-success mx-1"
+        >
+            {title}
+        </button>
+    );
+};
+
+/**
+ * 
+ * @param {Object} prop 
+ * @param {String} prop.title 
+ * @returns 
+ */
+export const ButtonReset = ({title}) => {
+    return (
+        <button
+            type="reset"
+            className="btn btn-sm btn-secondary mx-1"
+        >
+            {title}
+        </button>
+    );
+};

@@ -13,7 +13,7 @@ import {
     getDocumentTemplate,
     saveConsecutiveNumber,
 } from 'src/utils/SaveAndGet';
-import { Employ } from '../employ/Employ';
+import { Functionary } from '../employ/Functionary';
 
 
 const initialNumber = {
@@ -103,7 +103,7 @@ export const TabNavContent = () => {
                 />
             </div>
             <div className="tab-pane fade" id="nav-employ">
-                <Employ/>
+                <Functionary/>
             </div>
         </div>
     );
