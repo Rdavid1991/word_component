@@ -65,9 +65,9 @@ export const writeDocument = async (template) => {
         header.clear();
         footer.clear();
 
-        body.insertOoxml(template.body.toString(), Word.InsertLocation.start);
-        header.insertOoxml(template.header.toString(), Word.InsertLocation.start);
-        footer.insertOoxml(template.footer.toString(), Word.InsertLocation.start);
+        body.insertOoxml(template.body.toString(), Word.InsertLocation.replace);
+        header.insertOoxml(template.header.toString(), Word.InsertLocation.replace);
+        footer.insertOoxml(template.footer.toString(), Word.InsertLocation.replace);
 
         return await context.sync();
     });
