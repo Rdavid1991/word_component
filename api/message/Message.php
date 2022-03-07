@@ -3,7 +3,7 @@
 class Message
 {
 
-    public static function success()
+    public static function successSaved()
     {
         return (object) array(
             "title" => "Hecho",
@@ -14,11 +14,11 @@ class Message
 
     public static function successDelete()
     {
-        return json_encode((object) array(
+        return (object) array(
             "title" => "Hecho",
             "text" => "El registro se a borrado satisfactoriamente",
             "icon" => "success"
-        ));
+        );
     }
 
     public static function errorDatabase($error)

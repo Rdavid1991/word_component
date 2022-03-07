@@ -34,8 +34,6 @@ const HomePermissionRequest = ({ functionaries }) => {
 		e.preventDefault();
 		const selectedFunctionary = functionaries.find((functionary) => parseInt(functionary.id) == parseInt(values.functionary));
 
-		console.log({ selectedFunctionary, values, functionaries });
-
 		await DocumentPermissionRequestLoadVars(values, selectedFunctionary);
 		AlertSuccess("Los datos se han enviado al documento");
 	};

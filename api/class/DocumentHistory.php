@@ -4,8 +4,10 @@ require_once(dirname(__FILE__) . "/../message/Message.php");
 
 class DocumentHistory extends ManagementDB
 {
+    protected $consecutive;
     function __construct()
     {
+        $this->consecutive = new Consecutive();
         parent::__construct();
     }
 
@@ -14,57 +16,12 @@ class DocumentHistory extends ManagementDB
         parent::__destruct();
     }
 
-    public function get_count_numbers()
-    {
-        $sql = "SELECT * FROM [dbo].[number_memo_notes] WHERE department_owner_id = ?";
-        return parent::select_query($sql, [$_GET["department_owner"] ?? $_POST["department_owner"]]);
-    }
 
-    public function save_count_numbers($memo, $note)
-    {
-        $result = $this->get_count_numbers();
-        if ($result) {
-            $update = "UPDATE [dbo].[number_memo_notes]
-                        SET [memorandum] = ? ,[notes] = ?
-                        WHERE [id] = ?";
-            $result = parent::insert_query($update, [$memo, $note, $result[0]->id]);
-            if ($result) {
-                return (object) array(
-                    "title" => "Hecho",
-                    "text" => "Se ha guardado la información correctamente",
-                    "icon" => "success"
-                );
-            } else {
-                return (object) array(
-                    "title" => "Oops!!!",
-                    "text" => "A ocurrido un error.",
-                    "icon" => "error"
-                );
-            }
-        } else {
-            $update = "INSERT INTO [dbo].[number_memo_notes]([memorandum],[notes],[department_owner_id])
-                        VALUES(?,?,?)";
-            $result = parent::insert_query($update, [$_POST["memo"], $_POST["note"], $_POST["department_owner"]]);
-            if ($result) {
-                return (object) array(
-                    "title" => "Hecho",
-                    "text" => "Se ha guardado la información correctamente",
-                    "icon" => "success"
-                );
-            } else {
-                return (object) array(
-                    "title" => "Oops!!!",
-                    "text" => "A ocurrido un error.",
-                    "icon" => "error"
-                );
-            }
-        }
-    }
 
     public function find()
     {
 
-        $count_number = $this->get_count_numbers();
+        $count_number = $this->consecutive->get_count_numbers();
 
         if (intval($_GET["type"]) === 1) {
 
@@ -79,7 +36,7 @@ class DocumentHistory extends ManagementDB
             $solicitado = $_POST["solicitado"];
             $date = $_POST["date"];
             $department_owner = $_POST["department_owner"];
-           
+
 
             $sql = "INSERT INTO [dbo].[memo]
            ([asunto]
@@ -100,13 +57,13 @@ class DocumentHistory extends ManagementDB
                ?
                )";
 
-            $result = parent::insert_query($sql, [$asunto, $solicitado, $dirigido,   $count_number[0]->memorandum, $date, 1, $department_owner]);
+            $result = parent::insert_query($sql, [$asunto, $solicitado, $dirigido,   $count_number["data"][0]->memorandum, $date, 1, $department_owner]);
 
             if ($result) {
-                $this->save_count_numbers(($count_number[0]->memorandum + 1), $count_number[0]->notes);
+                $this->consecutive->save_count_numbers(($count_number["data"][0]->memorandum + 1), $count_number["data"][0]->notes);
             }
 
-            $data = ["data" => [(object) ["id" => $count_number[0]->memorandum]]];
+            $data = ["data" => [(object) ["id" => $count_number["data"][0]->memorandum]]];
 
             echo json_encode($data);
         } else if (intval($_GET["type"]) === 2) {
@@ -141,13 +98,13 @@ class DocumentHistory extends ManagementDB
                ?
                )";
 
-            $result = parent::insert_query($sql, [$asunto, $solicitado, $dirigido,   $count_number[0]->notes, $date, 1, $department_owner]);
+            $result = parent::insert_query($sql, [$asunto, $solicitado, $dirigido,   $count_number["data"][0]->notes, $date, 1, $department_owner]);
 
             if ($result) {
-                $this->save_count_numbers(($count_number[0]->memorandum), $count_number[0]->notes + 1);
+                $this->consecutive->save_count_numbers(($count_number["data"][0]->memorandum), $count_number["data"][0]->notes + 1);
             }
 
-            $data = ["data" => [(object) ["id" => $count_number[0]->notes]]];
+            $data = ["data" => [(object) ["id" => $count_number["data"][0]->notes]]];
 
             echo json_encode($data);
         }
@@ -165,8 +122,8 @@ class DocumentHistory extends ManagementDB
             $result = parent::insert_query($update, [$_GET["info"]]);
 
             if ($result) {
-                $count_number = $this->get_count_numbers();
-                $this->save_count_numbers((intval($_GET["info"])), $count_number->notes);
+                $count_number = $this->consecutive->get_count_numbers();
+                $this->consecutive->save_count_numbers((intval($_GET["info"])), $count_number->notes);
 
                 $msj = (object) array(
                     "title" => "Hecho",
@@ -190,8 +147,8 @@ class DocumentHistory extends ManagementDB
             $result = parent::insert_query($update, [$_GET["info"]]);
 
             if ($result) {
-                $count_number = $this->get_count_numbers();
-                $this->save_count_numbers($count_number->notes, intval($_GET["info"]));
+                $count_number = $this->consecutive->get_count_numbers();
+                $this->consecutive->save_count_numbers($count_number->notes, intval($_GET["info"]));
 
                 $msj = (object) array(
                     "title" => "Hecho",

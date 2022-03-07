@@ -8,6 +8,7 @@ require_once(dirname(__FILE__) . "/class/DocTemplate.php");
 require_once(dirname(__FILE__) . "/class/Options.php");
 require_once(dirname(__FILE__) . "/class/Addressee.php");
 require_once(dirname(__FILE__) . "/class/Functionary.php");
+require_once(dirname(__FILE__) . "/class/Consecutive.php");
 
 
 class HandlerActionsMemo extends ManagementDB
@@ -43,79 +44,70 @@ class HandlerActionsMemo extends ManagementDB
             }
         }
     }
+}
 
-    public function save_document()
+class Response
+{
+    public static function responseInsert($result)
     {
-
-        if (isset($_POST["type"])) {
-            $type = $_POST["type"];
-            $document = json_encode((object) [
-                "body" => $_POST["body"],
-                "footer" => $_POST["footer"],
-                "header" => $_POST["header"]
-            ]);
-
-            $sql = "SELECT * FROM [dbo].[document] where [id] =" . $type;
-
-            $result = parent::select_query($sql);
-
-            if ($result) {
-                $sql = "UPDATE [dbo].[document]
-                SET [doc] = ?
-                WHERE [id] = ?";
-
-                $result = parent::insert_query($sql, [$document, $type]);
-            } else {
-
-                $sql = "INSERT INTO [dbo].[document] ([id],[doc])
-                VALUES (?,?)";
-
-                $result = parent::insert_query($sql, [$type, $document]);
-            }
-
-            if ($result) {
-                $msj = (object) array(
-                    "title" => "Hecho",
-                    "text" => "Los datos se han guardado correctamente",
-                    "icon" => "success"
-                );
-                echo  json_encode($msj);
-            } else {
-                $msj = (object) array(
-                    "title" => "Oops!!!",
-                    "text" => "A ocurrido un error.",
-                    "icon" => "error"
-                );
-                echo  json_encode($msj);
-            }
+        if ($result["isSuccess"]) {
+            return json_encode((object) ["message" => Message::successSaved()]);
         } else {
-            $msj = (object) array(
-                "title" => "Algo salio mal",
-                "text" => "no se puede guardar los datos, hacen falta parámetros",
-                "icon" => 'warning'
-            );
-            echo  json_encode($msj);
+            http_response_code(500);
+            return json_encode((object)["message" => Message::errorDatabase($result["error"])]);
         }
     }
 
-    public function get_document()
+    public static function responseSelect($result)
     {
+        if ($result["isSuccess"]) {
+            return json_encode((object) ["data" => $result["data"]]);
+        } else if (!$result["isSuccess"]) {
+            http_response_code(500);
+            return json_encode(["message" => Message::errorDatabase($result["error"])]);
+        }
+    }
 
-        $type = $_GET["type"];
-
-
-        $sql = "SELECT * FROM [dbo].[document] where [id] ='" . $type . "'";
-
-        $result = parent::select_query($sql);
-
-        echo json_encode($result);
+    public static function responseDelete($result)
+    {
+        if ($result["isSuccess"]) {
+            return json_encode((object) ["message" => Message::successDelete()]);
+        } else {
+            http_response_code(500);
+            return json_encode((object)["message" => Message::errorDatabase($result["error"])]);
+        }
     }
 }
 
-$handler = new HandlerActionsMemo();
-$document_history = new DocumentHistory();
-$template = new DocTemplate();
-$options = new Options();
+
+/**
+ * Manejo de plantillas 
+ */
+if (
+    $_GET["action"] === "save_template_doc" ||
+    $_GET["action"] === "edit_template_doc" ||
+    $_GET["action"] === "get_template_doc" ||
+    $_GET["action"] === "delete_template_doc"
+) {
+
+    $template = new DocTemplate();
+
+    switch ($_GET["action"]) {
+        case "save_template_doc":
+            echo Response::responseInsert($template->save_template_doc());
+            break;
+        case "edit_template_doc":
+            echo Response::responseInsert($template->edit_template_doc());
+            break;
+        case "get_template_doc":
+            echo Response::responseSelect($template->get_template_doc());
+            break;
+        case "delete_template_doc":
+            echo Response::responseDelete($template->delete_template_doc());
+            break;
+    }
+}
+
 
 if (
     $_GET["action"] === "save_functionary" ||
@@ -124,10 +116,10 @@ if (
     $functionary = new Functionary();
     switch ($_GET["action"]) {
         case "save_functionary":
-            $functionary->save_functionary();
+            echo Response::responseInsert($functionary->save_functionary());
             break;
         case "get_functionary":
-            $functionary->get_functionary();
+            echo Response::responseSelect($functionary->get_functionary());
             break;
     }
 }
@@ -142,61 +134,69 @@ if (
 
     switch ($_GET["action"]) {
         case "save_addressee":
-            $addressee->save_addressee();
+            echo Response::responseInsert($addressee->save_addressee());
             break;
         case "edit_addressee":
-            $addressee->edit_addressee();
+            echo Response::responseInsert($addressee->edit_addressee());
             break;
         case "get_addressee":
-            $addressee->get_addressee();
+            echo Response::responseSelect($addressee->get_addressee());
             break;
         case "delete_addressee":
-            $addressee->delete_addressee();
+            echo Response::responseDelete($addressee->delete_addressee());
             break;
     }
 }
 
-switch ($_GET["action"]) {
-    case "set_number":
-        $document_history->find();
-        break;
-    case "get_type":
-        $handler->get_document();
-        break;
-    case "save_document":
-        $handler->save_document();
-        break;
-    case "get_reject_info":
-        $handler->get_reject_info();
-        break;
-    case "reject_info":
-        $document_history->reject_info();
-        break;
-    case "save_count_numbers":
-        $result = $document_history->save_count_numbers($_POST["memo"], $_POST["note"]);
-        echo json_encode($result);
-        break;
-    case "get_count_numbers":
-        $result = $document_history->get_count_numbers();
-        echo json_encode([
-            "data" => $result
-        ]);
-        break;
-    case "save_template_doc":
-        $template->save_template_doc();
-        break;
-    case "edit_template_doc":
-        $template->edit_template_doc();
-        break;
-    case "get_template_doc":
-        $template->get_template_doc();
-        break;
-    case "delete_template_doc":
-        $template->delete_template_doc();
-        break;
-    case "get_options_department_owner":
-        $options->get_department_owner();
-        break;
-    default:
-        break;
+if (
+    $_GET["action"] === "save_count_numbers" ||
+    $_GET["action"] === "get_count_numbers"
+) {
+
+    $consecutive = new Consecutive();
+
+    switch ($_GET["action"]) {
+        case "save_count_numbers":
+            echo Response::responseInsert($consecutive->save_count_numbers($_POST["memo"], $_POST["note"]));
+            break;
+        case "get_count_numbers":
+            echo Response::responseSelect($consecutive->get_count_numbers());
+            break;
+    }
+}
+
+if (
+    $_GET["action"] === "set_number" ||
+    $_GET["action"] === "reject_info"
+
+) {
+
+    $document_history = new DocumentHistory();
+
+    switch ($variable) {
+        case "set_number":
+            $document_history->find();
+            break;
+        case "reject_info":
+            $document_history->reject_info();
+            break;
+    }
+}
+
+if (
+    $_GET["action"] ==="get_reject_info" ||
+    $_GET["action"] ==="get_options_department_owner"
+) {
+    $handler = new HandlerActionsMemo();
+    $options = new Options();
+    switch ($_GET["action"]) {
+        case "get_reject_info":
+            $handler->get_reject_info();
+            break;
+        case "get_options_department_owner":
+            $options->get_department_owner();
+            break;
+        default:
+            break;
+    }
 }

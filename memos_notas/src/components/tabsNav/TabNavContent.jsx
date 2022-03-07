@@ -48,7 +48,9 @@ export const TabNavContent = () => {
         let functionary = await getFunctionaries();
         if (functionary) {
             const { data } = functionary;
-            setFunctionary(data);
+            if (data.length > 0) {
+                setFunctionary(data);
+            }
         }
     };
 
@@ -69,10 +71,12 @@ export const TabNavContent = () => {
     };
 
     const fetchAddresses = async () => {
-        const result = await getAddresses();
-        if (result) {
-            const array = Array.isArray(result) ? result : [result];
-            setStateAddressee(array);
+        const addresses = await getAddresses();
+        if (addresses) {
+            const { data } = addresses;
+            if (data.length > 0) {
+                setStateAddressee(data);
+            }
         }
     };
 
@@ -116,8 +120,8 @@ export const TabNavContent = () => {
                     fetchTemplate={fetchTemplate}
                 />
             </div>
-            <div className="tab-pane fade h-100" id="nav-employ">
-                <Functionary 
+            <div className="tab-pane fade h-100 functionary_pane" id="nav-employ">
+                <Functionary
                     functionaries={functionaries}
                     fetchFunctionary={fetchFunctionary}
                 />

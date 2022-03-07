@@ -28,11 +28,7 @@ class DocTemplate extends ManagementDB
             $_POST["department_owner"] == "0" ? $_POST["owner"] : $_POST["department_owner"]
         ];
 
-        $response = parent::insert_query($sql, $params);
-
-        if ($response) {
-            echo Message::success();
-        }
+        return parent::insert_query($sql, $params);
     }
 
     public function edit_template_doc()
@@ -43,11 +39,7 @@ class DocTemplate extends ManagementDB
                     [type] = ?
                 WHERE [id] = ?";
 
-        $response = parent::insert_query($sql, [$_POST["name"], $_POST["document"], $_POST["type"], $_POST["id"]]);
-
-        if ($response) {
-            echo Message::success();
-        }
+       return parent::insert_query($sql, [$_POST["name"], $_POST["document"], $_POST["type"], $_POST["id"]]);
     }
 
     public function delete_template_doc()
@@ -56,13 +48,7 @@ class DocTemplate extends ManagementDB
         $sql = "DELETE FROM [dbo].[document]
                 WHERE [id] = ?";
 
-        $response = parent::insert_query($sql, [$_POST["id"]], $affected);
-
-        if ($response) {
-            if (intval($affected) > 0) {
-                echo Message::successDelete();
-            }
-        }
+        return parent::insert_query($sql, [$_POST["id"]], $affected);
     }
 
     public function get_template_doc()
@@ -70,7 +56,6 @@ class DocTemplate extends ManagementDB
         $sql = "SELECT * FROM [dbo].[document]";
         $sql .= $_GET["department_owner"] == "0" ? "" : "WHERE [department_owner_id] = ?";
 
-        $response = parent::select_query($sql, [$_GET["department_owner"]]);
-        echo json_encode((object)["data" => $response]);
+        return parent::select_query($sql, [$_GET["department_owner"]]);
     }
 }

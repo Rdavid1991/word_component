@@ -16,7 +16,7 @@ moment.locale("es-mx");
  * Obtener controles del documento y agruparlos por sección: encabezado, cuerpo, pie de pagina
  * @param {Word.RequestContext} context
  * @param {Object<string, string>} variables
- * @returns {object} Retornar JSOn con nombre de la etiqueta como llave. Ejemplo: [tag] :{body: [control], footer:[control],header:[control]}
+ * @returns {object} Retornar JSOn con nombre de la etiqueta como llave. 
  */
 const getControlsByTag = (context, variables) => {
 	let arrayControls = {};
@@ -24,17 +24,7 @@ const getControlsByTag = (context, variables) => {
 	Object.keys(variables).forEach((tag) => {
 		arrayControls = {
 			...arrayControls,
-			[tag]: {
-				body  : context.document.body.contentControls.getByTag(tag),
-				footer: context.document.sections
-					.getFirst()
-					.getFooter("Primary")
-					.contentControls.getByTag(tag),
-				header: context.document.sections
-					.getFirst()
-					.getHeader("Primary")
-					.contentControls.getByTag(tag),
-			},
+			[tag]: context.document.contentControls.getByTag(tag),
 		};
 	});
 	return arrayControls;
@@ -42,18 +32,13 @@ const getControlsByTag = (context, variables) => {
 
 /**
  * @param {Word.RequestContext} context
- * @param {Object[]} controls
- * @param {Word.ContentControl} controls[].body
- * @param {Word.ContentControl} controls[].footer
- * @param {Word.ContentControl} controls[].header
+ * @param {Object<string,Word.ContentControl>} controls
  * @param {Object<string,string>} variables
  * @returns {object}
  */
 const loadControls = (context, controls, variables) => {
 	Object.keys(variables).forEach((tag) => {
-		context.load(controls[tag].body);
-		context.load(controls[tag].footer);
-		context.load(controls[tag].header);
+		context.load(controls[tag]);
 	});
 
 	return controls;
@@ -61,16 +46,11 @@ const loadControls = (context, controls, variables) => {
 
 /**
  * Insertar texto en el control
- * @param {Object} control
- * @param {Word.ContentControlCollection} control.body
- * @param {Word.ContentControlCollection} control.header
- * @param {Word.ContentControlCollection} control.footer
+ * @param {Word.ContentControlCollection} control
  * @param {string} text
  */
 const insertTextControl = (control, text) => {
-	control.body.items[0]?.insertText(text, "Replace");
-	control.header.items[0]?.insertText(text, "Replace");
-	control.footer.items[0]?.insertText(text, "Replace");
+	control.items[0]?.insertText(text, "Replace");
 };
 
 /**
@@ -88,7 +68,7 @@ const insertTextControl = (control, text) => {
 const loadWordVars = async (addresseeState, id, form) => {
 	await Word.run(async (context) => {
 
-		const memoAndNoteControls = { ...AddresseeControls, ...DocumentMemoOrNotesControls };
+		const memoAndNoteControls = { ...DocumentMemoOrNotesControls, ...AddresseeControls };
 
 		const controls = loadControls(
 			context,
@@ -155,6 +135,17 @@ const loadWordVars = async (addresseeState, id, form) => {
  * @returns 
  */
 export const DocumentPermissionRequestLoadVars = async (values, functionary) => {
+
+	await Word.run(async (context) => {
+		let builtInProperties = context.document.sections.getFirst().getFooter("Primary");
+		builtInProperties.load("*"); // Let's get all!
+
+		let ssss = builtInProperties.getOoxml();
+
+		await context.sync();
+		console.log(JSON.stringify(ssss, null, 4));
+	});
+
 	return Word.run(async (context) => {
 
 		const DPRC = DocumentPermissionRequestControls;

@@ -26,7 +26,7 @@ export const FunctionaryCreate = ({ handleInputChange, fetchFunctionary, values,
 	return (
 		<div className="px-3" >
 			<div className="px-2">
-				<h3 className="fw-bold mb-3">Agregar funcionario</h3>
+				<h3 className="fw-bold mb-3">Agregar o editar funcionario</h3>
 				<form onSubmit={handleSaveFunctionary} onReset={() => reset()}>
 					<InputText
 						htmlId="name"

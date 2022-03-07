@@ -44,7 +44,8 @@ export const saveAddressees = async (form) => {
         const route = `${form.edit ? "edit" : "save"}_addressee`;
         let response = await apiRequest().post(route, { ...form, department_owner });
         if (response.ok) {
-            await Swal.fire(await response.json());
+            const { message } = await response.json();
+            await Swal.fire(message);
             return { isSaved: true };
         } else {
             const { message } = await response.json();
@@ -68,7 +69,8 @@ export const deleteAddressees = async (id, showLoader) => {
         let response = await apiRequest().post("delete_addressee", { id });
         showLoader(false);
         if (response.ok) {
-            await Swal.fire(await response.json());
+            const { message } = await response.json();
+            await Swal.fire(message);
         } else {
             const { message } = await response.json();
             await AlertError(`No se pudo borrar el destinatario: ${message.text}`);
@@ -86,7 +88,8 @@ export const saveFunctionary = async(form) => {
         const route = `${form.edit ? "edit" : "save"}_functionary`;
         let response = await apiRequest().post(route, { ...form, department_owner });
         if (response.ok) {
-            await Swal.fire(await response.json());
+            const { message } = await response.json();
+            await Swal.fire(message);
             return { isSaved: true };
         } else {
             const { message } = await response.json();
@@ -99,7 +102,7 @@ export const saveFunctionary = async(form) => {
 };
 
 /**
- * Obtener funcinarios
+ * Obtener funcionarios
  * @returns 
  */
  export const getFunctionaries = async () => {
@@ -112,6 +115,9 @@ export const saveFunctionary = async(form) => {
             return await response.json();
         }
         const { message } = await response.json();
+
+        console.log({message});
+
         await AlertError(`Error al consultar funcionarios: ${message.text}`);
     } catch (error) {
         await AlertError(`Error al consultar funcionarios: ${error}`);
@@ -198,7 +204,8 @@ export const saveDocumentTemplate = async (values, handlerFetchTemplate, reset) 
                 .post(`${values.edit ? "edit" : "save"}_template_doc`, { ...values, document, department_owner });
             if (response.ok) {
                 handlerFetchTemplate();
-                await Swal.fire(await response.json());
+                const { message } = await response.json();
+                await Swal.fire(message);
                 clearDocument();
                 reset();
             } else {

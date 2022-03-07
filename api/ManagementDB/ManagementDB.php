@@ -25,11 +25,11 @@ class ManagementDB extends Connection
         if ($query_result) {
             $numRows = sqlsrv_rows_affected($query_result);
             sqlsrv_commit($this->_db);
-            return ["isInsert" => true];
+            return ["isSuccess" => true];
         }
         $error = sqlsrv_errors();
         sqlsrv_rollback($this->_db);
-        return ["isInsert" => false, "error" => "Error al insertar datos " . $error[0]["message"]];
+        return ["isSuccess" => false, "error" => "Error al insertar datos " . $error[0]["message"]];
     }
 
     protected function select_query(string $sql_query, $params = array())
@@ -45,10 +45,10 @@ class ManagementDB extends Connection
             }
 
             sqlsrv_free_stmt($query_result);
-            return $array_items;
+            return ["isSuccess" => true , "data" => $array_items];
         }
         error_log("Error en base de datos: " . json_encode(sqlsrv_errors()));
-        $errorselect = json_encode(sqlsrv_errors());
-        return false;
+        $error = sqlsrv_errors();
+        return ["isSuccess" => false , "error" => "Error al insertar datos " . $error[0]["message"]];
     }
 }

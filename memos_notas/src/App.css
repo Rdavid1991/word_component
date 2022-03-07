@@ -1,4 +1,4 @@
-body{
+body {
   overflow: hidden;
 }
 
@@ -14,9 +14,13 @@ i {
   height: 94vh;
 }
 
-.tab-content{
+.tab-content {
   overflow-y: auto;
   scroll-behavior: smooth;
   height: 100%;
 }
 
+.functionary_pane.active {
+  display: grid;
+  grid-template-rows: 425px 5px 83%;
+}

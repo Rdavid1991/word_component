@@ -40,7 +40,7 @@ export const FunctionaryList = ({ functionaries }) => {
 
 
 	return (
-		<div className="px-3 position-sticky mt-5 top-0 h-100 " >
+		<div className="px-3 mt-2" >
 			<h3 className="fw-bold mt-2 mb-2">Lista de funcionarios</h3>
 			<InputText
 				htmlId="search"

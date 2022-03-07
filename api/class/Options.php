@@ -19,8 +19,13 @@ class Options extends ManagementDB
     {
         $sql = "SELECT * FROM [dbo].[department_owner]";
 
-        $query_result = parent::select_query($sql);
+        $result = parent::select_query($sql);
 
-        echo json_encode((object) ["data" => $query_result]);
+        if ($result["isSuccess"]) {
+            echo json_encode((object) ["data" => $result["data"]]);
+        } else if (!$result["isSuccess"]) {
+            http_response_code(500);
+            echo json_encode(["message" => Message::errorDatabase($result["error"])]);
+        }
     }
 }

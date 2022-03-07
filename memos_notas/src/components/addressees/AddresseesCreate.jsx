@@ -14,45 +14,43 @@ export const AddresseesCreate = ({ departmentOwnerState, fetchAddresses, handleI
 
     return (
         <div className="px-3" >
-            <div className="px-2">
-                <h3 className="fw-bold mb-3">Agregar destinatarios</h3>
-                <form onSubmit={handleSaveAddressees} onReset={() => reset()}>
-                    <InputText
-                        htmlId="name"
-                        htmlLabel="Nombre"
-                        onChange={handleInputChange}
-                        placeholder="Nombre del destinatario"
-                        value={form.name}
-                    />
-                    <InputText
-                        htmlId="jobTitle"
-                        htmlLabel="Cargo"
-                        onChange={handleInputChange}
-                        placeholder="Cargo del destinatario"
-                        value={form.jobTitle}
-                    />
-                    <InputText
-                        htmlId="archetype"
-                        htmlLabel="Arquetipo"
-                        onChange={handleInputChange}
-                        placeholder="Ejemplo: Sr, Sra, Lic"
-                        value={form.archetype}
-                    />
-                    <InputText
-                        htmlId="department"
-                        htmlLabel="Dirección / Departamento"
-                        onChange={handleInputChange}
-                        placeholder="Dirección o departamento del destinatario"
-                        value={form.department}
-                    />
-                    {renderSelectDepartment(form, handleInputChange, departmentOwnerState)}
+            <h3 className="fw-bold mb-3">Agregar o editar destinatarios</h3>
+            <form onSubmit={handleSaveAddressees} onReset={() => reset()}>
+                <InputText
+                    htmlId="name"
+                    htmlLabel="Nombre"
+                    onChange={handleInputChange}
+                    placeholder="Nombre del destinatario"
+                    value={form.name}
+                />
+                <InputText
+                    htmlId="jobTitle"
+                    htmlLabel="Cargo"
+                    onChange={handleInputChange}
+                    placeholder="Cargo del destinatario"
+                    value={form.jobTitle}
+                />
+                <InputText
+                    htmlId="archetype"
+                    htmlLabel="Arquetipo"
+                    onChange={handleInputChange}
+                    placeholder="Ejemplo: Sr, Sra, Lic"
+                    value={form.archetype}
+                />
+                <InputText
+                    htmlId="department"
+                    htmlLabel="Dirección / Departamento"
+                    onChange={handleInputChange}
+                    placeholder="Dirección o departamento del destinatario"
+                    value={form.department}
+                />
+                {renderSelectDepartment(form, handleInputChange, departmentOwnerState)}
 
-                    <div className="mb-3">
-                        <button className="btn btn-sm btn-secondary">Guardar</button>
-                        <button className="btn btn-sm btn-secondary mx-1" type="reset">Limpiar campos</button>
-                    </div>
-                </form>
-            </div>
+                <div className="mb-3">
+                    <button className="btn btn-sm btn-secondary">Guardar</button>
+                    <button className="btn btn-sm btn-secondary mx-1" type="reset">Limpiar campos</button>
+                </div>
+            </form>
         </div>
     );
 };
