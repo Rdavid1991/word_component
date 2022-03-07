@@ -16,7 +16,7 @@
   <ProviderName>Mides</ProviderName>
   <DefaultLocale>en-US</DefaultLocale>
   <!-- The display name of your add-in. Used on the store and various places of the Office UI such as the add-ins dialog. -->
-  <DisplayName DefaultValue="Memos y notas" />
+  <DisplayName DefaultValue="Template manager" />
   <Description DefaultValue="Generar numero de memos y notas"/>
 
   <!-- Icon for your add-in. Used on installation screens and the add-ins dialog. -->

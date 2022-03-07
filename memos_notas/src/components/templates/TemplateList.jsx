@@ -5,7 +5,7 @@ import { typeOfDocuments } from "src/utils/constants";
 
 const TemplateList = ({ documents, handlerEdit, handlerDelete }) => {
 
-
+	const [filtered, setFiltered] = useState([]);
 	const [searchState, setSearchState] = useState("");
 	const [departmentOwnerState, setDepartmentOwnerState] = useState([]);
 
@@ -34,29 +34,29 @@ const TemplateList = ({ documents, handlerEdit, handlerDelete }) => {
 		target.focus({ preventScroll: true });
 	};
 
-	const searchElements = (item, index, departmentName) => {
-		return (
-			<div key={index} className="card p-1 mb-2 bg-body">
-				<div className="card-body">
-					<h6 className="fw-bold card-title">Nombre: <span className="fw-light">{item.name}</span></h6>
-					<p className="fw-bold text-muted mb-0">Tipo: <span className="fw-light">{typeOfDocuments[item.type]}</span></p>
-					{
-						getLocalStorageUserDepartment() == 0 ?
-							<p className="fw-bold text-muted">Pertenece a:&nbsp;
-								<span
-									className="fw-light"
-								>
-									{departmentName}
-								</span>
-							</p>
-							: null
-					}
-					<button className="btn btn-sm btn-secondary m-1" data-id={item.id} onClick={onClickEdit}><i className="far fa-edit"></i></button>
-					<button className="btn btn-sm btn-secondary m-1" data-id={item.id} onClick={onClickDelete}><i className="fas fa-trash-alt"></i></button>
-				</div>
-			</div>
-		);
+	useEffect(() => {
+		handlerFilterSearch();
+	}, [searchState, documents]);
+
+	/**
+	 * @param {React.ChangeEvent<HTMLInputElement>} e
+	 */
+	const handleSearchChange = (e) => {
+		setSearchState(e.target.value);
 	};
+
+	const handlerFilterSearch = () => {
+		let searching = documents.filter((item) => {
+			const departmentName = departmentOwnerState.filter((e) => e.id == item.department_owner_id)[0]?.name;
+
+			return new RegExp(searchState, "i").test(item.name) ||
+				new RegExp(searchState, "i").test(typeOfDocuments[item.type]) ||
+				new RegExp(searchState, "i").test(departmentName) ? true : false;
+		});
+
+		setFiltered(searching);
+	};
+
 
 	return (
 		<>
@@ -78,20 +78,31 @@ const TemplateList = ({ documents, handlerEdit, handlerDelete }) => {
 			</div>
 			<div className="overflow-auto h-100">
 				{
-					documents.map((item, index) => {
+					filtered.map((item, index) => {
 
 						const departmentName = departmentOwnerState.filter((e) => e.id == item.department_owner_id)[0]?.name;
 
-						if (searchState.length > 0 &&
-							new RegExp(searchState, "i").test(item.name) ||
-							new RegExp(searchState, "i").test(typeOfDocuments[item.type]) ||
-							new RegExp(searchState, "i").test(departmentName)
-
-						) {
-							return searchElements(item, index, departmentName);
-						} else if (searchState.length <= 0) {
-							return searchElements(item, index, departmentName);
-						}
+						return (
+							<div key={index} className="card p-1 mb-2 bg-body">
+								<div className="card-body">
+									<h6 className="fw-bold card-title">Nombre: <span className="fw-light">{item.name}</span></h6>
+									<p className="fw-bold text-muted mb-0">Tipo: <span className="fw-light">{typeOfDocuments[item.type]}</span></p>
+									{
+										getLocalStorageUserDepartment() == 0 ?
+											<p className="fw-bold text-muted">Pertenece a:&nbsp;
+												<span
+													className="fw-light"
+												>
+													{departmentName}
+												</span>
+											</p>
+											: null
+									}
+									<button className="btn btn-sm btn-secondary m-1" data-id={item.id} onClick={onClickEdit}><i className="far fa-edit"></i></button>
+									<button className="btn btn-sm btn-secondary m-1" data-id={item.id} onClick={onClickDelete}><i className="fas fa-trash-alt"></i></button>
+								</div>
+							</div>
+						);
 					})
 				}
 			</div>

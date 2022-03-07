@@ -7,10 +7,8 @@ import { writeDocument } from 'src/utils/documents';
 import { selectedDocumentType } from './functions';
 import { parametersOfDocuments } from './functions/parametersOfDocuments';
 
-const HomeSelectDocument = ({ setMemoOrNoteState, memoOrNoteState, documents }) => {
+const HomeSelectDocument = ({ setMemoOrNoteState, memoOrNoteState, documents, setSelectedState, selectedState }) => {
     const { setControls } = useContext(context);
-
-    const [selectedState, setSelectedState] = useState("");
 
     const handleSelectChange = ({ target }) => {
         setSelectedState(target.value);
@@ -31,7 +29,7 @@ const HomeSelectDocument = ({ setMemoOrNoteState, memoOrNoteState, documents }) 
     return (
         <form>
             <div className="mb-3">
-                <label htmlFor="to" className="form-label fw-bold">Memo o Notas?</label>
+                <label htmlFor="to" className="form-label fw-bold">Seleccionar una plantilla</label>
                 <select
                     name="type"
                     className="form-select form-select-sm"

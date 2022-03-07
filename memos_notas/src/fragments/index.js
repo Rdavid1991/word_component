@@ -41,6 +41,7 @@ export const renderSelectDepartment = (values, handleInputChange, departmentOwne
  * @param {String=} props.icon fontAwesome class
  * @param {String=} props.placeholder
  * @param {boolean=} props.required
+ * @param {boolean=} props.disabled
  * @returns 
  */
 export const InputText = ({
@@ -50,7 +51,8 @@ export const InputText = ({
     icon = "",
     htmlLabel = "",
     placeholder = "Escribir aquí",
-    required = false
+    required = false,
+    disabled = false
 }) => {
 
     return (
@@ -68,6 +70,7 @@ export const InputText = ({
                     id={htmlId}
                     placeholder={placeholder}
                     required={required}
+                    disabled={disabled}
                     onChange={onChange}
                     value={value}
                 />

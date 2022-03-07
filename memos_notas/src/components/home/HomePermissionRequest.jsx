@@ -19,9 +19,10 @@ const initialState = {
  * @param {String} props[].functionaries.id_card
  * @param {String} props[].functionaries.job_title
  * @param {String} props[].functionaries.position_number
+ * @param {Function} props[].setSelectedState
  * @returns 
  */
-const HomePermissionRequest = ({ functionaries }) => {
+const HomePermissionRequest = ({ functionaries, setSelectedState }) => {
 
 	// eslint-disable-next-line no-unused-vars
 	const [values, setValues, handleInputChange, reset] = useForm(initialState);
@@ -36,6 +37,7 @@ const HomePermissionRequest = ({ functionaries }) => {
 
 		await DocumentPermissionRequestLoadVars(values, selectedFunctionary);
 		AlertSuccess("Los datos se han enviado al documento");
+		setSelectedState("");
 	};
 
 	return (

@@ -230,7 +230,7 @@ export const deleteDocumentTemplate = async (handlerFetchTemplate, id) => {
         try {
             const response = await apiRequest().post("delete_template_doc", { id });
             if (response.ok) {
-                await handlerFetchTemplate();
+                handlerFetchTemplate();
                 const { message } = await response.json();
                 await Swal.fire(message);
             } else {

@@ -5,6 +5,7 @@ import { context } from 'src/context/context';
 import { getLocalStorageUserName } from 'src/utils';
 import { useForm } from 'src/hooks/useForm';
 import { AlertError, AlertSuccess, AlertWarning } from 'src/utils/Alerts';
+import { InputText } from 'src/fragments';
 
 
 const initialState = {
@@ -12,19 +13,9 @@ const initialState = {
     subject: "",
     from   : getLocalStorageUserName()
 };
-const HomeGenerateDocument = ({ addresseeState, memoOrNoteState, fetchNumbers }) => {
+const HomeGenerateDocument = ({ addresseeState, memoOrNoteState, fetchNumbers, setSelectedState }) => {
 
     const { showLoader } = useContext(context);
-    /**
-     * addresseeState structure
-     *  {
-     *      "id": 1,
-     *      "name": "",
-     *      "jobTitle": "",
-     *      "archetype": "",
-     *      "department": ""
-     *  }
-     */
 
     const [form, setForm, handleInputChange, reset] = useForm(initialState);
     const [buttonDisabled, setButtonDisabled] = useState(true);
@@ -57,6 +48,7 @@ const HomeGenerateDocument = ({ addresseeState, memoOrNoteState, fetchNumbers })
                 loadWordVars(addresseeState, data[0].id, form)
                     .then(() => {
                         AlertSuccess('La información esta lista');
+                        setSelectedState("");
                     })
                     .catch((err) => {
                         AlertError("No se puede editar el documento" + err,);
@@ -100,38 +92,25 @@ const HomeGenerateDocument = ({ addresseeState, memoOrNoteState, fetchNumbers })
                     </select>
                 </div>
             </div>
-            <div className="mb-3">
-                <label htmlFor="subject" className="form-label fw-bold">Asunto</label>
-                <div className="input-group mb-3">
-
-                    <span className="input-group-text"><i className="fas fa-comments"></i></span>
-                    <input
-                        type="text"
-                        className="form-control form-control-sm"
-                        id="subject"
-                        placeholder="Asunto"
-                        required={true}
-                        onChange={handleInputChange}
-                        value={form.subject}
-                    />
-                </div>
-            </div>
-            <div className="mb-3">
-                <label htmlFor="from" className="form-label fw-bold">Solicitado por</label>
-                <div className="input-group mb-3">
-                    <span className="input-group-text"><i className="fas fa-user-edit"></i></span>
-                    <input
-                        type="text"
-                        className="form-control form-control-sm"
-                        id="from"
-                        placeholder="Quien lo solicita"
-                        required={true}
-                        onChange={handleInputChange}
-                        value={form.from}
-                        disabled
-                    />
-                </div>
-            </div>
+            <InputText
+                htmlId="subject"
+                onChange={handleInputChange}
+                value={form.subject}
+                htmlLabel={"Asunto"}
+                icon={"fas fa-comments"}
+                placeholder="Asunto"
+                required={true}
+            />
+            <InputText
+                htmlId="from"
+                onChange={handleInputChange}
+                value={form.from}
+                htmlLabel={"Solicitado por"}
+                icon={"fas fa-user-edit"}
+                placeholder="Quien lo solicita"
+                required={true}
+                disabled={true}
+            />
             <button
                 type="submit"
                 className="btn btn-sm btn-secondary"

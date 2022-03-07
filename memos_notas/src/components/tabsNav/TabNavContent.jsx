@@ -36,9 +36,9 @@ export const TabNavContent = () => {
         (async () => {
             await HomeInsertUser();
             showLoader(true);
-            await fetchNumbers();
-            await fetchTemplate();
-            await fetchAddresses();
+            fetchNumbers();
+            fetchTemplate();
+            fetchAddresses();
             await fetchFunctionary();
             showLoader(false);
         })();
@@ -74,7 +74,7 @@ export const TabNavContent = () => {
         const addresses = await getAddresses();
         if (addresses) {
             const { data } = addresses;
-            if (data.length > 0) {
+            if (data.length >= 0) {
                 setStateAddressee(data);
             }
         }
@@ -84,7 +84,7 @@ export const TabNavContent = () => {
         const templates = await getDocumentTemplate();
         if (templates) {
             const { data } = templates;
-            if (data.length > 0) {
+            if (data.length >= 0) {
                 setDocuments(data);
             }
         }

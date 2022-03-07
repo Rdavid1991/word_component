@@ -18,7 +18,7 @@ export const apiRequest = () => {
                 formData.append(key, value);
             });
 
-            return await fetch(`${globals.apiUrl}?action=${route}`, { 
+            return await fetch(`${globals.apiUrl}?action=${route}`, {
                 method: "POST",
                 body  : formData
             });
