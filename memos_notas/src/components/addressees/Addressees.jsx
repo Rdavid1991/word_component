@@ -15,30 +15,44 @@ const initialState = {
     department: "",
     edit      : false
 };
+
+/**
+ * 
+ * @param {Object} props
+ * @param {Array} props.addresseeState
+ * @param {Function} props.fetchAddresses
+ * @returns 
+ */
 export const Addressees = ({ addresseeState, fetchAddresses }) => {
 
     const { showLoader, departmentOwnerState } = useContext(context);
 
     const [form, setForm, handleInputChange, reset] = useForm(initialState);
 
-    const handlerEdit = (index) => {
+    const handlerEdit = (idEdit) => {
+
+        const found = addresseeState.find((a) => a.id == idEdit);
+
         setForm({
-            id        : addresseeState[index].id,
-            name      : addresseeState[index].name,
-            jobTitle  : addresseeState[index].jobTitle,
-            archetype : addresseeState[index].archetype,
-            department: addresseeState[index].department,
+            id        : found.id,
+            name      : found.name,
+            jobTitle  : found.jobTitle,
+            archetype : found.archetype,
+            department: found.department,
             edit      : true
         });
         document.querySelector(".tab-content").scrollTo(0, 0);
     };
 
-    const handlerDelete = async (index) => {
+    const handlerDelete = async (idEdit) => {
+
+        const { id, name } = addresseeState.find((a) => a.id == idEdit);
+
         const { isConfirmed } = await AlertConfirmQuestion(
-            `Desea borrar a <span class="fw-bold">${addresseeState[index].name}</span>`
+            `Desea borrar a <span class="fw-bold">${name}</span>`
         );
         if (isConfirmed) {
-            await deleteAddressees(addresseeState[index].id, showLoader);
+            await deleteAddressees(id, showLoader);
             fetchAddresses();
         }
     };

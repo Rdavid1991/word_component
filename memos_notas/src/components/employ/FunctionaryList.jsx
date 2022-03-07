@@ -10,9 +10,11 @@ import { InputText } from 'src/fragments';
  * @param {String} props[].functionaries.id_card
  * @param {String} props[].functionaries.job_title
  * @param {String} props[].functionaries.position_number
+ * @param {Function} props.handlerEdit
+ * @param {Function} props.handlerDelete
  * @returns 
  */
-export const FunctionaryList = ({ functionaries }) => {
+export const FunctionaryList = ({ functionaries, handlerEdit, handlerDelete }) => {
 
 	const [filtered, setFiltered] = useState([]);
 	const [search, setSearch] = useState("");
@@ -38,6 +40,7 @@ export const FunctionaryList = ({ functionaries }) => {
 		setFiltered(searching);
 	};
 
+	handlerEdit;
 
 	return (
 		<div className="px-3" >
@@ -58,8 +61,8 @@ export const FunctionaryList = ({ functionaries }) => {
 								<p className="fw-bold m-0 text-muted">Cedula: <span className="fw-light">{item.id_card}</span></p>
 								<p className="fw-bold m-0 text-muted">Puesto: <span className="fw-light">{item.job_title}</span></p>
 								<p className="fw-bold m-0 text-muted">Posición: <span className="fw-light">{item.position_number}</span></p>
-								<button className="btn btn-sm btn-secondary m-1" onClick={() => {/* handlerEdit(index) */ }}><i className="far fa-edit"></i></button>
-								<button className="btn btn-sm btn-secondary m-1" onClick={() => {/* handlerDelete(index) */ }}><i className="fas fa-trash-alt"></i></button>
+								<button className="btn btn-sm btn-secondary m-1" onClick={() => { handlerEdit(item.id); }}><i className="far fa-edit"></i></button>
+								<button className="btn btn-sm btn-secondary m-1" onClick={() => { handlerDelete(item.id); }}><i className="fas fa-trash-alt"></i></button>
 							</div>
 						</div>
 					))

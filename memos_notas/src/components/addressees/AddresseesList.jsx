@@ -49,8 +49,8 @@ export const AddresseesList = ({ addresseeState, handlerEdit, handlerDelete }) =
                                 <p className="fw-bold m-0 text-muted">Arquetipo: <span className="fw-light">{item.archetype}</span></p>
                                 <p className="fw-bold m-0 text-muted">Cargo: <span className="fw-light">{item.jobTitle}</span></p>
                                 <p className="fw-bold m-0 text-muted">Departamento: <span className="fw-light">{item.department}</span></p>
-                                <button className="btn btn-sm btn-secondary m-1" onClick={() => handlerEdit(index)}><i className="far fa-edit"></i></button>
-                                <button className="btn btn-sm btn-secondary m-1" onClick={() => handlerDelete(index)}><i className="fas fa-trash-alt"></i></button>
+                                <button className="btn btn-sm btn-secondary m-1" onClick={() => handlerEdit(item.id)}><i className="far fa-edit"></i></button>
+                                <button className="btn btn-sm btn-secondary m-1" onClick={() => handlerDelete(item.id)}><i className="fas fa-trash-alt"></i></button>
                             </div>
                         </div>
                     ))

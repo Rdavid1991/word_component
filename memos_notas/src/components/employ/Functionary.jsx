@@ -1,18 +1,57 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { context } from 'src/context/context';
 import { useForm } from 'src/hooks/useForm';
+import { AlertConfirmQuestion } from 'src/utils/Alerts';
+import { deleteFunctionary } from 'src/utils/SaveAndGet';
 import { FunctionaryCreate } from './FunctionaryCreate';
 import { FunctionaryList } from './FunctionaryList';
 
 const initialState = {
+    id      : "",
     name    : "",
     idCard  : "",
     jobTitle: "",
-    position: ""
+    position: "",
+    edit    : false
 };
+
+/**
+ * 
+ * @param {Object} props 
+ * @param {Array} props.functionaries
+ * @returns 
+ */
 export const Functionary = ({ functionaries, fetchFunctionary }) => {
+
+    const { showLoader } = useContext(context);
 
     const [values, setValues, handleInputChange, reset] = useForm(initialState);
 
+    const handlerEdit = (idEdit) => {
+        const { id, name, id_card, job_title, position_number } = functionaries.find((e) => e.id === idEdit);
+
+        setValues({
+            id      : id,
+            name    : name,
+            idCard  : id_card,
+            jobTitle: job_title,
+            position: position_number,
+            edit    : true
+        });
+
+        document.querySelector(".tab-content").scrollTo(0, 0);
+    };
+
+    const handlerDelete = async (idDelete) => {
+
+        const { id, name } = functionaries.find((e) => e.id === idDelete);
+        const { isConfirmed } = await AlertConfirmQuestion(`¿Desea borrar a ${name}?`);
+
+        if (isConfirmed) {
+            await deleteFunctionary(id, showLoader);
+            fetchFunctionary();
+        }
+    };
 
 
     return (
@@ -31,6 +70,8 @@ export const Functionary = ({ functionaries, fetchFunctionary }) => {
                 <div className="px-3 "><hr /></div>
                 <FunctionaryList
                     functionaries={functionaries}
+                    handlerEdit={handlerEdit}
+                    handlerDelete={handlerDelete}
                 />
             </div>
         </>

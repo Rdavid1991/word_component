@@ -111,6 +111,8 @@ if (
 
 if (
     $_GET["action"] === "save_functionary" ||
+    $_GET["action"] === "edit_functionary" ||
+    $_GET["action"] === "delete_functionary" ||
     $_GET["action"] === "get_functionary"
 ) {
     $functionary = new Functionary();
@@ -118,8 +120,14 @@ if (
         case "save_functionary":
             echo Response::responseInsert($functionary->save_functionary());
             break;
+        case "edit_functionary":
+            echo Response::responseInsert($functionary->edit_functionary());
+            break;
         case "get_functionary":
             echo Response::responseSelect($functionary->get_functionary());
+            break;
+        case "delete_functionary":
+            echo Response::responseDelete($functionary->delete_functionary());
             break;
     }
 }

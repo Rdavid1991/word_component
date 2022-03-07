@@ -81,6 +81,25 @@ export const deleteAddressees = async (id, showLoader) => {
     }
 };
 
+export const deleteFunctionary = async (id, showLoader) => {
+
+    try {
+        showLoader(true);
+        let response = await apiRequest().post("delete_functionary", { id });
+        showLoader(false);
+        if (response.ok) {
+            const { message } = await response.json();
+            await Swal.fire(message);
+        } else {
+            const { message } = await response.json();
+            await AlertError(`No se pudo borrar el funcionario: ${message.text}`);
+        }
+    } catch (error) {
+        showLoader(false);
+        await AlertError(error);
+    }
+};
+
 export const saveFunctionary = async(form) => {
     const department_owner = getLocalStorageUserDepartment();
 

@@ -67,7 +67,7 @@ const TemplateList = ({ documents, handlerEdit, handlerDelete }) => {
 					type="text"
 					className="form-control form-control-sm"
 					required={true}
-					onChange={({ target }) => setSearchState(target.value)}
+					onChange={handleSearchChange}
 					value={searchState}
 				/>
 				<span
