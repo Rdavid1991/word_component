@@ -9,24 +9,30 @@ const initialState = {
     jobTitle: "",
     position: ""
 };
-export const Functionary = ({functionaries, fetchFunctionary}) => {
+export const Functionary = ({ functionaries, fetchFunctionary }) => {
 
     const [values, setValues, handleInputChange, reset] = useForm(initialState);
 
-    
+
 
     return (
         <>
-            <FunctionaryCreate
-                handleInputChange={handleInputChange}
-                fetchFunctionary={fetchFunctionary}
-                values={values}
-                reset={reset}
-            />
-            <div className="px-3 "><hr/></div>
-            <FunctionaryList
-                functionaries={functionaries}
-            />
+            <div className="w-100 px-3">
+                <h3 className="fw-bold text-truncate">Funcionarios</h3>
+                <p className="text-truncate" style={{ fontSize: "14px" }}>Agregar o editar funcionarios para plantillas</p>
+            </div>
+            <div className="functionary_pane h-100">
+                <FunctionaryCreate
+                    handleInputChange={handleInputChange}
+                    fetchFunctionary={fetchFunctionary}
+                    values={values}
+                    reset={reset}
+                />
+                <div className="px-3 "><hr /></div>
+                <FunctionaryList
+                    functionaries={functionaries}
+                />
+            </div>
         </>
     );
 };

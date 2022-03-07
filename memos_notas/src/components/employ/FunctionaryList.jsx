@@ -40,8 +40,8 @@ export const FunctionaryList = ({ functionaries }) => {
 
 
 	return (
-		<div className="px-3 mt-2" >
-			<h3 className="fw-bold mt-2 mb-2">Lista de funcionarios</h3>
+		<div className="px-3" >
+			<h3 className="fw-bold mb-2">Lista de funcionarios</h3>
 			<InputText
 				htmlId="search"
 				onChange={handlerInputChange}
@@ -62,7 +62,6 @@ export const FunctionaryList = ({ functionaries }) => {
 								<button className="btn btn-sm btn-secondary m-1" onClick={() => {/* handlerDelete(index) */ }}><i className="fas fa-trash-alt"></i></button>
 							</div>
 						</div>
-
 					))
 				}
 			</div>

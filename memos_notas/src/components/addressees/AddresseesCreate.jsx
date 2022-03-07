@@ -14,7 +14,6 @@ export const AddresseesCreate = ({ departmentOwnerState, fetchAddresses, handleI
 
     return (
         <div className="px-3" >
-            <h3 className="fw-bold mb-3">Agregar o editar destinatarios</h3>
             <form onSubmit={handleSaveAddressees} onReset={() => reset()}>
                 <InputText
                     htmlId="name"

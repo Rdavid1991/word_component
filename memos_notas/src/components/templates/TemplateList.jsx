@@ -59,7 +59,7 @@ const TemplateList = ({ documents, handlerEdit, handlerDelete }) => {
 	};
 
 	return (
-		<div className="mb-5">
+		<>
 			<h3 className="fw-bold">Lista de plantillas</h3>
 			<div className="input-group mb-3">
 				<input
@@ -76,24 +76,26 @@ const TemplateList = ({ documents, handlerEdit, handlerDelete }) => {
 					<i className="fas fa-search"></i>
 				</span>
 			</div>
-			{
-				documents.map((item, index) => {
+			<div className="overflow-auto h-100">
+				{
+					documents.map((item, index) => {
 
-					const departmentName = departmentOwnerState.filter((e) => e.id == item.department_owner_id)[0]?.name;
+						const departmentName = departmentOwnerState.filter((e) => e.id == item.department_owner_id)[0]?.name;
 
-					if (searchState.length > 0 &&
-						new RegExp(searchState, "i").test(item.name) ||
-						new RegExp(searchState, "i").test(typeOfDocuments[item.type]) ||
-						new RegExp(searchState, "i").test(departmentName)
+						if (searchState.length > 0 &&
+							new RegExp(searchState, "i").test(item.name) ||
+							new RegExp(searchState, "i").test(typeOfDocuments[item.type]) ||
+							new RegExp(searchState, "i").test(departmentName)
 
-					) {
-						return searchElements(item, index, departmentName);
-					} else if (searchState.length <= 0) {
-						return searchElements(item, index, departmentName);
-					}
-				})
-			}
-		</div>
+						) {
+							return searchElements(item, index, departmentName);
+						} else if (searchState.length <= 0) {
+							return searchElements(item, index, departmentName);
+						}
+					})
+				}
+			</div>
+		</>
 	);
 };
 

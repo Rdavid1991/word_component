@@ -26,9 +26,6 @@ const TemplateCreate = ({ handlerFetchTemplate, values, reset, handleInputChange
 
     return (
         <>
-
-            <h3 className="fw-bold">Crear o editar plantillas de documentos</h3>
-
             <form
                 onSubmit={handleSaveDocument}
                 onReset={handleReset}

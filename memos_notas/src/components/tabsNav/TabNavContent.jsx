@@ -102,7 +102,7 @@ export const TabNavContent = () => {
                     documents={documents}
                 />
             </div>
-            <div className="tab-pane fade" id="nav-addressees">
+            <div className="tab-pane fade h-100" id="nav-addressees">
                 <Addressees
                     addresseeState={addresseeState}
                     fetchAddresses={fetchAddresses}
@@ -114,13 +114,13 @@ export const TabNavContent = () => {
                     setNumberState={setNumberState}
                 />
             </div>
-            <div className="tab-pane fade" id="nav-template">
+            <div className="tab-pane fade h-100" id="nav-template">
                 <Template
                     documents={documents}
                     fetchTemplate={fetchTemplate}
                 />
             </div>
-            <div className="tab-pane fade h-100 functionary_pane" id="nav-employ">
+            <div className="tab-pane fade h-100" id="nav-employ">
                 <Functionary
                     functionaries={functionaries}
                     fetchFunctionary={fetchFunctionary}

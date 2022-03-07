@@ -45,19 +45,25 @@ export const Addressees = ({ addresseeState, fetchAddresses }) => {
 
     return (
         <>
-            <AddresseesCreate
-                departmentOwnerState={departmentOwnerState}
-                fetchAddresses={fetchAddresses}
-                reset={reset}
-                handleInputChange={handleInputChange}
-                form={form}
-            />
-            <div className="px-3"><hr /></div>
-            <AddresseesList
-                addresseeState={addresseeState}
-                handlerEdit={handlerEdit}
-                handlerDelete={handlerDelete}
-            />
+            <div className="w-100 px-3">
+                <h3 className="fw-bold text-truncate">Destinatarios</h3>
+                <p className="text-truncate" style={{ fontSize: "14px" }}>Agregar o editar destinatarios para memos o notas</p>
+            </div>
+            <div className="addressees_pane h-100">
+                <AddresseesCreate
+                    departmentOwnerState={departmentOwnerState}
+                    fetchAddresses={fetchAddresses}
+                    reset={reset}
+                    handleInputChange={handleInputChange}
+                    form={form}
+                />
+                <div className="px-3"><hr /></div>
+                <AddresseesList
+                    addresseeState={addresseeState}
+                    handlerEdit={handlerEdit}
+                    handlerDelete={handlerDelete}
+                />
+            </div>
         </>
     );
 };

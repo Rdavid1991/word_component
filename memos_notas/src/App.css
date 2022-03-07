@@ -20,7 +20,17 @@ i {
   height: 100%;
 }
 
-.functionary_pane.active {
+.active > .functionary_pane {
   display: grid;
-  grid-template-rows: 425px 5px 83%;
+  grid-template-rows: 350px 30px 83%;
+}
+
+.active > .addressees_pane {
+  display: grid;
+  grid-template-rows: 353px 30px 83%;
+}
+
+.active > .template_pane {
+  display: grid;
+  grid-template-rows: 200px 30px 83%;
 }

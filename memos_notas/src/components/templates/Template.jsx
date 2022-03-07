@@ -59,21 +59,27 @@ export const Template = ({ documents, fetchTemplate }) => {
 
     return (
         <>
-            <div className="px-3 pt-3">
-                <TemplateCreate
-                    handlerFetchTemplate={handlerFetchTemplate}
-                    values={values}
-                    reset={reset}
-                    handleInputChange={handleInputChange}
-                />
+            <div className="w-100 px-3">
+                <h3 className="fw-bold text-truncate">Plantillas</h3>
+                <p className="text-truncate" style={{ fontSize: "14px" }}>Agregar o editar plantillas de documentos</p>
             </div>
-            <div className="px-3"><hr /></div>
-            <div className="px-3">
-                <TemplateList
-                    documents={documents}
-                    handlerEdit={handlerEdit}
-                    handlerDelete={handlerDelete}
-                />
+            <div className="template_pane h-100">
+                <div className="px-3">
+                    <TemplateCreate
+                        handlerFetchTemplate={handlerFetchTemplate}
+                        values={values}
+                        reset={reset}
+                        handleInputChange={handleInputChange}
+                    />
+                </div>
+                <div className="px-3"><hr /></div>
+                <div className="px-3">
+                    <TemplateList
+                        documents={documents}
+                        handlerEdit={handlerEdit}
+                        handlerDelete={handlerDelete}
+                    />
+                </div>
             </div>
         </>
     );

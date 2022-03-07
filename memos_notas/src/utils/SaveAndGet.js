@@ -231,7 +231,8 @@ export const deleteDocumentTemplate = async (handlerFetchTemplate, id) => {
             const response = await apiRequest().post("delete_template_doc", { id });
             if (response.ok) {
                 await handlerFetchTemplate();
-                await Swal.fire(await response.json());
+                const { message } = await response.json();
+                await Swal.fire(message);
             } else {
                 const { message } = await response.json();
                 AlertError(`No de pudo borrar la plantilla: ${message.text}`);

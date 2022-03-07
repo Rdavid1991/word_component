@@ -168,12 +168,11 @@ if (
 if (
     $_GET["action"] === "set_number" ||
     $_GET["action"] === "reject_info"
-
 ) {
 
     $document_history = new DocumentHistory();
 
-    switch ($variable) {
+    switch ($_GET["action"]) {
         case "set_number":
             $document_history->find();
             break;
