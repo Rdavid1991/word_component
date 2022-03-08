@@ -31,6 +31,11 @@ export const renderSelectDepartment = (values, handleInputChange, departmentOwne
     }
 };
 
+export const Space = ({height}) => {
+    return (<div style={{height: `${height}rem`}}></div>);
+};
+
+
 /**
  * @component
  * @param {Object} props 
@@ -79,6 +84,63 @@ export const InputText = ({
     );
 };
 
+/**
+ * 
+ * @param {Object} props
+ * @param {String} props.id
+ * @param {String=} props.icon
+ * @param {String} props.value
+ * @param {String} props.label
+ * @param {String=} props.description
+ * @param {Object<string,string>[]} props.options
+ * @param {Function} props.handleInputChange
+ * @returns 
+ */
+export const SelectOptions = ({
+    id,
+    icon = "",
+    value,
+    label,
+    options,
+    description = "",
+    handleInputChange,
+
+}) => {
+    return (
+        <div className="mb-3">
+            <label
+                forHtml={`#${id}`}
+                className="fw-bold form-label"
+            >
+                {label}
+            </label>
+            <div className="input-group mb-3">
+                {
+                    icon.length > 0 ? <span className="input-group-text"><i className={icon}></i></span> : ""
+                }
+                <select
+                    id={id}
+                    value={value}
+                    onChange={handleInputChange}
+                    className="form-select form-select-sm"
+                >
+                    <option value="">Seleccione una opción</option>
+                    {
+                        options.map((item) => (
+                            <option key={item.id} value={item.id}>{item.name}</option>
+                        ))
+                    }
+                </select>
+                {
+                    description.length > 0 ?
+                        <div className="form-text">{description}</div>
+                        : ""
+                }
+            </div>
+        </div>
+    );
+};
+
 /* Botones */
 
 /**
@@ -87,7 +149,7 @@ export const InputText = ({
  * @param {String} prop.title 
  * @returns 
  */
-export const ButtonSubmit = ({title}) => {
+export const ButtonSubmit = ({ title }) => {
     return (
         <button
             type="submit"
@@ -104,7 +166,7 @@ export const ButtonSubmit = ({title}) => {
  * @param {String} prop.title 
  * @returns 
  */
-export const ButtonReset = ({title}) => {
+export const ButtonReset = ({ title }) => {
     return (
         <button
             type="reset"

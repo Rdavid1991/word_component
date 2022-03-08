@@ -1,5 +1,6 @@
 import moment from 'moment';
 import React from 'react';
+import { SelectOptions } from 'src/fragments';
 import { useForm } from 'src/hooks/useForm';
 import { AlertSuccess } from 'src/utils/Alerts';
 import { DocumentPermissionRequestLoadVars } from './functions';
@@ -42,26 +43,14 @@ const HomePermissionRequest = ({ functionaries, setSelectedState }) => {
 
 	return (
 		<form onSubmit={handleSubmit}>
-			<div className="mb-3">
-				<label
-					forHtml="#functionary"
-					className="fw-bold form-label"
-				>
-					Funcionario
-				</label>
-				<select
-					id="functionary"
-					value={values.functionary}
-					onChange={handleInputChange}
-					className="form-select form-select-sm"
-				>
-					{
-						functionaries.map((item) => (
-							<option key={item.id} value={item.id}>{item.name}</option>
-						))
-					}
-				</select>
-			</div>
+
+			<SelectOptions
+				id="functionary"
+				handleInputChange={handleInputChange}
+				label="Funcionario"
+				value={values.functionary}
+				options={functionaries}
+			/>
 			<div className="mb-3">
 				<label
 					forHtml="#from"

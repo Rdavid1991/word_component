@@ -22,15 +22,29 @@ i {
 
 .active > .functionary_pane {
   display: grid;
-  grid-template-rows: 350px 30px 83%;
+  grid-template-rows: 350px 30px 75%;
 }
 
 .active > .addressees_pane {
   display: grid;
-  grid-template-rows: 353px 30px 83%;
+  grid-template-rows: 353px 30px 75%;
 }
 
 .active > .template_pane {
   display: grid;
-  grid-template-rows: 200px 30px 83%;
+  grid-template-rows: 200px 30px 72%;
+}
+
+.scroll::-webkit-scrollbar {
+  width: 8px;
+}
+.scroll::-webkit-scrollbar-track {
+  border-radius: 50px;
+}
+.scroll::-webkit-scrollbar-thumb {
+  background: rgb(224, 224, 224);
+  border-radius: 10px;
+}
+.scroll::-webkit-scrollbar-thumb:hover {
+  background: rgb(160, 160, 160);
 }

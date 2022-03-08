@@ -1,6 +1,7 @@
 //@ts-check
 import React, { useContext } from 'react';
 import { context } from 'src/context/context';
+import { Space } from 'src/fragments';
 import { useForm } from 'src/hooks/useForm';
 import { deleteAddressees } from 'src/utils/SaveAndGet';
 import { AlertConfirmQuestion } from '../../utils/Alerts';
@@ -60,8 +61,12 @@ export const Addressees = ({ addresseeState, fetchAddresses }) => {
     return (
         <>
             <div className="w-100 px-3">
-                <h3 className="fw-bold text-truncate">Destinatarios</h3>
-                <p className="text-truncate" style={{ fontSize: "14px" }}>Agregar o editar destinatarios para memos o notas</p>
+                <div className="card my-2 radius-50 text-white" style={{ background: "linear-gradient(0deg, #f94747c7, #fd182abf)" }}>
+                    <div className="card-body">
+                        <h3 className="fw-bold text-truncate">Destinatarios</h3>
+                        <p className="text-truncate" style={{ fontSize: "14px" }}>Agregar o editar destinatarios para memos o notas</p>
+                    </div>
+                </div>
             </div>
             <div className="addressees_pane h-100">
                 <AddresseesCreate
@@ -77,6 +82,7 @@ export const Addressees = ({ addresseeState, fetchAddresses }) => {
                     handlerEdit={handlerEdit}
                     handlerDelete={handlerDelete}
                 />
+                <Space height={10}/>
             </div>
         </>
     );

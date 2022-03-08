@@ -8,7 +8,7 @@ import {
 	getLocalStorageUserInitials,
 } from "src/utils";
 import "moment/locale/es-us";
-import { AddresseeControls, DocumentMemoOrNotesControls, DocumentPermissionRequestControls } from "src/utils/constants";
+import { AddresseeControls, DocumentMemoOrNotesControls, DocumentPermissionRequestControls, FunctionaryControls } from "src/utils/constants";
 import { apiRequest } from "src/utils/apiRequest";
 moment.locale("es-mx");
 
@@ -64,11 +64,21 @@ const insertTextControl = (control, text) => {
  * @param {string} form.from - Remitente de memo o nota
  * @param {string} form.subject - Asunto de memo o nota
  * @param {string} form.to - Posición en el array addresseeState
+ * @param {Object} functionary 
+ * @param {String} functionary.id 
+ * @param {String} functionary.name 
+ * @param {String} functionary.id_card 
+ * @param {String} functionary.job_title 
+ * @param {String} functionary.position_number 
  */
-const loadWordVars = async (addresseeState, id, form) => {
+const loadWordVars = async (addresseeState, id, form, functionary) => {
 	await Word.run(async (context) => {
 
-		const memoAndNoteControls = { ...DocumentMemoOrNotesControls, ...AddresseeControls };
+		const memoAndNoteControls = {
+			...DocumentMemoOrNotesControls,
+			...AddresseeControls,
+			...FunctionaryControls
+		};
 
 		const controls = loadControls(
 			context,
@@ -115,6 +125,18 @@ const loadWordVars = async (addresseeState, id, form) => {
 				case Object.keys(memoAndNoteControls)[10]:
 					insertTextControl(control, addresseeState[form.to].department);
 					break;
+				case Object.keys(memoAndNoteControls)[11]:
+					insertTextControl(control, functionary?.name);
+					break;
+				case Object.keys(memoAndNoteControls)[12]:
+					insertTextControl(control, functionary?.id_card);
+					break;
+				case Object.keys(memoAndNoteControls)[13]:
+					insertTextControl(control, functionary?.job_title);
+					break;
+				case Object.keys(memoAndNoteControls)[14]:
+					insertTextControl(control, functionary?.position_number.toString());
+					break;
 				default:
 					break;
 			}
@@ -148,7 +170,7 @@ export const DocumentPermissionRequestLoadVars = async (values, functionary) => 
 
 	return Word.run(async (context) => {
 
-		const DPRC = DocumentPermissionRequestControls;
+		const DPRC = { ...DocumentPermissionRequestControls, ...FunctionaryControls };
 
 		const controls = loadControls(
 			context,

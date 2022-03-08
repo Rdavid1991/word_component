@@ -22,12 +22,12 @@ const TabScreenButtons = () => {
 
             <div className="nav-item dropdown">
                 <div className="nav nav-tabs"  >
-                    <div
+                    <button
                         className="nav-link dropdown-toggle"
                         data-bs-toggle="dropdown"
                     >
                         Menu
-                    </div>
+                    </button>
                     <div className="dropdown-menu">
                         <button
                             className="dropdown-item"

@@ -17,14 +17,17 @@ export const AddresseeControls = {
 };
 
 export const DocumentPermissionRequestControls = {
-    from_hour      : "Desde - hora",
-    from_day       : "Desde - día",
-    from_month     : "Desde - mes",
-    from_year      : "Desde - año",
-    to_hour        : "Hasta - hora",
-    to_day         : "Hasta - día",
-    to_month       : "Hasta - mes",
-    to_year        : "Hasta - año",
+    from_hour : "Desde - hora",
+    from_day  : "Desde - día",
+    from_month: "Desde - mes",
+    from_year : "Desde - año",
+    to_hour   : "Hasta - hora",
+    to_day    : "Hasta - día",
+    to_month  : "Hasta - mes",
+    to_year   : "Hasta - año",
+};
+
+export const FunctionaryControls ={
     name           : "Nombre",
     id_card        : "Cedula",
     job_title      : "Puesto",

@@ -45,8 +45,7 @@ class DocTemplate extends ManagementDB
     public function delete_template_doc()
     {
         $affected = 0;
-        $sql = "DELETE FROM [dbo].[document]
-                WHERE [id] = ?";
+        $sql = "UPDATE [dbo].[document] SET [active] = 0 WHERE [id] = ?";
 
         return parent::insert_query($sql, [$_POST["id"]], $affected);
     }
@@ -54,7 +53,7 @@ class DocTemplate extends ManagementDB
     public function get_template_doc()
     {
         $sql = "SELECT * FROM [dbo].[document]";
-        $sql .= $_GET["department_owner"] == "0" ? "" : "WHERE [department_owner_id] = ?";
+        $sql .= $_GET["department_owner"] == "0" ? "WHERE [active] = 1" : "WHERE [department_owner_id] = ? AND [active] = 1";
 
         return parent::select_query($sql, [$_GET["department_owner"]]);
     }

@@ -16,7 +16,6 @@ import {
 } from 'src/utils/SaveAndGet';
 import { Functionary } from '../employ/Functionary';
 
-
 const initialNumber = {
     note: "1",
     memo: "1",
@@ -92,7 +91,7 @@ export const TabNavContent = () => {
 
 
     return (
-        <div className="tab-content" id="nav-tabContent">
+        <div className="tab-content scroll" id="nav-tabContent">
 
             <div className="tab-pane fade active show" id="nav-home">
                 <Home
@@ -114,13 +113,13 @@ export const TabNavContent = () => {
                     setNumberState={setNumberState}
                 />
             </div>
-            <div className="tab-pane fade h-100" id="nav-template">
+            <div className="tab-pane fade h-100 after" id="nav-template">
                 <Template
                     documents={documents}
                     fetchTemplate={fetchTemplate}
                 />
             </div>
-            <div className="tab-pane fade h-100" id="nav-employ">
+            <div className="tab-pane fade h-100 after" id="nav-employ">
                 <Functionary
                     functionaries={functionaries}
                     fetchFunctionary={fetchFunctionary}

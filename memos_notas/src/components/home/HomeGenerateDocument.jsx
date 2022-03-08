@@ -5,15 +5,33 @@ import { context } from 'src/context/context';
 import { getLocalStorageUserName } from 'src/utils';
 import { useForm } from 'src/hooks/useForm';
 import { AlertError, AlertSuccess, AlertWarning } from 'src/utils/Alerts';
-import { InputText } from 'src/fragments';
+import { InputText, SelectOptions } from 'src/fragments';
 
 
 const initialState = {
-    to     : "",
-    subject: "",
-    from   : getLocalStorageUserName()
+    to         : "",
+    subject    : "",
+    functionary: "",
+    from       : getLocalStorageUserName()
 };
-const HomeGenerateDocument = ({ addresseeState, memoOrNoteState, fetchNumbers, setSelectedState }) => {
+
+/**
+ * 
+ * @param {Object} props
+ * @param {Object[]} props.functionaries
+ * @param {String} props.functionaries.id
+ * @param {String} props.functionaries.name
+ * @param {String} props.functionaries.id_card
+ * @param {String} props.functionaries.job_title
+ * @param {String} props.functionaries.position_number
+ * @param {any} props.addresseeState
+ * @param {any} props.memoOrNoteState
+ * @param {any} props.fetchNumbers
+ * @param {any} props.setSelectedState
+ * 
+ * @returns 
+ */
+const HomeGenerateDocument = ({ functionaries, addresseeState, memoOrNoteState, fetchNumbers, setSelectedState }) => {
 
     const { showLoader } = useContext(context);
 
@@ -45,7 +63,11 @@ const HomeGenerateDocument = ({ addresseeState, memoOrNoteState, fetchNumbers, s
 
             if (data.length > 0) {
                 showLoader(false);
-                loadWordVars(addresseeState, data[0].id, form)
+
+                const functionaryFound = functionaries.find((f)=> parseInt(f.id) === parseInt(form.functionary));
+
+
+                loadWordVars(addresseeState, data[0].consecutive, form, functionaryFound)
                     .then(() => {
                         AlertSuccess('La información esta lista');
                         setSelectedState("");
@@ -70,6 +92,15 @@ const HomeGenerateDocument = ({ addresseeState, memoOrNoteState, fetchNumbers, s
         <form
             onSubmit={handleSubmit}
         >
+            <SelectOptions
+                icon="fas fa-users"
+                id="functionary"
+                handleInputChange={handleInputChange}
+                label="Funcionario"
+                value={form.functionary}
+                options={functionaries}
+                description="Opcional, seleccionar en caso de que la plantilla incluya al funcionario"
+            />
             <div className="mb-3">
                 <label htmlFor="to" className="form-label fw-bold">Dirigido a</label>
                 <div className="input-group mb-3">
@@ -92,6 +123,7 @@ const HomeGenerateDocument = ({ addresseeState, memoOrNoteState, fetchNumbers, s
                     </select>
                 </div>
             </div>
+
             <InputText
                 htmlId="subject"
                 onChange={handleInputChange}

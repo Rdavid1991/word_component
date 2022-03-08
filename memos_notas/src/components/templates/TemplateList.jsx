@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { InputText } from 'src/fragments';
 import { getDepartmentOwner, getLocalStorageUserDepartment } from 'src/utils';
 import { typeOfDocuments } from "src/utils/constants";
 
@@ -60,51 +61,51 @@ const TemplateList = ({ documents, handlerEdit, handlerDelete }) => {
 
 	return (
 		<>
-			<h3 className="fw-bold">Lista de plantillas</h3>
-			<div className="input-group mb-3">
-				<input
-					placeholder="Buscar plantilla"
-					type="text"
-					className="form-control form-control-sm"
-					required={true}
-					onChange={handleSearchChange}
-					value={searchState}
-				/>
-				<span
-					className="input-group-text"
-				>
-					<i className="fas fa-search"></i>
-				</span>
+			<div className="card my-2 radius-50 text-white" style={{ background: "linear-gradient(0deg, #f94747c7, #fd182abf)" }}>
+				<div className="card-body">
+					<h3 className="fw-bold">Lista de plantillas</h3>
+					<InputText
+						placeholder="Buscar plantilla"
+						icon="fas fa-search"
+						onChange={handleSearchChange}
+						value={searchState}
+					/>
+				</div>
 			</div>
-			<div className="overflow-auto h-100">
-				{
-					filtered.map((item, index) => {
 
-						const departmentName = departmentOwnerState.filter((e) => e.id == item.department_owner_id)[0]?.name;
+			<div className="card radius-50 h-100">
+				<div className="card-body p-2 bg-light scroll radius-50 overflow-auto h-100">
 
-						return (
-							<div key={index} className="card p-1 mb-2 bg-body">
-								<div className="card-body">
-									<h6 className="fw-bold card-title">Nombre: <span className="fw-light">{item.name}</span></h6>
-									<p className="fw-bold text-muted mb-0">Tipo: <span className="fw-light">{typeOfDocuments[item.type]}</span></p>
-									{
-										getLocalStorageUserDepartment() == 0 ?
-											<p className="fw-bold text-muted">Pertenece a:&nbsp;
-												<span
-													className="fw-light"
-												>
-													{departmentName}
-												</span>
-											</p>
-											: null
-									}
-									<button className="btn btn-sm btn-secondary m-1" data-id={item.id} onClick={onClickEdit}><i className="far fa-edit"></i></button>
-									<button className="btn btn-sm btn-secondary m-1" data-id={item.id} onClick={onClickDelete}><i className="fas fa-trash-alt"></i></button>
+					{
+						filtered.map((item, index) => {
+
+							const departmentName = departmentOwnerState.filter((e) => e.id == item.department_owner_id)[0]?.name;
+
+							return (
+								<div key={index} className="card mb-2 bg-body radius-50">
+									<div className="card-body">
+										<h6 className="fw-bold card-title">Nombre: <span className="fw-light">{item.name}</span></h6>
+										<p className="fw-bold text-muted mb-0">Tipo: <span className="fw-light">{typeOfDocuments[item.type]}</span></p>
+										{
+											getLocalStorageUserDepartment() == 0 ?
+												<p className="fw-bold text-muted">Pertenece a:&nbsp;
+													<span
+														className="fw-light"
+													>
+														{departmentName}
+													</span>
+												</p>
+												: null
+										}
+										<button className="btn btn-sm btn-secondary m-1" data-id={item.id} onClick={onClickEdit}><i className="far fa-edit"></i></button>
+										<button className="btn btn-sm btn-secondary m-1" data-id={item.id} onClick={onClickDelete}><i className="fas fa-trash-alt"></i></button>
+									</div>
 								</div>
-							</div>
-						);
-					})
-				}
+							);
+						})
+					}
+
+				</div>
 			</div>
 		</>
 	);

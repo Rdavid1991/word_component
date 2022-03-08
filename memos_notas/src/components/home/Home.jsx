@@ -14,12 +14,13 @@ export const Home = ({ addresseeState, fetchNumbers, functionaries, documents })
 	useEffect(() => {
 		if (selectedState.length <= 0) setMemoOrNoteState(-1);
 	}, [selectedState]);
-	
+
 
 	const renderFormTypeDocument = () => {
 		if (String(memoOrNoteState) == Object.keys(typeOfDocuments)[1] || String(memoOrNoteState) == Object.keys(typeOfDocuments)[2]) {
 			return (
 				<HomeGenerateDocument
+					functionaries={functionaries}
 					addresseeState={addresseeState}
 					memoOrNoteState={memoOrNoteState}
 					fetchNumbers={fetchNumbers}

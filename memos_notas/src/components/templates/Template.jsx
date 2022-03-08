@@ -1,6 +1,7 @@
 //@ts-check
 import React, { useCallback, useContext } from 'react';
 import { context } from 'src/context/context';
+import { Space } from 'src/fragments';
 import { useForm } from 'src/hooks/useForm';
 import { writeDocument } from 'src/utils/documents';
 import { deleteDocumentTemplate } from 'src/utils/SaveAndGet';
@@ -60,8 +61,12 @@ export const Template = ({ documents, fetchTemplate }) => {
     return (
         <>
             <div className="w-100 px-3">
-                <h3 className="fw-bold text-truncate">Plantillas</h3>
-                <p className="text-truncate" style={{ fontSize: "14px" }}>Agregar o editar plantillas de documentos</p>
+                <div className="card my-2 radius-50  text-white" style={{ background: "linear-gradient(0deg, #f94747c7, #fd182abf)" }}>
+                    <div className="card-body p-2">
+                        <h3 className="fw-bold text-truncate">Plantillas</h3>
+                        <p className="text-truncate" style={{ fontSize: "14px" }}>Agregar o editar plantillas de documentos</p>
+                    </div>
+                </div>
             </div>
             <div className="template_pane h-100">
                 <div className="px-3">
@@ -80,6 +85,7 @@ export const Template = ({ documents, fetchTemplate }) => {
                         handlerDelete={handlerDelete}
                     />
                 </div>
+                <Space height={10}/>
             </div>
         </>
     );

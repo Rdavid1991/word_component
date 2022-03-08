@@ -63,7 +63,7 @@ class DocumentHistory extends ManagementDB
                 $this->consecutive->save_count_numbers(($count_number["data"][0]->memorandum + 1), $count_number["data"][0]->notes);
             }
 
-            $data = ["data" => [(object) ["id" => $count_number["data"][0]->memorandum]]];
+            $data = ["data" => [(object) ["consecutive" => $count_number["data"][0]->memorandum]]];
 
             echo json_encode($data);
         } else if (intval($_GET["type"]) === 2) {
@@ -104,7 +104,7 @@ class DocumentHistory extends ManagementDB
                 $this->consecutive->save_count_numbers(($count_number["data"][0]->memorandum), $count_number["data"][0]->notes + 1);
             }
 
-            $data = ["data" => [(object) ["id" => $count_number["data"][0]->notes]]];
+            $data = ["data" => [(object) ["consecutive" => $count_number["data"][0]->notes]]];
 
             echo json_encode($data);
         }

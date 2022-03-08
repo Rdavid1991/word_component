@@ -61,13 +61,13 @@ const TemplateCreate = ({ handlerFetchTemplate, values, reset, handleInputChange
 
                 <div className="mb-3">
                     <button
-                        className="btn btn-sm btn-primary mx-1"
+                        className="btn btn-sm btn-secondary mx-1"
                         type="submit"
                     >
                         Guardar
                     </button>
                     <button
-                        className="btn btn-sm btn-primary mx-1"
+                        className="btn btn-sm btn-secondary mx-1"
                         type="reset"
                     >
                         Limpiar campos
