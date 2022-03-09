@@ -22,17 +22,17 @@ i {
 
 .active > .functionary_pane {
   display: grid;
-  grid-template-rows: 350px 30px 75%;
+  grid-template-rows: 350px 30px 70%;
 }
 
 .active > .addressees_pane {
   display: grid;
-  grid-template-rows: 353px 30px 75%;
+  grid-template-rows: 353px 30px 70%;
 }
 
 .active > .template_pane {
   display: grid;
-  grid-template-rows: 200px 30px 72%;
+  grid-template-rows: 200px 30px 70%;
 }
 
 .scroll::-webkit-scrollbar {
@@ -47,4 +47,20 @@ i {
 }
 .scroll::-webkit-scrollbar-thumb:hover {
   background: rgb(160, 160, 160);
+}
+
+
+.menu-bar{
+  cursor: pointer;
+  width: fit-content;
+}
+.menu-bar > .bar {
+  width: 35px;
+  height: 5px;
+  background-color: #3b3b3b;
+  margin: 6px 0;
+}
+
+.btn.active {
+  background-color: #fd182abf;
 }

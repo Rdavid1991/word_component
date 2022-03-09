@@ -100,7 +100,7 @@ export const deleteFunctionary = async (id, showLoader) => {
     }
 };
 
-export const saveFunctionary = async(form) => {
+export const saveFunctionary = async (form) => {
     const department_owner = getLocalStorageUserDepartment();
 
     try {
@@ -124,7 +124,7 @@ export const saveFunctionary = async(form) => {
  * Obtener funcionarios
  * @returns 
  */
- export const getFunctionaries = async () => {
+export const getFunctionaries = async () => {
 
     const department_owner = JSON.parse(localStorage.getItem(localStorageKeyUser)).department;
 
@@ -135,7 +135,7 @@ export const saveFunctionary = async(form) => {
         }
         const { message } = await response.json();
 
-        console.log({message});
+        console.log({ message });
 
         await AlertError(`Error al consultar funcionarios: ${message.text}`);
     } catch (error) {
@@ -188,12 +188,17 @@ export const saveConsecutiveNumber = async (numbers) => {
     return false;
 };
 
-export const getDocumentTemplate = async () => {
+/**
+ * 
+ * @param {String | Number} id 
+ * @returns 
+ */
+export const getDocumentTemplate = async (id) => {
 
     const department_owner = getLocalStorageUserDepartment();
 
     try {
-        const response = await apiRequest().get("get_template_doc", { department_owner });
+        const response = await apiRequest().get("get_template_doc", { id, department_owner });
         if (response.ok) {
             return await response.json();
         } else {
@@ -202,6 +207,25 @@ export const getDocumentTemplate = async () => {
         }
     } catch (error) {
         await AlertError(`Error al consultar plantillas: ${error}`);
+    }
+    return false;
+};
+
+
+export const getDocumentInfoTemplate = async () => {
+
+    const department_owner = getLocalStorageUserDepartment();
+
+    try {
+        const response = await apiRequest().get("get_template_info", { department_owner });
+        if (response.ok) {
+            return await response.json();
+        } else {
+            const { message } = await response.json();
+            await AlertError(`Error al consultar información de plantillas: ${message.text}`);
+        }
+    } catch (error) {
+        await AlertError(`Error al consultar información de plantillas: ${error}`);
     }
     return false;
 };

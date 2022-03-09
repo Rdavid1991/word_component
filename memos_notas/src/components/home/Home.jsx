@@ -6,6 +6,7 @@ import HomeGenerateDocument from "./HomeGenerateDocument.jsx";
 import HomeOtherDocument from "./HomeOtherDocument.jsx";
 import HomeSelectDocument from "./HomeSelectDocument.jsx";
 import RejectConsecutiveNumber from "./RejectConsecutiveNumber.jsx";
+import { Space } from "src/fragments/index.js";
 
 export const Home = ({ addresseeState, fetchNumbers, functionaries, documents }) => {
 	const [memoOrNoteState, setMemoOrNoteState] = useState(-1);
@@ -44,9 +45,15 @@ export const Home = ({ addresseeState, fetchNumbers, functionaries, documents })
 	return (
 		<>
 			<div className="px-3 w-100">
-				<h3 className="fw-bold text-truncate">
-					Inicio
-				</h3>
+				<div className="card my-2 radius-50 text-white" style={{ background: "linear-gradient(0deg, #f94747c7, #fd182abf)" }}>
+					<div className="card-body">
+						<h3 className="fw-bold text-truncate">
+							Inicio
+						</h3>
+						<p>Crear documentos basados en plantillas</p>
+					</div>
+				</div>
+
 				<HomeSelectDocument
 					setMemoOrNoteState={setMemoOrNoteState}
 					memoOrNoteState={memoOrNoteState}
@@ -65,6 +72,7 @@ export const Home = ({ addresseeState, fetchNumbers, functionaries, documents })
 					fetchNumbers={fetchNumbers}
 				/>
 			</div>
+			<Space height={10}  />
 		</>
 	);
 };

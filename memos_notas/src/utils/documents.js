@@ -49,10 +49,10 @@ export const clearDocument = async () => {
 
 /**
      * Escribir documento
-     * @param {object}  template Template del documento 
-     * @param {string}  template.body 
-     * @param {string}  template.header 
-     * @param {string}  template.footer 
+     * @param {Object}  template Template del documento 
+     * @param {String}  template.body 
+     * @param {String}  template.header 
+     * @param {String}  template.footer 
      */
 export const writeDocument = async (template) => {
     return await Word.run(async (context) => {

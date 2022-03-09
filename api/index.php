@@ -87,6 +87,7 @@ if (
     $_GET["action"] === "save_template_doc" ||
     $_GET["action"] === "edit_template_doc" ||
     $_GET["action"] === "get_template_doc" ||
+    $_GET["action"] === "get_template_info" ||
     $_GET["action"] === "delete_template_doc"
 ) {
 
@@ -98,6 +99,9 @@ if (
             break;
         case "edit_template_doc":
             echo Response::responseInsert($template->edit_template_doc());
+            break;
+        case "get_template_info":
+            echo Response::responseSelect($template->get_template_info());
             break;
         case "get_template_doc":
             echo Response::responseSelect($template->get_template_doc());

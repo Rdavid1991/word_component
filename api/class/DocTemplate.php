@@ -39,7 +39,7 @@ class DocTemplate extends ManagementDB
                     [type] = ?
                 WHERE [id] = ?";
 
-       return parent::insert_query($sql, [$_POST["name"], $_POST["document"], $_POST["type"], $_POST["id"]]);
+        return parent::insert_query($sql, [$_POST["name"], $_POST["document"], $_POST["type"], $_POST["id"]]);
     }
 
     public function delete_template_doc()
@@ -50,11 +50,20 @@ class DocTemplate extends ManagementDB
         return parent::insert_query($sql, [$_POST["id"]], $affected);
     }
 
-    public function get_template_doc()
+    public function get_template_info()
     {
-        $sql = "SELECT * FROM [dbo].[document]";
+        $sql = "SELECT [id],[name],[type] FROM [dbo].[document]";
         $sql .= $_GET["department_owner"] == "0" ? "WHERE [active] = 1" : "WHERE [department_owner_id] = ? AND [active] = 1";
 
         return parent::select_query($sql, [$_GET["department_owner"]]);
+    }
+
+    public function get_template_doc()
+    {
+        $sql = "SELECT [id],[doc] FROM [dbo].[document]";
+        $sql .= $_GET["department_owner"] == "0" ? "WHERE [active] = 1" : "WHERE [department_owner_id] = ? AND [active] = 1";
+        $sql .= "AND [id] = ?";
+
+        return parent::select_query($sql, [$_GET["department_owner"], $_GET["id"]]);
     }
 }

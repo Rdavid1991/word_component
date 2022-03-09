@@ -1,7 +1,7 @@
 import "./App.css";
 import React, { useCallback, useEffect, useState } from "react";
 import { context } from "./context/context";
-import { TabNav } from "./components/tabsNav/TabNav";
+import TabNav from "./components/tabsNav/TabNav";
 import { getDepartmentOwner, getLocalStorageUserDepartment } from "./utils";
 
 

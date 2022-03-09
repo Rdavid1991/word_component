@@ -4,19 +4,20 @@ import { context } from 'src/context/context';
 import { AlertError, AlertSuccess } from 'src/utils/Alerts';
 import { typeOfDocuments } from 'src/utils/constants';
 import { writeDocument } from 'src/utils/documents';
+import { getDocumentTemplate } from 'src/utils/SaveAndGet';
 import { selectedDocumentType } from './functions';
 import { parametersOfDocuments } from './functions/parametersOfDocuments';
 
 const HomeSelectDocument = ({ setMemoOrNoteState, memoOrNoteState, documents, setSelectedState, selectedState }) => {
     const { setControls } = useContext(context);
 
-    const handleSelectChange = ({ target }) => {
+    const handleSelectChange = async ({ target }) => {
         setSelectedState(target.value);
-        const template = JSON.parse(documents.find(item => parseInt(item.id) === parseInt(target.value)).doc);
+        const template = await getDocumentTemplate(target.value);
 
         setMemoOrNoteState(selectedDocumentType(target));
 
-        writeDocument(template)
+        writeDocument(JSON.parse(template.data[0].doc))
             .then(async () => {
                 await AlertSuccess("Documento cargado satisfactoriamente");
                 setControls(await parametersOfDocuments());

@@ -10,7 +10,7 @@ import { context } from 'src/context/context';
 import {
     getAddresses,
     getConsecutiveNumber,
-    getDocumentTemplate,
+    getDocumentInfoTemplate,
     getFunctionaries,
     saveConsecutiveNumber,
 } from 'src/utils/SaveAndGet';
@@ -80,7 +80,7 @@ export const TabNavContent = () => {
     };
 
     const fetchTemplate = async () => {
-        const templates = await getDocumentTemplate();
+        const templates = await getDocumentInfoTemplate();
         if (templates) {
             const { data } = templates;
             if (data.length >= 0) {
@@ -92,7 +92,6 @@ export const TabNavContent = () => {
 
     return (
         <div className="tab-content scroll" id="nav-tabContent">
-
             <div className="tab-pane fade active show" id="nav-home">
                 <Home
                     addresseeState={addresseeState}

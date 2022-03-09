@@ -4,7 +4,7 @@ import { context } from 'src/context/context';
 import { Space } from 'src/fragments';
 import { useForm } from 'src/hooks/useForm';
 import { writeDocument } from 'src/utils/documents';
-import { deleteDocumentTemplate } from 'src/utils/SaveAndGet';
+import { deleteDocumentTemplate, getDocumentTemplate } from 'src/utils/SaveAndGet';
 import TemplateCreate from './TemplateCreate';
 import TemplateList from './TemplateList';
 
@@ -38,7 +38,7 @@ export const Template = ({ documents, fetchTemplate }) => {
         const filterDocument = (item) => parseInt(item.id) === parseInt(id);
         const documentObject = documents.find(filterDocument);
 
-        const documentTemplate = JSON.parse(documentObject.doc);
+        const template = await getDocumentTemplate(id);
 
         setValues({
             ...values,
@@ -49,7 +49,7 @@ export const Template = ({ documents, fetchTemplate }) => {
             edit : true
         });
 
-        writeDocument(documentTemplate);
+        writeDocument(JSON.parse(template.data[0].doc));
         document.querySelector(".tab-content").scrollTo(0, 0);
 
     }, [documents]);

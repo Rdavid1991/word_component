@@ -71,6 +71,7 @@ export const InputText = ({
                 }
                 <input
                     type="text"
+                    autoComplete="off"
                     className="form-control form-control-sm"
                     id={htmlId}
                     placeholder={placeholder}
