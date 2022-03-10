@@ -17,7 +17,7 @@
   <DefaultLocale>en-US</DefaultLocale>
   <!-- The display name of your add-in. Used on the store and various places of the Office UI such as the add-ins dialog. -->
   <DisplayName DefaultValue="Template manager" />
-  <Description DefaultValue="Generar numero de memos y notas"/>
+  <Description DefaultValue="Gestionar plantillas dinamicas"/>
 
   <!-- Icon for your add-in. Used on installation screens and the add-ins dialog. -->
   <IconUrl DefaultValue="http://localhost:3000/assets/icon-32.png" />
@@ -130,9 +130,9 @@
       </bt:Urls>
       <!-- ShortStrings max characters==125. -->
       <bt:ShortStrings>
-        <bt:String id="GetStarted.Title" DefaultValue="Get started with your sample add-in!" />
-        <bt:String id="CommandsGroup.Label" DefaultValue="Commands Group" />
-        <bt:String id="TaskpaneButton.Label" DefaultValue="Generar memo o nota" />
+        <bt:String id="GetStarted.Title" DefaultValue="Gestiona plantillas dinamicas" />
+        <bt:String id="CommandsGroup.Label" DefaultValue="Plantillas" />
+        <bt:String id="TaskpaneButton.Label" DefaultValue="Gestionar plantillas" />
       </bt:ShortStrings>
       <!-- LongStrings max characters==250. -->
       <bt:LongStrings>

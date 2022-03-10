@@ -1,0 +1,25 @@
+{
+    // Use IntelliSense para saber los atributos posibles.
+    // Mantenga el puntero para ver las descripciones de los existentes atributos.
+    // Para más información, visite: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "HOST Desktop (Edge Legacy)",
+            "type": "office-addin",
+            "request": "attach",
+            "url": "http://localhost:3000/?_host_Info=Word$Win32$16.01$es-ES$$$$0",
+            "port": 9222,
+            "timeout": 600000,
+            "webRoot": "${workspaceFolder}",
+            "preLaunchTask": "npm: start",
+            "postDebugTask": "Stop Debug"
+        },
+        {
+            "name": "Launch Microsoft Edge and open the Edge DevTools",
+            "request": "attach",
+            "type": "pwa-chrome",
+            "url": "http://localhost:3000/taskpane.html?_host_Info=Word$Win32$16.01$en-US$$$$0"
+        }
+    ]
+}

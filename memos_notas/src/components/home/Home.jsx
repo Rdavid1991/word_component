@@ -45,7 +45,7 @@ export const Home = ({ addresseeState, fetchNumbers, functionaries, documents })
 	return (
 		<>
 			<div className="px-3 w-100">
-				<div className="card my-2 radius-50 text-white" style={{ background: "linear-gradient(0deg, #f94747c7, #fd182abf)" }}>
+				<div className="card my-2 radius-50 text-white gradient">
 					<div className="card-body">
 						<h3 className="fw-bold text-truncate">
 							Inicio
@@ -66,12 +66,12 @@ export const Home = ({ addresseeState, fetchNumbers, functionaries, documents })
 				}
 			</div>
 			<div className="px-3"><hr /></div>
-			<div className="px-3">
+			{/* <div className="px-3">
 				<RejectConsecutiveNumber
 					memoOrNoteState={memoOrNoteState}
 					fetchNumbers={fetchNumbers}
 				/>
-			</div>
+			</div> */}
 			<Space height={10}  />
 		</>
 	);

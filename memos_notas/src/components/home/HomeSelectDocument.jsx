@@ -1,5 +1,5 @@
 //@ts-check
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { context } from 'src/context/context';
 import { AlertError, AlertSuccess } from 'src/utils/Alerts';
 import { typeOfDocuments } from 'src/utils/constants';
@@ -9,15 +9,16 @@ import { selectedDocumentType } from './functions';
 import { parametersOfDocuments } from './functions/parametersOfDocuments';
 
 const HomeSelectDocument = ({ setMemoOrNoteState, memoOrNoteState, documents, setSelectedState, selectedState }) => {
-    const { setControls } = useContext(context);
+    const { setControls, showLoader } = useContext(context);
 
     const handleSelectChange = async ({ target }) => {
+        showLoader(true);
         setSelectedState(target.value);
         const template = await getDocumentTemplate(target.value);
 
         setMemoOrNoteState(selectedDocumentType(target));
 
-        writeDocument(JSON.parse(template.data[0].doc))
+        await writeDocument(JSON.parse(template.data[0].doc))
             .then(async () => {
                 await AlertSuccess("Documento cargado satisfactoriamente");
                 setControls(await parametersOfDocuments());
@@ -25,6 +26,7 @@ const HomeSelectDocument = ({ setMemoOrNoteState, memoOrNoteState, documents, se
             .catch(async (error) => {
                 await AlertError("No se puede cargar documento, revise si el documento actual no tiene controles bloqueados. " + error);
             });
+        showLoader(false);
     };
 
     return (

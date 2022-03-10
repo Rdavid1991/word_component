@@ -61,7 +61,7 @@ const TemplateList = ({ documents, handlerEdit, handlerDelete }) => {
 
 	return (
 		<>
-			<div className="card my-2 radius-50 text-white" style={{ background: "linear-gradient(0deg, #f94747c7, #fd182abf)" }}>
+			<div className="card my-2 radius-50 text-white gradient">
 				<div className="card-body">
 					<h3 className="fw-bold">Lista de plantillas</h3>
 					<InputText

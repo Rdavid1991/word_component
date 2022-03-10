@@ -11,14 +11,15 @@ export const App = () => {
 	const [controls, setControlsState] = useState([]);
 	const [departmentOwnerState, setDepartmentOwnerState] = useState([]);
 
-    useEffect(() => {
-        (async () => {
-            if (getLocalStorageUserDepartment() == "0") {
-                const data = await getDepartmentOwner();
-                setDepartmentOwnerState(data);
-            }
-        })();
-    }, []);
+	useEffect(() => {
+
+		(async () => {
+			if (getLocalStorageUserDepartment() == "0") {
+				const { data } = await getDepartmentOwner();
+				setDepartmentOwnerState(data);
+			}
+		})();
+	}, []);
 
 	const showLoader = useCallback((show) => {
 		setLoader(show);

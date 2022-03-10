@@ -1,5 +1,6 @@
 body {
   overflow: hidden;
+  user-select: none;
 }
 
 .radius-50 {
@@ -49,18 +50,30 @@ i {
   background: rgb(160, 160, 160);
 }
 
-
-.menu-bar{
+.menu-bar {
   cursor: pointer;
   width: fit-content;
 }
 .menu-bar > .bar {
   width: 35px;
   height: 5px;
-  background-color: #3b3b3b;
+  background-color: #2a5699;
   margin: 6px 0;
 }
 
 .btn.active {
-  background-color: #fd182abf;
+  background-color: #83beec;
+  color: #3b3b3b;
+}
+
+.gradient {
+  background: linear-gradient(0deg, #2a5699, #4082e6);
+}
+
+.close-color:hover{
+  color: #4082e6!important;
+}
+
+.swa-custom-title {
+  height: 8rem;
 }

@@ -30,6 +30,7 @@ export const TabNavContent = () => {
     const [documents, setDocuments] = useState(initialDocument);
     const [numberState, setNumberState] = useState(initialNumber);
     const [functionaries, setFunctionary] = useState(initialFunctionary);
+    const [selectedState, setSelectedState] = useState("");
 
     useEffect(() => {
         (async () => {

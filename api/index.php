@@ -1,4 +1,5 @@
 <?php
+
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: *");
 
@@ -9,7 +10,6 @@ require_once(dirname(__FILE__) . "/class/Options.php");
 require_once(dirname(__FILE__) . "/class/Addressee.php");
 require_once(dirname(__FILE__) . "/class/Functionary.php");
 require_once(dirname(__FILE__) . "/class/Consecutive.php");
-
 
 class HandlerActionsMemo extends ManagementDB
 {
@@ -78,7 +78,6 @@ class Response
         }
     }
 }
-
 
 /**
  * Manejo de plantillas 
@@ -205,7 +204,7 @@ if (
             $handler->get_reject_info();
             break;
         case "get_options_department_owner":
-            $options->get_department_owner();
+            echo Response::responseSelect($options->get_department_owner());
             break;
         default:
             break;
