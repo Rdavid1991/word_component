@@ -7,6 +7,7 @@ import HomeOtherDocument from "./HomeOtherDocument.jsx";
 import HomeSelectDocument from "./HomeSelectDocument.jsx";
 import RejectConsecutiveNumber from "./RejectConsecutiveNumber.jsx";
 import { Space } from "src/fragments/index.js";
+import HomeCompensatoryTimeRequest from "./HomeCompensatoryTimeRequest.jsx";
 
 export const Home = ({ addresseeState, fetchNumbers, functionaries, documents }) => {
 	const [memoOrNoteState, setMemoOrNoteState] = useState(-1);
@@ -39,14 +40,21 @@ export const Home = ({ addresseeState, fetchNumbers, functionaries, documents })
 					setSelectedState={setSelectedState}
 				/>
 			);
+		} else if (String(memoOrNoteState) == Object.keys(typeOfDocuments)[4]) {
+			return (
+				<HomeCompensatoryTimeRequest
+					functionaries={functionaries}
+					setSelectedState={setSelectedState}
+				/>
+			);
 		}
 	};
 
 	return (
 		<>
 			<div className="px-3 w-100">
-				<div className="card my-2 radius-50 text-white gradient">
-					<div className="card-body">
+				<div className="card my-2 rounded text-white gradient">
+					<div className="card-body py-1">
 						<h3 className="fw-bold text-truncate">
 							Inicio
 						</h3>
@@ -72,7 +80,7 @@ export const Home = ({ addresseeState, fetchNumbers, functionaries, documents })
 					fetchNumbers={fetchNumbers}
 				/>
 			</div> */}
-			<Space height={10}  />
+			<Space height={10} />
 		</>
 	);
 };

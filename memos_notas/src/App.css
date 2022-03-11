@@ -43,11 +43,11 @@ i {
   border-radius: 50px;
 }
 .scroll::-webkit-scrollbar-thumb {
-  background: rgb(224, 224, 224);
+  background: linear-gradient(0deg, #2a5699, #4082e6);;
   border-radius: 10px;
 }
 .scroll::-webkit-scrollbar-thumb:hover {
-  background: rgb(160, 160, 160);
+  background: #2a5699;
 }
 
 .menu-bar {
@@ -57,12 +57,13 @@ i {
 .menu-bar > .bar {
   width: 35px;
   height: 5px;
-  background-color: #2a5699;
+  background: linear-gradient(0deg, #2a5699, #4082e6);;
   margin: 6px 0;
 }
 
 .btn.active {
-  background-color: #83beec;
+  background-color: #c9c9c9;
+  border: #c9c9c9;
   color: #3b3b3b;
 }
 

@@ -8,7 +8,7 @@ import {
 	getLocalStorageUserInitials,
 } from "src/utils";
 import "moment/locale/es-us";
-import { AddresseeControls, DocumentMemoOrNotesControls, DocumentPermissionRequestControls, FunctionaryControls } from "src/utils/constants";
+import { AddresseeControls, DocumentMemoOrNotesControls, DocumentRequestControls, FunctionaryControls } from "src/utils/constants";
 import { apiRequest } from "src/utils/apiRequest";
 moment.locale("es-mx");
 
@@ -158,19 +158,9 @@ const loadWordVars = async (addresseeState, id, form, functionary) => {
  */
 export const DocumentPermissionRequestLoadVars = async (values, functionary) => {
 
-	await Word.run(async (context) => {
-		let builtInProperties = context.document.sections.getFirst().getFooter("Primary");
-		builtInProperties.load("*"); // Let's get all!
-
-		let ssss = builtInProperties.getOoxml();
-
-		await context.sync();
-		console.log(JSON.stringify(ssss, null, 4));
-	});
-
 	return Word.run(async (context) => {
 
-		const DPRC = { ...DocumentPermissionRequestControls, ...FunctionaryControls };
+		const DPRC = { ...DocumentRequestControls, ...FunctionaryControls };
 
 		const controls = loadControls(
 			context,
@@ -262,9 +252,8 @@ const fetchData = async (addresseeState, memoOrNoteState, form) => {
  */
 const selectedDocumentType = (target) => {
 
-	const children = target.children[target.selectedIndex];
-	// @ts-ignore
-	return children.dataset.type;
+	return target.selectedOptions[0].dataset.type;
+
 };
 
 export { loadWordVars, fetchData, selectedDocumentType };

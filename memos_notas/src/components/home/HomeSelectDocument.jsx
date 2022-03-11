@@ -42,15 +42,40 @@ const HomeSelectDocument = ({ setMemoOrNoteState, memoOrNoteState, documents, se
                 >
                     <option disabled value="">Seleccione una plantilla</option>
                     {
-                        documents.map((item, index) => (
-                            <option
-                                key={index}
-                                data-type={item.type}
-                                value={item.id}
-                            >
-                                {typeOfDocuments[item.type]} - {item.name}
-                            </option>
-                        ))
+                        Object.entries(typeOfDocuments).map((entry, index) => {
+
+                            const [type, value] = entry;
+
+                            if (documents.find((element) => parseInt(element.type) === parseInt(type))) {
+
+                                return (
+                                    <optgroup key={index} label={value}>
+                                        {
+                                            documents.map((item, index) => {
+
+                                                if (parseInt(item.type) === parseInt(type)) {
+                                                    
+                                                    return (
+                                                        <option
+                                                            key={index}
+                                                            data-type={item.type}
+                                                            value={item.id}
+                                                        >
+                                                            {item.name}
+                                                        </option>
+
+                                                    );
+                                                }
+                                                return null;
+                                            })
+                                        }
+                                    </optgroup>
+
+                                );
+
+                            }
+                            return null;
+                        })
                     }
                 </select>
             </div>

@@ -50,6 +50,8 @@ const HomePermissionRequest = ({ functionaries, setSelectedState }) => {
 				label="Funcionario"
 				value={values.functionary}
 				options={functionaries}
+				required={true}
+				
 			/>
 			<div className="mb-3">
 				<label

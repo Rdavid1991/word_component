@@ -84,8 +84,9 @@ export const TabNavContent = () => {
         const templates = await getDocumentInfoTemplate();
         if (templates) {
             const { data } = templates;
+
             if (data.length >= 0) {
-                setDocuments(data);
+                setDocuments(data.sort((first, second)=> first.type - second.type));
             }
         }
     };

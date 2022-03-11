@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import Swal from 'sweetalert2';
 import { globals } from 'src/globals';
 import { context } from 'src/context/context';
-import { AddresseeControls, DocumentMemoOrNotesControls, DocumentPermissionRequestControls, FunctionaryControls } from 'src/utils/constants';
+import { AddresseeControls, CompensatoryTime, DocumentMemoOrNotesControls, DocumentRequestControls, FunctionaryControls } from 'src/utils/constants';
 import { saveConsecutiveNumber } from 'src/utils/SaveAndGet';
 
 const InfoHelp = ({ numberState, setNumberState }) => {
@@ -181,7 +181,21 @@ const InfoHelp = ({ numberState, setNumberState }) => {
                 </thead>
                 <tbody>
                     {
-                        Object.entries(DocumentPermissionRequestControls).map(renderVariables)
+                        Object.entries(DocumentRequestControls).map(renderVariables)
+                    }
+                </tbody>
+            </table>
+            <h3 className="text-center px-2 fw-bold" >Uso de tiempo compensatorio</h3>
+            <table className="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Campo</th>
+                        <th scope="col">Variable</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {
+                        Object.entries(CompensatoryTime).map(renderVariables)
                     }
                 </tbody>
             </table>

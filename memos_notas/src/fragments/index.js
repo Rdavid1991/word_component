@@ -93,6 +93,7 @@ export const InputText = ({
  * @param {String} props.value
  * @param {String} props.label
  * @param {String=} props.description
+ * @param {Boolean=} props.required
  * @param {Object<string,string>[]} props.options
  * @param {Function} props.handleInputChange
  * @returns 
@@ -104,6 +105,7 @@ export const SelectOptions = ({
     label,
     options,
     description = "",
+    required = false,
     handleInputChange,
 
 }) => {
@@ -124,6 +126,7 @@ export const SelectOptions = ({
                     value={value}
                     onChange={handleInputChange}
                     className="form-select form-select-sm"
+                    required={required}
                 >
                     <option value="">Seleccione una opción</option>
                     {
@@ -154,7 +157,7 @@ export const ButtonSubmit = ({ title }) => {
     return (
         <button
             type="submit"
-            className="btn btn-sm btn-success mx-1"
+            className="btn btn-sm btn-secondary mx-1"
         >
             {title}
         </button>

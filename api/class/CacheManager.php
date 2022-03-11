@@ -25,7 +25,7 @@ class CacheManager
     public function cacheFolder($folder)
     {
         if (!is_dir($this->path . $folder)) {
-            mkdir($this->path . $folder);
+            mkdir($this->path . $folder, 0777, true);
         }
 
         $this->folder = $folder;

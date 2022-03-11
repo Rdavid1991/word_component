@@ -33,8 +33,8 @@ export const AddresseesList = ({ addresseeState, handlerEdit, handlerDelete }) =
     return (
         <div className="px-3">
 
-            <div className="card my-2 radius-50 text-white gradient">
-                <div className="card-body">
+            <div className="card my-2 rounded text-white gradient">
+                <div className="card-body py-1">
                     <h3 className="fw-bold mb-2">Lista de destinatarios</h3>
                     <InputText
                         htmlId="department"
@@ -45,12 +45,12 @@ export const AddresseesList = ({ addresseeState, handlerEdit, handlerDelete }) =
                     />
                 </div >
             </div >
-            <div className="card radius-50 h-100">
-                <div className="card-body p-2 bg-light scroll radius-50 overflow-auto h-100">
+            <div className="card rounded h-100">
+                <div className="card-body p-2 bg-light scroll rounded overflow-auto h-100">
                     {
                         filtered.map((item, index) => (
-                            <div key={index} className="card mb-2 radius-50 bg-body">
-                                <div className="card-body">
+                            <div key={index} className="card mb-2 rounded bg-body">
+                                <div className="card-body py-1">
                                     <h6 className="fw-bold card-title">Nombre: <span className="fw-light">{item.name}</span></h6>
                                     <p className="fw-bold m-0 text-muted">Arquetipo: <span className="fw-light">{item.archetype}</span></p>
                                     <p className="fw-bold m-0 text-muted">Cargo: <span className="fw-light">{item.jobTitle}</span></p>

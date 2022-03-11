@@ -61,8 +61,8 @@ export const Addressees = ({ addresseeState, fetchAddresses }) => {
     return (
         <>
             <div className="w-100 px-3">
-                <div className="card my-2 radius-50 text-white gradient">
-                    <div className="card-body">
+                <div className="card my-2 rounded text-white gradient">
+                    <div className="card-body py-1">
                         <h3 className="fw-bold text-truncate">Destinatarios</h3>
                         <p className="text-truncate" style={{ fontSize: "14px" }}>Agregar o editar destinatarios para memos o notas</p>
                     </div>

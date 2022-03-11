@@ -16,7 +16,7 @@ export const AddresseeControls = {
     addressee_department: "Dirección / departamento",
 };
 
-export const DocumentPermissionRequestControls = {
+export const DocumentRequestControls = {
     from_hour : "Desde - hora",
     from_day  : "Desde - día",
     from_month: "Desde - mes",
@@ -27,7 +27,15 @@ export const DocumentPermissionRequestControls = {
     to_year   : "Hasta - año",
 };
 
-export const FunctionaryControls ={
+export const CompensatoryTime = {
+    from_hour : "Desde - hora",
+    to_hour   : "Hasta - hora",
+    date_day  : "Día",
+    date_month: "Mes",
+    date_year : "año"
+};
+
+export const FunctionaryControls = {
     name           : "Nombre",
     id_card        : "Cedula",
     job_title      : "Puesto",
@@ -38,6 +46,7 @@ export const typeOfDocuments = {
     0: "Otros",
     1: "Memorandum",
     2: "Nota",
-    3: "Solicitud de permiso"
+    3: "Solicitud de permiso",
+    4: "Solicitud de tiempo compensatorio"
 };
 
