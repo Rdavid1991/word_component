@@ -10,6 +10,13 @@ require_once(dirname(__FILE__) . "/class/Options.php");
 require_once(dirname(__FILE__) . "/class/Addressee.php");
 require_once(dirname(__FILE__) . "/class/Functionary.php");
 require_once(dirname(__FILE__) . "/class/Consecutive.php");
+require_once(dirname(__FILE__) . "/class/CacheManager.php");
+
+
+require_once(dirname(__FILE__) . "/routers/router_template.php");
+require_once(dirname(__FILE__) . "/routers/router_functionary.php");
+require_once(dirname(__FILE__) . "/routers/router_addressee.php");
+
 
 class HandlerActionsMemo extends ManagementDB
 {
@@ -79,85 +86,6 @@ class Response
     }
 }
 
-/**
- * Manejo de plantillas 
- */
-if (
-    $_GET["action"] === "save_template_doc" ||
-    $_GET["action"] === "edit_template_doc" ||
-    $_GET["action"] === "get_template_doc" ||
-    $_GET["action"] === "get_template_info" ||
-    $_GET["action"] === "delete_template_doc"
-) {
-
-    $template = new DocTemplate();
-
-    switch ($_GET["action"]) {
-        case "save_template_doc":
-            echo Response::responseInsert($template->save_template_doc());
-            break;
-        case "edit_template_doc":
-            echo Response::responseInsert($template->edit_template_doc());
-            break;
-        case "get_template_info":
-            echo Response::responseSelect($template->get_template_info());
-            break;
-        case "get_template_doc":
-            echo Response::responseSelect($template->get_template_doc());
-            break;
-        case "delete_template_doc":
-            echo Response::responseDelete($template->delete_template_doc());
-            break;
-    }
-}
-
-
-if (
-    $_GET["action"] === "save_functionary" ||
-    $_GET["action"] === "edit_functionary" ||
-    $_GET["action"] === "delete_functionary" ||
-    $_GET["action"] === "get_functionary"
-) {
-    $functionary = new Functionary();
-    switch ($_GET["action"]) {
-        case "save_functionary":
-            echo Response::responseInsert($functionary->save_functionary());
-            break;
-        case "edit_functionary":
-            echo Response::responseInsert($functionary->edit_functionary());
-            break;
-        case "get_functionary":
-            echo Response::responseSelect($functionary->get_functionary());
-            break;
-        case "delete_functionary":
-            echo Response::responseDelete($functionary->delete_functionary());
-            break;
-    }
-}
-
-if (
-    $_GET["action"] === "save_addressee" ||
-    $_GET["action"] === "edit_addressee" ||
-    $_GET["action"] === "get_addressee" ||
-    $_GET["action"] === "delete_addressee"
-) {
-    $addressee = new Addressee();
-
-    switch ($_GET["action"]) {
-        case "save_addressee":
-            echo Response::responseInsert($addressee->save_addressee());
-            break;
-        case "edit_addressee":
-            echo Response::responseInsert($addressee->edit_addressee());
-            break;
-        case "get_addressee":
-            echo Response::responseSelect($addressee->get_addressee());
-            break;
-        case "delete_addressee":
-            echo Response::responseDelete($addressee->delete_addressee());
-            break;
-    }
-}
 
 if (
     $_GET["action"] === "save_count_numbers" ||
@@ -194,17 +122,37 @@ if (
 }
 
 if (
-    $_GET["action"] ==="get_reject_info" ||
-    $_GET["action"] ==="get_options_department_owner"
+    $_GET["action"] === "get_reject_info" ||
+    $_GET["action"] === "get_options_department_owner"
 ) {
-    $handler = new HandlerActionsMemo();
-    $options = new Options();
+
+    $cacheManager = new CacheManager();
+
+    $cache_action = $_GET["action"] ?? "";
+    $cache_id = $_GET["id"] ?? "";
+    $cache_department = $_GET["department_owner"] ?? "";
+    $cache_name = $cache_action . $cache_id . $cache_department;
+
+    $cacheManager->cacheName($cache_name);
+
+    if (!$cacheManager->existCache()) {
+        $handler = new HandlerActionsMemo();
+        $options = new Options();
+    }
     switch ($_GET["action"]) {
         case "get_reject_info":
             $handler->get_reject_info();
             break;
         case "get_options_department_owner":
-            echo Response::responseSelect($options->get_department_owner());
+
+            if ($cacheManager->existCache()) {
+                echo $cacheManager->getCache();
+            } else {
+                $response = Response::responseSelect($options->get_department_owner());
+                $cacheManager->createCache($response);
+                echo $response;
+            }
+            
             break;
         default:
             break;
