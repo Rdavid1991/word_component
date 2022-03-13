@@ -135,24 +135,23 @@ if (
 
     $cacheManager->cacheName($cache_name);
 
-    if (!$cacheManager->existCache()) {
-        $handler = new HandlerActionsMemo();
-        $options = new Options();
-    }
+
+    $handler = new HandlerActionsMemo();
+
     switch ($_GET["action"]) {
         case "get_reject_info":
             $handler->get_reject_info();
             break;
         case "get_options_department_owner":
-
-            if ($cacheManager->existCache()) {
+            if (isset($_GET["id"]) && $_GET["id"] !== "0" && $cacheManager->existCache()) {
                 echo $cacheManager->getCache();
             } else {
+                $options = new Options();
                 $response = Response::responseSelect($options->get_department_owner());
                 $cacheManager->createCache($response);
                 echo $response;
             }
-            
+
             break;
         default:
             break;

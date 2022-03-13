@@ -5,7 +5,8 @@ import { getLocalStorageUserDepartment } from 'src/utils';
      * Solo se muestra si tiene acceso para crear plantillas para otros
      * @returns 
      */
-export const renderSelectDepartment = (values, handleInputChange, departmentOwnerState) => {
+export const renderSelectDepartment = (values, handleInputChange, department) => {
+
     if (getLocalStorageUserDepartment() == "0") {
 
         return (
@@ -19,7 +20,7 @@ export const renderSelectDepartment = (values, handleInputChange, departmentOwne
                 >
                     <option disabled value="">Seleccione un departamento</option>
                     {
-                        departmentOwnerState.map((item, index) => (
+                        department.map((item, index) => (
                             <option key={index} value={item.id}>{item.name}</option>
                         ))
                     }

@@ -34,8 +34,8 @@ export const TabNavContent = () => {
 
     useEffect(() => {
         (async () => {
-            await HomeInsertUser();
             showLoader(true);
+            await HomeInsertUser();
             fetchNumbers();
             fetchTemplate();
             fetchAddresses();

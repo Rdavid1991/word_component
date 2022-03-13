@@ -5,7 +5,7 @@ import { saveFunctionary } from 'src/utils/SaveAndGet';
 
 export const FunctionaryCreate = ({ handleInputChange, fetchFunctionary, values, reset }) => {
 
-	const { showLoader, departmentOwnerState } = useContext(context);
+	const { showLoader, departments } = useContext(context);
 
 	/**
 	 * 
@@ -58,7 +58,7 @@ export const FunctionaryCreate = ({ handleInputChange, fetchFunctionary, values,
 					value={values.position}
 					required={true}
 				/>
-				{renderSelectDepartment(values, handleInputChange, departmentOwnerState)}
+				{renderSelectDepartment(values, handleInputChange, departments)}
 
 				<div className="mb-3">
 					<ButtonSubmit

@@ -7,7 +7,7 @@ import { saveDocumentTemplate } from 'src/utils/SaveAndGet';
 
 const TemplateCreate = ({ handlerFetchTemplate, values, reset, handleInputChange }) => {
 
-    const { showLoader, departmentOwnerState } = useContext(context);
+    const { showLoader, departments } = useContext(context);
 
 
     /**
@@ -58,7 +58,7 @@ const TemplateCreate = ({ handlerFetchTemplate, values, reset, handleInputChange
                     </select>
                 </div>
 
-                {renderSelectDepartment(values, handleInputChange, departmentOwnerState)}
+                {renderSelectDepartment(values, handleInputChange, departments)}
 
                 <div className="mb-3">
                     <button

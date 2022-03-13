@@ -40,18 +40,6 @@ const addZeroToLeft = (digit) => {
     }
 };
 
-/**
- * Obtener los departamentos a los que pertenece un usuario
- * @returns 
- */
-export const getDepartmentOwner = async (id= "0") => {
-    const response = await apiRequest().get("get_options_department_owner", { id });
-    if (response.ok) {
-        return await response.json();
-    }
-    AlertError(`Error al cagar departamentos: ${response.status} - ${response.statusText}`);
-    return [];
-};
 
 /**
  * Verificar si existe usuario en el almacenamiento local

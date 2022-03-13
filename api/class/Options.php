@@ -18,8 +18,8 @@ class Options extends ManagementDB
     public function get_department_owner()
     {
         $sql = "SELECT * FROM [dbo].[department_owner]";
-        $sql .= $_GET["id"] !== "0" ? "WHERE [id] = ?" : "";
+        $sql .=  isset($_GET["id"]) && $_GET["id"] !== "0" ? "WHERE [id] = ?" : "";
 
-        return parent::select_query($sql,[$_GET["id"]]);
+        return parent::select_query($sql,[$_GET["id"] ?? ""]);
     }
 }

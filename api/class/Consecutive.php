@@ -20,7 +20,7 @@ class Consecutive extends ManagementDB
     public function save_count_numbers($memo, $note)
     {
         $result = $this->get_count_numbers();
-        if ($result) {
+        if (sizeof($result["data"]) > 0 ) {
             $update = "UPDATE [dbo].[number_memo_notes]
                         SET [memorandum] = ? ,[notes] = ?
                         WHERE [id] = ?";

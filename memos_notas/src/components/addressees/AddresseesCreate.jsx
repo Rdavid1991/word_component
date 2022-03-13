@@ -3,7 +3,7 @@ import React from 'react';
 import { InputText, renderSelectDepartment } from 'src/fragments';
 import { saveAddressees } from 'src/utils/SaveAndGet';
 
-export const AddresseesCreate = ({ departmentOwnerState, fetchAddresses, handleInputChange, form, reset }) => {
+export const AddresseesCreate = ({ departments, fetchAddresses, handleInputChange, form, reset }) => {
 
     const handleSaveAddressees = async (e) => {
         e.preventDefault();
@@ -43,7 +43,7 @@ export const AddresseesCreate = ({ departmentOwnerState, fetchAddresses, handleI
                     placeholder="Dirección o departamento del destinatario"
                     value={form.department}
                 />
-                {renderSelectDepartment(form, handleInputChange, departmentOwnerState)}
+                {renderSelectDepartment(form, handleInputChange, departments)}
 
                 <div className="mb-3">
                     <button className="btn btn-sm btn-secondary">Guardar</button>

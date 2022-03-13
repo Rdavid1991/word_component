@@ -52,7 +52,7 @@ class DocTemplate extends ManagementDB
 
     public function get_template_info()
     {
-        $sql = "SELECT [id],[name],[type] FROM [dbo].[document]";
+        $sql = "SELECT [id],[name],[type], [department_owner_id] FROM [dbo].[document]";
         $sql .= $_GET["department_owner"] == "0" ? "WHERE [active] = 1" : "WHERE [department_owner_id] = ? AND [active] = 1";
 
         return parent::select_query($sql, [$_GET["department_owner"]]);

@@ -1,23 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState,useContext } from 'react';
+import { context } from 'src/context/context';
 import { InputText } from 'src/fragments';
-import { getDepartmentOwner, getLocalStorageUserDepartment } from 'src/utils';
+import { getLocalStorageUserDepartment } from 'src/utils';
 import { typeOfDocuments } from "src/utils/constants";
+
 
 
 const TemplateList = ({ documents, handlerEdit, handlerDelete }) => {
 
+	const {departments} = useContext(context);
+
 	const [filtered, setFiltered] = useState([]);
 	const [searchState, setSearchState] = useState("");
-	const [departmentOwnerState, setDepartmentOwnerState] = useState([]);
-
-	useEffect(() => {
-		(async () => {
-			if (getLocalStorageUserDepartment() == "0") {
-				const data = await getDepartmentOwner();
-				setDepartmentOwnerState(data);
-			}
-		})();
-	}, []);
+	
 
 	/**
 	 * @param {React.MouseEvent<HTMLFormElement, MouseEvent>} e
@@ -48,7 +43,7 @@ const TemplateList = ({ documents, handlerEdit, handlerDelete }) => {
 
 	const handlerFilterSearch = () => {
 		let searching = documents.filter((item) => {
-			const departmentName = departmentOwnerState.filter((e) => e.id == item.department_owner_id)[0]?.name;
+			const departmentName = departments.filter((e) => e.id == item.department_owner_id)[0]?.name;
 
 			return new RegExp(searchState, "i").test(item.name) ||
 				new RegExp(searchState, "i").test(typeOfDocuments[item.type]) ||
@@ -79,7 +74,7 @@ const TemplateList = ({ documents, handlerEdit, handlerDelete }) => {
 					{
 						filtered.map((item, index) => {
 
-							const departmentName = departmentOwnerState.filter((e) => e.id == item.department_owner_id)[0]?.name;
+							const departmentName = departments.filter((e) => e.id == item.department_owner_id)[0]?.name;
 
 							return (
 								<div key={index} className="card mb-2 bg-body rounded">

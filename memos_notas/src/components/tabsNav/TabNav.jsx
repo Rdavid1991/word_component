@@ -3,8 +3,9 @@ import { renderToString } from 'react-dom/server';
 import TabScreenButtons from './TabScreenButtons';
 import { TabNavContent } from './TabNavContent';
 import Swal from 'sweetalert2';
-import { getDepartmentOwner, getLocalStorageUserDepartment } from 'src/utils';
+import { getLocalStorageUserDepartment } from 'src/utils';
 import { context } from 'src/context/context';
+import { getDepartment } from 'src/utils/SaveAndGet';
 
 const initialState = {
     home      : false,
@@ -40,7 +41,7 @@ const TabNav = () => {
     useEffect(() => {
         (async () => {
             const userDepartment = getLocalStorageUserDepartment();
-            const { data } = await getDepartmentOwner(userDepartment);
+            const { data } = await getDepartment(userDepartment);
             setDepartmentName({
                 name: data[0].name
             });

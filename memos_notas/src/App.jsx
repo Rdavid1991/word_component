@@ -1,25 +1,24 @@
 import "./App.css";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useState, useEffect } from "react";
 import { context } from "./context/context";
 import TabNav from "./components/tabsNav/TabNav";
-import { getDepartmentOwner, getLocalStorageUserDepartment } from "./utils";
+import { getDepartment } from "./utils/SaveAndGet";
 
 
 export const App = () => {
 
 	const [loader, setLoader] = useState(false);
 	const [controls, setControlsState] = useState([]);
-	const [departmentOwnerState, setDepartmentOwnerState] = useState([]);
+	const [departments, setDepartments] = useState([]);
+
 
 	useEffect(() => {
-
 		(async () => {
-			if (getLocalStorageUserDepartment() == "0") {
-				const { data } = await getDepartmentOwner();
-				setDepartmentOwnerState(data);
-			}
+			let { data } = await getDepartment();
+			setDepartments(data);
 		})();
 	}, []);
+
 
 	const showLoader = useCallback((show) => {
 		setLoader(show);
@@ -34,7 +33,7 @@ export const App = () => {
 			showLoader,
 			setControls,
 			controls,
-			departmentOwnerState
+			departments
 		}}>
 
 			<div id="container">

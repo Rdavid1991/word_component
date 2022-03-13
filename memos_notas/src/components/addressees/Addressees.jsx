@@ -26,7 +26,7 @@ const initialState = {
  */
 export const Addressees = ({ addresseeState, fetchAddresses }) => {
 
-    const { showLoader, departmentOwnerState } = useContext(context);
+    const { showLoader, departments } = useContext(context);
 
     const [form, setForm, handleInputChange, reset] = useForm(initialState);
 
@@ -70,7 +70,7 @@ export const Addressees = ({ addresseeState, fetchAddresses }) => {
             </div>
             <div className="addressees_pane h-100">
                 <AddresseesCreate
-                    departmentOwnerState={departmentOwnerState}
+                    departments={departments}
                     fetchAddresses={fetchAddresses}
                     reset={reset}
                     handleInputChange={handleInputChange}

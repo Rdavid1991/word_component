@@ -38,7 +38,7 @@ export const apiRequest = () => {
             });
 
             const response = await fetch(`${globals.apiUrl}?action=${route}${paramsString}`, {
-                method: "GET",
+                method: "GET"
             });
 
             return response;

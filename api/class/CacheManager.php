@@ -9,6 +9,9 @@ class CacheManager
     function __construct()
     {
         $this->path = dirname(__DIR__) . "/tmp/";
+        if (!is_dir($this->path)) {
+            mkdir($this->path, 0777, true);
+        }
     }
 
     protected function getCacheName()

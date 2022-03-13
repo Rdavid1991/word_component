@@ -23,17 +23,17 @@ i {
 
 .active > .functionary_pane {
   display: grid;
-  grid-template-rows: 350px 30px 70%;
+  grid-template-rows: auto auto 70%;
 }
 
 .active > .addressees_pane {
   display: grid;
-  grid-template-rows: 353px 30px 70%;
+  grid-template-rows: auto auto 70%;
 }
 
 .active > .template_pane {
   display: grid;
-  grid-template-rows: 200px 30px 70%;
+  grid-template-rows: auto auto 70%;
 }
 
 .scroll::-webkit-scrollbar {

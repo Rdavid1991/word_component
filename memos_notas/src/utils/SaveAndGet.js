@@ -4,6 +4,29 @@ import { apiRequest } from "src/utils/apiRequest";
 import { clearDocument, readDocument } from "src/utils/documents";
 import Swal from "sweetalert2";
 
+
+export const getDepartment = async (id = undefined) => {
+
+    const params = {};
+
+    if (id) {
+        params.id = id;
+    }
+
+    try {
+        const response = await apiRequest().get("get_options_department_owner", { ...params });
+
+        if (response.ok) {
+            return await response.json();
+        }
+        const { message } = await response.json();
+        await AlertError(`Error al consultar destinatarios: ${message.text}`);
+    } catch (error) {
+        await AlertError(`Error al consultar destinatarios: ${error}`);
+    }
+    return false;
+};
+
 /**
  * Obtener los destinatarios
  * @returns 

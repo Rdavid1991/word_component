@@ -11,68 +11,22 @@ import {
 	localStorageKeyUser,
 } from '.';
 import { AlertError } from './Alerts';
-import { apiRequest } from './apiRequest';
+import RequestInitialUserInfo from 'src/fragments/RequestInitialUserInfo';
 
-export const HomeInsertUser = async () => {
-
-	let user = "";
-	let email = "";
-	let department = "";
-
+export const HomeInsertUser = async (data) => {
 
 	if (!getLocalStorageUserName() &&
 		!getLocalStorageUserEmail() &&
 		!getLocalStorageUserInitials() &&
 		!getLocalStorageUserDepartment()) {
 
+
 		localStorage.clear();
-		
-		const alertHtml = async () => {
-			let json;
-			const result = await apiRequest().get("get_options_department_owner", {});
-			if (result.ok) {
-				json = await result.json();
-			}
 
-			return (
-				<>
-					<p>Para continuar ingrese la información solicitada</p>
-					<div className="mb-3 px-3">
-						<label htmlFor="swal-input1" className="form-label fw-bold">Nombre y apellido</label>
-						<input
-							type="text"
-							defaultValue={user}
-							id="swal-input1"
-							className="form-control form-control-sm"
-							placeholder="Nombre Apellido" />
-					</div>
-					<div className="mb-3 px-3">
-						<label htmlFor="swal-input1" className="form-label fw-bold">Correo</label>
-						<input
-							type="text"
-							defaultValue={email}
-							id="swal-input2"
-							className="form-control form-control-sm"
-							placeholder="usuario@mides.gob.pa" />
-					</div>
-					<div className="mb-3 px-3">
-						<label htmlFor="swal-input1" className="form-label fw-bold">Departamento</label>
-						<select
-							id='user_department'
-							className="form-select form-select-sm"
-							value={department}
-						>
-							<option disabled value="">Seleccione un departamento</option>
-							{
-								json.data.map((item, index) => (
-									<option key={index} value={item.id}>{item.name}</option>
-								))
-							}
-						</select>
-					</div>
-
-				</>
-			);
+		const initialState = {
+			user      : "",
+			email     : "",
+			department: ""
 		};
 
 		let loop = true;
@@ -82,7 +36,7 @@ export const HomeInsertUser = async () => {
 				const { value } = await Swal.fire({
 					title            : 'Ingrese su información',
 					allowOutsideClick: false,
-					html             : renderToString(await alertHtml()),
+					html             : renderToString(<RequestInitialUserInfo department={data} initialState={initialState} />),
 					focusConfirm     : false,
 					preConfirm       : () => {
 						return {
@@ -96,13 +50,17 @@ export const HomeInsertUser = async () => {
 					}
 				});
 
-				user = value.user.toString();
-				email = value.email.toString();
-				department = value.department.toString();
+				const user = value.user.toString();
+				const email = value.email.toString();
+				const department = value.department.toString();
 
-				const arrayUser = value.user.split(/\s/);
+				initialState.user = user;
+				initialState.email = email;
+				initialState.department = department;
 
-				if (value.department.toString().length > 0 && arrayUser.length >= 2 && value.email.toString().length > 0 && new RegExp("@mides.gob.pa", "g").test(value.email.toString())) {
+				const arrayUser = user.split(/\s/);
+
+				if (department.length > 0 && arrayUser.length >= 2 && email.length > 0 && new RegExp("@mides.gob.pa", "g").test(email)) {
 
 					localStorage.setItem(localStorageKeyUser, JSON.stringify({
 						...value,
