@@ -17,8 +17,6 @@ const initialState = {
 
 const TabNav = () => {
 
-    const { showLoader } = useContext(context);
-
     const [menuState, setMenuState] = useState({ ...initialState, home: true });
     const [departmentName, setDepartmentName] = useState({
         name: ""
@@ -42,6 +40,9 @@ const TabNav = () => {
         (async () => {
             const userDepartment = getLocalStorageUserDepartment();
             const { data } = await getDepartment(userDepartment);
+
+            console.log(data);
+            
             setDepartmentName({
                 name: data[0].name
             });

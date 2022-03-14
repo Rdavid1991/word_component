@@ -53,8 +53,10 @@ export const Addressees = ({ addresseeState, fetchAddresses }) => {
             `Desea borrar a <span class="fw-bold">${name}</span>`
         );
         if (isConfirmed) {
-            await deleteAddressees(id, showLoader);
-            fetchAddresses();
+            showLoader(true);
+            await deleteAddressees(id);
+            await fetchAddresses();
+            showLoader(false);
         }
     };
 

@@ -13,13 +13,17 @@ import {
 import { AlertError } from './Alerts';
 import RequestInitialUserInfo from 'src/fragments/RequestInitialUserInfo';
 
+/**
+ * 
+ * @param {Array} data 
+ */
 export const HomeInsertUser = async (data) => {
 
-	if (!getLocalStorageUserName() &&
+	if ( data.length > 0 &&
+		!getLocalStorageUserName() &&
 		!getLocalStorageUserEmail() &&
 		!getLocalStorageUserInitials() &&
 		!getLocalStorageUserDepartment()) {
-
 
 		localStorage.clear();
 

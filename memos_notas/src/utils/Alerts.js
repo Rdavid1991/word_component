@@ -1,6 +1,9 @@
 import Swal from 'sweetalert2';
 
 const AlertError = async (error) => {
+
+    console.error(error);
+    
     return await Swal.fire({
         title: "A ocurrido un error",
         text : error,

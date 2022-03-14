@@ -62,9 +62,8 @@ const HomeGenerateDocument = ({ functionaries, addresseeState, memoOrNoteState, 
             const { data } = await fetchData(addresseeState, memoOrNoteState, form);
 
             if (data.length > 0) {
-                showLoader(false);
 
-                const functionaryFound = functionaries.find((f)=> parseInt(f.id) === parseInt(form.functionary));
+                const functionaryFound = functionaries.find((f) => parseInt(f.id) === parseInt(form.functionary));
 
 
                 loadWordVars(addresseeState, data[0].consecutive, form, functionaryFound)
@@ -76,9 +75,9 @@ const HomeGenerateDocument = ({ functionaries, addresseeState, memoOrNoteState, 
                         AlertError("No se puede editar el documento" + err,);
                     });
             } else {
-                showLoader(false);
                 await AlertError('Error al consultar base de datos o no existen registros');
             }
+            showLoader(false);
 
             fetchNumbers();
             reset();

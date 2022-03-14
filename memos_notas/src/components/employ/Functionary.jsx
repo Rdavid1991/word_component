@@ -50,8 +50,10 @@ export const Functionary = ({ functionaries, fetchFunctionary }) => {
         const { isConfirmed } = await AlertConfirmQuestion(`¿Desea borrar a ${name}?`);
 
         if (isConfirmed) {
-            await deleteFunctionary(id, showLoader);
-            fetchFunctionary();
+            showLoader(true);
+            await deleteFunctionary(id);
+            await fetchFunctionary();
+            showLoader(false);
         }
     };
 

@@ -85,12 +85,10 @@ export const saveAddressees = async (form) => {
  * @param {String|Number} id 
  * @param {Function} showLoader Invocar spinner de carga
  */
-export const deleteAddressees = async (id, showLoader) => {
+export const deleteAddressees = async (id) => {
 
     try {
-        showLoader(true);
         let response = await apiRequest().post("delete_addressee", { id });
-        showLoader(false);
         if (response.ok) {
             const { message } = await response.json();
             await Swal.fire(message);
@@ -99,17 +97,14 @@ export const deleteAddressees = async (id, showLoader) => {
             await AlertError(`No se pudo borrar el destinatario: ${message.text}`);
         }
     } catch (error) {
-        showLoader(false);
         await AlertError(error);
     }
 };
 
-export const deleteFunctionary = async (id, showLoader) => {
+export const deleteFunctionary = async (id) => {
 
     try {
-        showLoader(true);
         let response = await apiRequest().post("delete_functionary", { id });
-        showLoader(false);
         if (response.ok) {
             const { message } = await response.json();
             await Swal.fire(message);
@@ -118,7 +113,6 @@ export const deleteFunctionary = async (id, showLoader) => {
             await AlertError(`No se pudo borrar el funcionario: ${message.text}`);
         }
     } catch (error) {
-        showLoader(false);
         await AlertError(error);
     }
 };

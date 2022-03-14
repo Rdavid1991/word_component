@@ -15,6 +15,7 @@ import {
     saveConsecutiveNumber,
 } from 'src/utils/SaveAndGet';
 import { Functionary } from '../employ/Functionary';
+import { existUser } from 'src/utils';
 
 const initialNumber = {
     note: "1",
@@ -25,24 +26,28 @@ const initialAddressee = [];
 const initialFunctionary = [];
 export const TabNavContent = () => {
 
-    const { showLoader } = useContext(context);
+    const { showLoader, departments } = useContext(context);
     const [addresseeState, setStateAddressee] = useState(initialAddressee);
     const [documents, setDocuments] = useState(initialDocument);
     const [numberState, setNumberState] = useState(initialNumber);
     const [functionaries, setFunctionary] = useState(initialFunctionary);
-    const [selectedState, setSelectedState] = useState("");
+
 
     useEffect(() => {
-        (async () => {
-            showLoader(true);
-            await HomeInsertUser();
-            fetchNumbers();
-            fetchTemplate();
-            fetchAddresses();
-            await fetchFunctionary();
-            showLoader(false);
-        })();
-    }, []);
+
+        HomeInsertUser(departments).then(async () => {
+
+            if (existUser()) {
+                showLoader(true);
+                fetchNumbers();
+                fetchTemplate();
+                fetchAddresses();
+                await fetchFunctionary();
+                showLoader(false);
+            }
+        });
+
+    }, [departments]);
 
     const fetchFunctionary = async () => {
         let functionary = await getFunctionaries();
@@ -50,7 +55,7 @@ export const TabNavContent = () => {
             const { data } = functionary;
             if (data.length > 0) {
                 setFunctionary(data);
-            }else{
+            } else {
                 setFunctionary(initialFunctionary);
             }
         }
@@ -78,7 +83,7 @@ export const TabNavContent = () => {
             const { data } = addresses;
             if (data.length >= 0) {
                 setStateAddressee(data);
-            }else{
+            } else {
                 setStateAddressee(initialAddressee);
             }
         }
@@ -90,8 +95,8 @@ export const TabNavContent = () => {
             const { data } = templates;
 
             if (data.length >= 0) {
-                setDocuments(data.sort((first, second)=> first.type - second.type));
-            }else{
+                setDocuments(data.sort((first, second) => first.type - second.type));
+            } else {
                 setDocuments(initialDocument);
             }
         }

@@ -17,7 +17,7 @@ export const FunctionaryCreate = ({ handleInputChange, fetchFunctionary, values,
 		const { isSaved } = await saveFunctionary(values);
 		if (isSaved) {
 			reset();
-			fetchFunctionary();
+			await fetchFunctionary();
 		}
 		showLoader(false);
 	};
