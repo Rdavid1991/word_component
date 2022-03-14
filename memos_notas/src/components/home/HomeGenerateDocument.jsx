@@ -1,11 +1,12 @@
 //@ts-check
 import React, { useContext, useEffect, useState } from 'react';
-import { fetchData, loadWordVars } from './functions';
+import { fetchData } from './functions';
 import { context } from 'src/context/context';
 import { getLocalStorageUserName } from 'src/utils';
 import { useForm } from 'src/hooks/useForm';
 import { AlertError, AlertSuccess, AlertWarning } from 'src/utils/Alerts';
 import { InputText, SelectOptions } from 'src/fragments';
+import { SendDataToDocument } from './functions/SendDataToDocument';
 
 
 const initialState = {
@@ -66,7 +67,7 @@ const HomeGenerateDocument = ({ functionaries, addresseeState, memoOrNoteState, 
                 const functionaryFound = functionaries.find((f) => parseInt(f.id) === parseInt(form.functionary));
 
 
-                loadWordVars(addresseeState, data[0].consecutive, form, functionaryFound)
+                SendDataToDocument.SendDataToMemoOrNote(addresseeState, data[0].consecutive, form, functionaryFound)
                     .then(() => {
                         AlertSuccess('La información esta lista');
                         setSelectedState("");

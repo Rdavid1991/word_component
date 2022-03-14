@@ -68,7 +68,7 @@ export const HomeInsertUser = async (data) => {
 
 					localStorage.setItem(localStorageKeyUser, JSON.stringify({
 						...value,
-						initials: `${arrayUser[0].charAt(0)}${arrayUser[1].charAt(0)}`,
+						initials: `${arrayUser[0].charAt(0)}${arrayUser[1].charAt(0)}`.toLowerCase(),
 					}));
 					break;
 				} else {

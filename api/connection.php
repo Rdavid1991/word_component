@@ -14,7 +14,6 @@ define(
     )
 );
 
-//define("SERVER", "172.20.70.46");
 define("SERVER", "localhost");
 
 

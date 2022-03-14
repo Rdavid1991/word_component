@@ -1,9 +1,6 @@
 /* eslint-disable no-prototype-builtins */
 //@ts-check
 
-import { AlertError } from "./Alerts";
-import { apiRequest } from "./apiRequest";
-
 const localStorageKeyUser = "infoUser";
 
 /**

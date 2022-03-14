@@ -2,13 +2,13 @@
 /* global Word */
 import moment from "moment";
 import {
-	addZeroToLeft,
+
 	getLocalStorageUserDepartment,
 	getLocalStorageUserEmail,
-	getLocalStorageUserInitials,
+
 } from "src/utils";
 import "moment/locale/es-us";
-import { AddresseeControls, DocumentMemoOrNotesControls, DocumentRequestControls, FunctionaryControls } from "src/utils/constants";
+import {  DocumentRequestControls, FunctionaryControls } from "src/utils/constants";
 import { apiRequest } from "src/utils/apiRequest";
 moment.locale("es-mx");
 
@@ -53,97 +53,7 @@ const insertTextControl = (control, text) => {
 	control.items[0]?.insertText(text, "Replace");
 };
 
-/**
- * Cargar documento
- * @param {Object[]} addresseeState
- * @param {string} addresseeState[].name
- * @param {string} addresseeState[].jobTitle
- * @param {string} addresseeState[].archetype
- * @param {string} addresseeState[].department
- * @param {Object} form
- * @param {string} form.from - Remitente de memo o nota
- * @param {string} form.subject - Asunto de memo o nota
- * @param {string} form.to - Posición en el array addresseeState
- * @param {Object} functionary 
- * @param {String} functionary.id 
- * @param {String} functionary.name 
- * @param {String} functionary.id_card 
- * @param {String} functionary.job_title 
- * @param {String} functionary.position_number 
- */
-const loadWordVars = async (addresseeState, id, form, functionary) => {
-	await Word.run(async (context) => {
 
-		const memoAndNoteControls = {
-			...DocumentMemoOrNotesControls,
-			...AddresseeControls,
-			...FunctionaryControls
-		};
-
-		const controls = loadControls(
-			context,
-			getControlsByTag(context, memoAndNoteControls),
-			memoAndNoteControls
-		);
-
-		await context.sync();
-
-		Object.entries(controls).map((entry) => {
-			const [key, control] = entry;
-
-			switch (key) {
-				case Object.keys(memoAndNoteControls)[0]:
-					insertTextControl(control, addZeroToLeft(id.toString()));
-					break;
-				case Object.keys(memoAndNoteControls)[1]:
-					insertTextControl(control, addZeroToLeft(id.toString()));
-					break;
-				case Object.keys(memoAndNoteControls)[2]:
-					insertTextControl(control, moment().year().toString());
-					break;
-				case Object.keys(memoAndNoteControls)[3]:
-					insertTextControl(control, moment().format("LL").toString());
-					break;
-				case Object.keys(memoAndNoteControls)[4]:
-					insertTextControl(control, form.from);
-					break;
-				case Object.keys(memoAndNoteControls)[5]:
-					insertTextControl(control, form.subject);
-					break;
-				case Object.keys(memoAndNoteControls)[6]:
-					insertTextControl(control, getLocalStorageUserInitials());
-					break;
-				case Object.keys(memoAndNoteControls)[7]:
-					insertTextControl(control, addresseeState[form.to].name);
-					break;
-				case Object.keys(memoAndNoteControls)[8]:
-					insertTextControl(control, addresseeState[form.to].jobTitle);
-					break;
-				case Object.keys(memoAndNoteControls)[9]:
-					insertTextControl(control, addresseeState[form.to].archetype);
-					break;
-				case Object.keys(memoAndNoteControls)[10]:
-					insertTextControl(control, addresseeState[form.to].department);
-					break;
-				case Object.keys(memoAndNoteControls)[11]:
-					insertTextControl(control, functionary?.name);
-					break;
-				case Object.keys(memoAndNoteControls)[12]:
-					insertTextControl(control, functionary?.id_card);
-					break;
-				case Object.keys(memoAndNoteControls)[13]:
-					insertTextControl(control, functionary?.job_title);
-					break;
-				case Object.keys(memoAndNoteControls)[14]:
-					insertTextControl(control, functionary?.position_number.toString());
-					break;
-				default:
-					break;
-			}
-			return null;
-		});
-	});
-};
 
 /**
  * 
@@ -256,4 +166,4 @@ const selectedDocumentType = (target) => {
 
 };
 
-export { loadWordVars, fetchData, selectedDocumentType };
+export { fetchData, selectedDocumentType };
