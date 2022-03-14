@@ -50,6 +50,8 @@ export const TabNavContent = () => {
             const { data } = functionary;
             if (data.length > 0) {
                 setFunctionary(data);
+            }else{
+                setFunctionary(initialFunctionary);
             }
         }
     };
@@ -76,6 +78,8 @@ export const TabNavContent = () => {
             const { data } = addresses;
             if (data.length >= 0) {
                 setStateAddressee(data);
+            }else{
+                setStateAddressee(initialAddressee);
             }
         }
     };
@@ -87,6 +91,8 @@ export const TabNavContent = () => {
 
             if (data.length >= 0) {
                 setDocuments(data.sort((first, second)=> first.type - second.type));
+            }else{
+                setDocuments(initialDocument);
             }
         }
     };

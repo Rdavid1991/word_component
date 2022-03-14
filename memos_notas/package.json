@@ -15,10 +15,10 @@
   },
   "homepage": "./",
   "scripts": {
-    "start": "react-scripts start",
+    "start": "set \"REACT_APP_ENV=DEV\" && react-scripts start",
     "start-db-container": "powershell docker-compose up -d",
     "stop-db-container": "powershell docker-compose down",
-    "build": "react-scripts build && powershell ./script.ps1",
+    "build": "set \"REACT_APP_ENV=PROD\" && react-scripts build && powershell ./script.ps1",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
