@@ -35,13 +35,13 @@ export const TabNavContent = () => {
 
     useEffect(() => {
         HomeInsertUser(departments).then(async () => {
-            if (existUser()) {
+            if (existUser() && departments.length > 0) {
                 showLoader(true);
                 fetchNumbers();
                 fetchTemplate();
                 fetchAddresses();
                 await fetchFunctionary();
-                departments.length > 0? showLoader(false): null;
+                showLoader(false);
             }
         });
 

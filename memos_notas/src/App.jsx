@@ -11,7 +11,6 @@ export const App = () => {
 	const [controls, setControlsState] = useState([]);
 	const [departments, setDepartments] = useState([]);
 
-
 	useEffect(() => {
 		(async () => {
 			let { data } = await getDepartment();
