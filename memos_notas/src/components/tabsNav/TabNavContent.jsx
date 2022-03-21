@@ -102,7 +102,7 @@ export const TabNavContent = () => {
 
 
     return (
-        <div className="tab-content scroll" id="nav-tabContent">
+        <div className="tab-content scroll shadow__top" id="nav-tabContent">
             <div className="tab-pane fade active show" id="nav-home">
                 <Home
                     addresseeState={addresseeState}

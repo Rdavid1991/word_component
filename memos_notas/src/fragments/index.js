@@ -113,7 +113,7 @@ export const SelectOptions = ({
     return (
         <div className="mb-3">
             <label
-                forHtml={`#${id}`}
+                htmlFor={id}
                 className="fw-bold form-label"
             >
                 {label}

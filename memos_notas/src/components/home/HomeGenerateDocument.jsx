@@ -7,10 +7,12 @@ import { useForm } from 'src/hooks/useForm';
 import { AlertError, AlertSuccess, AlertWarning } from 'src/utils/Alerts';
 import { InputText, SelectOptions } from 'src/fragments';
 import { SendDataToDocument } from './functions/SendDataToDocument';
+import MultiSelect from './fragment/MultiSelect';
 
 
 const initialState = {
     to         : "",
+    cc         : [],
     subject    : "",
     functionary: "",
     from       : getLocalStorageUserName()
@@ -38,6 +40,7 @@ const HomeGenerateDocument = ({ functionaries, addresseeState, memoOrNoteState, 
 
     const [form, setForm, handleInputChange, reset] = useForm(initialState);
     const [buttonDisabled, setButtonDisabled] = useState(true);
+    const [select, setSelect] = useState(false);
 
     useEffect(() => {
         if (form.to.length > 0 && form.subject.length > 0 && form.from.length > 0) {
@@ -123,6 +126,29 @@ const HomeGenerateDocument = ({ functionaries, addresseeState, memoOrNoteState, 
                     </select>
                 </div>
             </div>
+
+            <div className="mb-3">
+                <div className="form-check">
+                    <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked={select} onChange={({ target }) => setSelect(target.checked)} />
+                    <label  className="form-check-label fw-bold" >
+                        Con copia
+                    </label>
+                </div>
+            </div>
+
+
+            {
+                select ?
+                    <MultiSelect
+                        options={addresseeState}
+                        optionsLabel="department"
+                        id="cc"
+                        value={form.cc}
+                        required={true}
+                        onChange={handleInputChange}
+                    />
+                    : null
+            }
 
             <InputText
                 htmlId="subject"

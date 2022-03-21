@@ -15,10 +15,19 @@ i {
   height: 94vh;
 }
 
+.shadow__top {
+  border-top: 1px solid #bebebe;
+  box-shadow: inset -1px 20px 13px -13px #bebebe;
+}
+
+.list__height{
+  height: -webkit-fill-available;
+}
+
 .tab-content {
   overflow-y: auto;
   scroll-behavior: smooth;
-  height: 100%;
+  height: 98%;
 }
 
 .active > .functionary_pane {
@@ -36,6 +45,10 @@ i {
   grid-template-rows: auto auto 70%;
 }
 
+.grid_list {
+  grid-row: 3/3;
+}
+
 .scroll::-webkit-scrollbar {
   width: 8px;
 }
@@ -43,7 +56,7 @@ i {
   border-radius: 50px;
 }
 .scroll::-webkit-scrollbar-thumb {
-  background: linear-gradient(0deg, #2a5699, #4082e6);;
+  background: linear-gradient(0deg, #2a5699, #4082e6);
   border-radius: 10px;
 }
 .scroll::-webkit-scrollbar-thumb:hover {
@@ -57,7 +70,7 @@ i {
 .menu-bar > .bar {
   width: 35px;
   height: 5px;
-  background: linear-gradient(0deg, #2a5699, #4082e6);;
+  background: linear-gradient(0deg, #2a5699, #4082e6);
   margin: 6px 0;
 }
 
@@ -71,8 +84,8 @@ i {
   background: linear-gradient(0deg, #2a5699, #4082e6);
 }
 
-.close-color:hover{
-  color: #4082e6!important;
+.close-color:hover {
+  color: #4082e6 !important;
 }
 
 .swa-custom-title {
