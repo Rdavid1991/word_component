@@ -193,47 +193,48 @@ export const SendDataToDocument = {
             });
         });
 
-        await Word.run(async (context) => {
-            const table = context.document.body.tables.getFirst().rows;
-            context.load(table);
+        if (form.hasCopy) {
 
-            await context.sync();
+            await Word.run(async (context) => {
+                const table = context.document.body.tables.getFirst().rows;
+                context.load(table);
 
-            table.items[0].insertRows(Word.InsertLocation.after, form.cc.length, [""][""]);
+                await context.sync();
 
-            
-        });
+                table.items[0].insertRows(Word.InsertLocation.after, form.cc.length, [""][""]);
 
-        await Word.run(async (context) => {
-            const table = context.document.body.tables.getFirst().rows;
-            context.load(table);
+            });
 
-            await context.sync();
+            await Word.run(async (context) => {
+                const table = context.document.body.tables.getFirst().rows;
+                context.load(table);
 
-            const cells = [];
-            //form.cc.map((item, index) => {
-                //console.log(index +1);
-                cells.push(table.items[1].cells);
-                cells.push(table.items[2].cells);
-            //});
+                await context.sync();
 
-            //cells.map((item) => {
-                context.load(cells[0]);
-                context.load(cells[1]);
-            //});
+                const cells = [];
+                form.cc.map((item, index) => {
+                    cells.push(table.items[index + 1].cells);
+                });
 
-            await context.sync();
+                cells.map((item) => {
+                    context.load(item);
+                });
 
-            //cells.map((item, index) => {
-                //console.log(item);
-                cells[0].items[0].body.insertText("CC:", Word.InsertLocation.replace);
-                cells[0].items[1].body.insertText(`${addresseeState[form.cc[0]].archetype} ${addresseeState[form.cc[0]].name}` +"\n" + addresseeState[form.cc[0]].jobTitle, Word.InsertLocation.replace);
-                cells[1].items[0].body.insertText("CC:", Word.InsertLocation.replace);
-                cells[1].items[1].body.insertText(addresseeState[form.cc[1]].name, Word.InsertLocation.replace);
-            //});
+                await context.sync();
 
-            
-        });
+                cells.map((item, index) => {
+                    item.items[0].body.insertText("CC:", Word.InsertLocation.replace);
+                    item.items[1].body.insertText(`${addresseeState[form.cc[index]].archetype} ${addresseeState[form.cc[index]].name}`, Word.InsertLocation.replace);
+                });
+
+                cells.map((item, index, array) => {
+                    item.items[1].body.insertText(
+                        "\n" + addresseeState[form.cc[index]].jobTitle + (array[index + 1] ? "\n" : "")
+                        , Word.InsertLocation.end
+                    ).font.bold = false;
+                });
+            });
+        }
 
     }
 

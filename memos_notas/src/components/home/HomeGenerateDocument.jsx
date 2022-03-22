@@ -13,11 +13,11 @@ import MultiSelect from './fragment/MultiSelect';
 
 const initialState = {
     to         : "",
-    cc         : [],
     subject    : "",
     functionary: "",
     cc         : [],
-    from       : getLocalStorageUserName()
+    from       : getLocalStorageUserName(),
+    hasCopy    : false
 };
 
 /**
@@ -42,7 +42,6 @@ const HomeGenerateDocument = ({ functionaries, addresseeState, memoOrNoteState, 
 
     const [form, setForm, handleInputChange, reset] = useForm(initialState);
     const [buttonDisabled, setButtonDisabled] = useState(true);
-    const [select, setSelect] = useState(false);
 
     useEffect(() => {
         if (form.to.length > 0 && form.subject.length > 0 && form.from.length > 0) {
@@ -131,8 +130,13 @@ const HomeGenerateDocument = ({ functionaries, addresseeState, memoOrNoteState, 
 
             <div className="mb-3">
                 <div className="form-check">
-                    <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked={select} onChange={({ target }) => setSelect(target.checked)} />
-                    <label  className="form-check-label fw-bold" >
+                    <input className="form-check-input" 
+                    type="checkbox" 
+                    value="" 
+                    id="hasCopy" 
+                    checked={form.hasCopy} 
+                    onChange={handleInputChange} />
+                    <label className="form-check-label fw-bold" >
                         Con copia
                     </label>
                 </div>
@@ -140,7 +144,7 @@ const HomeGenerateDocument = ({ functionaries, addresseeState, memoOrNoteState, 
 
 
             {
-                select ?
+                form.hasCopy ?
                     <MultiSelect
                         options={addresseeState}
                         optionsLabel="department"
@@ -176,7 +180,7 @@ const HomeGenerateDocument = ({ functionaries, addresseeState, memoOrNoteState, 
                 className="btn btn-sm btn-secondary"
                 disabled={buttonDisabled}
             >
-                Guardar
+                Enviar
             </button>
         </form>
 

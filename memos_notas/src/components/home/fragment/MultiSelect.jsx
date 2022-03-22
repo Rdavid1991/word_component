@@ -1,20 +1,20 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import "./MultiSelect.css";
 
 
 const initialState = {
-    target: {
-        id   : "cc",
-        name : "",
-        value: []
-    }
+    value: []
 };
-const CCMultiSelect = props => {
+
+const MultiSelect = props => {
 
     const { options, optionsLabel, value, id, required = false, onChange } = props;
 
     const [selected, setSelected] = useState(initialState);
+    const evt = useRef();
+    const select = useRef();
+
     /**
      * 
      * @param {React.ChangeEvent<HTMLInputElement>} e 
@@ -22,27 +22,31 @@ const CCMultiSelect = props => {
     const handleChange = (e) => {
         if (e.target.checked) {
             setSelected({
-                target: {
-                    ...selected.target,
-                    value: [
-                        ...selected.target.value,
-                        e.target.dataset.value
-                    ]
-                }
+                value: [
+                    ...value,
+                    e.target.dataset.value
+                ]
             });
         } else {
             setSelected({
-                target: {
-                    ...selected.target,
-                    value: selected.target.value.filter((sel) => sel !== e.target.dataset.value)
-                }
+                value: selected.value.filter((sel) => sel !== e.target.dataset.value)
             });
         }
     };
+    
+    useEffect(() => {
+        evt.current = new Event("setValues");
+        select.current = document.querySelector(`#${id}`);
+        select.current.addEventListener("setValues", onChange);
+    }, []);
 
     useEffect(() => {
-        onChange(selected);
+        triggerSelectEvent();
     }, [selected]);
+
+    const triggerSelectEvent = () => {
+        select.current.dispatchEvent(evt.current);
+    };
 
 
     return (
@@ -52,9 +56,10 @@ const CCMultiSelect = props => {
                 <span className="input-group-text"><i className="far fa-paper-plane"></i></span>
                 <select
                     readOnly
-                    value={value}
+                    value={selected.value}
                     className="d-none"
                     id={id}
+                    name={id}
                     required={required}
                     multiple={true}
                 >
@@ -75,7 +80,7 @@ const CCMultiSelect = props => {
                     aria-expanded="false"
                 >
                     <div>
-                        {selected.target.value.length} - seleccionados
+                        {selected.value.length} - seleccionados
                     </div>
                     <span className="me-2">
                         <i className="fas fa-angle-down"></i>
@@ -102,7 +107,7 @@ const CCMultiSelect = props => {
     );
 };
 
-CCMultiSelect.propTypes = {
+MultiSelect.propTypes = {
     options     : PropTypes.any.isRequired,
     optionsLabel: PropTypes.string.isRequired,
     value       : PropTypes.any.isRequired,
@@ -111,4 +116,4 @@ CCMultiSelect.propTypes = {
     required    : PropTypes.bool
 };
 
-export default CCMultiSelect;
+export default MultiSelect;
