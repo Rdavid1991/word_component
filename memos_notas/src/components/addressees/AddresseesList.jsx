@@ -31,7 +31,7 @@ export const AddresseesList = ({ addresseeState, handlerEdit, handlerDelete }) =
     };
 
     return (
-        <div className="px-3">
+        <div className="px-3" style={{position: "relative"}}>
 
             <div className="card my-2 rounded text-white gradient">
                 <div className="card-body py-1">
@@ -45,7 +45,7 @@ export const AddresseesList = ({ addresseeState, handlerEdit, handlerDelete }) =
                     />
                 </div >
             </div >
-            <div className="card rounded h-100">
+            <div className="card rounded list__height">
                 <div className="card-body p-2 bg-light scroll rounded overflow-auto h-100">
                     {
                         filtered.map((item, index) => (

@@ -32,7 +32,7 @@ const HomeSelectDocument = ({ setMemoOrNoteState, memoOrNoteState, documents, se
     return (
         <form>
             <div className="mb-3">
-                <label htmlFor="to" className="form-label fw-bold">Seleccionar una plantilla</label>
+                <label  className="form-label fw-bold">Seleccionar una plantilla</label>
                 <select
                     name="type"
                     className="form-select form-select-sm"
