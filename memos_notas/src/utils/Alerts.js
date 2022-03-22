@@ -3,7 +3,7 @@ import Swal from 'sweetalert2';
 const AlertError = async (error) => {
 
     console.error(error);
-    
+
     return await Swal.fire({
         title: "A ocurrido un error",
         text : error,
@@ -44,6 +44,14 @@ const AlertConfirmQuestion = async (question) => {
     });
 };
 
+export const AlertPlatform = async () => {
+    return await Swal.fire({
+        title            : 'Plataforma incorrecta',
+        html             : "Debe instalar complemento en word para poder acceder",
+        icon             : 'error',
+        showConfirmButton: false
+    });
+};
 
 export {
     AlertError,

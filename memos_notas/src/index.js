@@ -3,6 +3,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { App } from "./App";
+import { AlertPlatform } from "./utils/Alerts";
 
 
 const renderApp = (App) => {
@@ -14,6 +15,6 @@ const renderApp = (App) => {
 	);
 };
 
-Office.onReady(() => {
-	renderApp(App);
+Office.onReady(({host}) => {
+	host === Office.HostType.Word? renderApp(App): AlertPlatform();
 });

@@ -101,24 +101,25 @@ export const SendDataToDocument = {
         });
     },
 
-        /**
-     * Cargar documento
-     * @param {Object[]} addresseeState
-     * @param {string} addresseeState[].name
-     * @param {string} addresseeState[].jobTitle
-     * @param {string} addresseeState[].archetype
-     * @param {string} addresseeState[].department
-     * @param {Object} form
-     * @param {string} form.from - Remitente de memo o nota
-     * @param {string} form.subject - Asunto de memo o nota
-     * @param {string} form.to - Posición en el array addresseeState
-     * @param {Object} functionary 
-     * @param {String} functionary.id 
-     * @param {String} functionary.name 
-     * @param {String} functionary.id_card 
-     * @param {String} functionary.job_title 
-     * @param {String} functionary.position_number 
-     */
+    /**
+ * Cargar documento
+ * @param {Object[]} addresseeState
+ * @param {string} addresseeState[].name
+ * @param {string} addresseeState[].jobTitle
+ * @param {string} addresseeState[].archetype
+ * @param {string} addresseeState[].department
+ * @param {Object} form
+ * @param {string} form.from - Remitente de memo o nota
+ * @param {string} form.subject - Asunto de memo o nota
+ * @param {string} form.to - Posición en el array addresseeState
+ * @param {Array} form.cc - Posición en el array addresseeState
+ * @param {Object} functionary 
+ * @param {String} functionary.id 
+ * @param {String} functionary.name 
+ * @param {String} functionary.id_card 
+ * @param {String} functionary.job_title 
+ * @param {String} functionary.position_number 
+ */
     SendDataToMemoOrNote: async (addresseeState, id, form, functionary) => {
         await Word.run(async (context) => {
 
@@ -191,6 +192,50 @@ export const SendDataToDocument = {
                 return null;
             });
         });
+
+        await Word.run(async (context) => {
+            const table = context.document.body.tables.getFirst().rows;
+            context.load(table);
+
+            await context.sync();
+
+            table.items[0].insertRows(Word.InsertLocation.after, form.cc.length, [""][""]);
+
+            
+        });
+
+        await Word.run(async (context) => {
+            const table = context.document.body.tables.getFirst().rows;
+            context.load(table);
+
+            await context.sync();
+
+            const cells = [];
+            //form.cc.map((item, index) => {
+                //console.log(index +1);
+                cells.push(table.items[1].cells);
+                cells.push(table.items[2].cells);
+            //});
+
+            //cells.map((item) => {
+                context.load(cells[0]);
+                context.load(cells[1]);
+            //});
+
+            await context.sync();
+
+            //cells.map((item, index) => {
+                //console.log(item);
+                cells[0].items[0].body.insertText("CC:", Word.InsertLocation.replace);
+                cells[0].items[1].body.insertText(`${addresseeState[form.cc[0]].archetype} ${addresseeState[form.cc[0]].name}` +"\n" + addresseeState[form.cc[0]].jobTitle, Word.InsertLocation.replace);
+                cells[1].items[0].body.insertText("CC:", Word.InsertLocation.replace);
+                cells[1].items[1].body.insertText(addresseeState[form.cc[1]].name, Word.InsertLocation.replace);
+            //});
+
+            
+        });
+
     }
 
 };
+
