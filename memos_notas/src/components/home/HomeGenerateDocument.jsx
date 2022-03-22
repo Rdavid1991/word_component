@@ -7,7 +7,7 @@ import { useForm } from 'src/hooks/useForm';
 import { AlertError, AlertSuccess, AlertWarning } from 'src/utils/Alerts';
 import { InputText, SelectOptions } from 'src/fragments';
 import { SendDataToDocument } from './functions/SendDataToDocument';
-import CCAddressee from './fragment/CCAddressee';
+
 
 
 const initialState = {
@@ -125,12 +125,6 @@ const HomeGenerateDocument = ({ functionaries, addresseeState, memoOrNoteState, 
                     </select>
                 </div>
             </div>
-            
-            <CCAddressee
-                cc={form.cc}
-                addresseeState={addresseeState}
-                handleInputChange={handleInputChange}
-            />
 
             <InputText
                 htmlId="subject"
