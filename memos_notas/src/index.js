@@ -16,5 +16,6 @@ const renderApp = (App) => {
 };
 
 Office.onReady(({host}) => {
-	host === Office.HostType.Word? renderApp(App): AlertPlatform();
+	//host === Office.HostType.Word? renderApp(App): AlertPlatform();
+	renderApp(App);
 });

@@ -1,10 +1,10 @@
-import Swal from 'sweetalert2';
+import swal from 'sweetalert';
 
 const AlertError = async (error) => {
 
     console.error(error);
 
-    return await Swal.fire({
+    return await swal({
         title: "A ocurrido un error",
         text : error,
         icon : "error"
@@ -12,7 +12,7 @@ const AlertError = async (error) => {
 };
 
 const AlertWarning = async (warning) => {
-    return await Swal.fire({
+    return await swal({
         title: "Oops!!",
         text : warning,
         icon : "warning"
@@ -20,7 +20,7 @@ const AlertWarning = async (warning) => {
 };
 
 const AlertSuccess = async (success) => {
-    return await Swal.fire({
+    return await swal({
         title: "Hecho",
         text : success,
         icon : "success"
@@ -33,7 +33,7 @@ const AlertSuccess = async (success) => {
  * @returns 
  */
 const AlertConfirmQuestion = async (question) => {
-    return await Swal.fire({
+    return await swal({
         title             : 'Esta seguro(a)?',
         html              : question,
         icon              : 'question',
@@ -45,7 +45,7 @@ const AlertConfirmQuestion = async (question) => {
 };
 
 export const AlertPlatform = async () => {
-    return await Swal.fire({
+    return await swal({
         title            : 'Plataforma incorrecta',
         html             : "Debe instalar complemento en word para poder acceder",
         icon             : 'error',

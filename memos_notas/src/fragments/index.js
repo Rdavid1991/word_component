@@ -48,6 +48,8 @@ export const Space = ({height}) => {
  * @param {String=} props.placeholder
  * @param {boolean=} props.required
  * @param {boolean=} props.disabled
+ * @param {String=} props.pattern
+ * @param {String=} props.title
  * @returns 
  */
 export const InputText = ({
@@ -58,7 +60,9 @@ export const InputText = ({
     htmlLabel = "",
     placeholder = "Escribir aquí",
     required = false,
-    disabled = false
+    disabled = false,
+    pattern = null,
+    title = null
 }) => {
 
     return (
@@ -80,6 +84,8 @@ export const InputText = ({
                     disabled={disabled}
                     onChange={onChange}
                     value={value}
+                    pattern={pattern}
+                    title={title}
                 />
             </div>
         </div>

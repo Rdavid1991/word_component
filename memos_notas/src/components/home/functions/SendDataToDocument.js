@@ -49,9 +49,9 @@ const insertTextControl = (control, text) => {
 
 export const SendDataToDocument = {
 
-    sendToCompensatoryRequest: (values, functionary) => {
+    sendToCompensatoryRequest: async (values, functionary) => {
 
-        return Word.run(async (context) => {
+        return await Word.run(async (context) => {
 
             const DPRC = { ...FunctionaryControls, ...CompensatoryTime };
 
@@ -80,10 +80,10 @@ export const SendDataToDocument = {
                         insertTextControl(control, functionary.position_number.toString());
                         break;
                     case Object.keys(DPRC)[4]:
-                        insertTextControl(control, moment(values.from).format("hh:mm a"));
+                        insertTextControl(control, moment(values.from, "HH:mm").format("hh:mm a"));
                         break;
                     case Object.keys(DPRC)[5]:
-                        insertTextControl(control, moment(values.to).format("hh:mm a"));
+                        insertTextControl(control, moment(values.to, "HH:mm").format("hh:mm a"));
                         break;
                     case Object.keys(DPRC)[6]:
                         insertTextControl(control, moment(values.date).format("DD"));

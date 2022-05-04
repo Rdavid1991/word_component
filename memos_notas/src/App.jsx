@@ -36,7 +36,7 @@ export const App = () => {
 		}}>
 
 			<div id="container">
-				<div className={`loader loader-default ${loader ? "is-active" : ""} `} style={{ zIndex: 1 }}></div>
+				{/* <div className={`loader loader-default ${loader ? "is-active" : ""} `} style={{ zIndex: 1 }}></div> */}
 				<TabNav />
 			</div>
 		</context.Provider>

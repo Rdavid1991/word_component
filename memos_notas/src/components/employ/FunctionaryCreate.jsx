@@ -57,6 +57,8 @@ export const FunctionaryCreate = ({ handleInputChange, fetchFunctionary, values,
 					placeholder="Numero de posición del funcionario"
 					value={values.position}
 					required={true}
+					pattern="[0-9]{3,}"
+					title="Solo acepta números"
 				/>
 				{renderSelectDepartment(values, handleInputChange, departments)}
 

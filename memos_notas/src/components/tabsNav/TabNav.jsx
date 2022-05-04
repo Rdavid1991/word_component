@@ -15,8 +15,15 @@ const initialState = {
     help      : false
 };
 
+const sideNavInitial = {
+    left      : "-250px",
+    display   : "none",
+    visibility: "hidden"
+};
+
 const TabNav = () => {
 
+    const [sideNavToggle, setSideNavToggle] = useState(sideNavInitial);
     const [menuState, setMenuState] = useState({ ...initialState, home: true });
     const [departmentName, setDepartmentName] = useState({
         name: ""
@@ -42,15 +49,19 @@ const TabNav = () => {
             const { data } = await getDepartment(userDepartment);
 
             console.log(data);
-            
+
             setDepartmentName({
                 name: data[0].name
             });
         })();
     }, []);
 
+    const close = () => {
+        setSideNavToggle(sideNavInitial);
+    };
+
     const abrir = async () => {
-        await Swal.fire({
+        /* await Swal.fire({
             title: renderToString(
                 <>
                     <p>Menu</p>
@@ -89,12 +100,18 @@ const TabNav = () => {
                     button.addEventListener('shown.bs.tab', showTabEvent);
                 });
             },
-        });
+        }); */
 
+        setSideNavToggle({
+            display   : "block",
+            left      : "0",
+            visibility: "visible"
+        });
     };
 
     return (
         <>
+            <div id="opacity" style={{display: sideNavToggle.display, visibility: sideNavToggle.visibility}}></div>
             <div
                 onClick={abrir}
                 className="menu-bar m-3"
@@ -102,6 +119,19 @@ const TabNav = () => {
                 <div className="bar" ></div>
                 <div className="bar" ></div>
                 <div className="bar" ></div>
+            </div>
+            <div id="mySidenav" className="sidenav" style={{ left: sideNavToggle.left }}>
+                <div className="side-nav-content">
+                    <div className="close">
+                        <a id="closeNav" className="closebtn" onClick={close}>&times;</a>
+                    </div>
+
+                    <p>Menu</p>
+                    <img className="w-100" src="./assets/logo.png" alt="" />
+                    <p style={{ fontSize: "16px" }}>{departmentName.name}</p>
+
+                    <TabScreenButtons menuState={menuState} />
+                </div>
             </div>
             <TabNavContent />
         </>
