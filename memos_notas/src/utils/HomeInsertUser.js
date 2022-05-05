@@ -1,5 +1,5 @@
 //@ts-check
-
+/*
 import React from 'react';
 import Swal from 'sweetalert2';
 import { renderToString } from 'react-dom/server';
@@ -11,21 +11,12 @@ import {
 	localStorageKeyUser,
 } from '.';
 import { AlertError } from './Alerts';
-import RequestInitialUserInfo from 'src/fragments/RequestInitialUserInfo';
+import swal from 'sweetalert';
 
-/**
- * 
- * @param {Array} data 
- */
+
 export const HomeInsertUser = async (data) => {
 
-	if ( data.length > 0 &&
-		!getLocalStorageUserName() &&
-		!getLocalStorageUserEmail() &&
-		!getLocalStorageUserInitials() &&
-		!getLocalStorageUserDepartment()) {
-
-		localStorage.clear();
+	
 
 		const initialState = {
 			user      : "",
@@ -34,10 +25,16 @@ export const HomeInsertUser = async (data) => {
 		};
 
 		let loop = true;
-		while (loop) {
+		//while (loop) {
 			try {
 
-				const { value } = await Swal.fire({
+				/* await swal({
+					title  : "Informacion",
+					//content: renderToString(<RequestInitialUserInfo department={data} initialState={initialState} />)
+					content: "<button>Prueba</button>"
+				}); 
+
+				/* const { value } = await Swal.fire({
 					title            : 'Ingrese su información',
 					allowOutsideClick: false,
 					html             : renderToString(<RequestInitialUserInfo department={data} initialState={initialState} />),
@@ -52,9 +49,9 @@ export const HomeInsertUser = async (data) => {
 							department: document.getElementById('user_department').value
 						};
 					}
-				});
+				}); 
 
-				const user = value.user.toString();
+				/* const user = value.user.toString();
 				const email = value.email.toString();
 				const department = value.department.toString();
 
@@ -73,10 +70,10 @@ export const HomeInsertUser = async (data) => {
 					break;
 				} else {
 					await Swal.fire("Complete la información");
-				}
+				} 
 			} catch (error) {
 				await AlertError(error);
 			}
-		}
+		//}
 	}
-};
+}; */

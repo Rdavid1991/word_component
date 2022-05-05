@@ -150,3 +150,12 @@ i {
   float: right;
   cursor: pointer;
 }
+
+
+.swal-overlay--show-modal{
+  display: block!important;
+}
+
+.swal-overlay{
+  display: none;
+}

@@ -6,7 +6,7 @@ export const readDocument = async () => {
 
     const result = await AlertConfirmQuestion("¿Desea guardar nueva plantilla?");
 
-    if (result.isConfirmed) {
+    if (result) {
 
         return Word.run(async (context) => {
 
@@ -58,9 +58,17 @@ export const writeDocument = async (template) => {
     return await Word.run(async (context) => {
 
         const body = context.document.body;
-        const header = context.document.sections.getFirst().getHeader("Primary");
-        const footer = context.document.sections.getFirst().getFooter("Primary");
+        const headerContext = context.document.sections;
+        const footerContext = context.document.sections;
 
+        context.load(headerContext);
+        context.load(footerContext);
+
+        await context.sync();
+
+        const header = headerContext.items[0].getHeader("Primary");
+        const footer = footerContext.items[0].getFooter("Primary");
+        
         body.clear();
         header.clear();
         footer.clear();

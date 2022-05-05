@@ -17,6 +17,8 @@ export const Home = ({ addresseeState, fetchNumbers, functionaries, documents })
 		if (selectedState.length <= 0) setMemoOrNoteState(-1);
 	}, [selectedState]);
 
+	console.log(documents);
+
 
 	const renderFormTypeDocument = () => {
 		if (String(memoOrNoteState) == Object.keys(typeOfDocuments)[1] || String(memoOrNoteState) == Object.keys(typeOfDocuments)[2]) {

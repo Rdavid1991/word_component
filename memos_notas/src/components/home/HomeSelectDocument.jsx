@@ -5,6 +5,7 @@ import { AlertError, AlertSuccess } from 'src/utils/Alerts';
 import { typeOfDocuments } from 'src/utils/constants';
 import { writeDocument } from 'src/utils/documents';
 import { getDocumentTemplate } from 'src/utils/SaveAndGet';
+import swal from 'sweetalert';
 import { selectedDocumentType } from './functions';
 import { parametersOfDocuments } from './functions/parametersOfDocuments';
 
@@ -12,12 +13,12 @@ const HomeSelectDocument = ({ setMemoOrNoteState, memoOrNoteState, documents, se
     const { setControls, showLoader } = useContext(context);
 
     const handleSelectChange = async ({ target }) => {
-        showLoader(true);
+        //showLoader(true);
         setSelectedState(target.value);
         const template = await getDocumentTemplate(target.value);
-
-        setMemoOrNoteState(selectedDocumentType(target));
-
+        
+        //setMemoOrNoteState(selectedDocumentType(target));
+      
         await writeDocument(JSON.parse(template.data[0].doc))
             .then(async () => {
                 await AlertSuccess("Documento cargado satisfactoriamente");
@@ -26,7 +27,7 @@ const HomeSelectDocument = ({ setMemoOrNoteState, memoOrNoteState, documents, se
             .catch(async (error) => {
                 await AlertError("No se puede cargar documento, revise si el documento actual no tiene controles bloqueados. " + error);
             });
-        showLoader(false);
+        //showLoader(false);
     };
 
     return (

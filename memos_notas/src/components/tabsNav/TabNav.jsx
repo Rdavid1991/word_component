@@ -6,6 +6,9 @@ import Swal from 'sweetalert2';
 import { getLocalStorageUserDepartment } from 'src/utils';
 import { context } from 'src/context/context';
 import { getDepartment } from 'src/utils/SaveAndGet';
+import ModalInitialUser from './ModalInitialUser';
+
+/*global $*/
 
 const initialState = {
     home      : false,
@@ -54,6 +57,11 @@ const TabNav = () => {
                 name: data[0].name
             });
         })();
+
+        $('button[data-toggle="tab"]').on('shown.bs.tab', function (event) {
+            setSideNavToggle(sideNavInitial);
+        });
+
     }, []);
 
     const close = () => {
@@ -111,7 +119,7 @@ const TabNav = () => {
 
     return (
         <>
-            <div id="opacity" style={{display: sideNavToggle.display, visibility: sideNavToggle.visibility}}></div>
+            <div id="opacity" style={{ display: sideNavToggle.display, visibility: sideNavToggle.visibility }}></div>
             <div
                 onClick={abrir}
                 className="menu-bar m-3"

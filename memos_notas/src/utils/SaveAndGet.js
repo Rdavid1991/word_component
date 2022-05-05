@@ -254,12 +254,14 @@ export const getDocumentInfoTemplate = async () => {
  * @param {Function} reset 
  */
 export const saveDocumentTemplate = async (values, handlerFetchTemplate, reset) => {
-    const document = await readDocument();
-    if (document) {
+    
+    try {
+        const document = await readDocument();
+        
+        if (document) {
 
-        const department_owner = getLocalStorageUserDepartment();
+            const department_owner = getLocalStorageUserDepartment();
 
-        try {
             const response = await apiRequest()
                 .post(`${values.edit ? "edit" : "save"}_template_doc`, { ...values, document, department_owner });
             if (response.ok) {
@@ -272,9 +274,9 @@ export const saveDocumentTemplate = async (values, handlerFetchTemplate, reset) 
                 const { message } = await response.json();
                 await AlertError(`No se pudo guardar la plantilla: ${message.text}`);
             }
-        } catch (error) {
-            await AlertError(`Error al guardar plantilla: ${error}`);
         }
+    } catch (error) {
+        await AlertError(`Error al guardar plantilla: ${error}`);
     }
 };
 

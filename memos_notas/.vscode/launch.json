@@ -14,12 +14,16 @@
             "webRoot": "${workspaceFolder}",
             "preLaunchTask": "npm: start",
             "postDebugTask": "Stop Debug"
-        },
-        {
-            "name": "Launch Microsoft Edge and open the Edge DevTools",
+        },{
+            "type": "office-addin",
             "request": "attach",
-            "type": "pwa-chrome",
-            "url": "http://localhost:3000/taskpane.html?_host_Info=Word$Win32$16.01$en-US$$$$0"
-        }
+            "name": "Attach to Office Add-ins",
+            "port": 9222,
+            "trace": "verbose",
+            "url": "http://localhost:3000/?_host_Info=Word$Win32$16.01$en-US$$$$0",
+            "webRoot": "${workspaceFolder}",
+            "preLaunchTask": "npm: start",
+            "timeout": 45000
+            }
     ]
 }

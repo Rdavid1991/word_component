@@ -1,6 +1,5 @@
 //@ts-check
 import React, { useContext, useEffect, useState } from 'react';
-import { HomeInsertUser } from 'src/utils/HomeInsertUser';
 import { Addressees } from '../addressees/Addressees';
 import { Home } from '../home/Home';
 import { Template } from '../templates/Template';
@@ -15,7 +14,8 @@ import {
     saveConsecutiveNumber,
 } from 'src/utils/SaveAndGet';
 import { Functionary } from '../employ/Functionary';
-import { existUser } from 'src/utils';
+import { existUser, getLocalStorageUserDepartment, getLocalStorageUserEmail, getLocalStorageUserInitials, getLocalStorageUserName } from 'src/utils';
+import ModalInitialUser from './ModalInitialUser';
 
 const initialNumber = {
     note: "1",
@@ -31,21 +31,37 @@ export const TabNavContent = () => {
     const [documents, setDocuments] = useState(initialDocument);
     const [numberState, setNumberState] = useState(initialNumber);
     const [functionaries, setFunctionary] = useState(initialFunctionary);
+    const [showModal, setShowModal] = useState(false);
 
 
     useEffect(() => {
-        HomeInsertUser(departments).then(async () => {
-            if (existUser() && departments.length > 0) {
-                showLoader(true);
-                fetchNumbers();
-                fetchTemplate();
-                fetchAddresses();
-                await fetchFunctionary();
-                showLoader(false);
-            }
-        });
 
-    }, [departments]);
+
+
+        (async () => {
+            if (departments.length > 0 &&
+                !getLocalStorageUserName() &&
+                !getLocalStorageUserEmail() &&
+                !getLocalStorageUserInitials() &&
+                !getLocalStorageUserDepartment()) {
+                localStorage.clear();
+
+                setShowModal(true);
+
+            } else {
+
+                if (existUser() && departments.length > 0) {
+
+                    fetchNumbers();
+                    fetchTemplate();
+                    fetchAddresses();
+                    await fetchFunctionary();
+                    setShowModal(false);
+                }
+            }
+
+        })();
+    }, [showModal, departments]);
 
     const fetchFunctionary = async () => {
         let functionary = await getFunctionaries();
@@ -103,6 +119,11 @@ export const TabNavContent = () => {
 
     return (
         <div className="tab-content scroll shadow__top" id="nav-tabContent">
+
+            {
+                showModal ? <ModalInitialUser setShowModal={setShowModal} /> : null
+            }
+
             <div className="tab-pane fade active show" id="nav-home">
                 <Home
                     addresseeState={addresseeState}

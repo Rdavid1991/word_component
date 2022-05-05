@@ -1,9 +1,6 @@
 import swal from 'sweetalert';
 
 const AlertError = async (error) => {
-
-    console.error(error);
-
     return await swal({
         title: "A ocurrido un error",
         text : error,
@@ -33,14 +30,17 @@ const AlertSuccess = async (success) => {
  * @returns 
  */
 const AlertConfirmQuestion = async (question) => {
-    return await swal({
-        title             : 'Esta seguro(a)?',
-        html              : question,
-        icon              : 'question',
-        showCancelButton  : true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor : '#d33',
-        confirmButtonText : 'Si, hacerlo'
+    return await swal(
+        'Esta seguro(a)?',
+        question,
+        'warning', {
+            buttons: {
+                cancel: "No",
+                yes   : {
+                    text : "Si, hacerlo",
+                    value: true
+                }
+            }
     });
 };
 

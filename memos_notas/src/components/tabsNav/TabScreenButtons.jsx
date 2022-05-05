@@ -17,48 +17,48 @@ const TabScreenButtons = ({ menuState }) => {
         <nav>
             <div className="nav flex-column"  >
                 <button
-                    className={`btn btn-sm btn-primary fw-bold my-2 nav-item ${menuState.home? "active": ""}`}
+                    className={`btn btn-sm btn-primary nav-item active`}
                     id="home"
-                    data-bs-toggle="tab"
-                    data-bs-target="#nav-home"
+                    data-toggle="tab"
+                    data-target="#nav-home"
                     type="button"
                 >
                     Plantillas
                 </button>
                 <hr className="nav-divider" />
                 <button
-                    className={`btn btn-sm btn-primary fw-bold my-2 nav-item ${menuState.addressees? "active": ""}`}
+                    className={`btn btn-sm btn-primary nav-item `}
                     id="addressees"
-                    data-bs-toggle="tab"
-                    data-bs-target="#nav-addressees"
+                    data-toggle="tab"
+                    data-target="#nav-addressees"
                     type="button"
                 >
                     Crear o editar destinatarios
                 </button>
                 <button
-                    className={`btn btn-sm btn-primary fw-bold my-2 nav-item ${menuState.employ? "active": ""}`}
+                    className={`btn btn-sm btn-primary fw-bold my-2 nav-item `}
                     id="employ"
-                    data-bs-toggle="tab"
-                    data-bs-target="#nav-employ"
+                    data-toggle="tab"
+                    data-target="#nav-employ"
                     type="button"
                 >
                     Crear o editar funcionarios
                 </button>
                 <button
-                    className={`btn btn-sm btn-primary fw-bold my-2 nav-item ${menuState.template? "active": ""}`}
+                    className={`btn btn-sm btn-primary fw-bold my-2 nav-item `}
                     id="template"
-                    data-bs-toggle="tab"
-                    data-bs-target="#nav-template"
+                    data-toggle="tab"
+                    data-target="#nav-template"
                     type="button"
                 >
                     Crear o editar plantillas
                 </button>
                 <hr className="nav-divider" />
                 <button
-                    className={`btn btn-sm btn-primary fw-bold my-2 nav-item ${menuState.help? "active": ""}`}
+                    className={`btn btn-sm btn-primary fw-bold my-2 nav-item `}
                     id="help"
-                    data-bs-toggle="tab"
-                    data-bs-target="#nav-info-help"
+                    data-toggle="tab"
+                    data-target="#nav-info-help"
                     type="button"
                 >
                     Ayuda

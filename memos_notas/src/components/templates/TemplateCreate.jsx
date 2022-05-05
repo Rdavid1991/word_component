@@ -16,9 +16,9 @@ const TemplateCreate = ({ handlerFetchTemplate, values, reset, handleInputChange
      */
     const handleSaveDocument = async (e) => {
         e.preventDefault();
-        showLoader(true);
+        //showLoader(true);
         await saveDocumentTemplate(values, handlerFetchTemplate, reset);
-        showLoader(false);
+        //showLoader(false);
 
     };
 
@@ -39,6 +39,7 @@ const TemplateCreate = ({ handlerFetchTemplate, values, reset, handleInputChange
                     placeholder="Nombre de plantilla"
                     required={true}
                     icon="far fa-file-alt"
+                    name='name'
                 />
 
                 <div className="mb-3">

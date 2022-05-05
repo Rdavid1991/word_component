@@ -32,8 +32,8 @@ export const renderSelectDepartment = (values, handleInputChange, department) =>
     }
 };
 
-export const Space = ({height}) => {
-    return (<div style={{height: `${height}rem`}}></div>);
+export const Space = ({ height }) => {
+    return (<div style={{ height: `${height}rem` }}></div>);
 };
 
 
@@ -45,6 +45,7 @@ export const Space = ({height}) => {
  * @param {String} props.value
  * @param {String=} props.htmlLabel 
  * @param {String=} props.icon fontAwesome class
+ * @param {String} props.name fontAwesome class
  * @param {String=} props.placeholder
  * @param {boolean=} props.required
  * @param {boolean=} props.disabled
@@ -57,6 +58,7 @@ export const InputText = ({
     onChange,
     value,
     icon = "",
+    name = "",
     htmlLabel = "",
     placeholder = "Escribir aquí",
     required = false,
@@ -84,6 +86,7 @@ export const InputText = ({
                     disabled={disabled}
                     onChange={onChange}
                     value={value}
+                    name={name}
                     pattern={pattern}
                     title={title}
                 />
