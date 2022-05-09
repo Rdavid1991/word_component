@@ -80,15 +80,6 @@ const InfoHelp = ({ numberState, setNumberState }) => {
     return (
         <div className="px-3">
 
-            <div className="mb-3">
-                <div className="row">
-                    <a href={globals.memoUrl} className="link-info">Ir a lista de memos en SharePoint</a>
-                </div>
-                <div className="row">
-                    <a href={globals.notaUrl} className="link-info">Ir a lista de notas en SharePoint</a>
-                </div>
-            </div>
-
             <h3 className="text-center px-2 font-weight-bold" >Números de memos y notas</h3>
             <form onSubmit={handleSaveNumber}>
                 <div className="mb-3">

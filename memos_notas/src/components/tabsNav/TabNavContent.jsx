@@ -64,6 +64,7 @@ export const TabNavContent = () => {
     const fetchFunctionary = async () => {
         let functionary = await getFunctionaries();
         if (functionary) {
+
             const { data } = functionary;
             if (data.length > 0) {
                 setFunctionary(data);

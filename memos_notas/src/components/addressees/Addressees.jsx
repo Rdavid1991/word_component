@@ -49,14 +49,14 @@ export const Addressees = ({ addresseeState, fetchAddresses }) => {
 
         const { id, name } = addresseeState.find((a) => a.id == idEdit);
 
-        const { isConfirmed } = await AlertConfirmQuestion(
-            `Desea borrar a <span class="font-weight-bold">${name}</span>`
+        const value= await AlertConfirmQuestion(
+            `Desea borrar a ${name}`
         );
-        if (isConfirmed) {
-            showLoader(true);
+        if (value) {
+            //showLoader(true);
             await deleteAddressees(id);
             await fetchAddresses();
-            showLoader(false);
+            //showLoader(false);
         }
     };
 

@@ -47,13 +47,13 @@ export const Functionary = ({ functionaries, fetchFunctionary }) => {
     const handlerDelete = async (idDelete) => {
 
         const { id, name } = functionaries.find((e) => e.id === idDelete);
-        const { isConfirmed } = await AlertConfirmQuestion(`¿Desea borrar a ${name}?`);
-
-        if (isConfirmed) {
-            showLoader(true);
+        const value  = await AlertConfirmQuestion(`¿Desea borrar a ${name}?`);
+        
+        if (value) {
+            //showLoader(true);
             await deleteFunctionary(id);
             await fetchFunctionary();
-            showLoader(false);
+            //showLoader(false);
         }
     };
 

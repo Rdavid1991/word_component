@@ -69,7 +69,7 @@ export const saveAddressees = async (form) => {
         let response = await apiRequest().post(route, { ...form, department_owner });
         if (response.ok) {
             const { message } = await response.json();
-            await Swal.fire(message);
+            await swal(message);
             return { isSaved: true };
         } else {
             const { message } = await response.json();
@@ -92,7 +92,7 @@ export const deleteAddressees = async (id) => {
         let response = await apiRequest().post("delete_addressee", { id });
         if (response.ok) {
             const { message } = await response.json();
-            await Swal.fire(message);
+            await swal(message);
         } else {
             const { message } = await response.json();
             await AlertError(`No se pudo borrar el destinatario: ${message.text}`);
@@ -107,8 +107,9 @@ export const deleteFunctionary = async (id) => {
     try {
         let response = await apiRequest().post("delete_functionary", { id });
         if (response.ok) {
+            console.log("llega a borrar");
             const { message } = await response.json();
-            await Swal.fire(message);
+            await swal(message);
         } else {
             const { message } = await response.json();
             await AlertError(`No se pudo borrar el funcionario: ${message.text}`);

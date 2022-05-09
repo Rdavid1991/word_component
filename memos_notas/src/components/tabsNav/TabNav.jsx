@@ -132,9 +132,9 @@ const TabNav = () => {
                         <a id="closeNav" className="closebtn" onClick={close}>&times;</a>
                     </div>
 
-                    <p>Menu</p>
+                    <p className='font-weight-bold text-center'>Menu</p>
                     <img className="w-100" src="./assets/logo.png" alt="" />
-                    <p style={{ fontSize: "16px" }}>{departmentName.name}</p>
+                    <p className='font-weight-bold text-center' style={{ fontSize: "16px" }}>{departmentName.name}</p>
 
                     <TabScreenButtons menuState={menuState} />
                 </div>
