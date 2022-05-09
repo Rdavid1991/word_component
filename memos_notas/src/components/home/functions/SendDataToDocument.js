@@ -196,24 +196,34 @@ export const SendDataToDocument = {
         if (form.hasCopy) {
 
             await Word.run(async (context) => {
-                const table = context.document.body.tables.getFirst().rows;
+                const table = context.document.body.tables;
                 context.load(table);
-
+                await context.sync();
+                
+                const row = table.items[0].rows;
+                
+                await context.sync();
+                
+                context.load(row);
                 await context.sync();
 
-                table.items[0].insertRows(Word.InsertLocation.after, form.cc.length, [""][""]);
+                row.items[0].insertRows(Word.InsertLocation.after, form.cc.length, [""][""]);
 
             });
 
             await Word.run(async (context) => {
-                const table = context.document.body.tables.getFirst().rows;
+                const table = context.document.body.tables;
                 context.load(table);
-
+                await context.sync();
+                
+                const row = table.items[0].rows;
+                
+                context.load(row);
                 await context.sync();
 
                 const cells = [];
                 form.cc.map((item, index) => {
-                    cells.push(table.items[index + 1].cells);
+                    cells.push(row.items[index + 1].cells);
                 });
 
                 cells.map((item) => {

@@ -1,5 +1,5 @@
 //@ts-check
-import React, { useContext, useLayoutEffect, useState } from 'react';
+import React, { useContext, useLayoutEffect, useState, useCallback } from 'react';
 import { Addressees } from '../addressees/Addressees';
 import { Home } from '../home/Home';
 import { Template } from '../templates/Template';
@@ -33,7 +33,6 @@ export const TabNavContent = () => {
     const [functionaries, setFunctionary] = useState(initialFunctionary);
     const [showModal, setShowModal] = useState(false);
 
-
     useLayoutEffect(() => {
 
         (async () => {
@@ -44,7 +43,7 @@ export const TabNavContent = () => {
                 !getLocalStorageUserDepartment()) {
                 localStorage.clear();
 
-                setShowModal(true);
+                //setShowModal(true);
 
             } else {
 
@@ -54,14 +53,14 @@ export const TabNavContent = () => {
                     fetchTemplate();
                     fetchAddresses();
                     await fetchFunctionary();
-                    setShowModal(false);
+                    //setShowModal(false);
                 }
             }
 
         })();
-    }, [showModal, departments]);
+    }, [ departments]);
 
-    const fetchFunctionary = async () => {
+    const fetchFunctionary = useCallback(async () => {
         let functionary = await getFunctionaries();
         if (functionary) {
 
@@ -72,10 +71,10 @@ export const TabNavContent = () => {
                 setFunctionary(initialFunctionary);
             }
         }
-    };
+    }, [functionaries]);
 
 
-    const fetchNumbers = async () => {
+    const fetchNumbers = useCallback( async () => {
         let consecutive = await getConsecutiveNumber();
         if (consecutive) {
             const { data } = consecutive;
@@ -88,9 +87,9 @@ export const TabNavContent = () => {
                 await saveConsecutiveNumber(numberState);
             }
         }
-    };
+    },[numberState]);
 
-    const fetchAddresses = async () => {
+    const fetchAddresses = useCallback(async () => {
         const addresses = await getAddresses();
         if (addresses) {
             const { data } = addresses;
@@ -100,9 +99,9 @@ export const TabNavContent = () => {
                 setStateAddressee(initialAddressee);
             }
         }
-    };
+    },[addresseeState]);
 
-    const fetchTemplate = async () => {
+    const fetchTemplate = useCallback(async () => {
         const templates = await getDocumentInfoTemplate();
         if (templates) {
             const { data } = templates;
@@ -113,7 +112,7 @@ export const TabNavContent = () => {
                 setDocuments(initialDocument);
             }
         }
-    };
+    },[documents]);
 
 
     return (

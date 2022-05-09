@@ -11,12 +11,18 @@ export const readDocument = async () => {
         return Word.run(async (context) => {
 
             const docBody = context.document.body;
-            const docFooter = context.document.sections.getFirst().getFooter("Primary");
-            const docHeader = context.document.sections.getFirst().getHeader("Primary");
+            const docFooter = context.document.sections;
+            const docHeader = context.document.sections;
+
+            context.load(docFooter);
+            context.load(docHeader);
+
+            await context.sync();
+           
 
             const docBodyOoxml = docBody.getOoxml();
-            const docFooterOoxml = docFooter.getOoxml();
-            const docHeaderOoxml = docHeader.getOoxml();
+            const docFooterOoxml = docFooter.items[0].getFooter("Primary").getOoxml();
+            const docHeaderOoxml = docHeader.items[0].getHeader("Primary").getOoxml();
 
             await context.sync();
 
@@ -36,12 +42,16 @@ export const clearDocument = async () => {
     return Word.run(async (context) => {
 
         const docBody = context.document.body;
-        const docFooter = context.document.sections.getFirst().getFooter("Primary");
-        const docHeader = context.document.sections.getFirst().getHeader("Primary");
+        const docFooter = context.document.sections;
+        const docHeader = context.document.sections;
+
+        context.load(docFooter);
+        context.load(docHeader);
+        await context.sync();
 
         docBody.clear();
-        docFooter.clear();
-        docHeader.clear();
+        docFooter.items[0].getFooter("Primary");
+        docHeader.items[0].getHeader("Primary");
 
         await context.sync();
     });

@@ -19,15 +19,15 @@ const HomeSelectDocument = ({ setMemoOrNoteState, memoOrNoteState, documents, se
 
         setMemoOrNoteState(selectedDocumentType(target));
 
-        // await writeDocument(JSON.parse(template.data[0].doc))
-        //     .then(async () => {
-        //         await AlertSuccess("Documento cargado satisfactoriamente");
-        //         setControls(await parametersOfDocuments());
-        //     })
-        //     .catch(async (error) => {
-        //         await AlertError("No se puede cargar documento, revise si el documento actual no tiene controles bloqueados. " + error);
-        //     });
-        //showLoader(false);
+        await writeDocument(JSON.parse(template.data[0].doc))
+            .then(async () => {
+                await AlertSuccess("Documento cargado satisfactoriamente");
+                setControls(await parametersOfDocuments());
+            })
+            .catch(async (error) => {
+                await AlertError("No se puede cargar documento, revise si el documento actual no tiene controles bloqueados. " + error);
+            });
+        showLoader(false);
     };
 
     return (
