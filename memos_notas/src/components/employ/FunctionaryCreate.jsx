@@ -13,13 +13,13 @@ export const FunctionaryCreate = ({ handleInputChange, fetchFunctionary, values,
 	 */
 	const handleSaveFunctionary = async (e) => {
 		e.preventDefault();
-		showLoader(true);
+		//showLoader(true);
 		const { isSaved } = await saveFunctionary(values);
 		if (isSaved) {
 			reset();
 			await fetchFunctionary();
 		}
-		showLoader(false);
+		//showLoader(false);
 	};
 
 

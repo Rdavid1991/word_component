@@ -63,7 +63,7 @@ export const Functionary = ({ functionaries, fetchFunctionary }) => {
             <div className="w-100 px-3">
                 <div className="card my-2 rounded text-white gradient">
                     <div className="card-body py-1">
-                        <h3 className="fw-bold text-truncate">Funcionarios</h3>
+                        <h3 className="font-weight-bold text-truncate">Funcionarios</h3>
                         <p className="text-truncate" style={{ fontSize: "14px" }}>Agregar o editar funcionarios para plantillas</p>
                     </div>
                 </div>

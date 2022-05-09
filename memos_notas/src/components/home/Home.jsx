@@ -17,9 +17,6 @@ export const Home = ({ addresseeState, fetchNumbers, functionaries, documents })
 		if (selectedState.length <= 0) setMemoOrNoteState(-1);
 	}, [selectedState]);
 
-	console.log(documents);
-
-
 	const renderFormTypeDocument = () => {
 		if (String(memoOrNoteState) == Object.keys(typeOfDocuments)[1] || String(memoOrNoteState) == Object.keys(typeOfDocuments)[2]) {
 			return (
@@ -57,7 +54,7 @@ export const Home = ({ addresseeState, fetchNumbers, functionaries, documents })
 			<div className="px-3 w-100">
 				<div className="card my-2 rounded text-white gradient">
 					<div className="card-body py-1">
-						<h3 className="fw-bold text-truncate">
+						<h3 className="font-weight-bold text-truncate">
 							Inicio
 						</h3>
 						<p>Crear documentos basados en plantillas</p>

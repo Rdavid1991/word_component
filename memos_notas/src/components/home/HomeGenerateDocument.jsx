@@ -106,12 +106,12 @@ const HomeGenerateDocument = ({ functionaries, addresseeState, memoOrNoteState, 
                 description="Opcional, seleccionar en caso de que la plantilla incluya al funcionario"
             />
             <div className="mb-3">
-                <label htmlFor="to" className="form-label fw-bold">Dirigido a</label>
+                <label htmlFor="to" className="form-label font-weight-bold">Dirigido a</label>
                 <div className="input-group mb-3">
                     <span className="input-group-text"><i className="far fa-paper-plane"></i></span>
                     <select
                         value={form.to}
-                        className="form-select form-select-sm"
+                        className="form-control form-control-sm"
                         id="to"
                         placeholder="A quien a dirigido"
                         required={true}
@@ -136,7 +136,7 @@ const HomeGenerateDocument = ({ functionaries, addresseeState, memoOrNoteState, 
                     id="hasCopy" 
                     checked={form.hasCopy} 
                     onChange={handleInputChange} />
-                    <label className="form-check-label fw-bold" >
+                    <label className="form-check-label font-weight-bold" >
                         Con copia
                     </label>
                 </div>
@@ -163,8 +163,8 @@ const HomeGenerateDocument = ({ functionaries, addresseeState, memoOrNoteState, 
                 htmlLabel={"Asunto"}
                 icon={"fas fa-comments"}
                 placeholder="Asunto"
-                required={true}
-            />
+                required={true} 
+                name={''}            />
             <InputText
                 htmlId="from"
                 onChange={handleInputChange}
@@ -173,8 +173,8 @@ const HomeGenerateDocument = ({ functionaries, addresseeState, memoOrNoteState, 
                 icon={"fas fa-user-edit"}
                 placeholder="Quien lo solicita"
                 required={true}
-                disabled={true}
-            />
+                disabled={true} 
+                name={''}            />
             <button
                 type="submit"
                 className="btn btn-sm btn-secondary"

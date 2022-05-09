@@ -45,7 +45,7 @@ const HomeOtherDocument = () => {
                         {
                             controls.map((control, index) => (
                                 <div key={index} className="mb-3">
-                                    <label htmlFor={control.tag} className="form-label fw-bold">{control.title}</label>
+                                    <label htmlFor={control.tag} className="form-label font-weight-bold">{control.title}</label>
                                     <div className="input-group mb-3">
 
                                         <span className="input-group-text"><i className="far fa-keyboard"></i></span>

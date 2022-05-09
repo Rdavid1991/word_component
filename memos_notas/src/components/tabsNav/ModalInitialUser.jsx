@@ -73,10 +73,10 @@ const ModalInitialUser = ({ setShowModal }) => {
                         />
 
                         <div className="mb-3">
-                            <label htmlFor="swal-input1" className="form-label fw-bold">Departamento</label>
+                            <label htmlFor="swal-input1" className="form-label font-weight-bold">Departamento</label>
                             <select
                                 id='user_department'
-                                className="form-select form-select-sm"
+                                className="form-control form-control-sm"
                                 value={values.department}
                                 name="department"
                                 onChange={handleInputChange}

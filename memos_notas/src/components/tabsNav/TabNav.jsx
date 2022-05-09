@@ -51,8 +51,6 @@ const TabNav = () => {
             const userDepartment = getLocalStorageUserDepartment();
             const { data } = await getDepartment(userDepartment);
 
-            console.log(data);
-
             setDepartmentName({
                 name: data[0].name
             });

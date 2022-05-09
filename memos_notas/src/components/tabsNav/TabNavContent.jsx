@@ -1,5 +1,5 @@
 //@ts-check
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useLayoutEffect, useState } from 'react';
 import { Addressees } from '../addressees/Addressees';
 import { Home } from '../home/Home';
 import { Template } from '../templates/Template';
@@ -34,9 +34,7 @@ export const TabNavContent = () => {
     const [showModal, setShowModal] = useState(false);
 
 
-    useEffect(() => {
-
-
+    useLayoutEffect(() => {
 
         (async () => {
             if (departments.length > 0 &&

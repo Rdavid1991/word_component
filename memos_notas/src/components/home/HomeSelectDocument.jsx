@@ -16,27 +16,27 @@ const HomeSelectDocument = ({ setMemoOrNoteState, memoOrNoteState, documents, se
         //showLoader(true);
         setSelectedState(target.value);
         const template = await getDocumentTemplate(target.value);
-        
-        //setMemoOrNoteState(selectedDocumentType(target));
-      
-        await writeDocument(JSON.parse(template.data[0].doc))
-            .then(async () => {
-                await AlertSuccess("Documento cargado satisfactoriamente");
-                setControls(await parametersOfDocuments());
-            })
-            .catch(async (error) => {
-                await AlertError("No se puede cargar documento, revise si el documento actual no tiene controles bloqueados. " + error);
-            });
+
+        setMemoOrNoteState(selectedDocumentType(target));
+
+        // await writeDocument(JSON.parse(template.data[0].doc))
+        //     .then(async () => {
+        //         await AlertSuccess("Documento cargado satisfactoriamente");
+        //         setControls(await parametersOfDocuments());
+        //     })
+        //     .catch(async (error) => {
+        //         await AlertError("No se puede cargar documento, revise si el documento actual no tiene controles bloqueados. " + error);
+        //     });
         //showLoader(false);
     };
 
     return (
         <form>
             <div className="mb-3">
-                <label  className="form-label fw-bold">Seleccionar una plantilla</label>
+                <label className="form-label font-weight-bold">Seleccionar una plantilla</label>
                 <select
                     name="type"
-                    className="form-select form-select-sm"
+                    className="form-control form-control-sm"
                     required={true}
                     onChange={handleSelectChange}
                     value={selectedState}
@@ -55,7 +55,7 @@ const HomeSelectDocument = ({ setMemoOrNoteState, memoOrNoteState, documents, se
                                             documents.map((item, index) => {
 
                                                 if (parseInt(item.type) === parseInt(type)) {
-                                                    
+
                                                     return (
                                                         <option
                                                             key={index}

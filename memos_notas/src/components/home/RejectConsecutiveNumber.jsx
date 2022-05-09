@@ -88,11 +88,11 @@ const RejectConsecutiveNumber = ({ memoOrNoteState, fetchNumbers }) => {
 
 	return (
 		<>
-			<h3 className='text-center fw-bold'>Rechazar numero</h3>
+			<h3 className='text-center font-weight-bold'>Rechazar numero</h3>
 
 			<form className='px-2' onSubmit={handleSearchData}>
 				<div className="mb-3">
-					<label htmlFor="to" className="form-label fw-bold">Numero a rechazar</label>
+					<label htmlFor="to" className="form-label font-weight-bold">Numero a rechazar</label>
 					<div className="input-group mb-3">
 
 						<span className="input-group-text"><i className="fas fa-search"></i></span>
@@ -119,18 +119,18 @@ const RejectConsecutiveNumber = ({ memoOrNoteState, fetchNumbers }) => {
 					<form className="px-2 mt-4"
 						onSubmit={handleRejectInfo}
 					>
-						<p className="fw-bold">Dirigido a:&nbsp;
-							<span className="fw-light">
+						<p className="font-weight-bold">Dirigido a:&nbsp;
+							<span className="font-weight-light">
 								{rejectInfo.to}
 							</span>
 						</p>
-						<p className="fw-bold">Asunto:&nbsp;
-							<span className="fw-light">
+						<p className="font-weight-bold">Asunto:&nbsp;
+							<span className="font-weight-light">
 								{rejectInfo.subject}
 							</span>
 						</p>
-						<p className="fw-bold">Solicitado por:&nbsp;
-							<span className="fw-light">
+						<p className="font-weight-bold">Solicitado por:&nbsp;
+							<span className="font-weight-light">
 								{rejectInfo.from}
 							</span>
 						</p>

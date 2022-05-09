@@ -2,6 +2,7 @@ import { getLocalStorageUserDepartment, localStorageKeyUser } from "src/utils";
 import { AlertConfirmQuestion, AlertError, AlertSuccess } from "src/utils/Alerts";
 import { apiRequest } from "src/utils/apiRequest";
 import { clearDocument, readDocument } from "src/utils/documents";
+import swal from "sweetalert";
 import Swal from "sweetalert2";
 
 
@@ -125,7 +126,7 @@ export const saveFunctionary = async (form) => {
         let response = await apiRequest().post(route, { ...form, department_owner });
         if (response.ok) {
             const { message } = await response.json();
-            await Swal.fire(message);
+            await swal(message);
             return { isSaved: true };
         } else {
             const { message } = await response.json();
@@ -151,8 +152,6 @@ export const getFunctionaries = async () => {
             return await response.json();
         }
         const { message } = await response.json();
-
-        console.log({ message });
 
         await AlertError(`Error al consultar funcionarios: ${message.text}`);
     } catch (error) {

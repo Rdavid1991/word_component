@@ -11,9 +11,9 @@ export const renderSelectDepartment = (values, handleInputChange, department) =>
 
         return (
             <div className="mb-3">
-                <label htmlFor="owner" className="form-label fw-bold">Pertenece a</label>
+                <label htmlFor="owner" className="form-label font-weight-bold">Pertenece a</label>
                 <select id="owner"
-                    className="form-select form-select-sm"
+                    className="form-control form-control-sm"
                     value={values?.owner || ""}
                     onChange={handleInputChange}
                     required
@@ -45,7 +45,7 @@ export const Space = ({ height }) => {
  * @param {String} props.value
  * @param {String=} props.htmlLabel 
  * @param {String=} props.icon fontAwesome class
- * @param {String} props.name fontAwesome class
+ * @param {String=} props.name fontAwesome class
  * @param {String=} props.placeholder
  * @param {boolean=} props.required
  * @param {boolean=} props.disabled
@@ -70,7 +70,7 @@ export const InputText = ({
     return (
         <div className="mb-3">
             {
-                htmlLabel.length > 0 ? <label htmlFor={htmlId} className="form-label fw-bold">{htmlLabel}</label> : ""
+                htmlLabel.length > 0 ? <label htmlFor={htmlId} className="form-label font-weight-bold">{htmlLabel}</label> : ""
             }
             <div className="input-group mb-3">
                 {
@@ -123,7 +123,7 @@ export const SelectOptions = ({
         <div className="mb-3">
             <label
                 htmlFor={id}
-                className="fw-bold form-label"
+                className="font-weight-bold form-label"
             >
                 {label}
             </label>
@@ -135,7 +135,7 @@ export const SelectOptions = ({
                     id={id}
                     value={value}
                     onChange={handleInputChange}
-                    className="form-select form-select-sm"
+                    className="form-control form-control-sm"
                     required={required}
                 >
                     <option value="">Seleccione una opción</option>

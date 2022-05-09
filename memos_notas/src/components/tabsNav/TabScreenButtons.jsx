@@ -36,7 +36,7 @@ const TabScreenButtons = ({ menuState }) => {
                     Crear o editar destinatarios
                 </button>
                 <button
-                    className={`btn btn-sm btn-primary fw-bold my-2 nav-item `}
+                    className={`btn btn-sm btn-primary font-weight-bold my-2 nav-item `}
                     id="employ"
                     data-toggle="tab"
                     data-target="#nav-employ"
@@ -45,7 +45,7 @@ const TabScreenButtons = ({ menuState }) => {
                     Crear o editar funcionarios
                 </button>
                 <button
-                    className={`btn btn-sm btn-primary fw-bold my-2 nav-item `}
+                    className={`btn btn-sm btn-primary font-weight-bold my-2 nav-item `}
                     id="template"
                     data-toggle="tab"
                     data-target="#nav-template"
@@ -55,7 +55,7 @@ const TabScreenButtons = ({ menuState }) => {
                 </button>
                 <hr className="nav-divider" />
                 <button
-                    className={`btn btn-sm btn-primary fw-bold my-2 nav-item `}
+                    className={`btn btn-sm btn-primary font-weight-bold my-2 nav-item `}
                     id="help"
                     data-toggle="tab"
                     data-target="#nav-info-help"

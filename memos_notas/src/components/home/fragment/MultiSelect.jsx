@@ -20,20 +20,31 @@ const MultiSelect = props => {
      * @param {React.ChangeEvent<HTMLInputElement>} e 
      */
     const handleChange = (e) => {
+
+        let datasetValue = "";
+        if (e.target.dataset) {
+            datasetValue = e.target.dataset.value;
+        } else {
+            datasetValue = e.target.getAttribute("data-value");
+        }
+
         if (e.target.checked) {
             setSelected({
                 value: [
                     ...value,
-                    e.target.dataset.value
+                    datasetValue
                 ]
             });
         } else {
+
             setSelected({
-                value: selected.value.filter((sel) => sel !== e.target.dataset.value)
+                value: selected.value.filter((sel) => sel !== datasetValue)
             });
         }
     };
-    
+
+
+
     useEffect(() => {
         evt.current = new Event("setValues");
         select.current = document.querySelector(`#${id}`);
@@ -48,10 +59,11 @@ const MultiSelect = props => {
         select.current.dispatchEvent(evt.current);
     };
 
+    console.log({ options });
 
     return (
         <div className="mb-3">
-            <label htmlFor={id} className="form-label fw-bold">Con copia a</label>
+            <label htmlFor={id} className="form-label font-weight-bold">Con copia a</label>
             <div className="input-group mb-3">
                 <span className="input-group-text"><i className="far fa-paper-plane"></i></span>
                 <select
@@ -75,8 +87,8 @@ const MultiSelect = props => {
                 <div
                     className="form-control form-control-sm text-start d-flex justify-content-between"
                     id="dropdownMenuButton1"
-                    data-bs-toggle="dropdown"
-                    data-bs-auto-close="outside"
+                    data-toggle="dropdown"
+                    data-auto-close="outside"
                     aria-expanded="false"
                 >
                     <div>

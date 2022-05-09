@@ -162,7 +162,13 @@ const fetchData = async (addresseeState, memoOrNoteState, form) => {
  */
 const selectedDocumentType = (target) => {
 
-	return target.selectedOptions[0].dataset.type;
+	let type = "";
+	if (target.selectedOptions[0].dataset) {
+		type = target.selectedOptions[0].dataset.type;
+	}else {
+		type = target.selectedOptions[0].getAttribute("data-type");
+	}
+	return type;
 
 };
 

@@ -6,7 +6,7 @@ const InputDate = ({ label, id, value, onChange, required }) => {
         <div className="mb-3">
             <label
                 forHtml={`#${id}`}
-                className="fw-bold form-label"
+                className="font-weight-bold form-label"
             >
                 {label}
             </label>

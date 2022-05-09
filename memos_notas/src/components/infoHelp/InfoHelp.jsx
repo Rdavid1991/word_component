@@ -64,7 +64,7 @@ const InfoHelp = ({ numberState, setNumberState }) => {
         const [key, value] = entry;
         return (
             <tr key={index}>
-                <td className="fw-bold">{value}</td>
+                <td className="font-weight-bold">{value}</td>
                 <td>{key}</td>
                 <td
                     className="btn"
@@ -89,10 +89,10 @@ const InfoHelp = ({ numberState, setNumberState }) => {
                 </div>
             </div>
 
-            <h3 className="text-center px-2 fw-bold" >Números de memos y notas</h3>
+            <h3 className="text-center px-2 font-weight-bold" >Números de memos y notas</h3>
             <form onSubmit={handleSaveNumber}>
                 <div className="mb-3">
-                    <label htmlFor="memo" className="form-label fw-bold">Número de memorandum</label>
+                    <label htmlFor="memo" className="form-label font-weight-bold">Número de memorandum</label>
                     <div className="input-group mb-3">
                         <span className="input-group-text"><i className="fas fa-user"></i></span>
                         <input
@@ -110,7 +110,7 @@ const InfoHelp = ({ numberState, setNumberState }) => {
                     </div>
                 </div>
                 <div className="mb-3">
-                    <label htmlFor="note" className="form-label fw-bold">Número de notas</label>
+                    <label htmlFor="note" className="form-label font-weight-bold">Número de notas</label>
                     <div className="input-group mb-3">
                         <span className="input-group-text"><i className="fas fa-user"></i></span>
                         <input
@@ -133,7 +133,7 @@ const InfoHelp = ({ numberState, setNumberState }) => {
             </form>
             <hr />
             <h2>Variables</h2>
-            <h3 className="fw-bold" >Generar numero de memos y notas</h3>
+            <h3 className="font-weight-bold" >Generar numero de memos y notas</h3>
             <table className="table">
                 <thead>
                     <tr>
@@ -145,7 +145,7 @@ const InfoHelp = ({ numberState, setNumberState }) => {
                     {Object.entries(DocumentMemoOrNotesControls).map(renderVariables)}
                 </tbody>
             </table>
-            <h3 className="text-center px-2 fw-bold" >Destinatario</h3>
+            <h3 className="text-center px-2 font-weight-bold" >Destinatario</h3>
             <table className="table">
                 <thead>
                     <tr>
@@ -157,7 +157,7 @@ const InfoHelp = ({ numberState, setNumberState }) => {
                     {Object.entries(AddresseeControls).map(renderVariables)}
                 </tbody>
             </table>
-            <h3 className="text-center px-2 fw-bold" >Funcionarios</h3>
+            <h3 className="text-center px-2 font-weight-bold" >Funcionarios</h3>
             <table className="table">
                 <thead>
                     <tr>
@@ -171,7 +171,7 @@ const InfoHelp = ({ numberState, setNumberState }) => {
                     }
                 </tbody>
             </table>
-            <h3 className="text-center px-2 fw-bold" >Solicitud de permiso</h3>
+            <h3 className="text-center px-2 font-weight-bold" >Solicitud de permiso</h3>
             <table className="table">
                 <thead>
                     <tr>
@@ -185,7 +185,7 @@ const InfoHelp = ({ numberState, setNumberState }) => {
                     }
                 </tbody>
             </table>
-            <h3 className="text-center px-2 fw-bold" >Uso de tiempo compensatorio</h3>
+            <h3 className="text-center px-2 font-weight-bold" >Uso de tiempo compensatorio</h3>
             <table className="table">
                 <thead>
                     <tr>

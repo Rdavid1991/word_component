@@ -58,7 +58,7 @@ const TemplateList = ({ documents, handlerEdit, handlerDelete }) => {
 		<>
 			<div className="card my-2 rounded text-white gradient">
 				<div className="card-body py-1">
-					<h3 className="fw-bold">Lista de plantillas</h3>
+					<h3 className="font-weight-bold">Lista de plantillas</h3>
 					<InputText
 						placeholder="Buscar plantilla"
 						icon="fas fa-search"
@@ -79,13 +79,13 @@ const TemplateList = ({ documents, handlerEdit, handlerDelete }) => {
 							return (
 								<div key={index} className="card mb-2 bg-body rounded">
 									<div className="card-body py-1">
-										<h6 className="fw-bold card-title">Nombre: <span className="fw-light">{item.name}</span></h6>
-										<p className="fw-bold text-muted mb-0">Tipo: <span className="fw-light">{typeOfDocuments[item.type]}</span></p>
+										<h6 className="font-weight-bold card-title">Nombre: <span className="font-weight-light">{item.name}</span></h6>
+										<p className="font-weight-bold text-muted mb-0">Tipo: <span className="font-weight-light">{typeOfDocuments[item.type]}</span></p>
 										{
 											getLocalStorageUserDepartment() == 0 ?
-												<p className="fw-bold text-muted">Pertenece a:&nbsp;
+												<p className="font-weight-bold text-muted">Pertenece a:&nbsp;
 													<span
-														className="fw-light"
+														className="font-weight-light"
 													>
 														{departmentName}
 													</span>

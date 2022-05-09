@@ -43,9 +43,9 @@ const TemplateCreate = ({ handlerFetchTemplate, values, reset, handleInputChange
                 />
 
                 <div className="mb-3">
-                    <label htmlFor="type" className="form-label fw-bold">Tipo de documento</label>
+                    <label htmlFor="type" className="form-label font-weight-bold">Tipo de documento</label>
                     <select id="type"
-                        className="form-select form-select-sm"
+                        className="form-control form-control-sm"
                         value={values.type}
                         onChange={handleInputChange}
                         required

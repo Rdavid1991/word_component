@@ -50,7 +50,7 @@ export const Addressees = ({ addresseeState, fetchAddresses }) => {
         const { id, name } = addresseeState.find((a) => a.id == idEdit);
 
         const { isConfirmed } = await AlertConfirmQuestion(
-            `Desea borrar a <span class="fw-bold">${name}</span>`
+            `Desea borrar a <span class="font-weight-bold">${name}</span>`
         );
         if (isConfirmed) {
             showLoader(true);
@@ -65,7 +65,7 @@ export const Addressees = ({ addresseeState, fetchAddresses }) => {
             <div className="w-100 px-3">
                 <div className="card my-2 rounded text-white gradient">
                     <div className="card-body py-1">
-                        <h3 className="fw-bold text-truncate">Destinatarios</h3>
+                        <h3 className="font-weight-bold text-truncate">Destinatarios</h3>
                         <p className="text-truncate" style={{ fontSize: "14px" }}>Agregar o editar destinatarios para memos o notas</p>
                     </div>
                 </div>

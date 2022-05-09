@@ -56,7 +56,7 @@ const HomePermissionRequest = ({ functionaries, setSelectedState }) => {
 			<div className="mb-3">
 				<label
 					forHtml="#from"
-					className="fw-bold form-label"
+					className="font-weight-bold form-label"
 				>
 					Desde
 				</label>
@@ -70,7 +70,7 @@ const HomePermissionRequest = ({ functionaries, setSelectedState }) => {
 			<div className="mb-3">
 				<label
 					forHtml="#to"
-					className="fw-bold form-label"
+					className="font-weight-bold form-label"
 				>
 					Hasta
 				</label>
