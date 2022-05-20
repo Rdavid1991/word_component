@@ -1,6 +1,7 @@
 //@ts-check
 import React, { useContext } from 'react';
 import { context } from 'src/context/context';
+import { DocumentInfoSchema } from 'src/interface';
 import { AlertError, AlertSuccess } from 'src/utils/Alerts';
 import { typeOfDocuments } from 'src/utils/constants';
 import { writeDocument } from 'src/utils/documents';
@@ -9,7 +10,16 @@ import swal from 'sweetalert';
 import { selectedDocumentType } from './functions';
 import { parametersOfDocuments } from './functions/parametersOfDocuments';
 
-const HomeSelectDocument = ({ setTypeOfDocumentState, documents, setSelectedState, selectedState }) => {
+interface Props {
+    setTypeOfDocumentState: any,
+    documents: Array<DocumentInfoSchema>,
+    setSelectedState: any,
+    selectedState: any,
+}
+
+const HomeSelectDocument = ({ setTypeOfDocumentState, documents, setSelectedState, selectedState }: Props) => {
+
+
     const { setControls, showLoader } = useContext(context);
 
     const handleSelectChange = async ({ target }) => {
@@ -18,6 +28,9 @@ const HomeSelectDocument = ({ setTypeOfDocumentState, documents, setSelectedStat
         const template = await getDocumentTemplate(target.value);
 
         setTypeOfDocumentState(selectedDocumentType(target));
+
+        console.log(template.data);
+
 
         await writeDocument(JSON.parse(template.data[0].doc))
             .then(async () => {
@@ -47,14 +60,14 @@ const HomeSelectDocument = ({ setTypeOfDocumentState, documents, setSelectedStat
 
                             const [type, value] = entry;
 
-                            if (documents.find((element) => parseInt(element.type) === parseInt(type))) {
+                            if (documents.find((element) => element.type === parseInt(type))) {
 
                                 return (
                                     <optgroup key={index} label={value}>
                                         {
                                             documents.map((item, index) => {
 
-                                                if (parseInt(item.type) === parseInt(type)) {
+                                                if (item.type === parseInt(type)) {
 
                                                     return (
                                                         <option

@@ -6,8 +6,9 @@ import {
 
 } from "src/utils";
 import "moment/locale/es-us";
-import {  DocumentRequestControls, FunctionaryControls } from "src/utils/constants";
+import { DocumentRequestControls, FunctionaryControls } from "src/utils/constants";
 import { apiRequest } from "src/utils/apiRequest";
+import { AddresseesSchema, HomeGenerateDocumentState } from '../../../interface/index';
 moment.locale("es-mx");
 
 /**
@@ -132,17 +133,20 @@ export const DocumentPermissionRequestLoadVars = async (values, functionary) => 
  * @param {Object} form
  * @returns
  */
-const fetchData = async (addressee, memoOrNoteState, form) => {
+const fetchData = async (addressee: Array<AddresseesSchema>, memoOrNoteState, form :HomeGenerateDocumentState) => {
 	/**
 	 * 1 = memo
 	 * 2 = note
 	 */
 
+	console.log(form);
+	
+
 	const params = {
-		"dirigido"        : addressee[form.to].department,
-		"asunto"          : form.subject,
-		"solicitado"      : getLocalStorageUserEmail(),
-		"date"            : moment().format("L"),
+		"dirigido": addressee[form.to].department,
+		"asunto": form.subject,
+		"solicitado": getLocalStorageUserEmail(),
+		"date": moment().format("L"),
 		"department_owner": getLocalStorageUserDepartment()
 	};
 
@@ -163,7 +167,7 @@ const selectedDocumentType = (target) => {
 	let type = "";
 	if (target.selectedOptions[0].dataset) {
 		type = target.selectedOptions[0].dataset.type;
-	}else {
+	} else {
 		type = target.selectedOptions[0].getAttribute("data-type");
 	}
 	return type;

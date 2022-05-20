@@ -11,11 +11,13 @@ require_once(dirname(__FILE__) . "/class/Addressee.php");
 require_once(dirname(__FILE__) . "/class/Functionary.php");
 require_once(dirname(__FILE__) . "/class/Consecutive.php");
 require_once(dirname(__FILE__) . "/class/CacheManager.php");
+require_once(dirname(__FILE__) . "/class/AdminUser.php");
 
 
 require_once(dirname(__FILE__) . "/routers/router_template.php");
 require_once(dirname(__FILE__) . "/routers/router_functionary.php");
 require_once(dirname(__FILE__) . "/routers/router_addressee.php");
+require_once(dirname(__FILE__) . "/routers/router_login.php");
 
 
 class HandlerActionsMemo extends ManagementDB

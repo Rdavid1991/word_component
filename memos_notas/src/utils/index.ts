@@ -2,6 +2,7 @@
 //@ts-check
 
 const localStorageKeyUser = "infoUser";
+const localStorageAdminKey = "adminUser"
 
 /**
  * 
@@ -44,6 +45,8 @@ const addZeroToLeft = (digit) => {
  */
 const existUser = () => localStorage.hasOwnProperty(localStorageKeyUser) ? true : false;
 
+const existAdmin = () => localStorage.hasOwnProperty(localStorageAdminKey) ? true : false;
+
 /**
  * Verificar si no existe usuario en el almacenamiento local
  * return
@@ -73,19 +76,29 @@ const getLocalStorageUserInitials = () => localStorage.hasOwnProperty(localStora
  * 
  * @returns {string}
  */
-const getLocalStorageUserDepartment = () => localStorage.hasOwnProperty(localStorageKeyUser)
-    ? JSON.parse(localStorage.getItem(localStorageKeyUser)).department
-    : "";
+const getLocalStorageUserDepartment = () => {
 
+    if (localStorage.hasOwnProperty(localStorageKeyUser)) {
+        return JSON.parse(localStorage.getItem(localStorageKeyUser)).department
+    } else if (localStorage.hasOwnProperty(localStorageAdminKey)) {
+        return JSON.parse(localStorage.getItem(localStorageAdminKey)).department
+    } else {
+        return ""
+    }
+
+
+}
 export {
     isMemo,
     isNote,
     addZeroToLeft,
     existUser,
+    existAdmin,
     notExistUser,
     getLocalStorageUserName,
     getLocalStorageUserEmail,
     getLocalStorageUserInitials,
     getLocalStorageUserDepartment,
-    localStorageKeyUser
+    localStorageKeyUser,
+    localStorageAdminKey
 };

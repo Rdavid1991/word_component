@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ChangeEvent, HTMLInputTypeAttribute } from 'react';
 import { getLocalStorageUserDepartment } from 'src/utils';
 
 export const renderSelectDepartment = (values, handleInputChange, department) => {
@@ -33,26 +33,24 @@ export const Space = ({ height }) => {
 };
 
 
-/**
- * @component
- * @param {Object} props 
- * @param {String=} props.htmlId 
- * @param {Function} props.onChange
- * @param {String} props.value
- * @param {String=} props.htmlLabel 
- * @param {String=} props.icon fontAwesome class
- * @param {String=} props.name fontAwesome class
- * @param {String=} props.placeholder
- * @param {boolean=} props.required
- * @param {boolean=} props.disabled
- * @param {String=} props.pattern
- * @param {String=} props.title
- * @returns 
- */
+interface PropsInput {
+    htmlId?: string,
+    onChange: (e: ChangeEvent<HTMLSelectElement | HTMLInputElement>) => void,
+    value: string,
+    icon?: string,
+    name ?: string,
+    htmlLabel?: string,
+    placeholder?: string,
+    required?: boolean,
+    disabled?: boolean,
+    pattern?: string,
+    title?: string,
+    type?: HTMLInputTypeAttribute
+}
 export const InputText = ({
-    htmlId ="",
+    htmlId = "",
     onChange,
-    value ="",
+    value = "",
     icon = "",
     name = "",
     htmlLabel = "",
@@ -60,8 +58,9 @@ export const InputText = ({
     required = false,
     disabled = false,
     pattern = null,
-    title = null
-}) : JSX.Element => {
+    title = null,
+    type = 'text'
+}: PropsInput): JSX.Element => {
 
     return (
         <div className="mb-3">
@@ -73,7 +72,7 @@ export const InputText = ({
                     icon.length > 0 ? <span className="input-group-text"><i className={icon}></i></span> : ""
                 }
                 <input
-                    type="text"
+                    type={type}
                     autoComplete="off"
                     className="form-control form-control-sm"
                     id={htmlId}
@@ -94,11 +93,11 @@ export const InputText = ({
 /**
  * 
  * @param {Object} props
- * @param {String} props.id
- * @param {String=} props.icon
- * @param {String} props.value
- * @param {String} props.label
- * @param {String=} props.description
+ * @param {string} props.id
+ * @param {string=} props.icon
+ * @param {string} props.value
+ * @param {string} props.label
+ * @param {string=} props.description
  * @param {Boolean=} props.required
  * @param {Object<string,string>[]} props.options
  * @param {Function} props.handleInputChange
@@ -156,7 +155,7 @@ export const SelectOptions = ({
 /**
  * 
  * @param {Object} prop 
- * @param {String} prop.title 
+ * @param {string} prop.title 
  * @returns 
  */
 export const ButtonSubmit = ({ title }) => {
@@ -173,7 +172,7 @@ export const ButtonSubmit = ({ title }) => {
 /**
  * 
  * @param {Object} prop 
- * @param {String} prop.title 
+ * @param {string} prop.title 
  * @returns 
  */
 export const ButtonReset = ({ title }) => {

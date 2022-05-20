@@ -1,12 +1,6 @@
 <?php
 
-if (
-    $_GET["action"] === "save_template_doc" ||
-    $_GET["action"] === "edit_template_doc" ||
-    $_GET["action"] === "get_template_doc" ||
-    $_GET["action"] === "get_template_info" ||
-    $_GET["action"] === "delete_template_doc"
-) {
+if (str_contains($_GET["action"], "template")) {
 
     $cacheManager = new CacheManager();
 
@@ -21,6 +15,7 @@ if (
 
 
     switch ($_GET["action"]) {
+
         case "save_template_doc":
             $cacheManager->removeCache();
             echo Response::responseInsert($template->save_template_doc());

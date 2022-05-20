@@ -18,16 +18,18 @@ export const readDocument = async () => {
             context.load(docHeader);
 
             await context.sync();
-           
+
 
             const docBodyOoxml = docBody.getOoxml();
             const docFooterOoxml = docFooter.items[0].getFooter("Primary").getOoxml();
             const docHeaderOoxml = docHeader.items[0].getHeader("Primary").getOoxml();
 
+            
             await context.sync();
-
+            
+           
             return JSON.stringify({
-                "body"  : docBodyOoxml.value,
+                "body": docBodyOoxml.value,
                 "footer": docFooterOoxml.value,
                 "header": docHeaderOoxml.value,
             });
@@ -57,14 +59,18 @@ export const clearDocument = async () => {
     });
 };
 
+interface WriteDocumentTemplate {
+    body: string,
+    header: string,
+    footer: string,
+}
 /**
-     * Escribir documento
-     * @param {Object}  template Template del documento 
-     * @param {String}  template.body 
-     * @param {String}  template.header 
-     * @param {String}  template.footer 
-     */
-export const writeDocument = async (template) => {
+ * Escribir documento
+ */
+export const writeDocument = async (template: WriteDocumentTemplate) => {
+
+    console.log(template.footer)
+
     return await Word.run(async (context) => {
 
         const body = context.document.body;
@@ -78,14 +84,14 @@ export const writeDocument = async (template) => {
 
         const header = headerContext.items[0].getHeader("Primary");
         const footer = footerContext.items[0].getFooter("Primary");
-        
+
         body.clear();
         header.clear();
         footer.clear();
 
-        body.insertOoxml(template.body.toString(), Word.InsertLocation.replace);
-        header.insertOoxml(template.header.toString(), Word.InsertLocation.replace);
-        footer.insertOoxml(template.footer.toString(), Word.InsertLocation.replace);
+        body.insertOoxml(template.body, Word.InsertLocation.replace);
+        header.insertOoxml(template.header, Word.InsertLocation.replace);
+        footer.insertOoxml(template.footer, Word.InsertLocation.replace);
 
         return await context.sync();
     });

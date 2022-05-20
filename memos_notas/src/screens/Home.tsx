@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { typeOfDocuments } from "src/utils/constants";
 import HomePermissionRequest from "../components/home/HomePermissionRequest";
-import HomeGenerateDocument from "../components/home/HomeGenerateDocument";
+import HomeGenerateDocument from "../components/home/SelectedMemorandumOrNote";
 import HomeOtherDocument from "../components/home/HomeOtherDocument";
 import HomeSelectDocument from "../components/home/HomeSelectDocument";
 import HomeCompensatoryTimeRequest from "../components/home/HomeCompensatoryTimeRequest";

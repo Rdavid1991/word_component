@@ -1,3 +1,10 @@
+/**
+ * @author rcenteno@mides.gob.pa
+ * 
+ * Se encarga de hacer las peticiones a base de datos
+ */
+
+
 import { getLocalStorageUserDepartment, localStorageKeyUser } from "src/utils";
 import { AlertConfirmQuestion, AlertError, AlertSuccess } from "src/utils/Alerts";
 import { apiRequest } from "src/utils/apiRequest";
@@ -8,7 +15,7 @@ import swal from "sweetalert";
 
 export const getDepartment = async (id = undefined) => {
 
-    const params : any = {};
+    const params: any = {};
 
     if (id) {
         params.id = id;
@@ -254,10 +261,10 @@ export const getDocumentInfoTemplate = async () => {
  * @param {Function} reset 
  */
 export const saveDocumentTemplate = async (values, handlerFetchTemplate, reset) => {
-    
+
     try {
         const document = await readDocument();
-        
+
         if (document) {
 
             const department_owner = getLocalStorageUserDepartment();
@@ -286,9 +293,9 @@ export const saveDocumentTemplate = async (values, handlerFetchTemplate, reset) 
  * @param {number| string} id 
  */
 export const deleteDocumentTemplate = async (handlerFetchTemplate, id) => {
-    const { isConfirmed } = await AlertConfirmQuestion("Va a borrar un elemento ¿desea continuar?");
+    const value = await AlertConfirmQuestion("Va a borrar un elemento ¿desea continuar?");
 
-    if (isConfirmed) {
+    if (value) {
         try {
             const response = await apiRequest().post("delete_template_doc", { id });
             if (response.ok) {
@@ -306,3 +313,24 @@ export const deleteDocumentTemplate = async (handlerFetchTemplate, id) => {
         AlertSuccess("La acción a sido cancelada");
     }
 };
+
+/**
+ * Iniciar sesión a los administradores
+ * @param user Nombre de usuario administrador
+ * @param pass Contraseña de usuario administrador
+ */
+export const loginAdmin = async (user: string, pass: string) => {
+
+    try {
+        const response = await   apiRequest().post("login_admin", { user, pass });
+        if (response.ok) {
+            return await response.json();
+        }
+        const { message } = await response.json();
+
+        await AlertError(`Error al iniciar como administrador: ${message.text}`);
+    } catch (error) {
+        await AlertError(`Error al iniciar como administrador: ${error}`);
+    }
+    return false;
+}

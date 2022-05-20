@@ -4,6 +4,7 @@ import { globals } from 'src/globals';
 import { context } from 'src/context/context';
 import { AddresseeControls, CompensatoryTime, DocumentMemoOrNotesControls, DocumentRequestControls, FunctionaryControls } from 'src/utils/constants';
 import { saveConsecutiveNumber } from 'src/utils/SaveAndGet';
+import { localStorageAdminKey, localStorageKeyUser } from 'src/utils';
 
 const InfoHelp = ({ initialNumber }) => {
 
@@ -195,7 +196,8 @@ const InfoHelp = ({ initialNumber }) => {
             <button
                 type='button'
                 onClick={() => {
-                    localStorage.removeItem("infoUser")
+                    localStorage.removeItem(localStorageKeyUser)
+                    localStorage.removeItem(localStorageAdminKey)
                     window.location.reload()
                 }}
             >

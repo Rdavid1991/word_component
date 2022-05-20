@@ -1,20 +1,18 @@
-import { useState } from 'react';
+import { ChangeEvent, useState } from 'react';
+import { Interface } from 'readline';
 
-/**
- * 
- * @param {*} initialState estado inicial 
- * @returns {array} [values, setValues, handleInputChange, reset]
- */
-export const useForm = (initialState = {}) => {
 
-    const [values, setValues] = useState(initialState);
+
+export const useForm = <TypeSchema>(initialState: TypeSchema): [TypeSchema, (state: TypeSchema) => void, (e: ChangeEvent<HTMLInputElement|HTMLSelectElement>) => void, () => void] => {
+
+    const [values, setValues] = useState<TypeSchema>(initialState);
 
     const reset = () => {
         setValues(initialState);
     };
 
     const handleInputChange = ({ target }) => {
-      
+
         if (target.tagName === 'SELECT' && target.multiple) {
             let selected = [];
             for (let option of target.selectedOptions) {
@@ -25,12 +23,12 @@ export const useForm = (initialState = {}) => {
                 [target.name || target.id]: selected
             });
 
-        }else if (target.tagName === 'INPUT' && target.type === "checkbox") {
+        } else if (target.tagName === 'INPUT' && target.type === "checkbox") {
             setValues({
                 ...values,
                 [target.name || target.id]: target.checked
             });
-        }else{
+        } else {
             setValues({
                 ...values,
                 [target.name || target.id]: target.value

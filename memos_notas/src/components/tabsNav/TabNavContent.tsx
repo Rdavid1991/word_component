@@ -6,8 +6,8 @@ import { Template } from '../templates/Template';
 import InfoHelp from '../../screens/InfoHelp';
 import { context } from 'src/context/context';
 import { Functionary } from '../employ/Functionary';
-import { existUser } from 'src/utils';
-import ModalInitialUser from './ModalInitialUser';
+import { existAdmin, existUser } from 'src/utils';
+import ModalInitialUser from '../../screens/ModalInitialUser';
 import fetchData from 'src/utils/fetchData';
 
 
@@ -45,16 +45,19 @@ export const TabNavContent = () => {
                     numberState: responseNumbers
                 })
                 setShowModal(false);
+            } else if (existAdmin()) {
+                const responseTemplate = await fetchData.fetchTemplate();
+                setData({
+                    ...data,
+                    documents: responseTemplate,
+
+                })
             } else {
                 setShowModal(true)
             }
 
-
         })();
-    }, [departments]);
-
-    console.log({data});
-    
+    }, []);
 
     const fetchNumbers = async () => setData({ ...data, numberState: await fetchData.fetchNumbers() })
     const fetchAddresses = async () => setData({ ...data, addressee: await fetchData.fetchAddresses() })
@@ -85,7 +88,7 @@ export const TabNavContent = () => {
             <div className="tab-pane fade" id="nav-info-help">
                 <InfoHelp
                     initialNumber={data.numberState}
-                    //setNumberState={setNumberState}
+                //setNumberState={setNumberState}
                 />
             </div>
             <div className="tab-pane fade h-100 after" id="nav-template">

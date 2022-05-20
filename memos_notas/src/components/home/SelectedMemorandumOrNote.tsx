@@ -1,5 +1,4 @@
-//@ts-check
-import React, { useContext, useEffect, useState } from 'react';
+import React, { FormEvent, useContext, useEffect, useState } from 'react';
 import { fetchData } from './functions';
 import { context } from 'src/context/context';
 import { getLocalStorageUserName } from 'src/utils';
@@ -8,12 +7,12 @@ import { AlertError, AlertSuccess, AlertWarning } from 'src/utils/Alerts';
 import { InputText, SelectOptions } from 'src/fragments';
 import { SendDataToDocument } from './functions/SendDataToDocument';
 import MultiSelect from './fragment/MultiSelect';
-import { AddresseesSchema, FunctionarySchema } from 'src/interface';
+import { AddresseesSchema, FunctionarySchema, HomeGenerateDocumentState } from 'src/interface';
 
 
 
 const initialState = {
-    to: "",
+    to: NaN,
     subject: "",
     functionary: "",
     cc: [],
@@ -21,21 +20,25 @@ const initialState = {
     hasCopy: false
 };
 
+
+
 interface Props {
     functionaries: Array<FunctionarySchema>,
     addressee: Array<AddresseesSchema>,
     memoOrNoteState: any,
     fetchNumbers: () => void,
-    setSelectedState: ( select :string) => void
+    setSelectedState: (select: string) => void
 }
+
+
 
 const HomeGenerateDocument = ({ functionaries, addressee, memoOrNoteState, fetchNumbers, setSelectedState }: Props): JSX.Element => {
 
-    const [form, setForm, handleInputChange, reset]: any = useForm(initialState);
+    const [form, setForm, handleInputChange, reset] = useForm<HomeGenerateDocumentState>(initialState);
     const [buttonDisabled, setButtonDisabled] = useState(true);
 
     useEffect(() => {
-        if (form.to.length > 0 && form.subject.length > 0 && form.from.length > 0) {
+        if (!isNaN(form.to) && form.subject.length > 0 && form.from.length > 0) {
             setButtonDisabled(false);
         } else {
             setButtonDisabled(true);
@@ -50,7 +53,7 @@ const HomeGenerateDocument = ({ functionaries, addressee, memoOrNoteState, fetch
         });
     }, [addressee]);
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (parseInt(memoOrNoteState) > 0) {
             //showLoader(true);

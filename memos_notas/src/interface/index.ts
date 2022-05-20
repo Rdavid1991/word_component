@@ -1,4 +1,5 @@
 import { Addressees } from '../components/addressees/Addressees';
+import { Interface } from 'readline';
 export interface FunctionarySchema {
     id: string,
     name: string,
@@ -26,4 +27,19 @@ export interface TemplateSchema {
 export interface DepartmentSchema {
     id: number,
     name: string
+}
+
+export interface HomeGenerateDocumentState {
+    to: number,
+    subject: string,
+    functionary: string,
+    cc: Array<any>,
+    from: string,
+    hasCopy: boolean
+}
+export interface DocumentInfoSchema {
+    id : number,
+    name: string,
+    type : number,
+    department_owner_id : number
 }
