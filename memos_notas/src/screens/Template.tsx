@@ -5,27 +5,24 @@ import { Space } from 'src/fragments';
 import { useForm } from 'src/hooks/useForm';
 import { writeDocument } from 'src/utils/documents';
 import { deleteDocumentTemplate, getDocumentTemplate } from 'src/utils/SaveAndGet';
-import TemplateCreate from './TemplateCreate';
-import TemplateList from './TemplateList';
+import TemplateCreate from '../components/templates/TemplateCreate';
+import TemplateList from '../components/templates/TemplateList';
+import { FetchContext } from '../context/context';
 
 const initialState = {
     name: "",
     type: "",
-    id  : "",
-    edit: false
+    id: "",
+    edit: false,
+    owner: ""
 };
 
-export const Template = ({ documents, fetchTemplate }) => {
+export const Template = ({ documents }) => {
 
-    const [values, setValues, handleInputChange, reset] : any = useForm(initialState);
+    const [values, setValues, handleInputChange, reset] = useForm<typeof initialState>(initialState);
     const { showLoader } = useContext(context);
+    const { fetchTemplate } = useContext(FetchContext);
 
-
-    const handlerFetchTemplate = async () => {
-        showLoader(true);
-        await fetchTemplate();
-        showLoader(false);
-    };
 
     const handlerEdit = useCallback(async (id) => {
 
@@ -42,11 +39,11 @@ export const Template = ({ documents, fetchTemplate }) => {
 
         setValues({
             ...values,
-            id   : documentObject.id,
-            name : documentObject.name,
-            type : documentObject.type,
+            id: documentObject.id,
+            name: documentObject.name,
+            type: documentObject.type,
             owner: documentObject.department_owner_id,
-            edit : true
+            edit: true
         });
 
         writeDocument(JSON.parse(template.data[0].doc));
@@ -55,7 +52,8 @@ export const Template = ({ documents, fetchTemplate }) => {
     }, [documents]);
 
     const handlerDelete = useCallback(async (id) => {
-        deleteDocumentTemplate(handlerFetchTemplate, id);
+        const deleted = await deleteDocumentTemplate(id);
+        if (deleted) fetchTemplate();
     }, [documents]);
 
     return (
@@ -71,7 +69,6 @@ export const Template = ({ documents, fetchTemplate }) => {
             <div className="template_pane h-100">
                 <div className="px-3">
                     <TemplateCreate
-                        handlerFetchTemplate={handlerFetchTemplate}
                         values={values}
                         reset={reset}
                         handleInputChange={handleInputChange}
@@ -85,7 +82,7 @@ export const Template = ({ documents, fetchTemplate }) => {
                         handlerDelete={handlerDelete}
                     />
                 </div>
-                <Space height={10}/>
+                <Space height={10} />
             </div>
         </>
     );

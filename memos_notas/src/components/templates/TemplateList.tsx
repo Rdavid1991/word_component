@@ -29,7 +29,7 @@ const TemplateList = ({ documents, handlerEdit, handlerDelete }) => {
 	const onClickDelete = ({ target }) => {
 		handlerDelete(target.dataset.id);
 
-		console.log(target.dataset.id);
+		
 		
 		target.focus({ preventScroll: true });
 	};

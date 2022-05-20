@@ -1,6 +1,6 @@
 //@ts-check
 import React from 'react';
-import { InputText, renderSelectDepartment } from 'src/fragments';
+import { InputText, SelectDepartment } from 'src/fragments';
 import { saveAddressees } from 'src/utils/SaveAndGet';
 
 export const AddresseesCreate = ({ departments, fetchAddresses, handleInputChange, form, reset }) => {
@@ -43,7 +43,7 @@ export const AddresseesCreate = ({ departments, fetchAddresses, handleInputChang
                     placeholder="Dirección o departamento del destinatario"
                     value={form.department}
                 />
-                {renderSelectDepartment(form, handleInputChange, departments)}
+                <SelectDepartment {...{ values: form, handleInputChange, departments }} />
 
                 <div className="mb-3">
                     <button className="btn btn-sm btn-secondary">Guardar</button>

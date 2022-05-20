@@ -26,11 +26,10 @@ const HomeSelectDocument = ({ setTypeOfDocumentState, documents, setSelectedStat
         //showLoader(true);
         setSelectedState(target.value);
         const template = await getDocumentTemplate(target.value);
-
+        
         setTypeOfDocumentState(selectedDocumentType(target));
 
-        console.log(template.data);
-
+        
 
         await writeDocument(JSON.parse(template.data[0].doc))
             .then(async () => {

@@ -69,7 +69,7 @@ interface WriteDocumentTemplate {
  */
 export const writeDocument = async (template: WriteDocumentTemplate) => {
 
-    console.log(template.footer)
+    
 
     return await Word.run(async (context) => {
 

@@ -7,7 +7,7 @@ import { AlertError, AlertSuccess, AlertWarning } from 'src/utils/Alerts';
 import { InputText, SelectOptions } from 'src/fragments';
 import { SendDataToDocument } from './functions/SendDataToDocument';
 import MultiSelect from './fragment/MultiSelect';
-import { AddresseesSchema, FunctionarySchema, HomeGenerateDocumentState } from 'src/interface';
+import { AddresseesSchema, FunctionarySchema, SelectedMemorandumOrNoteState } from 'src/interface';
 
 
 
@@ -32,9 +32,9 @@ interface Props {
 
 
 
-const HomeGenerateDocument = ({ functionaries, addressee, memoOrNoteState, fetchNumbers, setSelectedState }: Props): JSX.Element => {
+const SelectedMemorandumOrNote = ({ functionaries, addressee, memoOrNoteState, fetchNumbers, setSelectedState }: Props): JSX.Element => {
 
-    const [form, setForm, handleInputChange, reset] = useForm<HomeGenerateDocumentState>(initialState);
+    const [form, setForm, handleInputChange, reset] = useForm<SelectedMemorandumOrNoteState>(initialState);
     const [buttonDisabled, setButtonDisabled] = useState(true);
 
     useEffect(() => {
@@ -181,4 +181,4 @@ const HomeGenerateDocument = ({ functionaries, addressee, memoOrNoteState, fetch
     );
 };
 
-export default React.memo(HomeGenerateDocument);
+export default React.memo(SelectedMemorandumOrNote);

@@ -29,7 +29,7 @@ export interface DepartmentSchema {
     name: string
 }
 
-export interface HomeGenerateDocumentState {
+export interface SelectedMemorandumOrNoteState {
     to: number,
     subject: string,
     functionary: string,

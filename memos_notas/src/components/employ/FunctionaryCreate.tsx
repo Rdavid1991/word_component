@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { context } from 'src/context/context';
-import { ButtonReset, ButtonSubmit, InputText, renderSelectDepartment } from 'src/fragments';
+import { ButtonReset, ButtonSubmit, InputText, SelectDepartment } from 'src/fragments';
 import { saveFunctionary } from 'src/utils/SaveAndGet';
 
 export const FunctionaryCreate = ({ handleInputChange, fetchFunctionary, values, reset }) => {
@@ -60,7 +60,7 @@ export const FunctionaryCreate = ({ handleInputChange, fetchFunctionary, values,
 					pattern="[0-9]{3,}"
 					title="Solo acepta números"
 				/>
-				{renderSelectDepartment(values, handleInputChange, departments)}
+				<SelectDepartment {...{ values, handleInputChange, departments }} />
 
 				<div className="mb-3">
 					<ButtonSubmit

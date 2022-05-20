@@ -1,31 +1,39 @@
 import React, { ChangeEvent, HTMLInputTypeAttribute } from 'react';
+import { DepartmentSchema } from 'src/interface';
 import { getLocalStorageUserDepartment } from 'src/utils';
 
-export const renderSelectDepartment = (values, handleInputChange, department) => {
+export const SelectDepartment = ({ values, handleInputChange, departments }) => {
 
-    if (getLocalStorageUserDepartment() == "0") {
+    return (
+        <>
 
-        return (
-            <div className="mb-3">
-                <label htmlFor="owner" className="form-label font-weight-bold">Pertenece a</label>
-                <select id="owner"
-                    className="form-control form-control-sm"
-                    value={values?.owner || ""}
-                    onChange={handleInputChange}
-                    required
-                >
-                    <option disabled value="">Seleccione un departamento</option>
-                    {
-                        department.map((item, index) => (
-                            <option key={index} value={item.id}>{item.name}</option>
-                        ))
-                    }
-                </select>
-            </div>
-        );
-    } else {
-        return null;
-    }
+            {
+                getLocalStorageUserDepartment() === 0 ?
+                    <div className="mb-3">
+                        <label htmlFor="owner" className="form-label font-weight-bold">Pertenece a</label>
+                        <select id="owner"
+                            className="form-control form-control-sm"
+                            value={values?.owner || ""}
+                            onChange={handleInputChange}
+                            required
+                        >
+                            <option disabled value="">Seleccione</option>
+                            {
+                                departments.map((item, index) => (
+                                    <option
+                                        key={index}
+                                        //selected={item.id === 0 ? true : false}
+                                        value={item.id}>{item.name}</option>
+                                ))
+                            }
+                        </select>
+                    </div>
+                    : null
+
+            }
+        </>
+    );
+
 };
 
 export const Space = ({ height }) => {
@@ -38,7 +46,7 @@ interface PropsInput {
     onChange: (e: ChangeEvent<HTMLSelectElement | HTMLInputElement>) => void,
     value: string,
     icon?: string,
-    name ?: string,
+    name?: string,
     htmlLabel?: string,
     placeholder?: string,
     required?: boolean,

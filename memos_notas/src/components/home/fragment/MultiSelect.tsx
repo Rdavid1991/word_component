@@ -59,7 +59,7 @@ const MultiSelect = props => {
         select.current.dispatchEvent(evt.current);
     };
 
-    console.log({ options });
+    
 
     return (
         <div className="mb-3">

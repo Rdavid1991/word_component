@@ -1,13 +1,15 @@
 //@ts-check
 import React, { useContext } from 'react';
 import { context } from 'src/context/context';
-import { InputText, renderSelectDepartment } from 'src/fragments';
+import { InputText, SelectDepartment } from 'src/fragments';
 import { typeOfDocuments } from 'src/utils/constants';
 import { saveDocumentTemplate } from 'src/utils/SaveAndGet';
+import { FetchContext } from '../../context/context';
 
-const TemplateCreate = ({ handlerFetchTemplate, values, reset, handleInputChange }) => {
+const TemplateCreate = ({ values, reset, handleInputChange }) => {
 
     const { showLoader, departments } = useContext(context);
+    const { fetchTemplate } = useContext(FetchContext);
 
 
     /**
@@ -17,7 +19,8 @@ const TemplateCreate = ({ handlerFetchTemplate, values, reset, handleInputChange
     const handleSaveDocument = async (e) => {
         e.preventDefault();
         //showLoader(true);
-        await saveDocumentTemplate(values, handlerFetchTemplate, reset);
+        const saved = await saveDocumentTemplate(values, reset);
+        if (saved) fetchTemplate();
         //showLoader(false);
 
     };
@@ -59,7 +62,7 @@ const TemplateCreate = ({ handlerFetchTemplate, values, reset, handleInputChange
                     </select>
                 </div>
 
-                {renderSelectDepartment(values, handleInputChange, departments)}
+                <SelectDepartment {...{ values, handleInputChange, departments }} />
 
                 <div className="mb-3">
                     <button

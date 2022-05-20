@@ -114,7 +114,7 @@ export const deleteFunctionary = async (id) => {
     try {
         let response = await apiRequest().post("delete_functionary", { id });
         if (response.ok) {
-            console.log("llega a borrar");
+
             const { message } = await response.json();
             await swal(message);
         } else {
@@ -223,6 +223,7 @@ export const getDocumentTemplate = async (id) => {
 
     try {
         const response = await apiRequest().get("get_template_doc", { id, department_owner });
+        
         if (response.ok) {
             return await response.json();
         } else {
@@ -260,7 +261,7 @@ export const getDocumentInfoTemplate = async () => {
  * @param {Function} handlerFetchTemplate 
  * @param {Function} reset 
  */
-export const saveDocumentTemplate = async (values, handlerFetchTemplate, reset) => {
+export const saveDocumentTemplate = async (values, reset) => {
 
     try {
         const document = await readDocument();
@@ -272,11 +273,11 @@ export const saveDocumentTemplate = async (values, handlerFetchTemplate, reset) 
             const response = await apiRequest()
                 .post(`${values.edit ? "edit" : "save"}_template_doc`, { ...values, document, department_owner });
             if (response.ok) {
-                handlerFetchTemplate();
                 const { message } = await response.json();
                 //await Swal.fire(message);
                 clearDocument();
                 reset();
+                return true
             } else {
                 const { message } = await response.json();
                 await AlertError(`No se pudo guardar la plantilla: ${message.text}`);
@@ -285,6 +286,7 @@ export const saveDocumentTemplate = async (values, handlerFetchTemplate, reset) 
     } catch (error) {
         await AlertError(`Error al guardar plantilla: ${error}`);
     }
+    return false
 };
 
 /**
@@ -292,16 +294,16 @@ export const saveDocumentTemplate = async (values, handlerFetchTemplate, reset) 
  * @param {Function} handlerFetchTemplate 
  * @param {number| string} id 
  */
-export const deleteDocumentTemplate = async (handlerFetchTemplate, id) => {
+export const deleteDocumentTemplate = async (id): Promise<boolean> => {
     const value = await AlertConfirmQuestion("Va a borrar un elemento ¿desea continuar?");
 
     if (value) {
         try {
             const response = await apiRequest().post("delete_template_doc", { id });
             if (response.ok) {
-                handlerFetchTemplate();
                 const { message } = await response.json();
                 //await Swal.fire(message);
+                return true
             } else {
                 const { message } = await response.json();
                 AlertError(`No de pudo borrar la plantilla: ${message.text}`);
@@ -312,6 +314,7 @@ export const deleteDocumentTemplate = async (handlerFetchTemplate, id) => {
     } else {
         AlertSuccess("La acción a sido cancelada");
     }
+    return false
 };
 
 /**
@@ -322,7 +325,7 @@ export const deleteDocumentTemplate = async (handlerFetchTemplate, id) => {
 export const loginAdmin = async (user: string, pass: string) => {
 
     try {
-        const response = await   apiRequest().post("login_admin", { user, pass });
+        const response = await apiRequest().post("login_admin", { user, pass });
         if (response.ok) {
             return await response.json();
         }
