@@ -37,9 +37,22 @@ export interface SelectedMemorandumOrNoteState {
     from: string,
     hasCopy: boolean
 }
-export interface DocumentInfoSchema {
-    id : number,
-    name: string,
-    type : number,
-    department_owner_id : number
+export interface TemplateInfoSchema {
+    id: number;
+    name: string;
+    type: number;
+    department_owner_id: number;
+    edit: boolean;
+}
+
+export interface Consecutive {
+    note: number,
+    memo: number,
+}
+
+export interface DataStateSchema {
+    addressee: Array<any>,
+    templateInfo: Array<TemplateInfoSchema>,
+    functionaries: Array<any>,
+    numberState: Consecutive
 }

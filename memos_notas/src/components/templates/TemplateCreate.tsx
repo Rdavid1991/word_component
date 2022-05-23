@@ -1,5 +1,4 @@
-//@ts-check
-import React, { useContext } from 'react';
+import React, { useContext, MouseEvent } from 'react';
 import { context } from 'src/context/context';
 import { InputText, SelectDepartment } from 'src/fragments';
 import { typeOfDocuments } from 'src/utils/constants';
@@ -14,9 +13,8 @@ const TemplateCreate = ({ values, reset, handleInputChange }) => {
 
     /**
      * Encargarse de guardar el documento
-     * @param {React.MouseEvent<HTMLFormElement, MouseEvent>} e 
      */
-    const handleSaveDocument = async (e) => {
+    const handleSaveDocument = async (e : MouseEvent<HTMLFormElement>) => {
         e.preventDefault();
         //showLoader(true);
         const saved = await saveDocumentTemplate(values, reset);

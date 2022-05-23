@@ -1,6 +1,5 @@
 //@ts-check
 import React, { useCallback, useContext } from 'react';
-import { context } from 'src/context/context';
 import { Space } from 'src/fragments';
 import { useForm } from 'src/hooks/useForm';
 import { writeDocument } from 'src/utils/documents';
@@ -8,53 +7,50 @@ import { deleteDocumentTemplate, getDocumentTemplate } from 'src/utils/SaveAndGe
 import TemplateCreate from '../components/templates/TemplateCreate';
 import TemplateList from '../components/templates/TemplateList';
 import { FetchContext } from '../context/context';
+import { TemplateInfoSchema } from '../interface/index';
 
-const initialState = {
+const initialTemplateInfoState: TemplateInfoSchema = {
     name: "",
-    type: "",
-    id: "",
+    type: 0,
+    id: 0,
     edit: false,
-    owner: ""
+    department_owner_id: 0
 };
 
-export const Template = ({ documents }) => {
+interface Props {
+    templates: Array<TemplateInfoSchema>
+}
 
-    const [values, setValues, handleInputChange, reset] = useForm<typeof initialState>(initialState);
-    const { showLoader } = useContext(context);
+export const Template = ({ templates }: Props) => {
+
+    const [values, setValues, handleInputChange, reset] = useForm<typeof initialTemplateInfoState>(initialTemplateInfoState);
+    //const { showLoader } = useContext(context);
     const { fetchTemplate } = useContext(FetchContext);
 
 
-    const handlerEdit = useCallback(async (id) => {
+    const handlerEdit = async (id: number) => {
 
-        /**
-         * 
-         * @param {Object} item 
-         * @param {string } item.id 
-         * @returns 
-         */
-        const filterDocument = (item) => parseInt(item.id) === parseInt(id);
-        const documentObject = documents.find(filterDocument);
 
+        const templateFound = templates.find((template) => template.id === id);
         const template = await getDocumentTemplate(id);
 
         setValues({
             ...values,
-            id: documentObject.id,
-            name: documentObject.name,
-            type: documentObject.type,
-            owner: documentObject.department_owner_id,
+            ...templateFound,
             edit: true
         });
 
+        console.log(template);
+        
+
         writeDocument(JSON.parse(template.data[0].doc));
         document.querySelector(".tab-content").scrollTo(0, 0);
+    };
 
-    }, [documents]);
-
-    const handlerDelete = useCallback(async (id) => {
+    const handlerDelete = async (id) => {
         const deleted = await deleteDocumentTemplate(id);
         if (deleted) fetchTemplate();
-    }, [documents]);
+    };
 
     return (
         <>
@@ -77,7 +73,7 @@ export const Template = ({ documents }) => {
                 <div className="px-3"><hr /></div>
                 <div className="px-3">
                     <TemplateList
-                        documents={documents}
+                        documents={templates}
                         handlerEdit={handlerEdit}
                         handlerDelete={handlerDelete}
                     />

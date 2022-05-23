@@ -1,53 +1,45 @@
-import React, { useEffect, useState,useContext } from 'react';
+import React, { useEffect, useState, useContext, MouseEvent, SyntheticEvent, ChangeEvent } from 'react';
 import { context } from 'src/context/context';
 import { InputText } from 'src/fragments';
 
 import { getLocalStorageUserDepartment } from 'src/utils';
 import { typeOfDocuments } from "src/utils/constants";
+import { TemplateInfoSchema } from '../../interface/index';
 
+interface Props {
+	documents: Array<TemplateInfoSchema>;
+	handlerEdit: (id: number) => void;
+	handlerDelete: (id: number) => void;
+}
 
+const TemplateList = ({ documents, handlerEdit, handlerDelete }: Props) => {
 
-const TemplateList = ({ documents, handlerEdit, handlerDelete }) => {
-
-	const {departments} = useContext(context);
+	const { departments } = useContext(context);
 
 	const [filtered, setFiltered] = useState([]);
 	const [searchState, setSearchState] = useState("");
-	
 
-	/**
-	 * @param {React.MouseEvent<HTMLFormElement, MouseEvent>} e
-	 */
-	const onClickEdit = ({ target }) => {
-		handlerEdit(target.dataset.id);
-		target.focus({ preventScroll: true });
+	const onClickEdit = ({ currentTarget }: MouseEvent<HTMLButtonElement>) => {
+		handlerEdit(Number.parseInt(currentTarget.dataset.id));
+		currentTarget.focus({ preventScroll: true });
 	};
 
-	/**
-	 * @param {React.MouseEvent<HTMLFormElement, MouseEvent>} e
-	 */
-	const onClickDelete = ({ target }) => {
-		handlerDelete(target.dataset.id);
-
-		
-		
-		target.focus({ preventScroll: true });
+	const onClickDelete = ({ currentTarget }: MouseEvent<HTMLButtonElement>) => {
+		handlerDelete(Number.parseInt(currentTarget.dataset.id));
+		currentTarget.focus({ preventScroll: true });
 	};
 
 	useEffect(() => {
 		handlerFilterSearch();
 	}, [searchState, documents]);
 
-	/**
-	 * @param {React.ChangeEvent<HTMLInputElement>} e
-	 */
-	const handleSearchChange = (e) => {
+	const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
 		setSearchState(e.target.value);
 	};
 
 	const handlerFilterSearch = () => {
 		let searching = documents.filter((item) => {
-			const departmentName = departments.filter((e) => e.id == item.department_owner_id)[0]?.name;
+			const departmentName = departments.filter((e) => e.id === item.department_owner_id)[0]?.name;
 
 			return new RegExp(searchState, "i").test(item.name) ||
 				new RegExp(searchState, "i").test(typeOfDocuments[item.type]) ||
@@ -78,7 +70,7 @@ const TemplateList = ({ documents, handlerEdit, handlerDelete }) => {
 					{
 						filtered.map((item, index) => {
 
-							const departmentName = departments.filter((e) => e.id == item.department_owner_id)[0]?.name;
+							const departmentName = departments.filter((e) => e.id === item.department_owner_id)[0]?.name;
 
 							return (
 								<div key={index} className="card mb-2 bg-body rounded">
@@ -86,7 +78,7 @@ const TemplateList = ({ documents, handlerEdit, handlerDelete }) => {
 										<h6 className="font-weight-bold card-title">Nombre: <span className="font-weight-light">{item.name}</span></h6>
 										<p className="font-weight-bold text-muted mb-0">Tipo: <span className="font-weight-light">{typeOfDocuments[item.type]}</span></p>
 										{
-											getLocalStorageUserDepartment() == 0 ?
+											getLocalStorageUserDepartment() === 0 ?
 												<p className="font-weight-bold text-muted">Pertenece a:&nbsp;
 													<span
 														className="font-weight-light"

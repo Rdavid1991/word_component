@@ -22,7 +22,6 @@ export const SelectDepartment = ({ values, handleInputChange, departments }) => 
                                 departments.map((item, index) => (
                                     <option
                                         key={index}
-                                        //selected={item.id === 0 ? true : false}
                                         value={item.id}>{item.name}</option>
                                 ))
                             }

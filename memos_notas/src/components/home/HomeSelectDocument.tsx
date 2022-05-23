@@ -1,18 +1,17 @@
 //@ts-check
 import React, { useContext } from 'react';
 import { context } from 'src/context/context';
-import { DocumentInfoSchema } from 'src/interface';
+import { TemplateInfoSchema } from 'src/interface';
 import { AlertError, AlertSuccess } from 'src/utils/Alerts';
 import { typeOfDocuments } from 'src/utils/constants';
 import { writeDocument } from 'src/utils/documents';
 import { getDocumentTemplate } from 'src/utils/SaveAndGet';
-import swal from 'sweetalert';
 import { selectedDocumentType } from './functions';
 import { parametersOfDocuments } from './functions/parametersOfDocuments';
 
 interface Props {
     setTypeOfDocumentState: any,
-    documents: Array<DocumentInfoSchema>,
+    documents: Array<TemplateInfoSchema>,
     setSelectedState: any,
     selectedState: any,
 }
@@ -28,8 +27,6 @@ const HomeSelectDocument = ({ setTypeOfDocumentState, documents, setSelectedStat
         const template = await getDocumentTemplate(target.value);
         
         setTypeOfDocumentState(selectedDocumentType(target));
-
-        
 
         await writeDocument(JSON.parse(template.data[0].doc))
             .then(async () => {

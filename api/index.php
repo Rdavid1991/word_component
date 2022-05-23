@@ -159,3 +159,17 @@ if (
             break;
     }
 }
+
+if ($_GET["action"] === "clear_cache") {
+
+    $dirs = scandir(dirname(__FILE__) . "./tmp");
+
+    foreach ($dirs as $dir) {
+        $files = glob(dirname(__FILE__) . "/tmp/" . $dir . "/*.txt");
+        foreach ($files as $file) {
+            if (is_file($file)) {
+                unlink($file);
+            }
+        }
+    }
+}

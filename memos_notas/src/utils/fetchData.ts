@@ -1,9 +1,7 @@
 import { getAddresses, getConsecutiveNumber, getDocumentInfoTemplate, getFunctionaries } from './SaveAndGet';
+import { Consecutive } from '../interface/index';
 
-interface Consecutive {
-    note: string,
-    memo: string,
-}
+
 
 const fetchData = {
 
@@ -30,8 +28,8 @@ const fetchData = {
                 }
             } else {
                 return {
-                    note: "1",
-                    memo: "1",
+                    note: 1,
+                    memo: 1,
                 };
             }
         }

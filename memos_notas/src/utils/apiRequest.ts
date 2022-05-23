@@ -36,8 +36,9 @@ export const apiRequest = (): ApiRequest => {
 
         /**
          * 
-         * @param {string} route
-         * @param {Object<string,string>} params
+         * @param route 
+         * @param params 
+         * @returns 
          */
         get: async (route: string, params: { [s: string]: string; }) => {
 

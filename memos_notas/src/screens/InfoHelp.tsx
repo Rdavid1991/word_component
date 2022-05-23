@@ -5,6 +5,7 @@ import { context } from 'src/context/context';
 import { AddresseeControls, CompensatoryTime, DocumentMemoOrNotesControls, DocumentRequestControls, FunctionaryControls } from 'src/utils/constants';
 import { saveConsecutiveNumber } from 'src/utils/SaveAndGet';
 import { localStorageAdminKey, localStorageKeyUser } from 'src/utils';
+import { apiRequest } from '../utils/apiRequest';
 
 const InfoHelp = ({ initialNumber }) => {
 
@@ -202,6 +203,13 @@ const InfoHelp = ({ initialNumber }) => {
                 }}
             >
                 Borrar datos de usuario
+            </button>
+            <button
+                onClick={() => {
+                    apiRequest().get("clear_cache", {})
+                }}
+            >
+                Borra cache
             </button>
 
         </div>

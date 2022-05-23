@@ -9,15 +9,16 @@ import { Functionary } from '../employ/Functionary';
 import { existAdmin, existUser } from 'src/utils';
 import ModalInitialUser from '../../screens/ModalInitialUser';
 import fetchData from 'src/utils/fetchData';
+import { DataStateSchema } from '../../interface/index';
 
 
-const initialState = {
+const initialDataState: DataStateSchema = {
     addressee: [],
-    documents: [],
+    templateInfo: [],
     functionaries: [],
     numberState: {
-        note: "1",
-        memo: "1",
+        note: 1,
+        memo: 1,
     }
 }
 
@@ -25,8 +26,12 @@ export const TabNavContent = () => {
 
     const { showLoader, departments } = useContext(context);
 
-    const [data, setData] = useState(initialState)
+    const [data, setData] = useState<typeof initialDataState>(initialDataState)
     const [showModal, setShowModal] = useState(false);
+
+    console.log(data.templateInfo);
+
+
 
     useLayoutEffect(() => {
 
@@ -40,7 +45,7 @@ export const TabNavContent = () => {
                 const responseFunctionary = await fetchData.fetchFunctionary();
                 setData({
                     addressee: responseAddresses,
-                    documents: responseTemplate,
+                    templateInfo: responseTemplate,
                     functionaries: responseFunctionary,
                     numberState: responseNumbers
                 })
@@ -49,7 +54,7 @@ export const TabNavContent = () => {
                 const responseTemplate = await fetchData.fetchTemplate();
                 setData({
                     ...data,
-                    documents: responseTemplate,
+                    templateInfo: responseTemplate,
 
                 })
             } else {
@@ -61,7 +66,7 @@ export const TabNavContent = () => {
 
     const fetchNumbers = async () => setData({ ...data, numberState: await fetchData.fetchNumbers() })
     const fetchAddresses = async () => setData({ ...data, addressee: await fetchData.fetchAddresses() })
-    const fetchTemplate = async () => setData({ ...data, documents: await fetchData.fetchTemplate() })
+    const fetchTemplate = async () => setData({ ...data, templateInfo: await fetchData.fetchTemplate() })
     const fetchFunctionary = async () => setData({ ...data, functionaries: await fetchData.fetchFunctionary() })
 
     return (
@@ -79,7 +84,7 @@ export const TabNavContent = () => {
                         addressee={data.addressee}
                         fetchNumbers={fetchNumbers}
                         functionaries={data.functionaries}
-                        documents={data.documents}
+                        documents={data.templateInfo}
                     />
                 </div>
                 <div className="tab-pane fade h-100" id="nav-addressees">
@@ -96,7 +101,7 @@ export const TabNavContent = () => {
                 </div>
                 <div className="tab-pane fade h-100 after" id="nav-template">
                     <Template
-                        documents={data.documents}
+                        templates={data.templateInfo}
                     />
                 </div>
                 <div className="tab-pane fade h-100 after" id="nav-employ">
