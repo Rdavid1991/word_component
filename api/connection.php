@@ -5,7 +5,7 @@ require_once(dirname(__FILE__)."/message/Message.php");
 define(
     "CONNECTION_INFO",
     array(
-        'Database' => 'memos&notas',
+        'Database' => 'db_plantillas',
         "UID" => "SA",
         "PWD" => "Abcd1234.",
         'CharacterSet' => 'UTF-8',

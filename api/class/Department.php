@@ -17,7 +17,7 @@ class Department extends ManagementDB
 
     public function get_department_info()
     {
-        $sql = "SELECT * FROM [memos&notas].[dbo].[department_owner]";
+        $sql = "SELECT * FROM [dbo].[department_owner]";
         $sql .= "WHERE [id]=?";
 
         return parent::select_query($sql, [$_GET["id"]]);
