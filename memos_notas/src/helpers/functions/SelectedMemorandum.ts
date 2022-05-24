@@ -1,6 +1,6 @@
 import moment from "moment";
 import { FormEvent } from "react";
-import { SendDataToDocument } from "src/components/home/functions/SendDataToDocument";
+import { SendDataToDocument } from "src/utils/SendDataToDocument";
 import { getLocalStorageUserDepartment, getLocalStorageUserEmail } from "src/utils";
 import { AlertError, AlertSuccess, AlertWarning } from "src/utils/Alerts";
 import { apiRequest } from "src/utils/apiRequest";

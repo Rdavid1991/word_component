@@ -1,8 +1,15 @@
 import React, { ChangeEvent, HTMLInputTypeAttribute } from 'react';
-import { DepartmentSchema } from 'src/helpers/interface';
+import { DepartmentSchema, TemplateInfoSchema } from 'src/helpers/interface';
 import { getLocalStorageUserDepartment } from 'src/utils';
 
-export const SelectDepartment = ({ values, handleInputChange, departments }) => {
+interface Props {
+    values: TemplateInfoSchema,
+    departments: Array<DepartmentSchema>,
+    handleInputChange: (e: ChangeEvent<HTMLSelectElement | HTMLInputElement>) => void
+}
+
+export const SelectDepartment = ({ values, handleInputChange, departments }: Props) => {
+
 
     return (
         <>
@@ -13,7 +20,7 @@ export const SelectDepartment = ({ values, handleInputChange, departments }) => 
                         <label htmlFor="owner" className="form-label font-weight-bold">Pertenece a</label>
                         <select id="owner"
                             className="form-control form-control-sm"
-                            value={values?.owner || ""}
+                            value={values.department_owner_id}
                             onChange={handleInputChange}
                             required
                         >

@@ -38,10 +38,6 @@ export const TabNavContent = () => {
     const [data, setData] = useState<typeof initialDataState>(initialDataState)
     const [showModal, setShowModal] = useState(false);
 
-
-
-
-
     useLayoutEffect(() => {
 
         (async () => {
@@ -53,9 +49,6 @@ export const TabNavContent = () => {
                 const responseAddresses = await fetchData.fetchAddresses();
                 const responseFunctionary = await fetchData.fetchFunctionary();
                 const responseDepartment = await fetchData.fetchDepartment(getLocalStorageUserDepartment());
-
-
-
 
                 setData({
                     addressee: responseAddresses,
@@ -84,7 +77,7 @@ export const TabNavContent = () => {
     const fetchTemplate = async () => setData({ ...data, templateInfo: await fetchData.fetchTemplate() })
     const fetchFunctionary = async () => setData({ ...data, functionaries: await fetchData.fetchFunctionary() })
     const fetchDepartment = async () => setData({ ...data, department: await fetchData.fetchDepartment(getLocalStorageUserDepartment()) })
-
+    
     return (
         <FetchContext.Provider
             value={{

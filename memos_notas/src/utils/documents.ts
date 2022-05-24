@@ -1,8 +1,5 @@
-//@ts-check
-/* global Word */
 import { DepartmentSchema } from "src/helpers/interface";
 import { AlertConfirmQuestion } from "src/utils/Alerts";
-import { DepartmentControls } from "./constants";
 
 export const readDocument = async () => {
 

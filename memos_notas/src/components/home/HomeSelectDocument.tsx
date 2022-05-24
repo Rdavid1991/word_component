@@ -7,7 +7,7 @@ import { typeOfDocuments } from 'src/utils/constants';
 import { setInitialDocumentData, writeDocument } from 'src/utils/documents';
 import { getDocumentTemplate } from 'src/utils/SaveAndGet';
 import { selectedDocumentType } from './functions';
-import { parametersOfDocuments } from './functions/parametersOfDocuments';
+import { parametersOfDocuments } from '../../utils/parametersOfDocuments';
 import { FetchContext } from '../../context/context';
 
 interface Props {
@@ -40,7 +40,6 @@ const HomeSelectDocument = ({ setTypeOfDocumentState, documents, setSelectedStat
                 await AlertError("No se puede cargar documento, revise si el documento actual no tiene controles bloqueados. " + error);
             });
 
-        
         showLoader(false);
     };
 

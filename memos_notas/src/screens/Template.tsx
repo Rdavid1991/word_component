@@ -24,24 +24,18 @@ interface Props {
 export const Template = ({ templates }: Props) => {
 
     const [values, setValues, handleInputChange, reset] = useForm<typeof initialTemplateInfoState>(initialTemplateInfoState);
-    //const { showLoader } = useContext(context);
     const { fetchTemplate } = useContext(FetchContext);
-
 
     const handlerEdit = async (id: number) => {
 
-
         const templateFound = templates.find((template) => template.id === id);
         const template = await getDocumentTemplate(id);
-
+        
         setValues({
             ...values,
             ...templateFound,
             edit: true
         });
-
-        
-        
 
         writeDocument(JSON.parse(template.data[0].doc));
         document.querySelector(".tab-content").scrollTo(0, 0);

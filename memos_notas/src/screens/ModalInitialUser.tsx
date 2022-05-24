@@ -73,6 +73,7 @@ const ModalInitialUser = ({ setShowModal }) => {
             }));
 
             $('#initialUser').modal('hide');
+            window.location.reload()
         }
     };
 

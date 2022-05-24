@@ -16,7 +16,7 @@ const TemplateList = ({ documents, handlerEdit, handlerDelete }: Props) => {
 
 	const { departments } = useContext(context);
 
-	const [filtered, setFiltered] = useState([]);
+	const [filtered, setFiltered] = useState<Array<TemplateInfoSchema>>([]);
 	const [searchState, setSearchState] = useState("");
 
 	const onClickEdit = ({ currentTarget }: MouseEvent<HTMLButtonElement>) => {
@@ -49,7 +49,6 @@ const TemplateList = ({ documents, handlerEdit, handlerDelete }: Props) => {
 		setFiltered(searching);
 	};
 
-
 	return (
 		<>
 			<div className="card my-2 rounded text-white gradient">
@@ -70,29 +69,33 @@ const TemplateList = ({ documents, handlerEdit, handlerDelete }: Props) => {
 					{
 						filtered.map((item, index) => {
 
-							const departmentName = departments.filter((e) => e.id === item.department_owner_id)[0]?.name;
+							if (item.department_owner_id !== 0 || getLocalStorageUserDepartment() === 0) {
 
-							return (
-								<div key={index} className="card mb-2 bg-body rounded">
-									<div className="card-body py-1">
-										<h6 className="font-weight-bold card-title">Nombre: <span className="font-weight-light">{item.name}</span></h6>
-										<p className="font-weight-bold text-muted mb-0">Tipo: <span className="font-weight-light">{typeOfDocuments[item.type]}</span></p>
-										{
-											getLocalStorageUserDepartment() === 0 ?
-												<p className="font-weight-bold text-muted">Pertenece a:&nbsp;
-													<span
-														className="font-weight-light"
-													>
-														{departmentName}
-													</span>
-												</p>
-												: null
-										}
-										<button className="btn btn-sm btn-secondary m-1" data-id={item.id} onClick={onClickEdit}><i className="far fa-edit"></i></button>
-										<button className="btn btn-sm btn-secondary m-1" data-id={item.id} onClick={onClickDelete}><i className="fas fa-trash-alt"></i></button>
+								const departmentName = departments.filter((e) => e.id === item.department_owner_id)[0]?.name;
+
+								return (
+									<div key={index} className="card mb-2 bg-body rounded">
+										<div className="card-body py-1">
+											<h6 className="font-weight-bold card-title">Nombre: <span className="font-weight-light">{item.name}</span></h6>
+											<p className="font-weight-bold text-muted mb-0">Tipo: <span className="font-weight-light">{typeOfDocuments[item.type]}</span></p>
+											{
+												getLocalStorageUserDepartment() === 0 ?
+													<p className="font-weight-bold text-muted">Pertenece a:&nbsp;
+														<span
+															className="font-weight-light"
+														>
+															{departmentName}
+														</span>
+													</p>
+													: null
+											}
+											<button className="btn btn-sm btn-secondary m-1" data-id={item.id} onClick={onClickEdit}><i className="far fa-edit"></i></button>
+											<button className="btn btn-sm btn-secondary m-1" data-id={item.id} onClick={onClickDelete}><i className="fas fa-trash-alt"></i></button>
+										</div>
 									</div>
-								</div>
-							);
+								);
+							}
+							return null
 						})
 					}
 

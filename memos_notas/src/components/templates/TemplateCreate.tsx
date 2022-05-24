@@ -1,11 +1,19 @@
-import React, { useContext, MouseEvent } from 'react';
+import React, { useContext, MouseEvent, ChangeEvent } from 'react';
 import { context } from 'src/context/context';
 import { InputText, SelectDepartment } from 'src/fragments';
 import { typeOfDocuments } from 'src/utils/constants';
 import { saveDocumentTemplate } from 'src/utils/SaveAndGet';
 import { FetchContext } from '../../context/context';
+import PropTypes from 'prop-types';
+import { TemplateInfoSchema } from '../../helpers/interface/index';
 
-const TemplateCreate = ({ values, reset, handleInputChange }) => {
+interface Props {
+    values: TemplateInfoSchema,
+    reset: () => void,
+    handleInputChange: (e: ChangeEvent<HTMLSelectElement | HTMLInputElement>) => void
+}
+
+const TemplateCreate = ({ values, reset, handleInputChange } : Props) => {
 
     const { showLoader, departments } = useContext(context);
     const { fetchTemplate } = useContext(FetchContext);
@@ -14,7 +22,7 @@ const TemplateCreate = ({ values, reset, handleInputChange }) => {
     /**
      * Encargarse de guardar el documento
      */
-    const handleSaveDocument = async (e : MouseEvent<HTMLFormElement>) => {
+    const handleSaveDocument = async (e: MouseEvent<HTMLFormElement>) => {
         e.preventDefault();
         //showLoader(true);
         const saved = await saveDocumentTemplate(values, reset);

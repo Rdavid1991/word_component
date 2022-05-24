@@ -1,31 +1,27 @@
-import React, { useContext } from 'react';
+import React, { FormEvent, useContext } from 'react';
 import moment from 'moment';
-import PropTypes from 'prop-types';
 import { SelectOptions } from 'src/fragments';
 import { useForm } from 'src/hooks/useForm';
 import InputDate from 'src/fragments/InputDate';
 import InputTime from 'src/fragments/InputTime';
-import { SendDataToDocument } from './functions/SendDataToDocument';
+import { SendDataToDocument } from '../../utils/SendDataToDocument';
 import { AlertSuccess } from 'src/utils/Alerts';
 import { FetchContext } from 'src/context/context';
 
 const initialState = {
 	functionary: "",
-	from       : "08:00",
-	to         : "16:00",
-	date       : moment().format("YYYY-MM-DD")
+	from: "08:00",
+	to: "16:00",
+	date: moment().format("YYYY-MM-DD")
 };
 
 const HomeCompensatoryTimeRequest = ({ setSelectedState }) => {
 
-	const [values, setValues, handleInputChange, reset] : any = useForm(initialState);
+	const [values, setValues, handleInputChange, reset]: any = useForm(initialState);
 
 	const { functionaries } = useContext(FetchContext).data
-	/**
-	 * 
-	 * @param {React.FormEvent<HTMLFormElement>} e 
-	 */
-	const handleSubmit = async (e) => {
+
+	const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		const selectedFunctionary = functionaries.find((functionary) => parseInt(functionary.id) == parseInt(values.functionary));
 
@@ -73,9 +69,4 @@ const HomeCompensatoryTimeRequest = ({ setSelectedState }) => {
 	);
 };
 
-HomeCompensatoryTimeRequest.propTypes = {
-	functionaries   : PropTypes.arrayOf(PropTypes.object).isRequired,
-	setSelectedState: PropTypes.func.isRequired
-};
-
-export default HomeCompensatoryTimeRequest;
+export default React.memo(HomeCompensatoryTimeRequest);

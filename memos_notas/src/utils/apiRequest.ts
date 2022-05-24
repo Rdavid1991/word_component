@@ -26,6 +26,7 @@ export const apiRequest = (): ApiRequest => {
 
             Object.entries(params).map(([key, value]: any) => {
                 formData.append(key, value);
+                return null;
             });
 
             return await fetch(`${globals.apiUrl}?action=${route}`, {

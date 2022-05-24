@@ -1,12 +1,12 @@
 //@ts-check
 import { useContext, useEffect, useState } from "react";
 import { typeOfDocuments } from "src/utils/constants";
+import { FetchContext } from "src/context/context";
 import HomePermissionRequest from "../components/home/HomePermissionRequest";
 import SelectedMemorandumOrNote from "../components/home/SelectedMemorandumOrNote";
-import HomeOtherDocument from "../components/home/HomeOtherDocument";
+import SelectedOtherDocument from "../components/home/SelectedOtherDocument";
 import HomeSelectDocument from "../components/home/HomeSelectDocument";
 import HomeCompensatoryTimeRequest from "../components/home/HomeCompensatoryTimeRequest";
-import { FetchContext } from "src/context/context";
 
 export const Home = () => {
 	const { documents } = useContext(FetchContext).data
@@ -16,43 +16,6 @@ export const Home = () => {
 	useEffect(() => {
 		if (selectedState.length <= 0) setTypeOfDocumentState(-1);
 	}, [selectedState]);
-
-	const renderFormTypeDocument = () => {
-
-		switch (String(typeOfDocumentState)) {
-
-			case Object.keys(typeOfDocuments)[0]:
-				return (
-					<HomeOtherDocument />
-				);
-				
-			case Object.keys(typeOfDocuments)[1]:
-			case Object.keys(typeOfDocuments)[2]:
-				return (
-					<SelectedMemorandumOrNote
-						memoOrNoteState={typeOfDocumentState}
-						setSelectedState={setSelectedState}
-					/>
-				);
-
-			case Object.keys(typeOfDocuments)[3]:
-				return (
-					<HomePermissionRequest
-						setSelectedState={setSelectedState}
-					/>
-				);
-
-			case Object.keys(typeOfDocuments)[4]:
-				return (
-					<HomeCompensatoryTimeRequest
-						setSelectedState={setSelectedState}
-					/>
-				);
-
-			default:
-				break;
-		}
-	};
 
 	return (
 		<>
@@ -73,8 +36,31 @@ export const Home = () => {
 					selectedState={selectedState}
 				/>
 				{
-					renderFormTypeDocument()
+					{
+
+						[Object.keys(typeOfDocuments)[0]]: <SelectedOtherDocument />,
+
+						[Object.keys(typeOfDocuments)[1]]: <SelectedMemorandumOrNote
+							memoOrNoteState={typeOfDocumentState}
+							setSelectedState={setSelectedState}
+						/>,
+
+						[Object.keys(typeOfDocuments)[2]]: <SelectedMemorandumOrNote
+							memoOrNoteState={typeOfDocumentState}
+							setSelectedState={setSelectedState}
+						/>,
+
+						[Object.keys(typeOfDocuments)[3]]: <HomePermissionRequest
+							setSelectedState={setSelectedState}
+						/>,
+
+						[Object.keys(typeOfDocuments)[4]]: <HomeCompensatoryTimeRequest
+							setSelectedState={setSelectedState}
+						/>
+
+					}[String(typeOfDocumentState)]
 				}
+
 			</div>
 			<div className="px-3"><hr /></div>
 		</>
