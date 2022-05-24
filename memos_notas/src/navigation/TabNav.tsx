@@ -6,17 +6,17 @@ import { getDepartment } from 'src/utils/SaveAndGet';
 
 
 const initialState = {
-    home      : false,
+    home: false,
     addressees: false,
-    employ    : false,
-    template  : false,
-    help      : false
+    employ: false,
+    template: false,
+    help: false
 };
 
 const sideNavInitial = {
-    left      : "-250px",
-    display   : "none",
-  
+    left: "-250px",
+    display: "none",
+
 };
 
 const TabNav = () => {
@@ -50,14 +50,14 @@ const TabNav = () => {
 
     const abrir = async () => {
         setSideNavToggle({
-            display   : "block",
-            left      : "0",
+            display: "block",
+            left: "0",
         });
     };
 
     return (
         <>
-            <div id="opacity" style={{ display: sideNavToggle.display}}></div>
+            <div id="opacity" style={{ display: sideNavToggle.display }}></div>
             <div
                 onClick={abrir}
                 className="menu-bar m-3"
@@ -76,7 +76,7 @@ const TabNav = () => {
                     <img className="w-100" src="./assets/logo.png" alt="" />
                     <p className='font-weight-bold text-center' style={{ fontSize: "16px" }}>{departmentName.name}</p>
 
-                    <TabScreenButtons menuState={menuState} />
+                    <TabScreenButtons />
                 </div>
             </div>
             <TabNavContent />

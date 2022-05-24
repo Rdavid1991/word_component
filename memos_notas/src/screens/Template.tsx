@@ -7,7 +7,7 @@ import { deleteDocumentTemplate, getDocumentTemplate } from 'src/utils/SaveAndGe
 import TemplateCreate from '../components/templates/TemplateCreate';
 import TemplateList from '../components/templates/TemplateList';
 import { FetchContext } from '../context/context';
-import { TemplateInfoSchema } from '../interface/index';
+import { TemplateInfoSchema } from '../helpers/interface/index';
 
 const initialTemplateInfoState: TemplateInfoSchema = {
     name: "",
@@ -40,7 +40,7 @@ export const Template = ({ templates }: Props) => {
             edit: true
         });
 
-        console.log(template);
+        
         
 
         writeDocument(JSON.parse(template.data[0].doc));

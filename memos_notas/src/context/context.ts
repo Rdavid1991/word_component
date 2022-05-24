@@ -1,5 +1,6 @@
 import { createContext } from 'react';
-import { DepartmentSchema } from 'src/interface';
+import { AddresseesSchema, DepartmentSchema, FunctionarySchema, TemplateInfoSchema } from 'src/helpers/interface';
+
 
 interface ContextSchema {
     departments: Array<DepartmentSchema>,
@@ -11,7 +12,14 @@ interface ContextSchema {
 export const context = createContext<ContextSchema>(null);
 
 interface FetchContextSchema {
-    fetchTemplate: () => Promise<void>
+    fetchTemplate: () => Promise<void>;
+    fetchNumbers: () => Promise<void>;
+    data: {
+        department: DepartmentSchema
+        addressee: Array<AddresseesSchema>
+        functionaries: Array<FunctionarySchema>
+        documents: Array<TemplateInfoSchema>
+    }
 }
 
 

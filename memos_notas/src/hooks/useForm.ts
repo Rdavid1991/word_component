@@ -3,7 +3,7 @@ import { Interface } from 'readline';
 
 
 
-export const useForm = <TypeSchema>(initialState: TypeSchema): [TypeSchema, (state: TypeSchema) => void, (e: ChangeEvent<HTMLInputElement|HTMLSelectElement>) => void, () => void] => {
+export const useForm = <TypeSchema>(initialState: TypeSchema): [TypeSchema, (state: TypeSchema) => void, (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void, () => void] => {
 
     const [values, setValues] = useState<TypeSchema>(initialState);
 

@@ -4,8 +4,8 @@ import { Space } from 'src/fragments';
 import { useForm } from 'src/hooks/useForm';
 import { AlertConfirmQuestion } from 'src/utils/Alerts';
 import { deleteFunctionary } from 'src/utils/SaveAndGet';
-import { FunctionaryCreate } from './FunctionaryCreate';
-import { FunctionaryList } from './FunctionaryList';
+import { FunctionaryCreate } from '../components/employ/FunctionaryCreate';
+import { FunctionaryList } from '../components/employ/FunctionaryList';
 
 const initialState = {
     id      : "",

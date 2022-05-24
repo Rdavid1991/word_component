@@ -194,23 +194,29 @@ const InfoHelp = ({ initialNumber }) => {
                 </tbody>
             </table>
 
-            <button
-                type='button'
-                onClick={() => {
-                    localStorage.removeItem(localStorageKeyUser)
-                    localStorage.removeItem(localStorageAdminKey)
-                    window.location.reload()
-                }}
-            >
-                Borrar datos de usuario
-            </button>
-            <button
-                onClick={() => {
-                    apiRequest().get("clear_cache", {})
-                }}
-            >
-                Borra cache
-            </button>
+            <div className="d-flex justify-content-around">
+                <button
+                    className='btn btn-secondary btn-sm'
+                    type='button'
+                    onClick={() => {
+                        localStorage.removeItem(localStorageKeyUser)
+                        localStorage.removeItem(localStorageAdminKey)
+                        window.location.reload()
+                    }}
+                >
+                    Borrar datos de usuario
+                </button>
+                <button
+                    className='btn btn-secondary btn-sm'
+                    onClick={async () => {
+                        await apiRequest().get("clear_cache", {})
+                        window.location.reload()
+                    }}
+                >
+                    Borra cache
+                </button>
+
+            </div>
 
         </div>
     );

@@ -10,6 +10,8 @@ import { AlertConfirmQuestion, AlertError, AlertSuccess } from "src/utils/Alerts
 import { apiRequest } from "src/utils/apiRequest";
 import { clearDocument, readDocument } from "src/utils/documents";
 import swal from "sweetalert";
+import DepartmentInfo from '../screens/DepartmentInfo';
+import { DepartmentSchema } from '../helpers/interface/index';
 
 
 
@@ -223,7 +225,7 @@ export const getDocumentTemplate = async (id) => {
 
     try {
         const response = await apiRequest().get("get_template_doc", { id, department_owner });
-        
+
         if (response.ok) {
             return await response.json();
         } else {
@@ -337,3 +339,33 @@ export const loginAdmin = async (user: string, pass: string) => {
     }
     return false;
 }
+
+export const getDepartmentInfo = async (id: number) => {
+    try {
+        const response = await apiRequest().get("get_department_info", { id });
+        if (response.ok) {
+            return await response.json();
+        }
+        const { message } = await response.json();
+
+        await AlertError(`Error al obtener la información del departamento: ${message.text}`);
+    } catch (error) {
+        await AlertError(`Error al obtener la información del departamento: ${error}`);
+    }
+    return false;
+}
+
+export const saveDepartmentInfo = async (department: DepartmentSchema) => {
+    try {
+        const response = await apiRequest().get("save_department_info", { ...department });
+        if (response.ok) {
+            return await response.json();
+        }
+        const { message } = await response.json();
+
+        await AlertError(`Error al obtener la información del departamento: ${message.text}`);
+    } catch (error) {
+        await AlertError(`Error al obtener la información del departamento: ${error}`);
+    }
+    return false;
+} 

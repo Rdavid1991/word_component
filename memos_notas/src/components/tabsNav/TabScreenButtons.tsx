@@ -1,17 +1,7 @@
 import React from 'react';
 
-/**
- * 
- * @param {Object} props
- * @param {Object} props.menuState
- * @param {Boolean} props.menuState.home 
- * @param {Boolean} props.menuState.addressees 
- * @param {Boolean} props.menuState.employ 
- * @param {Boolean} props.menuState.template 
- * @param {Boolean} props.menuState.help 
- * @returns 
- */
-const TabScreenButtons = ({ menuState }) => {
+
+const TabScreenButtons = () => {
 
     return (
         <nav>
@@ -26,6 +16,15 @@ const TabScreenButtons = ({ menuState }) => {
                     Plantillas
                 </button>
                 <hr className="nav-divider" />
+                <button
+                    className={`btn btn-sm btn-primary font-weight-bold mt-2 mb-2 nav-item `}
+                    id="addressees"
+                    data-toggle="tab"
+                    data-target="#nav-dep-info"
+                    type="button"
+                >
+                    Información del departamento
+                </button>
                 <button
                     className={`btn btn-sm btn-primary font-weight-bold mt-2 mb-2 nav-item `}
                     id="addressees"

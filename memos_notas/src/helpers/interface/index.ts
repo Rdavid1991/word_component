@@ -1,4 +1,4 @@
-import { Addressees } from '../components/addressees/Addressees';
+import { Addressees } from '../../components/addressees/Addressees';
 import { Interface } from 'readline';
 export interface FunctionarySchema {
     id: string,
@@ -25,8 +25,11 @@ export interface TemplateSchema {
 }
 
 export interface DepartmentSchema {
-    id: number,
-    name: string
+    id?: number;
+    name?: string;
+    phone?:string;
+    shift?:string;
+    jobTitle?:string;
 }
 
 export interface SelectedMemorandumOrNoteState {
@@ -51,8 +54,9 @@ export interface Consecutive {
 }
 
 export interface DataStateSchema {
-    addressee: Array<any>,
+    addressee: Array<AddresseesSchema>,
     templateInfo: Array<TemplateInfoSchema>,
-    functionaries: Array<any>,
-    numberState: Consecutive
+    functionaries: Array<FunctionarySchema>,
+    numberState: Consecutive,
+    department : DepartmentSchema
 }

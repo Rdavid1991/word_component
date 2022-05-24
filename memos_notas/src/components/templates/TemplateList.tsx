@@ -4,7 +4,7 @@ import { InputText } from 'src/fragments';
 
 import { getLocalStorageUserDepartment } from 'src/utils';
 import { typeOfDocuments } from "src/utils/constants";
-import { TemplateInfoSchema } from '../../interface/index';
+import { TemplateInfoSchema } from '../../helpers/interface/index';
 
 interface Props {
 	documents: Array<TemplateInfoSchema>;

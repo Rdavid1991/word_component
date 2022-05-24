@@ -1,41 +1,27 @@
-import React, { FormEvent, useContext, useEffect, useState } from 'react';
-import { fetchData } from './functions';
-import { context } from 'src/context/context';
+import React, { ChangeEvent, FormEvent, useEffect, useState, useContext } from 'react';
 import { getLocalStorageUserName } from 'src/utils';
 import { useForm } from 'src/hooks/useForm';
-import { AlertError, AlertSuccess, AlertWarning } from 'src/utils/Alerts';
 import { InputText, SelectOptions } from 'src/fragments';
-import { SendDataToDocument } from './functions/SendDataToDocument';
-import MultiSelect from './fragment/MultiSelect';
-import { AddresseesSchema, FunctionarySchema, SelectedMemorandumOrNoteState } from 'src/interface';
-
-
-
-const initialState = {
-    to: NaN,
-    subject: "",
-    functionary: "",
-    cc: [],
-    from: getLocalStorageUserName(),
-    hasCopy: false
-};
-
-
+import { initialStateSelectedMemorandumOrNote } from 'src/helpers/states/states';
+import { SelectedMemorandumSubmit } from 'src/helpers/functions/SelectedMemorandum';
+import { FetchContext } from '../../context/context';
 
 interface Props {
-    functionaries: Array<FunctionarySchema>,
-    addressee: Array<AddresseesSchema>,
     memoOrNoteState: any,
-    fetchNumbers: () => void,
     setSelectedState: (select: string) => void
 }
 
+const SelectedMemorandumOrNote = ({ memoOrNoteState, setSelectedState }: Props): JSX.Element => {
 
+    const { fetchNumbers, data } = useContext(FetchContext)
+    const { addressee, functionaries } = data;
 
-const SelectedMemorandumOrNote = ({ functionaries, addressee, memoOrNoteState, fetchNumbers, setSelectedState }: Props): JSX.Element => {
-
-    const [form, setForm, handleInputChange, reset] = useForm<SelectedMemorandumOrNoteState>(initialState);
+    const [form, setForm, handleInputChange, reset] = useForm<typeof initialStateSelectedMemorandumOrNote>(initialStateSelectedMemorandumOrNote);
     const [buttonDisabled, setButtonDisabled] = useState(true);
+
+    useEffect(() => {
+        $("#cc").selectpicker("refresh")
+    }, [form.hasCopy]);
 
     useEffect(() => {
         if (!isNaN(form.to) && form.subject.length > 0 && form.from.length > 0) {
@@ -53,37 +39,19 @@ const SelectedMemorandumOrNote = ({ functionaries, addressee, memoOrNoteState, f
         });
     }, [addressee]);
 
-    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        if (parseInt(memoOrNoteState) > 0) {
-            //showLoader(true);
+        SelectedMemorandumSubmit(functionaries, addressee, memoOrNoteState, form, setSelectedState);
+        fetchNumbers();
+        reset();
+    }
 
-            const { data } = await fetchData(addressee, memoOrNoteState, form);
-
-            if (data.length > 0) {
-
-                const functionaryFound = functionaries.find((f) => parseInt(f.id) === parseInt(form.functionary));
-
-
-                SendDataToDocument.SendDataToMemoOrNote(addressee, data[0].consecutive, form, functionaryFound)
-                    .then(() => {
-                        AlertSuccess('La información esta lista');
-                        setSelectedState("");
-                    })
-                    .catch((err) => {
-                        AlertError("No se puede editar el documento" + err,);
-                    });
-            } else {
-                await AlertError('Error al consultar base de datos o no existen registros');
-            }
-            //showLoader(false);
-
-            fetchNumbers();
-            reset();
-        } else {
-            await AlertWarning("Es memo o nota?");
-        }
-    };
+    const handleSelectChange = ({ currentTarget }: ChangeEvent<HTMLSelectElement>) => {
+        setForm({
+            ...form,
+            cc: $(currentTarget).val() as Array<string>
+        })
+    }
 
     return (
 
@@ -104,7 +72,7 @@ const SelectedMemorandumOrNote = ({ functionaries, addressee, memoOrNoteState, f
                 <div className="input-group mb-3">
                     <span className="input-group-text"><i className="far fa-paper-plane"></i></span>
                     <select
-                        value={form.to}
+                        value={isNaN(form.to) ? "" : form.to}
                         className="form-control form-control-sm"
                         id="to"
                         placeholder="A quien a dirigido"
@@ -129,24 +97,38 @@ const SelectedMemorandumOrNote = ({ functionaries, addressee, memoOrNoteState, f
                         value=""
                         id="hasCopy"
                         checked={form.hasCopy}
-                        onChange={handleInputChange} />
+                        onChange={() => setForm({ ...form, hasCopy: !form.hasCopy })} />
                     <label className="form-check-label font-weight-bold" >
                         Con copia
                     </label>
                 </div>
             </div>
 
-
             {
                 form.hasCopy ?
-                    <MultiSelect
-                        options={addressee}
-                        optionsLabel="department"
-                        id="cc"
-                        value={form.cc}
-                        required={true}
-                        onChange={handleInputChange}
-                    />
+                    <div className="mb-3">
+                        <label htmlFor="cc" className="form-label font-weight-bold">Con copia a</label>
+                        <div className="input-group mb-3">
+                            <span className="input-group-text">
+                                <i className="far fa-paper-plane"></i>
+                            </span>
+                            <select
+                                onChange={handleSelectChange}
+                                className="form-control form-control-sm selectpicker"
+                                id="cc"
+                                required={true}
+                                data-selected-text-format="count"
+                                title='No hay nada seleccionado'
+                                multiple
+                            >
+                                {
+                                    addressee.map((item, index) => (
+                                        <option className="w-100" key={index} value={index}>{item.department}</option>
+                                    ))
+                                }
+                            </select>
+                        </div>
+                    </div>
                     : null
             }
 

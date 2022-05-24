@@ -55,7 +55,7 @@ class DocTemplate extends ManagementDB
         $sql = "SELECT [id],[name],[type], [department_owner_id] FROM [dbo].[document]";
         $sql .= $_GET["department_owner"] == "0"
             ? "WHERE [active] = 1"
-            : "WHERE [department_owner_id] = ? OR [department_owner_id] = 0 AND [active] = 1";
+            : "WHERE ([department_owner_id] = ? OR [department_owner_id] = 0) AND [active] = 1";
 
         return parent::select_query($sql, [$_GET["department_owner"]]);
     }

@@ -16,8 +16,6 @@ class DocumentHistory extends ManagementDB
         parent::__destruct();
     }
 
-
-
     public function find()
     {
 

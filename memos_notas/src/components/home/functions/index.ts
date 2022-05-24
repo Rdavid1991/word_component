@@ -8,7 +8,7 @@ import {
 import "moment/locale/es-us";
 import { DocumentRequestControls, FunctionaryControls } from "src/utils/constants";
 import { apiRequest } from "src/utils/apiRequest";
-import { AddresseesSchema, SelectedMemorandumOrNoteState } from '../../../interface/index';
+import { AddresseesSchema, SelectedMemorandumOrNoteState } from '../../../helpers/interface/index';
 moment.locale("es-mx");
 
 /**
@@ -126,36 +126,6 @@ export const DocumentPermissionRequestLoadVars = async (values, functionary) => 
 	});
 };
 
-/**
- *
- * @param {Array} addressee
- * @param {number} memoOrNoteState
- * @param {Object} form
- * @returns
- */
-const fetchData = async (addressee: Array<AddresseesSchema>, memoOrNoteState, form :SelectedMemorandumOrNoteState) => {
-	/**
-	 * 1 = memo
-	 * 2 = note
-	 */
-
-	
-	
-
-	const params = {
-		"dirigido": addressee[form.to].department,
-		"asunto": form.subject,
-		"solicitado": getLocalStorageUserEmail(),
-		"date": moment().format("L"),
-		"department_owner": getLocalStorageUserDepartment()
-	};
-
-	const response = await apiRequest().post(`set_number&type=${memoOrNoteState}`, params);
-	if (response.ok) {
-		return await response.json();
-	}
-	return false;
-};
 
 
 /**
@@ -174,4 +144,4 @@ const selectedDocumentType = (target) => {
 
 };
 
-export { fetchData, selectedDocumentType };
+export {  selectedDocumentType };

@@ -1,6 +1,8 @@
 //@ts-check
 /* global Word */
+import { DepartmentSchema } from "src/helpers/interface";
 import { AlertConfirmQuestion } from "src/utils/Alerts";
+import { DepartmentControls } from "./constants";
 
 export const readDocument = async () => {
 
@@ -24,10 +26,10 @@ export const readDocument = async () => {
             const docFooterOoxml = docFooter.items[0].getFooter("Primary").getOoxml();
             const docHeaderOoxml = docHeader.items[0].getHeader("Primary").getOoxml();
 
-            
+
             await context.sync();
-            
-           
+
+
             return JSON.stringify({
                 "body": docBodyOoxml.value,
                 "footer": docFooterOoxml.value,
@@ -69,8 +71,6 @@ interface WriteDocumentTemplate {
  */
 export const writeDocument = async (template: WriteDocumentTemplate) => {
 
-    
-
     return await Word.run(async (context) => {
 
         const body = context.document.body;
@@ -96,3 +96,30 @@ export const writeDocument = async (template: WriteDocumentTemplate) => {
         return await context.sync();
     });
 };
+
+export const setInitialDocumentData = async (department: DepartmentSchema) => {
+    return await Word.run(async (context) => {
+        const department_name = context.document.contentControls.getByTag("department_name");
+        const department_phone = context.document.contentControls.getByTag("department_phone");
+        const shift_name = context.document.contentControls.getByTag("shift_name");
+        const shift_job_title = context.document.contentControls.getByTag("shift_job_title");
+
+
+        context.load(department_name)
+        context.load(department_phone)
+        context.load(shift_name)
+        context.load(shift_job_title)
+
+        await context.sync()
+        
+        
+
+        department_name.items[0]?.insertText(department.name, Word.InsertLocation.replace)
+        department_phone.items[0]?.insertText(department.phone, Word.InsertLocation.replace)
+        shift_name.items[0]?.insertText(department.shift, Word.InsertLocation.replace)
+        shift_job_title.items[0]?.insertText(department.jobTitle, Word.InsertLocation.replace)
+
+        await context.sync();
+
+    })
+}

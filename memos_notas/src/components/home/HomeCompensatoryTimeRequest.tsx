@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import { SelectOptions } from 'src/fragments';
@@ -7,6 +7,7 @@ import InputDate from 'src/fragments/InputDate';
 import InputTime from 'src/fragments/InputTime';
 import { SendDataToDocument } from './functions/SendDataToDocument';
 import { AlertSuccess } from 'src/utils/Alerts';
+import { FetchContext } from 'src/context/context';
 
 const initialState = {
 	functionary: "",
@@ -15,10 +16,11 @@ const initialState = {
 	date       : moment().format("YYYY-MM-DD")
 };
 
-const HomeCompensatoryTimeRequest = ({ functionaries, setSelectedState }) => {
+const HomeCompensatoryTimeRequest = ({ setSelectedState }) => {
 
 	const [values, setValues, handleInputChange, reset] : any = useForm(initialState);
 
+	const { functionaries } = useContext(FetchContext).data
 	/**
 	 * 
 	 * @param {React.FormEvent<HTMLFormElement>} e 

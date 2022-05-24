@@ -12,7 +12,7 @@ const App = () => {
 	const [loader, setLoader] = useState(false);
 	const [controls, setControlsState] = useState([]);
 	const [departments, setDepartments] = useState([]);
-
+	
 	useEffect(() => {
 		(async () => {
 			let { data } = await getDepartment();

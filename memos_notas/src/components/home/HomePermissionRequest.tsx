@@ -1,5 +1,6 @@
 import moment from 'moment';
-import React from 'react';
+import React, { useContext } from 'react';
+import { FetchContext } from 'src/context/context';
 import { SelectOptions } from 'src/fragments';
 import { useForm } from 'src/hooks/useForm';
 import { AlertSuccess } from 'src/utils/Alerts';
@@ -7,26 +8,16 @@ import { DocumentPermissionRequestLoadVars } from './functions';
 
 const initialState = {
 	functionary: "",
-	from       : `${moment().format("YYYY-MM-DD")}T08:00`,
-	to         : `${moment().format("YYYY-MM-DD")}T16:00`
+	from: `${moment().format("YYYY-MM-DD")}T08:00`,
+	to: `${moment().format("YYYY-MM-DD")}T16:00`
 };
 
-/**
- * 
- * @param {Object} props
- * @param {Object[]} props.functionaries
- * @param {String} props[].functionaries.id
- * @param {String} props[].functionaries.name
- * @param {String} props[].functionaries.id_card
- * @param {String} props[].functionaries.job_title
- * @param {String} props[].functionaries.position_number
- * @param {Function} props[].setSelectedState
- * @returns 
- */
-const HomePermissionRequest = ({ functionaries, setSelectedState }) => {
+const HomePermissionRequest = ({ setSelectedState }) => {
 
-	// eslint-disable-next-line no-unused-vars
-	const [values, setValues, handleInputChange, reset] : any = useForm(initialState);
+	const { functionaries } = useContext(FetchContext).data
+	
+	
+	const [values, setValues, handleInputChange, reset]: any = useForm(initialState);
 
 	/**
 	 * 
@@ -51,7 +42,7 @@ const HomePermissionRequest = ({ functionaries, setSelectedState }) => {
 				value={values.functionary}
 				options={functionaries}
 				required={true}
-				
+
 			/>
 			<div className="mb-3">
 				<label

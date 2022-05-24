@@ -1,5 +1,5 @@
 import React, { ChangeEvent, HTMLInputTypeAttribute } from 'react';
-import { DepartmentSchema } from 'src/interface';
+import { DepartmentSchema } from 'src/helpers/interface';
 import { getLocalStorageUserDepartment } from 'src/utils';
 
 export const SelectDepartment = ({ values, handleInputChange, departments }) => {

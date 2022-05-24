@@ -42,6 +42,13 @@ export const FunctionaryControls = {
     position_number: "N° Posición"
 };
 
+export const DepartmentControls = {
+    department_name : "",
+    department_phone : "",
+    shift_name : "",
+    shift_job_title : "",
+}
+
 export const typeOfDocuments = {
     0: "Otros",
     1: "Memorandum",

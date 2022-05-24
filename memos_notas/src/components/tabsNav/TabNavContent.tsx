@@ -5,17 +5,26 @@ import { Home } from '../../screens/Home';
 import { Template } from '../../screens/Template';
 import InfoHelp from '../../screens/InfoHelp';
 import { context, FetchContext } from 'src/context/context';
-import { Functionary } from '../employ/Functionary';
-import { existAdmin, existUser } from 'src/utils';
+import { Functionary } from '../../screens/Functionary';
+import { existAdmin, existUser, getLocalStorageUserDepartment } from 'src/utils';
 import ModalInitialUser from '../../screens/ModalInitialUser';
 import fetchData from 'src/utils/fetchData';
-import { DataStateSchema } from '../../interface/index';
+import { DataStateSchema } from '../../helpers/interface/index';
+import DepartmentInfo from '../../screens/DepartmentInfo';
 
 
 const initialDataState: DataStateSchema = {
     addressee: [],
     templateInfo: [],
     functionaries: [],
+    department: {
+        id: 0,
+        name: "",
+        phone: "",
+        shift: "",
+        jobTitle: "",
+
+    },
     numberState: {
         note: 1,
         memo: 1,
@@ -29,7 +38,7 @@ export const TabNavContent = () => {
     const [data, setData] = useState<typeof initialDataState>(initialDataState)
     const [showModal, setShowModal] = useState(false);
 
-    console.log(data.templateInfo);
+
 
 
 
@@ -43,11 +52,17 @@ export const TabNavContent = () => {
                 const responseTemplate = await fetchData.fetchTemplate();
                 const responseAddresses = await fetchData.fetchAddresses();
                 const responseFunctionary = await fetchData.fetchFunctionary();
+                const responseDepartment = await fetchData.fetchDepartment(getLocalStorageUserDepartment());
+
+
+
+
                 setData({
                     addressee: responseAddresses,
                     templateInfo: responseTemplate,
                     functionaries: responseFunctionary,
-                    numberState: responseNumbers
+                    numberState: responseNumbers,
+                    department: responseDepartment,
                 })
                 setShowModal(false);
             } else if (existAdmin()) {
@@ -68,11 +83,21 @@ export const TabNavContent = () => {
     const fetchAddresses = async () => setData({ ...data, addressee: await fetchData.fetchAddresses() })
     const fetchTemplate = async () => setData({ ...data, templateInfo: await fetchData.fetchTemplate() })
     const fetchFunctionary = async () => setData({ ...data, functionaries: await fetchData.fetchFunctionary() })
+    const fetchDepartment = async () => setData({ ...data, department: await fetchData.fetchDepartment(getLocalStorageUserDepartment()) })
 
     return (
-        <FetchContext.Provider value={{
-            fetchTemplate
-        }}>
+        <FetchContext.Provider
+            value={{
+                fetchTemplate,
+                fetchNumbers,
+                data: {
+                    department: data.department,
+                    addressee: data.addressee,
+                    functionaries: data.functionaries,
+                    documents: data.templateInfo,
+                }
+            }}
+        >
             <div className="tab-content scroll shadow__top" id="nav-tabContent">
 
                 {
@@ -80,12 +105,7 @@ export const TabNavContent = () => {
                 }
 
                 <div className="tab-pane fade active show" id="nav-home">
-                    <Home
-                        addressee={data.addressee}
-                        fetchNumbers={fetchNumbers}
-                        functionaries={data.functionaries}
-                        documents={data.templateInfo}
-                    />
+                    <Home />
                 </div>
                 <div className="tab-pane fade h-100" id="nav-addressees">
                     <Addressees
@@ -109,6 +129,9 @@ export const TabNavContent = () => {
                         functionaries={data.functionaries}
                         fetchFunctionary={fetchFunctionary}
                     />
+                </div>
+                <div className="tab-pane fade h-100 after" id="nav-dep-info">
+                    <DepartmentInfo {...{ fetchDepartment }} />
                 </div>
             </div>
         </FetchContext.Provider>

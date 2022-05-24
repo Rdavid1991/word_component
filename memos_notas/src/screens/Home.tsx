@@ -1,13 +1,15 @@
 //@ts-check
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { typeOfDocuments } from "src/utils/constants";
 import HomePermissionRequest from "../components/home/HomePermissionRequest";
-import HomeGenerateDocument from "../components/home/SelectedMemorandumOrNote";
+import SelectedMemorandumOrNote from "../components/home/SelectedMemorandumOrNote";
 import HomeOtherDocument from "../components/home/HomeOtherDocument";
 import HomeSelectDocument from "../components/home/HomeSelectDocument";
 import HomeCompensatoryTimeRequest from "../components/home/HomeCompensatoryTimeRequest";
+import { FetchContext } from "src/context/context";
 
-export const Home = ({ addressee, fetchNumbers, functionaries, documents }) => {
+export const Home = () => {
+	const { documents } = useContext(FetchContext).data
 	const [typeOfDocumentState, setTypeOfDocumentState] = useState(-1);
 	const [selectedState, setSelectedState] = useState("");
 
@@ -27,11 +29,8 @@ export const Home = ({ addressee, fetchNumbers, functionaries, documents }) => {
 			case Object.keys(typeOfDocuments)[1]:
 			case Object.keys(typeOfDocuments)[2]:
 				return (
-					<HomeGenerateDocument
-						functionaries={functionaries}
-						addressee={addressee}
+					<SelectedMemorandumOrNote
 						memoOrNoteState={typeOfDocumentState}
-						fetchNumbers={fetchNumbers}
 						setSelectedState={setSelectedState}
 					/>
 				);
@@ -39,7 +38,6 @@ export const Home = ({ addressee, fetchNumbers, functionaries, documents }) => {
 			case Object.keys(typeOfDocuments)[3]:
 				return (
 					<HomePermissionRequest
-						functionaries={functionaries}
 						setSelectedState={setSelectedState}
 					/>
 				);
@@ -47,7 +45,6 @@ export const Home = ({ addressee, fetchNumbers, functionaries, documents }) => {
 			case Object.keys(typeOfDocuments)[4]:
 				return (
 					<HomeCompensatoryTimeRequest
-						functionaries={functionaries}
 						setSelectedState={setSelectedState}
 					/>
 				);

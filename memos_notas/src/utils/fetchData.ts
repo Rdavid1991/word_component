@@ -1,5 +1,5 @@
-import { getAddresses, getConsecutiveNumber, getDocumentInfoTemplate, getFunctionaries } from './SaveAndGet';
-import { Consecutive } from '../interface/index';
+import { getAddresses, getConsecutiveNumber, getDocumentInfoTemplate, getFunctionaries, getDepartmentInfo } from './SaveAndGet';
+import { Consecutive, DepartmentSchema } from '../helpers/interface/index';
 
 
 
@@ -59,6 +59,18 @@ const fetchData = {
             }
         }
     },
+    fetchDepartment: async (id: number): Promise<DepartmentSchema> => {
+        const templates = await getDepartmentInfo(id);
+        if (templates) {
+            const { data } = templates;
+
+            if (data.length >= 0) {
+                return data[0];
+            } else {
+                return {}
+            }
+        }
+    }
 
 }
 
