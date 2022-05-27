@@ -5,10 +5,44 @@ import { InputText, SelectOptions } from 'src/fragments';
 import { initialStateSelectedMemorandumOrNote } from 'src/helpers/states/states';
 import { SelectedMemorandumSubmit } from 'src/helpers/functions/SelectedMemorandum';
 import { FetchContext } from '../../context/context';
+import { AddresseesSchema } from 'src/helpers/interface';
 
 interface Props {
     memoOrNoteState: any,
     setSelectedState: (select: string) => void
+}
+
+interface PropsHasCopy {
+    handleSelectChange : (e : ChangeEvent<HTMLSelectElement>)=> void
+    addressee : Array<AddresseesSchema>
+}
+
+const HasCopy = ({addressee , handleSelectChange} : PropsHasCopy) => {
+    return (
+        <div className="mb-3">
+            <label htmlFor="cc" className="form-label font-weight-bold">Con copia a</label>
+            <div className="input-group mb-3">
+                <span className="input-group-text">
+                    <i className="far fa-paper-plane"></i>
+                </span>
+                <select
+                    onChange={handleSelectChange}
+                    className="form-control form-control-sm selectpicker"
+                    id="cc"
+                    required={true}
+                    data-selected-text-format="count"
+                    title='No hay nada seleccionado'
+                    multiple
+                >
+                    {
+                        addressee.map((item, index) => (
+                            <option className="w-100" key={index} value={index}>{item.department}</option>
+                        ))
+                    }
+                </select>
+            </div>
+        </div>
+    )
 }
 
 const SelectedMemorandumOrNote = ({ memoOrNoteState, setSelectedState }: Props): JSX.Element => {
@@ -105,30 +139,8 @@ const SelectedMemorandumOrNote = ({ memoOrNoteState, setSelectedState }: Props):
             </div>
 
             {
-                form.hasCopy ?
-                    <div className="mb-3">
-                        <label htmlFor="cc" className="form-label font-weight-bold">Con copia a</label>
-                        <div className="input-group mb-3">
-                            <span className="input-group-text">
-                                <i className="far fa-paper-plane"></i>
-                            </span>
-                            <select
-                                onChange={handleSelectChange}
-                                className="form-control form-control-sm selectpicker"
-                                id="cc"
-                                required={true}
-                                data-selected-text-format="count"
-                                title='No hay nada seleccionado'
-                                multiple
-                            >
-                                {
-                                    addressee.map((item, index) => (
-                                        <option className="w-100" key={index} value={index}>{item.department}</option>
-                                    ))
-                                }
-                            </select>
-                        </div>
-                    </div>
+                form.hasCopy 
+                    ? <HasCopy {...{addressee, handleSelectChange}}/>
                     : null
             }
 

@@ -1,5 +1,4 @@
-//@ts-check
-import { useContext, useLayoutEffect, useState } from 'react';
+import React, { useContext, useLayoutEffect, useState } from 'react';
 import { Addressees } from '../addressees/Addressees';
 import { Home } from '../../screens/Home';
 import { Template } from '../../screens/Template';
@@ -14,20 +13,20 @@ import DepartmentInfo from '../../screens/DepartmentInfo';
 
 
 const initialDataState: DataStateSchema = {
-    addressee: [],
-    templateInfo: [],
-    functionaries: [],
-    department: {
-        id: 0,
-        name: "",
-        phone: "",
-        shift: "",
-        jobTitle: "",
+    addressee     : [],
+    templateInfo  : [],
+    functionaries : [],
+    department    : {
+        id       : 0,
+        name     : "",
+        phone    : "",
+        shift    : "",
+        jobTitle : "",
 
     },
     numberState: {
-        note: 1,
-        memo: 1,
+        note : 1,
+        memo : 1,
     }
 }
 
@@ -51,11 +50,11 @@ export const TabNavContent = () => {
                 const responseDepartment = await fetchData.fetchDepartment(getLocalStorageUserDepartment());
 
                 setData({
-                    addressee: responseAddresses,
-                    templateInfo: responseTemplate,
-                    functionaries: responseFunctionary,
-                    numberState: responseNumbers,
-                    department: responseDepartment,
+                    addressee     : responseAddresses,
+                    templateInfo  : responseTemplate,
+                    functionaries : responseFunctionary,
+                    numberState   : responseNumbers,
+                    department    : responseDepartment,
                 })
                 setShowModal(false);
             } else if (existAdmin()) {
@@ -81,14 +80,14 @@ export const TabNavContent = () => {
     return (
         <FetchContext.Provider
             value={{
-                fetchTemplate,
-                fetchNumbers,
                 data: {
-                    department: data.department,
-                    addressee: data.addressee,
-                    functionaries: data.functionaries,
-                    documents: data.templateInfo,
-                }
+                    addressee     : data.addressee,
+                    department    : data.department,
+                    documents     : data.templateInfo,
+                    functionaries : data.functionaries,
+                },
+                fetchNumbers,
+                fetchTemplate,
             }}
         >
             <div className="tab-content scroll shadow__top" id="nav-tabContent">
@@ -107,10 +106,7 @@ export const TabNavContent = () => {
                     />
                 </div>
                 <div className="tab-pane fade" id="nav-info-help">
-                    <InfoHelp
-                        initialNumber={data.numberState}
-                    //setNumberState={setNumberState}
-                    />
+                    <InfoHelp/>
                 </div>
                 <div className="tab-pane fade h-100 after" id="nav-template">
                     <Template

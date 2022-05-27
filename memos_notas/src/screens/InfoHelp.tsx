@@ -1,47 +1,11 @@
-import React, { useContext, useState } from 'react';
-//import Swal from 'sweetalert2';
-import { globals } from 'src/globals';
-import { context } from 'src/context/context';
-import { AddresseeControls, CompensatoryTime, DocumentMemoOrNotesControls, DocumentRequestControls, FunctionaryControls } from 'src/utils/constants';
-import { saveConsecutiveNumber } from 'src/utils/SaveAndGet';
+import React from 'react';
+import { AddresseeControls, CompensatoryTime, DepartmentControls, DocumentMemoOrNotesControls, DocumentRequestControls, FunctionaryControls } from 'src/utils/constants';
 import { localStorageAdminKey, localStorageKeyUser } from 'src/utils';
 import { apiRequest } from '../utils/apiRequest';
 
-const InfoHelp = ({ initialNumber }) => {
+const InfoHelp = () => {
 
-    const [numberState, setNumberState] = useState(initialNumber)
-
-    const { showLoader } = useContext(context);
-    const handleInputChange = ({ target }) => {
-        setNumberState({
-            ...numberState,
-            [target.id]: target.value
-        });
-    };
-
-    const handleSaveNumber = async (e) => {
-        e.preventDefault();
-        /* const { isConfirmed } = await Swal.fire({
-            title             : "Cuidado",
-            text              : "va a cambiar el numero inicial de los memos o notas, verifique que sea el numero correcto antes de continuar",
-            icon              : "question",
-            showCancelButton  : true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor : '#d33',
-            confirmButtonText : 'Continuar'
-        }); */
-
-        /* if (isConfirmed) {
-            showLoader(true);
-            const saveNumberResult = await saveConsecutiveNumber(numberState);
-            showLoader(false);
-
-            if (saveNumberResult) {
-                //await Swal.fire(saveNumberResult);
-            }
-        } */
-    };
-
+  
     /**
      * 
      * @param {React.MouseEvent<HTMLButtonElement>} e 
@@ -83,51 +47,8 @@ const InfoHelp = ({ initialNumber }) => {
 
     return (
         <div className="p-3">
-            <h3 className="text-center px-2 font-weight-bold" >Números de memos y notas</h3>
-            <form onSubmit={handleSaveNumber}>
-                <div className="mb-3">
-                    <label htmlFor="memo" className="form-label font-weight-bold">Número de memorandum</label>
-                    <div className="input-group mb-3">
-                        <span className="input-group-text"><i className="fas fa-user"></i></span>
-                        <input
-                            type="number"
-                            className="form-control form-control-sm"
-                            id="memo"
-                            placeholder="Número de memorandum"
-                            required={true}
-                            onChange={handleInputChange}
-                            value={numberState.memo}
-                        />
-                    </div>
-                    <div className="form-text">
-                        Siguiente numero de memo
-                    </div>
-                </div>
-                <div className="mb-3">
-                    <label htmlFor="note" className="form-label font-weight-bold">Número de notas</label>
-                    <div className="input-group mb-3">
-                        <span className="input-group-text"><i className="fas fa-user"></i></span>
-                        <input
-                            type="number"
-                            className="form-control form-control-sm"
-                            id="note"
-                            placeholder="Número de notas"
-                            required={true}
-                            onChange={handleInputChange}
-                            value={numberState.note}
-                        />
-                    </div>
-                    <div className="form-text">
-                        Siguiente numero de nota
-                    </div>
-                </div>
-                <div className="mb-3">
-                    <button type="submit" className="btn btn-sm btn-secondary">Guardar</button>
-                </div>
-            </form>
-            <hr />
-            <h2>Variables</h2>
-            <h3 className="font-weight-bold" >Generar numero de memos y notas</h3>
+            <h4>Variables</h4>
+            <h5 className="font-weight-bold" >Generar numero de memos y notas</h5>
             <table className="table">
                 <thead>
                     <tr>
@@ -139,7 +60,7 @@ const InfoHelp = ({ initialNumber }) => {
                     {Object.entries(DocumentMemoOrNotesControls).map(renderVariables)}
                 </tbody>
             </table>
-            <h3 className="text-center px-2 font-weight-bold" >Destinatario</h3>
+            <h5 className="text-center px-2 font-weight-bold" >Destinatario</h5>
             <table className="table">
                 <thead>
                     <tr>
@@ -151,7 +72,7 @@ const InfoHelp = ({ initialNumber }) => {
                     {Object.entries(AddresseeControls).map(renderVariables)}
                 </tbody>
             </table>
-            <h3 className="text-center px-2 font-weight-bold" >Funcionarios</h3>
+            <h5 className="text-center px-2 font-weight-bold" >Funcionarios</h5>
             <table className="table">
                 <thead>
                     <tr>
@@ -165,7 +86,7 @@ const InfoHelp = ({ initialNumber }) => {
                     }
                 </tbody>
             </table>
-            <h3 className="text-center px-2 font-weight-bold" >Solicitud de permiso</h3>
+            <h5 className="text-center px-2 font-weight-bold" >Solicitud de permiso</h5>
             <table className="table">
                 <thead>
                     <tr>
@@ -179,7 +100,7 @@ const InfoHelp = ({ initialNumber }) => {
                     }
                 </tbody>
             </table>
-            <h3 className="text-center px-2 font-weight-bold" >Uso de tiempo compensatorio</h3>
+            <h5 className="text-center px-2 font-weight-bold" >Uso de tiempo compensatorio</h5>
             <table className="table">
                 <thead>
                     <tr>
@@ -190,6 +111,20 @@ const InfoHelp = ({ initialNumber }) => {
                 <tbody>
                     {
                         Object.entries(CompensatoryTime).map(renderVariables)
+                    }
+                </tbody>
+            </table>
+            <h5 className="text-center px-2 font-weight-bold" >Variable Departamentos</h5>
+            <table className="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Campo</th>
+                        <th scope="col">Variable</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {
+                        Object.entries(DepartmentControls).map(renderVariables)
                     }
                 </tbody>
             </table>

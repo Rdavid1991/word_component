@@ -1,5 +1,5 @@
 //@ts-check
-import React, { useContext } from 'react';
+import React, { Dispatch, useContext } from 'react';
 import { context } from 'src/context/context';
 import { TemplateInfoSchema } from 'src/helpers/interface';
 import { AlertError, AlertSuccess } from 'src/utils/Alerts';
@@ -11,10 +11,10 @@ import { parametersOfDocuments } from '../../utils/parametersOfDocuments';
 import { FetchContext } from '../../context/context';
 
 interface Props {
-    setTypeOfDocumentState: any,
+    setTypeOfDocumentState: Dispatch<React.SetStateAction<number>>,
     documents: Array<TemplateInfoSchema>,
-    setSelectedState: any,
-    selectedState: any,
+    setSelectedState: Dispatch<React.SetStateAction<string>>,
+    selectedState: string,
 }
 
 const HomeSelectDocument = ({ setTypeOfDocumentState, documents, setSelectedState, selectedState }: Props) => {
@@ -28,7 +28,7 @@ const HomeSelectDocument = ({ setTypeOfDocumentState, documents, setSelectedStat
         setSelectedState(target.value);
         const template = await getDocumentTemplate(target.value);
 
-        setTypeOfDocumentState(selectedDocumentType(target));
+        setTypeOfDocumentState(Number(selectedDocumentType(target)));
 
         await writeDocument(JSON.parse(template.data[0].doc))
             .then(async () => {
@@ -56,22 +56,22 @@ const HomeSelectDocument = ({ setTypeOfDocumentState, documents, setSelectedStat
                 >
                     <option disabled value="">Seleccione una plantilla</option>
                     {
-                        Object.entries(typeOfDocuments).map((entry, index) => {
+                        Object.entries(typeOfDocuments).map((entry, i) => {
 
                             const [type, value] = entry;
 
                             if (documents.find((element) => element.type === parseInt(type))) {
 
                                 return (
-                                    <optgroup key={index} label={value}>
+                                    <optgroup key={i} label={value}>
                                         {
-                                            documents.map((item, index) => {
+                                            documents.map((item, j) => {
 
                                                 if (item.type === parseInt(type)) {
 
                                                     return (
                                                         <option
-                                                            key={index}
+                                                            key={j}
                                                             data-type={item.type}
                                                             value={item.id}
                                                         >
