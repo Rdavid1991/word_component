@@ -25,19 +25,40 @@ class Department extends ManagementDB
 
     public function save_department_info()
     {
-        $sql = "UPDATE [dbo].[department_owner] ";
-        $sql .= "SET [name] = ?, ";
-        $sql .= "[phone] = ?, ";
-        $sql .= "[shift] = ?, ";
-        $sql .= "[jobTitle] = ? ";
-        $sql .= " WHERE [id] = ?";
 
-        return parent::insert_query($sql, [
-            $_GET["name"],
-            $_GET["phone"],
-            $_GET["shift"],
-            $_GET["jobTitle"],
-            $_GET["id"]
-        ]);
+        if (isset($_GET["id"])) {
+            $sql = "UPDATE [dbo].[department_owner] ";
+            $sql .= "SET [name] = ?, ";
+            $sql .= "[phone] = ?, ";
+            $sql .= "[shift] = ?, ";
+            $sql .= "[jobTitle] = ? ";
+            $sql .= " WHERE [id] = ?";
+
+            return parent::insert_query($sql, [
+                $_POST["name"],
+                $_POST["phone"],
+                $_POST["shift"],
+                $_POST["jobTitle"],
+                $_POST["id"]
+            ]);
+        } else {
+
+            $sql = "INSERT INTO [dbo].[department_owner] ([name],[phone],[shift],[jobTitle]) ";
+            $sql .= "VALUES (?,?,?,?)";
+
+            return parent::insert_query($sql, [
+                $_POST["name"],
+                $_POST["phone"],
+                $_POST["shift"],
+                $_POST["jobTitle"],
+            ]);
+        }
+    }
+
+    public function delete_department_info()
+    {
+        $sql = "DELETE FROM [dbo].[department_owner] WHERE [id]=?";
+
+        return parent::insert_query($sql, [$_POST["id"]]);
     }
 }

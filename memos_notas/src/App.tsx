@@ -9,40 +9,42 @@ import TabNav from "./navigation/TabNav";
 
 const App = () => {
 
-	const [loader, setLoader] = useState(false);
-	const [controls, setControlsState] = useState([]);
-	const [departments, setDepartments] = useState([]);
-	
-	useEffect(() => {
-		(async () => {
-			let { data } = await getDepartment();
-			setDepartments(data);
-		})();
-	}, []);
+    const [loader, setLoader] = useState(false);
+    const [controls, setControlsState] = useState([]);
+    const [departments, setDepartments] = useState([]);
 
+    useEffect(() => {
+        fetchDepartments()
+    }, []);
 
-	const showLoader = useCallback((show : any) => {
-		setLoader(show);
-	}, [loader]);
+    const fetchDepartments = async () => {
+        const { data } = await getDepartment();
+        setDepartments(data);
+    }
 
-	const setControls = useCallback((controls : any) => {
-		setControlsState(controls);
-	}, [controls]);
+    const showLoader = useCallback((show: any) => {
+        setLoader(show);
+    }, [loader]);
 
-	return (
-		<context.Provider value={{
-			showLoader,
-			setControls,
-			controls,
-			departments
-		}}>
+    const setControls = useCallback((controls: any) => {
+        setControlsState(controls);
+    }, [controls]);
 
-			<div id="container">
-				{/* <div className={`loader loader-default ${loader ? "is-active" : ""} `} style={{ zIndex: 1 }}></div> */}
-				<TabNav />
-			</div>
-		</context.Provider>
-	);
+    return (
+        <context.Provider value={{
+            controls,
+            departments,
+            fetchDepartments,
+            setControls,
+            showLoader,
+        }}>
+
+            <div id="container">
+                {/* <div className={`loader loader-default ${loader ? "is-active" : ""} `} style={{ zIndex: 1 }}></div> */}
+                <TabNav />
+            </div>
+        </context.Provider>
+    );
 };
 
 export default App

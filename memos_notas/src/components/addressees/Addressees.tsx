@@ -8,12 +8,12 @@ import { AddresseesCreate } from './AddresseesCreate';
 import { AddresseesList } from './AddresseesList';
 
 const initialState = {
-    id        : "",
-    name      : "",
-    jobTitle  : "",
-    archetype : "",
-    department: "",
-    edit      : false
+    id         : "",
+    name       : "",
+    jobTitle   : "",
+    archetype  : "",
+    department : "",
+    edit       : false
 };
 
 /**
@@ -23,7 +23,7 @@ const initialState = {
  * @param {Function} props.fetchAddresses
  * @returns 
  */
-export const Addressees = ({ addressee, fetchAddresses }) => {
+export const Addressees = ({ addressee, fetchAddresses }: any) => {
     
 
     const { showLoader, departments } = useContext(context);
@@ -35,12 +35,12 @@ export const Addressees = ({ addressee, fetchAddresses }) => {
         const found = addressee.find((a) => a.id == idEdit);
 
         setForm({
-            id        : found.id,
-            name      : found.name,
-            jobTitle  : found.jobTitle,
-            archetype : found.archetype,
-            department: found.department,
-            edit      : true
+            id         : found.id,
+            name       : found.name,
+            jobTitle   : found.jobTitle,
+            archetype  : found.archetype,
+            department : found.department,
+            edit       : true
         });
         document.querySelector(".tab-content").scrollTo(0, 0);
     };

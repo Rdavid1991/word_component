@@ -3,8 +3,9 @@ import { AddresseesSchema, DepartmentSchema, FunctionarySchema, TemplateInfoSche
 
 
 interface ContextSchema {
-    departments: Array<DepartmentSchema>,
     controls: Array<any>
+    departments: Array<DepartmentSchema>,
+    fetchDepartments : () => void;
     showLoader: (show: boolean) => void,
     setControls: (controls: Array<any>) => void
 }

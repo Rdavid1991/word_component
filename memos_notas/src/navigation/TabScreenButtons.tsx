@@ -1,4 +1,5 @@
 import React from 'react';
+import { getLocalStorageUserDepartment } from 'src/utils';
 
 
 const TabScreenButtons = () => {
@@ -16,15 +17,30 @@ const TabScreenButtons = () => {
                     Plantillas
                 </button>
                 <hr className="nav-divider" />
-                <button
-                    className={`btn btn-sm btn-primary font-weight-bold mt-2 mb-2 nav-item `}
-                    id="addressees"
-                    data-toggle="tab"
-                    data-target="#nav-dep-info"
-                    type="button"
-                >
-                    Información del departamento
-                </button>
+                {
+                    getLocalStorageUserDepartment()=== 0
+                        ? 
+                            <button
+                                className={`btn btn-sm btn-primary font-weight-bold mt-2 mb-2 nav-item `}
+                                data-toggle="tab"
+                                data-target="#nav-dep-info-admin"
+                                type="button"
+                            >
+                                Crear o editar departamentos
+                            </button>
+
+                        : 
+                            <button
+                                className={`btn btn-sm btn-primary font-weight-bold mt-2 mb-2 nav-item `}
+                                id="addressees"
+                                data-toggle="tab"
+                                data-target="#nav-dep-info"
+                                type="button"
+                            >
+                                Información del departamento
+                            </button>
+                }
+
                 <button
                     className={`btn btn-sm btn-primary font-weight-bold mt-2 mb-2 nav-item `}
                     id="addressees"

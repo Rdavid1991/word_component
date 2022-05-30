@@ -1,15 +1,16 @@
 import React, { useContext, useLayoutEffect, useState } from 'react';
-import { Addressees } from '../addressees/Addressees';
-import { Home } from '../../screens/Home';
-import { Template } from '../../screens/Template';
-import InfoHelp from '../../screens/InfoHelp';
+import { Addressees } from '../components/addressees/Addressees';
+import { Home } from '../screens/Home';
+import { Template } from '../screens/Template';
+import { Functionary } from '../screens/Functionary';
 import { context, FetchContext } from 'src/context/context';
-import { Functionary } from '../../screens/Functionary';
+import { DataStateSchema } from '../helpers/interface/index';
 import { existAdmin, existUser, getLocalStorageUserDepartment } from 'src/utils';
-import ModalInitialUser from '../../screens/ModalInitialUser';
+import InfoHelp from '../screens/InfoHelp';
+import ModalInitialUser from '../screens/ModalInitialUser';
 import fetchData from 'src/utils/fetchData';
-import { DataStateSchema } from '../../helpers/interface/index';
-import DepartmentInfo from '../../screens/DepartmentInfo';
+import DepartmentInfo from '../screens/DepartmentInfoUser';
+import DepartmentInfoAdmin from 'src/screens/DepartmentInfoAdmin';
 
 
 const initialDataState: DataStateSchema = {
@@ -51,10 +52,10 @@ export const TabNavContent = () => {
 
                 setData({
                     addressee     : responseAddresses,
-                    templateInfo  : responseTemplate,
+                    department    : responseDepartment,
                     functionaries : responseFunctionary,
                     numberState   : responseNumbers,
-                    department    : responseDepartment,
+                    templateInfo  : responseTemplate,
                 })
                 setShowModal(false);
             } else if (existAdmin()) {
@@ -76,7 +77,7 @@ export const TabNavContent = () => {
     const fetchTemplate = async () => setData({ ...data, templateInfo: await fetchData.fetchTemplate() })
     const fetchFunctionary = async () => setData({ ...data, functionaries: await fetchData.fetchFunctionary() })
     const fetchDepartment = async () => setData({ ...data, department: await fetchData.fetchDepartment(getLocalStorageUserDepartment()) })
-    
+
     return (
         <FetchContext.Provider
             value={{
@@ -106,7 +107,7 @@ export const TabNavContent = () => {
                     />
                 </div>
                 <div className="tab-pane fade" id="nav-info-help">
-                    <InfoHelp/>
+                    <InfoHelp />
                 </div>
                 <div className="tab-pane fade h-100 after" id="nav-template">
                     <Template
@@ -121,6 +122,9 @@ export const TabNavContent = () => {
                 </div>
                 <div className="tab-pane fade h-100 after" id="nav-dep-info">
                     <DepartmentInfo {...{ fetchDepartment }} />
+                </div>
+                <div className="tab-pane fade h-100 after" id="nav-dep-info-admin">
+                    <DepartmentInfoAdmin />
                 </div>
             </div>
         </FetchContext.Provider>

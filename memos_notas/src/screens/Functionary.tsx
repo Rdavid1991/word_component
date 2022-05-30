@@ -8,12 +8,12 @@ import { FunctionaryCreate } from '../components/employ/FunctionaryCreate';
 import { FunctionaryList } from '../components/employ/FunctionaryList';
 
 const initialState = {
-    id      : "",
-    name    : "",
-    idCard  : "",
-    jobTitle: "",
-    position: "",
-    edit    : false
+    id       : "",
+    name     : "",
+    idCard   : "",
+    jobTitle : "",
+    position : "",
+    edit     : false
 };
 
 /**
@@ -23,7 +23,7 @@ const initialState = {
  * @param {Function} props.fetchFunctionary
  * @returns 
  */
-export const Functionary = ({ functionaries, fetchFunctionary }) => {
+export const Functionary = ({ functionaries, fetchFunctionary }  : any) => {
 
     const { showLoader } = useContext(context);
 
@@ -33,12 +33,12 @@ export const Functionary = ({ functionaries, fetchFunctionary }) => {
         const { id, name, id_card, job_title, position_number } = functionaries.find((e) => e.id === idEdit);
 
         setValues({
-            id      : id,
-            name    : name,
-            idCard  : id_card,
-            jobTitle: job_title,
-            position: position_number,
-            edit    : true
+            id       : id,
+            name     : name,
+            idCard   : id_card,
+            jobTitle : job_title,
+            position : position_number,
+            edit     : true
         });
 
         document.querySelector(".tab-content").scrollTo(0, 0);

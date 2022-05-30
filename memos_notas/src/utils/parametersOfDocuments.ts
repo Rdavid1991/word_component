@@ -4,7 +4,7 @@
 export const parametersOfDocuments = async () => {
 
     return await Word.run(async (context) => {
-        let fields = [];
+        const fields = [];
         const control = context.document.body.contentControls;
 
         context.load(control);
@@ -13,8 +13,8 @@ export const parametersOfDocuments = async () => {
         for (const item of control.items) {
             if (item.tag && item.title) {
                 fields.push({
-                    "tag"  : item.tag,
-                    "title": item.title
+                    "tag"   : item.tag,
+                    "title" : item.title
                 });
             }
         }

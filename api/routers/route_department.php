@@ -28,5 +28,9 @@ if (str_contains($_GET["action"], "department")) {
             $cacheManager->removeCache();
             echo Response::responseInsert($department->save_department_info());
             break;
+        case 'delete_department_info' :
+            $cacheManager->removeCache();
+            echo Response::responseDelete($department->delete_department_info());
+            break;
     }
 }

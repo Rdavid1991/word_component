@@ -2,25 +2,25 @@ import swal from 'sweetalert';
 
 const AlertError = async (error) => {
     return await swal({
-        title: "A ocurrido un error",
-        text : error,
-        icon : "error"
+        title : "A ocurrido un error",
+        text  : error,
+        icon  : "error"
     });
 };
 
 const AlertWarning = async (warning) => {
     return await swal({
-        title: "Oops!!",
-        text : warning,
-        icon : "warning"
+        title : "Oops!!",
+        text  : warning,
+        icon  : "warning"
     });
 };
 
 const AlertSuccess = async (success) => {
     return await swal({
-        title: "Hecho",
-        text : success,
-        icon : "success"
+        title : "Hecho",
+        text  : success,
+        icon  : "success"
     });
 };
 
@@ -29,19 +29,19 @@ const AlertSuccess = async (success) => {
  * @param {string} question Pregunta de acción a realizar
  * @returns 
  */
-const AlertConfirmQuestion = async (question) => {
+const AlertConfirmQuestion = async (question: string) : Promise<boolean> => {
     return await swal(
         'Esta seguro(a)?',
         question,
         'warning', {
             buttons: {
-                cancel: true,
-                yes   : {
-                    text : "Si, hacerlo",
-                    value: true
+                cancel : true,
+                yes    : {
+                    text  : "Si, hacerlo",
+                    value : true
                 }
             }
-    });
+        });
 };
 
 export const AlertPlatform = async () => {

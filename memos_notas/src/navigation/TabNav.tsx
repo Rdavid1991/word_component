@@ -1,21 +1,22 @@
 import React, { useState, useEffect } from 'react';
-import TabScreenButtons from '../components/tabsNav/TabScreenButtons';
-import { TabNavContent } from '../components/tabsNav/TabNavContent';
+
+import { TabNavContent } from './TabNavContent';
 import { getLocalStorageUserDepartment } from 'src/utils';
 import { getDepartment } from 'src/utils/SaveAndGet';
+import TabScreenButtons from './TabScreenButtons';
 
 
 const initialState = {
-    home: false,
-    addressees: false,
-    employ: false,
-    template: false,
-    help: false
+    home       : false,
+    addressees : false,
+    employ     : false,
+    template   : false,
+    help       : false
 };
 
 const sideNavInitial = {
-    left: "-250px",
-    display: "none",
+    left    : "-250px",
+    display : "none",
 
 };
 
@@ -50,8 +51,8 @@ const TabNav = () => {
 
     const abrir = async () => {
         setSideNavToggle({
-            display: "block",
-            left: "0",
+            display : "block",
+            left    : "0",
         });
     };
 

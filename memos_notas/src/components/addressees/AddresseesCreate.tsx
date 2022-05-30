@@ -3,7 +3,7 @@ import React from 'react';
 import { InputText, SelectDepartment } from 'src/fragments';
 import { saveAddressees } from 'src/utils/SaveAndGet';
 
-export const AddresseesCreate = ({ departments, fetchAddresses, handleInputChange, form, reset }) => {
+export const AddresseesCreate = ({ departments, fetchAddresses, handleInputChange, form, reset } : any) => {
 
     const handleSaveAddressees = async (e) => {
         e.preventDefault();

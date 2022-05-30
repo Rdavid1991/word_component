@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { InputText } from 'src/fragments';
 
-export const AddresseesList = ({ addressee, handlerEdit, handlerDelete }) => {
+export const AddresseesList = ({ addressee, handlerEdit, handlerDelete } : any) => {
 
     const [filtered, setFiltered] = useState([]);
     const [searchState, setSearchState] = useState("");
@@ -20,7 +20,7 @@ export const AddresseesList = ({ addressee, handlerEdit, handlerDelete }) => {
 
     const handlerFilterSearch = () => {
 
-        let searching = addressee.filter((addressee) => {
+        const searching = addressee.filter((addressee) => {
             return new RegExp(searchState, "i").test(addressee.name) ||
                 new RegExp(searchState, "i").test(addressee.archetype) ||
                 new RegExp(searchState, "i").test(addressee.jobTitle) ||

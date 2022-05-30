@@ -6,7 +6,7 @@ import { Consecutive, DepartmentSchema } from '../helpers/interface/index';
 const fetchData = {
 
     fetchFunctionary: async (): Promise<Array<any>> => {
-        let functionary = await getFunctionaries();
+        const functionary = await getFunctionaries();
         if (functionary) {
             const { data } = functionary;
             if (data.length > 0) {
@@ -18,18 +18,18 @@ const fetchData = {
     },
 
     fetchNumbers: async (): Promise<Consecutive> => {
-        let consecutive = await getConsecutiveNumber();
+        const consecutive = await getConsecutiveNumber();
         if (consecutive) {
             const { data } = consecutive;
             if (data.length > 0) {
                 return {
-                    note: data[0].notes,
-                    memo: data[0].memorandum,
+                    memo : data[0].memorandum,
+                    note : data[0].notes,
                 }
             } else {
                 return {
-                    note: 1,
-                    memo: 1,
+                    memo : 1,
+                    note : 1,
                 };
             }
         }

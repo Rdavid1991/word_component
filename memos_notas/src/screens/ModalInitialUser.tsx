@@ -6,17 +6,17 @@ import { localStorageAdminKey, localStorageKeyUser } from 'src/utils';
 import { loginAdmin } from '../utils/SaveAndGet';
 
 const initialState = {
-    user: "",
-    email: "",
-    department: ""
+    email      : "",
+    department : "",
+    user       : "",
 };
 
 const initialAdmin = {
-    user: "",
-    pass: ""
+    pass : "",
+    user : "",
 }
 
-const ModalInitialUser = ({ setShowModal }) => {
+const ModalInitialUser = ({ setShowModal } : any) => {
 
     const { departments } = useContext(context);
     const [values, setValues, handleInputChange, reset] = useForm<typeof initialState>(initialState);
@@ -68,8 +68,8 @@ const ModalInitialUser = ({ setShowModal }) => {
             const { data } = await loginAdmin(admin.user, admin.pass);
 
             localStorage.setItem(localStorageAdminKey, JSON.stringify({
-                department: data[0].department,
-                admin: data[0].user,
+                department : data[0].department,
+                admin      : data[0].user,
             }));
 
             $('#initialUser').modal('hide');
@@ -91,89 +91,89 @@ const ModalInitialUser = ({ setShowModal }) => {
                     {
                         panel === 'admin'
                             ?
-                            <form
-                                onSubmit={handleSave}
-                            >
-                                <div className="modal-body">
-                                    <InputText
-                                        value={admin.user}
-                                        onChange={handleAdminChange}
-                                        name="user"
-                                        placeholder="Nombre de usuario administrador"
-                                        htmlLabel="Usuario"
-                                        required={true}
-                                    />
-
-                                    <InputText
-                                        type={'password'}
-                                        value={admin.pass}
-                                        onChange={handleAdminChange}
-                                        name="pass"
-                                        placeholder="Contraseña de administrador"
-                                        htmlLabel="Contraseña"
-                                        required={true}
-                                    />
-                                </div>
-                                <div className="modal-footer">
-                                    <button type="button" className='float-left btn btn-sm btn-secondary' onClick={() => setPanel("initial")}>Perfil</button>
-                                    <button type="submit" className="btn btn-sm btn-primary" >Iniciar</button>
-                                </div>
-                            </form>
-                            :
-                            <form
-                                onSubmit={handleSave}
-                            >
-                                <div className="modal-body">
-                                    <p>Para continuar ingrese la información solicitada</p>
-
-                                    <InputText
-                                        value={values.user}
-                                        onChange={handleInputChange}
-                                        name="user"
-                                        htmlId="swal-input1"
-                                        placeholder="Nombre Apellido"
-                                        htmlLabel="Nombre y apellido"
-                                        required={true}
-                                    />
-
-                                    <InputText
-                                        value={values.email}
-                                        onChange={handleInputChange}
-                                        name="email"
-                                        htmlId="swal-input2"
-                                        placeholder="usuario@mides.gob.pa"
-                                        htmlLabel="Correo"
-                                        required={true}
-                                    />
-
-                                    <div className="mb-3">
-                                        <label htmlFor="swal-input1" className="form-label font-weight-bold">Departamento</label>
-                                        <select
-                                            id='user_department'
-                                            className="form-control form-control-sm"
-                                            value={values.department}
-                                            name="department"
-                                            onChange={handleInputChange}
+                                <form
+                                    onSubmit={handleSave}
+                                >
+                                    <div className="modal-body">
+                                        <InputText
+                                            value={admin.user}
+                                            onChange={handleAdminChange}
+                                            name="user"
+                                            placeholder="Nombre de usuario administrador"
+                                            htmlLabel="Usuario"
                                             required={true}
-                                        >
-                                            <option disabled value="">Seleccione un departamento</option>
-                                            {
-                                                departments.map((item, index) => {
+                                        />
 
-                                                    return item.id !== 0
-                                                        ? <option key={index} value={item.id}>{item.name}</option>
-                                                        : null
-                                                })
-                                            }
-                                        </select>
+                                        <InputText
+                                            type={'password'}
+                                            value={admin.pass}
+                                            onChange={handleAdminChange}
+                                            name="pass"
+                                            placeholder="Contraseña de administrador"
+                                            htmlLabel="Contraseña"
+                                            required={true}
+                                        />
                                     </div>
+                                    <div className="modal-footer">
+                                        <button type="button" className='float-left btn btn-sm btn-secondary' onClick={() => setPanel("initial")}>Perfil</button>
+                                        <button type="submit" className="btn btn-sm btn-primary" >Iniciar</button>
+                                    </div>
+                                </form>
+                            :
+                                <form
+                                    onSubmit={handleSave}
+                                >
+                                    <div className="modal-body">
+                                        <p>Para continuar ingrese la información solicitada</p>
 
-                                </div>
-                                <div className="modal-footer">
-                                    <button type="button" className='float-left btn btn-sm btn-secondary' onClick={() => setPanel("admin")}>Administrar</button>
-                                    <button type="submit" className="btn btn-sm btn-primary" >Guardar</button>
-                                </div>
-                            </form>
+                                        <InputText
+                                            value={values.user}
+                                            onChange={handleInputChange}
+                                            name="user"
+                                            htmlId="swal-input1"
+                                            placeholder="Nombre Apellido"
+                                            htmlLabel="Nombre y apellido"
+                                            required={true}
+                                        />
+
+                                        <InputText
+                                            value={values.email}
+                                            onChange={handleInputChange}
+                                            name="email"
+                                            htmlId="swal-input2"
+                                            placeholder="usuario@mides.gob.pa"
+                                            htmlLabel="Correo"
+                                            required={true}
+                                        />
+
+                                        <div className="mb-3">
+                                            <label htmlFor="swal-input1" className="form-label font-weight-bold">Departamento</label>
+                                            <select
+                                                id='user_department'
+                                                className="form-control form-control-sm"
+                                                value={values.department}
+                                                name="department"
+                                                onChange={handleInputChange}
+                                                required={true}
+                                            >
+                                                <option disabled value="">Seleccione un departamento</option>
+                                                {
+                                                    departments.map((item, index) => {
+
+                                                        return item.id !== 0
+                                                            ? <option key={index} value={item.id}>{item.name}</option>
+                                                            : null
+                                                    })
+                                                }
+                                            </select>
+                                        </div>
+
+                                    </div>
+                                    <div className="modal-footer">
+                                        <button type="button" className='float-left btn btn-sm btn-secondary' onClick={() => setPanel("admin")}>Administrar</button>
+                                        <button type="submit" className="btn btn-sm btn-primary" >Guardar</button>
+                                    </div>
+                                </form>
                     }
                 </div>
             </div>

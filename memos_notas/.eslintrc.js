@@ -21,7 +21,7 @@ module.exports = {
         "@typescript-eslint"
     ],
     "rules": {
-        '@typescript-eslint/no-shadow' : ['error'],
+        '@typescript-eslint/no-shadow' : ['warn'],
         'indent'                       : ['warn', 4, { 'offsetTernaryExpressions': true }],
         'key-spacing'                  : [
             'warn',
@@ -33,6 +33,7 @@ module.exports = {
                 },
             },
         ],
+        'no-prototype-builtins'         : 0,
         'no-shadow'                     : 'off',
         'no-undef'                      : 'off',
         'prettier/prettier'             : 0,

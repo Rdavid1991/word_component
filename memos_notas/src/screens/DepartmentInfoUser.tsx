@@ -3,7 +3,7 @@ import { InputText } from '../fragments/index';
 import { DepartmentSchema } from '../helpers/interface/index';
 import { FetchContext } from '../context/context';
 import { useEffect } from 'react';
-import { saveDepartmentInfo } from 'src/utils/SaveAndGet';
+import { DepartmentInfoSave } from 'src/utils/SaveAndGet';
 import { FormEvent } from 'react';
 import { useForm } from 'src/hooks/useForm';
 
@@ -23,7 +23,7 @@ const DepartmentInfo = ({ fetchDepartment }: Props) => {
 
     const saveTemplateInfo = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        await saveDepartmentInfo(department)
+        await DepartmentInfoSave(department)
         //fetchDepartment()
     }
 

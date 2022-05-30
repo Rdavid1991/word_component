@@ -27,9 +27,9 @@ export interface TemplateSchema {
 export interface DepartmentSchema {
     id?: number;
     name?: string;
-    phone?:string;
-    shift?:string;
-    jobTitle?:string;
+    phone?: string;
+    shift?: string;
+    jobTitle?: string;
 }
 
 export interface SelectedMemorandumOrNoteState {
@@ -58,5 +58,13 @@ export interface DataStateSchema {
     templateInfo: Array<TemplateInfoSchema>,
     functionaries: Array<FunctionarySchema>,
     numberState: Consecutive,
-    department : DepartmentSchema
+    department: DepartmentSchema
+}
+
+export interface Result {
+    message: {
+        title: string;
+        text: string;
+        icon: string;
+    }
 }

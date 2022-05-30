@@ -1,5 +1,5 @@
 import { ChangeEvent, useState } from 'react';
-import { Interface } from 'readline';
+
 
 
 
@@ -14,8 +14,8 @@ export const useForm = <TypeSchema>(initialState: TypeSchema): [TypeSchema, (sta
     const handleInputChange = ({ target }) => {
 
         if (target.tagName === 'SELECT' && target.multiple) {
-            let selected = [];
-            for (let option of target.selectedOptions) {
+            const selected = [];
+            for (const option of target.selectedOptions) {
                 selected.push(option.value);
             }
             setValues({

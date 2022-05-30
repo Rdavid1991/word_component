@@ -10,7 +10,7 @@ import { AlertConfirmQuestion, AlertError, AlertSuccess } from "src/utils/Alerts
 import { apiRequest } from "src/utils/apiRequest";
 import { clearDocument, readDocument } from "src/utils/documents";
 import swal from "sweetalert";
-import DepartmentInfo from '../screens/DepartmentInfo';
+import DepartmentInfo from '../screens/DepartmentInfoUser';
 import { DepartmentSchema } from '../helpers/interface/index';
 
 
@@ -46,7 +46,7 @@ export const getAddresses = async () => {
     const department_owner = getLocalStorageUserDepartment();
     try {
 
-        let response = await apiRequest().get("get_addressee", { department_owner });
+        const response = await apiRequest().get("get_addressee", { department_owner });
         if (response.ok) {
             return await response.json();
         }
@@ -75,7 +75,7 @@ export const saveAddressees = async (form) => {
 
     try {
         const route = `${form.edit ? "edit" : "save"}_addressee`;
-        let response = await apiRequest().post(route, { ...form, department_owner });
+        const response = await apiRequest().post(route, { ...form, department_owner });
         if (response.ok) {
             const { message } = await response.json();
             await swal(message);
@@ -98,7 +98,7 @@ export const saveAddressees = async (form) => {
 export const deleteAddressees = async (id) => {
 
     try {
-        let response = await apiRequest().post("delete_addressee", { id });
+        const response = await apiRequest().post("delete_addressee", { id });
         if (response.ok) {
             const { message } = await response.json();
             await swal(message);
@@ -114,7 +114,7 @@ export const deleteAddressees = async (id) => {
 export const deleteFunctionary = async (id) => {
 
     try {
-        let response = await apiRequest().post("delete_functionary", { id });
+        const response = await apiRequest().post("delete_functionary", { id });
         if (response.ok) {
 
             const { message } = await response.json();
@@ -133,7 +133,7 @@ export const saveFunctionary = async (form) => {
 
     try {
         const route = `${form.edit ? "edit" : "save"}_functionary`;
-        let response = await apiRequest().post(route, { ...form, department_owner });
+        const response = await apiRequest().post(route, { ...form, department_owner });
         if (response.ok) {
             const { message } = await response.json();
             await swal(message);
@@ -355,9 +355,9 @@ export const getDepartmentInfo = async (id: number) => {
     return false;
 }
 
-export const saveDepartmentInfo = async (department: DepartmentSchema) => {
+export const DepartmentInfoSave = async (department: DepartmentSchema) => {
     try {
-        const response = await apiRequest().get("save_department_info", { ...department });
+        const response = await apiRequest().post("save_department_info", { ...department });
         if (response.ok) {
             return await response.json();
         }
@@ -368,4 +368,19 @@ export const saveDepartmentInfo = async (department: DepartmentSchema) => {
         await AlertError(`Error al obtener la información del departamento: ${error}`);
     }
     return false;
-} 
+}
+
+export const DepartmentInfoDelete = async (id: number) => {
+    try {
+        const response = await apiRequest().post("delete_department_info", { id });
+        if (response.ok) {
+            return await response.json();
+        }
+        const { message } = await response.json();
+
+        await AlertError(`Error al borrar la información del departamento: ${message.text}`);
+    } catch (error) {
+        await AlertError(`Error al borrar la información del departamento: ${error}`);
+    }
+    return false;
+}
