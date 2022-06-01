@@ -68,3 +68,9 @@ export interface Result {
         icon: string;
     }
 }
+
+export interface PermissionRequestSchema {
+    from        :string;
+    functionary :string;
+    to  :string;
+}

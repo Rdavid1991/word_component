@@ -1,4 +1,3 @@
-//@ts-check
 import React, { Dispatch, useContext } from 'react';
 import { context } from 'src/context/context';
 import { TemplateInfoSchema } from 'src/helpers/interface';
@@ -6,7 +5,7 @@ import { AlertError, AlertSuccess } from 'src/utils/Alerts';
 import { typeOfDocuments } from 'src/utils/constants';
 import { setInitialDocumentData, writeDocument } from 'src/utils/documents';
 import { getDocumentTemplate } from 'src/utils/SaveAndGet';
-import { selectedDocumentType } from './functions';
+import { selectedDocumentType } from '../../helpers/documents/sendDataToPermissionRequest';
 import { parametersOfDocuments } from '../../utils/parametersOfDocuments';
 import { FetchContext } from '../../context/context';
 

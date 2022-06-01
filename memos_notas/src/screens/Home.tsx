@@ -43,9 +43,7 @@ export const Home = () => {
 
                         [Object.keys(typeOfDocuments)[2]]: <SelectedNote {...{ setSelectedState }} />,
 
-                        [Object.keys(typeOfDocuments)[3]]: <SelectedPermissionRequest
-                            setSelectedState={setSelectedState}
-                        />,
+                        [Object.keys(typeOfDocuments)[3]]: <SelectedPermissionRequest {...{ setSelectedState }} />,
 
                         [Object.keys(typeOfDocuments)[4]]: <HomeCompensatoryTimeRequest
                             setSelectedState={setSelectedState}

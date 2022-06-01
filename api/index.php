@@ -4,7 +4,6 @@ header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: *");
 
 require_once(dirname(__FILE__) . "/ManagementDB/ManagementDB.php");
-require_once(dirname(__FILE__) . "/class/DocumentHistory.php");
 require_once(dirname(__FILE__) . "/class/DocTemplate.php");
 require_once(dirname(__FILE__) . "/class/Options.php");
 require_once(dirname(__FILE__) . "/class/Addressee.php");

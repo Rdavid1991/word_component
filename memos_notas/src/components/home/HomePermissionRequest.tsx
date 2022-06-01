@@ -2,36 +2,36 @@ import moment from 'moment';
 import React, { Dispatch, useContext } from 'react';
 import { FetchContext } from 'src/context/context';
 import { SelectOptions } from 'src/fragments';
+import { PermissionRequestSchema } from 'src/helpers/interface';
 import { useForm } from 'src/hooks/useForm';
 import { AlertSuccess } from 'src/utils/Alerts';
-import { DocumentPermissionRequestLoadVars } from './functions';
+import { sendDataToPermissionRequest } from '../../helpers/documents/sendDataToPermissionRequest';
 
 const initialState = {
     from        : `${moment().format("YYYY-MM-DD")}T08:00`,
     functionary : "",
     to          : `${moment().format("YYYY-MM-DD")}T16:00`
 };
-
 interface Props {
-	setSelectedState: Dispatch<React.SetStateAction<string>>
+    setSelectedState: Dispatch<React.SetStateAction<string>>
 }
 
-const SelectedPermissionRequest = ({ setSelectedState } :Props) => {
+const SelectedPermissionRequest = ({ setSelectedState }: Props) => {
 
     const { functionaries } = useContext(FetchContext).data
-	
-	
-    const [values, setValues, handleInputChange, reset]: any = useForm(initialState);
+
+
+    const [values, setValues, handleInputChange, reset] = useForm<PermissionRequestSchema>(initialState);
 
     /**
-	 * 
-	 * @param {React.FormEvent<HTMLFormElement>} e 
-	 */
+     * 
+     * @param {React.FormEvent<HTMLFormElement>} e 
+     */
     const handleSubmit = async (e) => {
         e.preventDefault();
         const selectedFunctionary = functionaries.find((functionary) => parseInt(functionary.id) == parseInt(values.functionary));
 
-        await DocumentPermissionRequestLoadVars(values, selectedFunctionary);
+        await sendDataToPermissionRequest(values, selectedFunctionary);
         AlertSuccess("Los datos se han enviado al documento");
         setSelectedState("");
     };

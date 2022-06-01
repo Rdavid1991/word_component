@@ -64,6 +64,10 @@ const SelectedNote = ({ setSelectedState }: Props): JSX.Element => {
     }, [form]);
 
     useEffect(() => {
+        $("#cc").selectpicker("refresh")
+    }, [form.hasCopy]);
+
+    useEffect(() => {
         setForm({
             ...form,
             from: getLocalStorageUserName()
