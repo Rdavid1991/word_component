@@ -5,8 +5,6 @@ import { apiRequest } from "src/utils/apiRequest";
 import { sendDataToMemorandum } from "../documents/sendDataToMemorandum";
 import { AddresseesSchema, SelectedMemorandumOrNoteState } from '../interface/index';
 
-
-
 const fetchData = async (addressee: Array<AddresseesSchema>, memoOrNoteState, form: SelectedMemorandumOrNoteState) => {
 
     const params = {
@@ -24,28 +22,16 @@ const fetchData = async (addressee: Array<AddresseesSchema>, memoOrNoteState, fo
     return false;
 };
 
-export const SelectedMemorandumSubmit = async (functionaries, addressee, memoOrNoteState, form, setSelectedState) => {
+export const selectedMemorandumSubmit = async (functionaries, addressee, form, setSelectedState) => {
 
-    if (parseInt(memoOrNoteState) > 0) {
+    const functionaryFound = functionaries.find((f) => parseInt(f.id) === parseInt(form.functionary));
 
-        const { data } = await fetchData(addressee, memoOrNoteState, form);
-
-        if (data.length > 0) {
-
-            const functionaryFound = functionaries.find((f) => parseInt(f.id) === parseInt(form.functionary));
-
-            sendDataToMemorandum( form , addressee,functionaryFound  )
-                .then(() => {
-                    AlertSuccess('La información esta lista');
-                    setSelectedState("");
-                })
-                .catch((err) => {
-                    AlertError("No se puede editar el documento" + err,);
-                });
-        } else {
-            await AlertError('Error al consultar base de datos o no existen registros');
-        }
-    } else {
-        await AlertWarning("Es memo o nota?");
-    }
+    sendDataToMemorandum( form , addressee,functionaryFound  )
+        .then(() => {
+            AlertSuccess('La información esta lista');
+            setSelectedState("");
+        })
+        .catch((err) => {
+            AlertError("No se puede editar el documento" + err,);
+        });
 };

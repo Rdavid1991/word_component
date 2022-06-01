@@ -3,12 +3,12 @@ import { getLocalStorageUserName } from 'src/utils';
 import { useForm } from 'src/hooks/useForm';
 import { InputText, SelectOptions } from 'src/fragments';
 import { initialStateSelectedMemorandumOrNote } from 'src/helpers/states/states';
-import { SelectedMemorandumSubmit } from 'src/helpers/functions/SelectedMemorandum';
+import { selectedMemorandumSubmit } from 'src/helpers/functions/selectedMemorandumSubmit';
 import { FetchContext } from '../../context/context';
 import { AddresseesSchema } from 'src/helpers/interface';
+import { selectedNoteSubmit } from '../../helpers/functions/selectedNoteSubmit';
 
 interface Props {
-    memoOrNoteState: any,
     setSelectedState: (select: string) => void
 }
 
@@ -45,7 +45,7 @@ const HasCopy = ({ addressee, handleSelectChange }: PropsHasCopy) => {
     )
 }
 
-const SelectedNote = ({ memoOrNoteState, setSelectedState }: Props): JSX.Element => {
+const SelectedNote = ({ setSelectedState }: Props): JSX.Element => {
 
     const { fetchNumbers, data } = useContext(FetchContext)
     const { addressee, functionaries } = data;
@@ -53,9 +53,6 @@ const SelectedNote = ({ memoOrNoteState, setSelectedState }: Props): JSX.Element
     const [form, setForm, handleInputChange, reset] = useForm<typeof initialStateSelectedMemorandumOrNote>(initialStateSelectedMemorandumOrNote);
     const [buttonDisabled, setButtonDisabled] = useState(true);
 
-    useEffect(() => {
-        $("#cc").selectpicker("refresh")
-    }, [form.hasCopy]);
 
     useEffect(() => {
         if (!isNaN(form.to) && form.subject.length > 0 && form.from.length > 0) {
@@ -75,7 +72,7 @@ const SelectedNote = ({ memoOrNoteState, setSelectedState }: Props): JSX.Element
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        SelectedMemorandumSubmit(functionaries, addressee, memoOrNoteState, form, setSelectedState);
+        selectedNoteSubmit(functionaries, addressee, form, setSelectedState);
         fetchNumbers();
         reset();
     }

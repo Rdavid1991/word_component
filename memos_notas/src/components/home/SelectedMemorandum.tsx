@@ -3,12 +3,11 @@ import { getLocalStorageUserName } from 'src/utils';
 import { useForm } from 'src/hooks/useForm';
 import { InputText, SelectOptions } from 'src/fragments';
 import { initialStateSelectedMemorandumOrNote } from 'src/helpers/states/states';
-import { SelectedMemorandumSubmit } from 'src/helpers/functions/SelectedMemorandum';
+import { selectedMemorandumSubmit } from 'src/helpers/functions/selectedMemorandumSubmit';
 import { FetchContext } from '../../context/context';
 import { AddresseesSchema } from 'src/helpers/interface';
 
 interface Props {
-    memoOrNoteState: any,
     setSelectedState: (select: string) => void
 }
 
@@ -45,7 +44,7 @@ const HasCopy = ({ addressee, handleSelectChange }: PropsHasCopy) => {
     )
 }
 
-const SelectedMemorandum = ({ memoOrNoteState, setSelectedState }: Props): JSX.Element => {
+const SelectedMemorandum = ({ setSelectedState }: Props): JSX.Element => {
 
     const { fetchNumbers, data } = useContext(FetchContext)
     const { addressee, functionaries } = data;
@@ -75,7 +74,7 @@ const SelectedMemorandum = ({ memoOrNoteState, setSelectedState }: Props): JSX.E
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        SelectedMemorandumSubmit(functionaries, addressee, memoOrNoteState, form, setSelectedState);
+        selectedMemorandumSubmit(functionaries, addressee, form, setSelectedState);
         fetchNumbers();
         reset();
     }

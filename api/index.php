@@ -110,23 +110,6 @@ if (
 }
 
 if (
-    $_GET["action"] === "set_number" ||
-    $_GET["action"] === "reject_info"
-) {
-
-    $document_history = new DocumentHistory();
-
-    switch ($_GET["action"]) {
-        case "set_number":
-            $document_history->find();
-            break;
-        case "reject_info":
-            $document_history->reject_info();
-            break;
-    }
-}
-
-if (
     $_GET["action"] === "get_reject_info" ||
     $_GET["action"] === "get_options_department_owner"
 ) {

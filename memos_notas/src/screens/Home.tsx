@@ -1,9 +1,7 @@
-//@ts-check
 import { useContext, useEffect, useState } from "react";
 import { typeOfDocuments } from "src/utils/constants";
 import { FetchContext } from "src/context/context";
 import SelectedPermissionRequest from "../components/home/HomePermissionRequest";
-import SelectedMemorandumOrNote from "../components/home/SelectedNote";
 import SelectedOtherDocument from "../components/home/SelectedOtherDocument";
 import HomeSelectDocument from "../components/home/HomeSelectDocument";
 import HomeCompensatoryTimeRequest from "../components/home/HomeCompensatoryTimeRequest";
@@ -41,15 +39,9 @@ export const Home = () => {
                     {
                         [Object.keys(typeOfDocuments)[0]]: <SelectedOtherDocument />,
 
-                        [Object.keys(typeOfDocuments)[1]]: <SelectedMemorandum
-                            memoOrNoteState={typeOfDocumentState}
-                            setSelectedState={setSelectedState}
-                        />,
+                        [Object.keys(typeOfDocuments)[1]]: <SelectedMemorandum {...{ setSelectedState }} />,
 
-                        [Object.keys(typeOfDocuments)[2]]: <SelectedNote
-                            memoOrNoteState={typeOfDocumentState}
-                            setSelectedState={setSelectedState}
-                        />,
+                        [Object.keys(typeOfDocuments)[2]]: <SelectedNote {...{ setSelectedState }} />,
 
                         [Object.keys(typeOfDocuments)[3]]: <SelectedPermissionRequest
                             setSelectedState={setSelectedState}
