@@ -25,9 +25,9 @@ const HomeCompensatoryTimeRequest = ({ setSelectedState } : any) => {
         e.preventDefault();
         const selectedFunctionary = functionaries.find((functionary) => parseInt(functionary.id) == parseInt(values.functionary));
 
-        await SendDataToDocument.sendToCompensatoryRequest(values, selectedFunctionary);
+        /* await SendDataToDocument.sendToCompensatoryRequest(values, selectedFunctionary);
         AlertSuccess("Los datos se han enviado al documento");
-        setSelectedState("");
+        setSelectedState(""); */
     };
 
     return (

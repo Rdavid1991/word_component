@@ -22,8 +22,11 @@ module.exports = {
     ],
     "rules": {
         '@typescript-eslint/no-shadow' : ['warn'],
-        'indent'                       : ['warn', 4, { 'offsetTernaryExpressions': true }],
-        'key-spacing'                  : [
+        'indent'                       : ['warn', 4, {
+            'SwitchCase'               : 1,
+            'offsetTernaryExpressions' : true,
+        }],
+        'key-spacing': [
             'warn',
             {
                 align: {

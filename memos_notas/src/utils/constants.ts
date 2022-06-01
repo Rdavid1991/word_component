@@ -1,19 +1,17 @@
 
-export const DocumentMemoOrNotesControls = {
-    num_memo : "Consecutivo - memo",
-    num_note : "Consecutivo - nota",
-    year     : "Año",
+export const MemorandumControls = {
     date     : "Fecha",
+    initials : "Iniciales",
     request  : "Solicitado por",
     subject  : "Asunto",
-    initials : "Iniciales"
+    year     : "Año",
 };
 
 export const AddresseeControls = {
-    addressee_name       : "Nombre",
-    addressee_job_title  : "Cargo",
     addressee_archetype  : "Arquetipo",
     addressee_department : "Dirección / departamento",
+    addressee_job_title  : "Cargo",
+    addressee_name       : "Nombre",
 };
 
 export const DocumentRequestControls = {
@@ -36,9 +34,9 @@ export const CompensatoryTime = {
 };
 
 export const FunctionaryControls = {
-    name            : "Nombre",
     id_card         : "Cedula",
     job_title       : "Puesto",
+    name            : "Nombre",
     position_number : "N° Posición"
 };
 

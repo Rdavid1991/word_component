@@ -13,11 +13,11 @@ interface Props {
 }
 
 interface PropsHasCopy {
-    handleSelectChange : (e : ChangeEvent<HTMLSelectElement>)=> void
-    addressee : Array<AddresseesSchema>
+    handleSelectChange: (e: ChangeEvent<HTMLSelectElement>) => void
+    addressee: Array<AddresseesSchema>
 }
 
-const HasCopy = ({addressee , handleSelectChange} : PropsHasCopy) => {
+const HasCopy = ({ addressee, handleSelectChange }: PropsHasCopy) => {
     return (
         <div className="mb-3">
             <label htmlFor="cc" className="form-label font-weight-bold">Con copia a</label>
@@ -45,7 +45,7 @@ const HasCopy = ({addressee , handleSelectChange} : PropsHasCopy) => {
     )
 }
 
-const SelectedMemorandumOrNote = ({ memoOrNoteState, setSelectedState }: Props): JSX.Element => {
+const SelectedNote = ({ memoOrNoteState, setSelectedState }: Props): JSX.Element => {
 
     const { fetchNumbers, data } = useContext(FetchContext)
     const { addressee, functionaries } = data;
@@ -92,15 +92,6 @@ const SelectedMemorandumOrNote = ({ memoOrNoteState, setSelectedState }: Props):
         <form
             onSubmit={handleSubmit}
         >
-            <SelectOptions
-                icon="fas fa-users"
-                id="functionary"
-                handleInputChange={handleInputChange}
-                label="Funcionario"
-                value={form.functionary}
-                options={functionaries}
-                description="Opcional, seleccionar en caso de que la plantilla incluya al funcionario"
-            />
             <div className="mb-3">
                 <label htmlFor="to" className="form-label font-weight-bold">Dirigido a</label>
                 <div className="input-group mb-3">
@@ -139,8 +130,8 @@ const SelectedMemorandumOrNote = ({ memoOrNoteState, setSelectedState }: Props):
             </div>
 
             {
-                form.hasCopy 
-                    ? <HasCopy {...{addressee, handleSelectChange}}/>
+                form.hasCopy
+                    ? <HasCopy {...{ addressee, handleSelectChange }} />
                     : null
             }
 
@@ -153,6 +144,7 @@ const SelectedMemorandumOrNote = ({ memoOrNoteState, setSelectedState }: Props):
                 placeholder="Asunto"
                 required={true}
                 name={''} />
+
             <InputText
                 htmlId="from"
                 onChange={handleInputChange}
@@ -175,4 +167,4 @@ const SelectedMemorandumOrNote = ({ memoOrNoteState, setSelectedState }: Props):
     );
 };
 
-export default React.memo(SelectedMemorandumOrNote);
+export default React.memo(SelectedNote);

@@ -16,24 +16,24 @@ export const SelectDepartment = ({ values, handleInputChange, departments }: Pro
 
             {
                 getLocalStorageUserDepartment() === 0 ?
-                        <div className="mb-3">
-                        <label htmlFor="owner" className="form-label font-weight-bold">Pertenece a</label>
-                        <select id="owner"
-                                className="form-control form-control-sm"
-                                value={values.department_owner_id}
-                                onChange={handleInputChange}
-                                required
+                    <div className="mb-3">
+                            <label htmlFor="owner" className="form-label font-weight-bold">Pertenece a</label>
+                            <select id="owner"
+                            className="form-control form-control-sm"
+                            value={values.department_owner_id}
+                            onChange={handleInputChange}
+                            required
                             >
-                                <option disabled value="">Seleccione</option>
-                                {
+                            <option disabled value="">Seleccione</option>
+                            {
                                     departments.map((item, index) => (
                                         <option
                                             key={index}
                                             value={item.id}>{item.name}</option>
                                     ))
                                 }
-                            </select>
-                    </div>
+                        </select>
+                        </div>
                     : null
 
             }
@@ -42,7 +42,7 @@ export const SelectDepartment = ({ values, handleInputChange, departments }: Pro
 
 };
 
-export const Space = ({ height }:any) => {
+export const Space = ({ height }: any) => {
     return (<div style={{ height: `${height}rem` }}></div>);
 };
 
@@ -127,7 +127,7 @@ export const SelectOptions = ({
     required = false,
     handleInputChange,
 
-} : any) => {
+}: any) => {
     return (
         <div className="mb-3">
             <label
@@ -155,8 +155,8 @@ export const SelectOptions = ({
                     }
                 </select>
                 {
-                    description.length > 0 ?
-                            <div className="form-text">{description}</div>
+                    description.length > 0
+                        ? <div className="form-text text-danger">{description}</div>
                         : ""
                 }
             </div>
@@ -189,7 +189,7 @@ export const ButtonSubmit = ({ title }: any) => {
  * @param {string} prop.title 
  * @returns 
  */
-export const ButtonReset = ({ title } : any) => {
+export const ButtonReset = ({ title }: any) => {
     return (
         <button
             type="reset"

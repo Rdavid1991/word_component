@@ -1,11 +1,12 @@
 import React from 'react';
-import { AddresseeControls, CompensatoryTime, DepartmentControls, DocumentMemoOrNotesControls, DocumentRequestControls, FunctionaryControls } from 'src/utils/constants';
+import { AddresseeControls, CompensatoryTime, DepartmentControls, DocumentRequestControls, FunctionaryControls } from 'src/utils/constants';
 import { localStorageAdminKey, localStorageKeyUser } from 'src/utils';
 import { apiRequest } from '../utils/apiRequest';
+import { MemorandumControls } from '../utils/constants';
 
 const InfoHelp = () => {
 
-  
+
     /**
      * 
      * @param {React.MouseEvent<HTMLButtonElement>} e 
@@ -57,7 +58,7 @@ const InfoHelp = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {Object.entries(DocumentMemoOrNotesControls).map(renderVariables)}
+                    {Object.entries(MemorandumControls).map(renderVariables)}
                 </tbody>
             </table>
             <h5 className="text-center px-2 font-weight-bold" >Destinatario</h5>
