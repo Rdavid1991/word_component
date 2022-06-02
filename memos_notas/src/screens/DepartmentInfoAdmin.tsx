@@ -7,6 +7,7 @@ import { DepartmentInfoDelete } from 'src/utils/SaveAndGet';
 import { DepartmentList } from '../components/departments/DepartmentsList';
 import { useForm } from '../hooks/useForm';
 import { AlertConfirmQuestion, AlertSuccess } from 'src/utils/Alerts';
+import { Space } from '../fragments/index';
 
 
 
@@ -51,6 +52,8 @@ const DepartmentInfoAdmin = () => {
             <DepartmentForm {...{ department, handleInputChange, reset }} />
 
             <DepartmentList {...{ departments, handlerDelete, handlerEdit }} />
+
+            <Space height={10} />
         </>
     )
 }

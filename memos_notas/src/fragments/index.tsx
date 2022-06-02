@@ -16,24 +16,24 @@ export const SelectDepartment = ({ values, handleInputChange, departments }: Pro
 
             {
                 getLocalStorageUserDepartment() === 0 ?
-                    <div className="mb-3">
-                            <label htmlFor="owner" className="form-label font-weight-bold">Pertenece a</label>
-                            <select id="owner"
-                            className="form-control form-control-sm"
-                            value={values.department_owner_id}
-                            onChange={handleInputChange}
-                            required
+                        <div className="mb-3">
+                        <label htmlFor="owner" className="form-label font-weight-bold">Pertenece a</label>
+                        <select id="owner"
+                                className="form-control form-control-sm"
+                                value={values.department_owner_id}
+                                onChange={handleInputChange}
+                                required
                             >
-                            <option disabled value="">Seleccione</option>
-                            {
+                                <option disabled value="">Seleccione</option>
+                                {
                                     departments.map((item, index) => (
                                         <option
                                             key={index}
                                             value={item.id}>{item.name}</option>
                                     ))
                                 }
-                        </select>
-                        </div>
+                            </select>
+                    </div>
                     : null
 
             }
@@ -42,7 +42,7 @@ export const SelectDepartment = ({ values, handleInputChange, departments }: Pro
 
 };
 
-export const Space = ({ height }: any) => {
+export const Space = ({ height }: { height: number }) => {
     return (<div style={{ height: `${height}rem` }}></div>);
 };
 
