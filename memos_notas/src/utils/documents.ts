@@ -28,9 +28,9 @@ export const readDocument = async () => {
 
 
             return JSON.stringify({
-                "body": docBodyOoxml.value,
-                "footer": docFooterOoxml.value,
-                "header": docHeaderOoxml.value,
+                "body"   : docBodyOoxml.value,
+                "footer" : docFooterOoxml.value,
+                "header" : docHeaderOoxml.value,
             });
         });
     }
@@ -98,21 +98,22 @@ export const setInitialDocumentData = async (department: DepartmentSchema) => {
     return await Word.run(async (context) => {
         const department_name = context.document.contentControls.getByTag("department_name");
         const department_phone = context.document.contentControls.getByTag("department_phone");
+        const department_initials = context.document.contentControls.getByTag("department_initials");
         const shift_name = context.document.contentControls.getByTag("shift_name");
         const shift_job_title = context.document.contentControls.getByTag("shift_job_title");
 
 
         context.load(department_name)
         context.load(department_phone)
+        context.load(department_initials)
         context.load(shift_name)
         context.load(shift_job_title)
 
         await context.sync()
-        
-        
-
+         
         department_name.items[0]?.insertText(department.name, Word.InsertLocation.replace)
         department_phone.items[0]?.insertText(department.phone, Word.InsertLocation.replace)
+        department_initials.items[0]?.insertText(department.initials, Word.InsertLocation.replace)
         shift_name.items[0]?.insertText(department.shift, Word.InsertLocation.replace)
         shift_job_title.items[0]?.insertText(department.jobTitle, Word.InsertLocation.replace)
 

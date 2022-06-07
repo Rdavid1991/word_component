@@ -31,7 +31,8 @@ class Department extends ManagementDB
             $sql .= "SET [name] = ?, ";
             $sql .= "[phone] = ?, ";
             $sql .= "[shift] = ?, ";
-            $sql .= "[jobTitle] = ? ";
+            $sql .= "[jobTitle] = ?, ";
+            $sql .= "[initials] = ? ";
             $sql .= " WHERE [id] = ?";
 
             return parent::insert_query($sql, [
@@ -39,18 +40,20 @@ class Department extends ManagementDB
                 $_POST["phone"],
                 $_POST["shift"],
                 $_POST["jobTitle"],
+                $_POST["initials"],
                 $_POST["id"]
             ]);
         } else {
 
-            $sql = "INSERT INTO [dbo].[department_owner] ([name],[phone],[shift],[jobTitle]) ";
-            $sql .= "VALUES (?,?,?,?)";
+            $sql = "INSERT INTO [dbo].[department_owner] ([name],[phone],[shift],[jobTitle],[initials]) ";
+            $sql .= "VALUES (?,?,?,?,?)";
 
             return parent::insert_query($sql, [
                 $_POST["name"],
                 $_POST["phone"],
                 $_POST["shift"],
                 $_POST["jobTitle"],
+                $_POST["initials"],
             ]);
         }
     }

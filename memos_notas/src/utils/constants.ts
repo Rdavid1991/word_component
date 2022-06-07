@@ -41,10 +41,11 @@ export const FunctionaryControls = {
 };
 
 export const DepartmentControls = {
-    department_name  : "Nombre",
-    department_phone : "Teléfono",
-    shift_name       : "Jefe",
-    shift_job_title  : "Puesto",
+    department_initials : "Iniciales de departamento",
+    department_name     : "Nombre",
+    department_phone    : "Teléfono",
+    shift_job_title     : "Puesto",
+    shift_name          : "Jefe",
 }
 
 export const typeOfDocuments = {

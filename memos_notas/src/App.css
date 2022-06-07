@@ -20,7 +20,7 @@ i {
   box-shadow: inset -1px 20px 13px -13px #bebebe;
 }
 
-.list__height{
+.list__height {
   height: -webkit-fill-available;
 }
 
@@ -30,17 +30,17 @@ i {
   height: 98%;
 }
 
-.active > .functionary_pane {
+.active>.functionary_pane {
   display: grid;
   grid-template-rows: auto auto 70%;
 }
 
-.active > .addressees_pane {
+.active>.addressees_pane {
   display: grid;
   grid-template-rows: auto auto 70%;
 }
 
-.active > .template_pane {
+.active>.template_pane {
   display: grid;
   grid-template-rows: auto auto 70%;
 }
@@ -52,13 +52,16 @@ i {
 .scroll::-webkit-scrollbar {
   width: 8px;
 }
+
 .scroll::-webkit-scrollbar-track {
   border-radius: 50px;
 }
+
 .scroll::-webkit-scrollbar-thumb {
   background: linear-gradient(0deg, #2a5699, #4082e6);
   border-radius: 10px;
 }
+
 .scroll::-webkit-scrollbar-thumb:hover {
   background: #2a5699;
 }
@@ -67,7 +70,8 @@ i {
   cursor: pointer;
   width: fit-content;
 }
-.menu-bar > .bar {
+
+.menu-bar>.bar {
   width: 35px;
   height: 5px;
   background: linear-gradient(0deg, #2a5699, #4082e6);
@@ -109,7 +113,7 @@ i {
   z-index: 1;
 }
 
-#opacity{
+#opacity {
   position: absolute;
   background-color: rgba(0, 0, 0, 0.5);
   transition: 0.5s;
@@ -120,7 +124,7 @@ i {
   z-index: 1;
 }
 
-.side-nav-content{
+.side-nav-content {
   background-color: #fff;
   height: 100%;
   border-radius: 10px;
@@ -152,10 +156,34 @@ i {
 }
 
 
-.swal-overlay--show-modal{
-  display: block!important;
+.swal-overlay--show-modal {
+  display: block !important;
 }
 
-.swal-overlay{
+.swal-overlay {
   display: none;
+}
+
+.intermitent {
+  animation: help-alert 2s infinite ease-out;
+  animation-fill-mode: forwards;
+}
+
+@keyframes help-alert {
+  from {
+    color: rgb(0, 114, 198);
+  }
+
+  50% {
+    color: rgb(199, 229, 250)
+  }
+
+  to {
+    color: rgb(0, 114, 198);
+  }
+}
+
+.tooltip-wrap {
+  width: 250px;
+  white-space: pre-wrap;
 }

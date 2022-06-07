@@ -46,6 +46,17 @@ const DepartmentInfo = ({ fetchDepartment }: Props) => {
                         onChange={handleInputChange}
                         placeholder="Nombre de la dirección o departamento"
                         value={department?.name}
+                        iconHelp="far fa-question-circle"
+                        descriptionHelp='Nombre del departamento que aparecerá en el documento'
+                    />
+                    <InputText
+                        htmlId="initials"
+                        htmlLabel="Iniciales de departamento"
+                        onChange={handleInputChange}
+                        placeholder="Iniciales de departamento"
+                        value={department?.initials}
+                        iconHelp="far fa-question-circle"
+                        descriptionHelp='Iniciales del departamento que aparecerán en el documento'
 
                     />
                     <InputText
@@ -54,7 +65,8 @@ const DepartmentInfo = ({ fetchDepartment }: Props) => {
                         onChange={handleInputChange}
                         placeholder="500-0000/500-0000"
                         value={department?.phone}
-
+                        iconHelp="far fa-question-circle"
+                        descriptionHelp='Numero de teléfono del departamento que aparecerá en el documento'
                     />
                     <InputText
                         htmlId="shift"
@@ -62,7 +74,8 @@ const DepartmentInfo = ({ fetchDepartment }: Props) => {
                         onChange={handleInputChange}
                         placeholder="Nombre del jefe o director"
                         value={department?.shift}
-
+                        iconHelp="far fa-question-circle"
+                        descriptionHelp='Nombre del jefe, director o firmante que aparecerán en el documento'
                     />
                     <InputText
                         htmlId="jobTitle"
@@ -70,6 +83,8 @@ const DepartmentInfo = ({ fetchDepartment }: Props) => {
                         onChange={handleInputChange}
                         placeholder="Director de *****"
                         value={department?.jobTitle}
+                        iconHelp="far fa-question-circle"
+                        descriptionHelp='Puesto del jefe, director o firmante del departamento que aparecerá en el documento'
                     />
                 </div>
                 <div className="d-flex justify-content-around">

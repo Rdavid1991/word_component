@@ -15,10 +15,11 @@ export const SelectDepartment = ({ values, handleInputChange, departments }: Pro
         <>
 
             {
-                getLocalStorageUserDepartment() === 0 ?
+                getLocalStorageUserDepartment() === 0
+                    ?
                         <div className="mb-3">
-                        <label htmlFor="owner" className="form-label font-weight-bold">Pertenece a</label>
-                        <select id="owner"
+                            <label htmlFor="owner" className="form-label font-weight-bold">Pertenece a</label>
+                            <select id="owner"
                                 className="form-control form-control-sm"
                                 value={values.department_owner_id}
                                 onChange={handleInputChange}
@@ -33,7 +34,7 @@ export const SelectDepartment = ({ values, handleInputChange, departments }: Pro
                                     ))
                                 }
                             </select>
-                    </div>
+                        </div>
                     : null
 
             }
@@ -59,7 +60,9 @@ interface PropsInput {
     disabled?: boolean,
     pattern?: string,
     title?: string,
-    type?: HTMLInputTypeAttribute
+    type?: HTMLInputTypeAttribute,
+    iconHelp?: string
+    descriptionHelp?: string
 }
 export const InputText = ({
     htmlId = "",
@@ -73,13 +76,34 @@ export const InputText = ({
     disabled = false,
     pattern = null,
     title = null,
-    type = 'text'
+    type = 'text',
+    iconHelp = "",
+    descriptionHelp
 }: PropsInput): JSX.Element => {
 
     return (
         <div className="mb-3">
             {
-                htmlLabel.length > 0 ? <label htmlFor={htmlId} className="form-label font-weight-bold">{htmlLabel}</label> : ""
+                htmlLabel.length > 0
+                    ?
+                        <label
+                            htmlFor={htmlId}
+                            className="form-label font-weight-bold"
+                        > {htmlLabel}
+                        </label>
+                    : ""
+            }
+            {
+                iconHelp.length > 0
+                    ?
+                        <span
+                            className='float-right intermitent'
+                            data-toggle="tooltip"
+                            data-html="true"
+                            title={descriptionHelp}>
+                            <i className={`${iconHelp}`}></i>
+                        </span>
+                    : ""
             }
             <div className="input-group mb-3">
                 {

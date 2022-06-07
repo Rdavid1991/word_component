@@ -25,7 +25,7 @@ class DocTemplate extends ManagementDB
             $_POST["name"],
             $_POST["type"],
             $_POST["document"],
-            $_POST["department_owner"] == "0" ? $_POST["owner"] : $_POST["department_owner"]
+            $_POST["department_owner"] == "0" ? $_POST["department_owner_id"] : $_POST["department_owner"]
         ];
 
         return parent::insert_query($sql, $params);

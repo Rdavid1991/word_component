@@ -27,6 +27,7 @@ export interface TemplateSchema {
 export interface DepartmentSchema {
     id?: number;
     name?: string;
+    initials?:string;
     phone?: string;
     shift?: string;
     jobTitle?: string;
