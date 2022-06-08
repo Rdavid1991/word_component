@@ -61,7 +61,7 @@ interface PropsInput {
     pattern?: string,
     title?: string,
     type?: HTMLInputTypeAttribute,
-    iconHelp?: string
+    iconHelp?: boolean
     descriptionHelp?: string
 }
 export const InputText = ({
@@ -77,7 +77,7 @@ export const InputText = ({
     pattern = null,
     title = null,
     type = 'text',
-    iconHelp = "",
+    iconHelp,
     descriptionHelp
 }: PropsInput): JSX.Element => {
 
@@ -94,14 +94,14 @@ export const InputText = ({
                     : ""
             }
             {
-                iconHelp.length > 0
+                iconHelp
                     ?
                         <span
                             className='float-right intermitent'
                             data-toggle="tooltip"
                             data-html="true"
                             title={descriptionHelp}>
-                            <i className={`${iconHelp}`}></i>
+                            <i className="far fa-question-circle"></i>
                         </span>
                     : ""
             }

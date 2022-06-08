@@ -21,6 +21,9 @@ export const AddresseesCreate = ({ departments, fetchAddresses, handleInputChang
                     onChange={handleInputChange}
                     placeholder="Nombre del destinatario"
                     value={form.name}
+                    required={true}
+                    iconHelp={true}
+                    descriptionHelp="Nombre de director o jefe del departamento a quien va dirigido"
                 />
                 <InputText
                     htmlId="jobTitle"
@@ -28,6 +31,9 @@ export const AddresseesCreate = ({ departments, fetchAddresses, handleInputChang
                     onChange={handleInputChange}
                     placeholder="Cargo del destinatario"
                     value={form.jobTitle}
+                    required={true}
+                    iconHelp={true}
+                    descriptionHelp="cargo de director o jefe del departamento a quien va dirigido"
                 />
                 <InputText
                     htmlId="archetype"
@@ -35,6 +41,9 @@ export const AddresseesCreate = ({ departments, fetchAddresses, handleInputChang
                     onChange={handleInputChange}
                     placeholder="Ejemplo: Sr, Sra, Lic"
                     value={form.archetype}
+                    required={true}
+                    iconHelp={true}
+                    descriptionHelp="EL arquetipo es el prefijo que usado para referirse a alguien de manera cortes. Ejemplo: Sr, Sra, Licdo, Ing, etc."
                 />
                 <InputText
                     htmlId="department"
@@ -42,6 +51,9 @@ export const AddresseesCreate = ({ departments, fetchAddresses, handleInputChang
                     onChange={handleInputChange}
                     placeholder="Dirección o departamento del destinatario"
                     value={form.department}
+                    required={true}
+                    iconHelp={true}
+                    descriptionHelp="Nombre del departamento a quien va dirigido"
                 />
                 <SelectDepartment {...{ values: form, handleInputChange, departments }} />
 
