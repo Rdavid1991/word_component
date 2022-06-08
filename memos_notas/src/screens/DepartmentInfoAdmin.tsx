@@ -59,11 +59,14 @@ const DepartmentInfoAdmin = () => {
                 </div>
             </div>
 
-            <DepartmentForm {...{ department, handleInputChange, handleSave, reset }} />
+            <div className="px-3">
+                <DepartmentForm {...{ department, handleInputChange, handleSave, reset }} />
 
-            <DepartmentList {...{ departments, handlerDelete, handlerEdit }} />
+                <DepartmentList {...{ departments, handlerDelete, handlerEdit }} />
 
-            <Space height={10} />
+            </div>
+
+            <Space height={5} />
         </>
     );
 };

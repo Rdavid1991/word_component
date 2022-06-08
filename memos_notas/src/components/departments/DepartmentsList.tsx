@@ -35,7 +35,7 @@ export const DepartmentList = (props: Props) => {
     };
 
     return (
-        <div className="px-3" >
+        <>
             <div className="card my-2 rounded text-white gradient">
                 <div className="card-body py-1">
                     <h3 className="font-weight-bold d-flex mb-2">Lista de funcionarios</h3>
@@ -99,7 +99,7 @@ export const DepartmentList = (props: Props) => {
                     }
                 </div>
             </div>
-        </div >
+        </>
     );
 };
 

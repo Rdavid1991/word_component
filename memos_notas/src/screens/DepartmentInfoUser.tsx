@@ -45,9 +45,6 @@ const DepartmentInfoUser = ({ fetchDepartment }: Props) => {
             <div className="px-3">
                 <DepartmentForm {...{ department, handleInputChange, handleSave, reset }} />
             </div>
-            <div className="d-flex justify-content-around">
-                <button className='btn btn-sm btn-primary' type="submit">Guardar</button>
-            </div>
 
             <Space height={5} />
         </>
