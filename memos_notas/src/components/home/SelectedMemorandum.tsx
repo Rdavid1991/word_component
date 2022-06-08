@@ -41,19 +41,19 @@ const HasCopy = ({ addressee, handleSelectChange }: PropsHasCopy) => {
                 </select>
             </div>
         </div>
-    )
-}
+    );
+};
 
 const SelectedMemorandum = ({ setSelectedState }: Props): JSX.Element => {
 
-    const { fetchNumbers, data } = useContext(FetchContext)
+    const { data } = useContext(FetchContext);
     const { addressee, functionaries } = data;
 
     const [form, setForm, handleInputChange, reset] = useForm<typeof initialStateSelectedMemorandumOrNote>(initialStateSelectedMemorandumOrNote);
     const [buttonDisabled, setButtonDisabled] = useState(true);
 
     useEffect(() => {
-        $("#cc").selectpicker("refresh")
+        $("#cc").selectpicker("refresh");
     }, [form.hasCopy]);
 
     useEffect(() => {
@@ -75,16 +75,15 @@ const SelectedMemorandum = ({ setSelectedState }: Props): JSX.Element => {
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         selectedMemorandumSubmit(functionaries, addressee, form, setSelectedState);
-        fetchNumbers();
         reset();
-    }
+    };
 
     const handleSelectChange = ({ currentTarget }: ChangeEvent<HTMLSelectElement>) => {
         setForm({
             ...form,
             cc: $(currentTarget).val() as Array<string>
-        })
-    }
+        });
+    };
 
     return (
 

@@ -32,7 +32,7 @@ export const loadControls = async (context: Word.RequestContext, controls: { [s:
         context.load(controls[tag]);
     });
 
-    await context.sync()
+    await context.sync();
 };
 
 /**
@@ -41,5 +41,7 @@ export const loadControls = async (context: Word.RequestContext, controls: { [s:
  * @param text 
  */
 export const insertTextControl = (control: Word.ContentControlCollection, text: string) => {
-    control.items[0]?.insertText(text, "Replace");
+    if (text !== undefined || text !== null) {
+        control.items[0]?.insertText(text, "Replace");
+    }
 };

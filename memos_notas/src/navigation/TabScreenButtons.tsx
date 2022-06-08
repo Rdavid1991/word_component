@@ -16,7 +16,7 @@ const TabScreenButtons = () => {
                 >
                     Plantillas
                 </button>
-                <hr className="nav-divider" />
+                <hr className='line__divider' />
                 {
                     getLocalStorageUserDepartment()=== 0
                         ? 
@@ -68,7 +68,7 @@ const TabScreenButtons = () => {
                 >
                     Crear o editar plantillas
                 </button>
-                <hr className="nav-divider" />
+                <hr className='line__divider' />
                 <button
                     className={`btn btn-sm btn-primary font-weight-bold mt-2 mb-2 nav-item `}
                     id="help"

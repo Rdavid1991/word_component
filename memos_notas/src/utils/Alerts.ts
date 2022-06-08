@@ -8,19 +8,25 @@ const AlertError = async (error) => {
     });
 };
 
-const AlertWarning = async (warning) => {
+const AlertWarning = async (warning : string) => {
+
+    const span = document.createElement("div");
+    span.innerHTML = warning;
+
     return await swal({
+        content: {
+            element: span
+        },
+        icon  : "warning",
         title : "Oops!!",
-        text  : warning,
-        icon  : "warning"
     });
 };
 
-const AlertSuccess = async (success) => {
+const AlertSuccess = async (success: string) => {
     return await swal({
-        title : "Hecho",
+        icon  : "success",
         text  : success,
-        icon  : "success"
+        title : "Hecho",
     });
 };
 

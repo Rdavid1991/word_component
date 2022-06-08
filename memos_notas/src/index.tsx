@@ -6,16 +6,16 @@ import App from './App';
 
 
 
-const renderApp = (Component : ()=> JSX.Element) => {
-	ReactDOM.render(
-		// <React.StrictMode>
-			<Component />,
-		//</React.StrictMode>,
-		document.getElementById("root")
-	);
+const renderApp = (Component: () => JSX.Element) => {
+    ReactDOM.render(
+        // <React.StrictMode>
+        <Component />,
+        // </React.StrictMode>,
+        document.getElementById("root")
+    );
 };
 
-Office.onReady(({host}) => {
-	//host === Office.HostType.Word? renderApp(App): AlertPlatform();
-	renderApp(App);
+Office.onReady(({ host }) => {
+    //host === Office.HostType.Word? renderApp(App): AlertPlatform();
+    renderApp(App);
 });

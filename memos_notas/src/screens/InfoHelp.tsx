@@ -7,41 +7,13 @@ import { MemorandumControls } from '../utils/constants';
 const InfoHelp = () => {
 
 
-    /**
-     * 
-     * @param {React.MouseEvent<HTMLButtonElement>} e 
-     */
-    const HandleCopyToCLipBoard = (e) => {
-
-        const { value } = e.target.dataset;
-
-        /*  Swal.fire({
-             title            : "Hecho",
-             html             : `<p>Se copio <b>${value}</b></p>`,
-             toast            : true,
-             timer            : 1500,
-             icon             : "success",
-             showConfirmButton: false,
-             position         : 'bottom',
-             color            : "#fff",
-             background       : "#8B8C89"
-         }); */
-        navigator.clipboard.writeText(value);
-    };
 
     const renderVariables = (entry, index) => {
         const [key, value] = entry;
         return (
             <tr key={index}>
                 <td className="font-weight-bold">{value}</td>
-                <td>{key}</td>
-                <td
-                    className="btn"
-                    data-value={key}
-                    onClick={HandleCopyToCLipBoard}
-                >
-                    <i className="far fa-copy"></i>
-                </td>
+                <td style={{userSelect: 'all'}}>{key}</td>
             </tr>
         );
     };
@@ -135,9 +107,9 @@ const InfoHelp = () => {
                     className='btn btn-secondary btn-sm'
                     type='button'
                     onClick={() => {
-                        localStorage.removeItem(localStorageKeyUser)
-                        localStorage.removeItem(localStorageAdminKey)
-                        window.location.reload()
+                        localStorage.removeItem(localStorageKeyUser);
+                        localStorage.removeItem(localStorageAdminKey);
+                        window.location.reload();
                     }}
                 >
                     Borrar datos de usuario
@@ -145,8 +117,8 @@ const InfoHelp = () => {
                 <button
                     className='btn btn-secondary btn-sm'
                     onClick={async () => {
-                        await apiRequest().get("clear_cache", {})
-                        window.location.reload()
+                        await apiRequest().get("clear_cache", {});
+                        window.location.reload();
                     }}
                 >
                     Borra cache

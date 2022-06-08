@@ -15,11 +15,13 @@
 			"addins",
 			"browserslist",
 			"builtins",
+			"closebtn",
 			"DPRC",
 			"firefox",
 			"formdata",
 			"Phpfastcache",
 			"selectpicker",
+			"sidenav",
 			"swal",
 			"sweetalert"
 		],

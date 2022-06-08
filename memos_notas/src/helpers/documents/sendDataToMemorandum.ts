@@ -12,9 +12,9 @@ export const sendDataToMemorandum = async (
         
     // Cargar base de documento
     await Word.run(async (context) => { 
-        
+
         const controls = getControlsByTag(context, MemorandumControls);
-        await loadControls(context, controls,MemorandumControls)
+        await loadControls(context, controls,MemorandumControls);
 
         Object.entries(controls).map((entry) => {
             const [key, control] = entry;
@@ -51,12 +51,12 @@ export const sendDataToMemorandum = async (
             }
             return null;
         });
-    })
+    });
 
     // Cargar destinatario
     await Word.run(async (context) => { 
         const controls = getControlsByTag(context, AddresseeControls);
-        await loadControls(context, controls,AddresseeControls)
+        await loadControls(context, controls,AddresseeControls);
 
         Object.entries(controls).map((entry) => {
             const [key, control] = entry;
@@ -88,13 +88,15 @@ export const sendDataToMemorandum = async (
                 
             }
             
-        })
-    })
+        });
+    }).catch((err) => { 
+        console.error(err);
+    });
 
     // Cargar funcionario opcional
     await Word.run(async (context) => { 
         const controls = getControlsByTag(context, FunctionaryControls);
-        await loadControls(context, controls,FunctionaryControls)
+        await loadControls(context, controls,FunctionaryControls);
 
         Object.entries(controls).map((entry) => {
             const [key, control] = entry;
@@ -118,15 +120,17 @@ export const sendDataToMemorandum = async (
 
                 // Insertar numero de posición
                 case Object.keys(FunctionaryControls)[3]:
-                    insertTextControl(control, functionary?.position_number.toString());
+                    insertTextControl(control, functionary?.position_number);
                     break;
             
                 default:
                     break;
                 
             }
-        })
-    })
+        });
+    }).catch((err) => { 
+        console.error(err);
+    });
 
     if (form.hasCopy) {
     
@@ -145,6 +149,8 @@ export const sendDataToMemorandum = async (
 
             row.items[0].insertRows(Word.InsertLocation.after, form.cc.length, [""][""]);
 
+        }).catch((err) => { 
+            console.error(err);
         });
 
         await Word.run(async (context) => {
@@ -179,6 +185,8 @@ export const sendDataToMemorandum = async (
                     , Word.InsertLocation.end
                 ).font.bold = false;
             });
+        }).catch((err) => { 
+            console.error(err);
         });
     }
-}
+};

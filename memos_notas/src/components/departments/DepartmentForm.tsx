@@ -1,33 +1,23 @@
-import React, { ChangeEvent, FormEvent, useContext } from 'react'
+import { ChangeEvent, FormEvent } from 'react';
 import { ButtonReset, ButtonSubmit, InputText } from 'src/fragments';
-import { DepartmentSchema, Result } from '../../helpers/interface/index';
+import { DepartmentSchema } from '../../helpers/interface/index';
 import { getLocalStorageUserDepartment } from 'src/utils';
-import { DepartmentInfoSave } from 'src/utils/SaveAndGet';
-import { AlertSuccess } from 'src/utils/Alerts';
-import { context } from 'src/context/context';
 
 interface Props {
     handleInputChange: (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void
     department: DepartmentSchema;
     reset: () => void;
+    handleSave: (e: FormEvent<HTMLFormElement>) => void;
 }
 
 const DepartmentForm = (props: Props) => {
 
-    const { handleInputChange, department, reset } = props
-    const { fetchDepartments } = useContext(context)
+    const { handleInputChange, department, reset, handleSave } = props;
 
-    const handleSave = async (e: FormEvent<HTMLFormElement>) => {
-        e.preventDefault()
-        const result: Result = await DepartmentInfoSave(department)
-        reset()
-        fetchDepartments()
-        AlertSuccess(result.message.text);
-    }
-
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const handleReset = (e: FormEvent<HTMLFormElement>) => {
         reset();
-    }
+    };
 
     return (
         <form
@@ -41,6 +31,18 @@ const DepartmentForm = (props: Props) => {
                     onChange={handleInputChange}
                     placeholder="Nombre de la dirección o departamento"
                     value={department?.name}
+                    required={true}
+                    iconHelp="far fa-question-circle"
+                    descriptionHelp='Nombre del departamento que aparecerá en el documento'
+                />
+                <InputText
+                    htmlId="initials"
+                    htmlLabel="Iniciales de departamento"
+                    onChange={handleInputChange}
+                    placeholder="Iniciales de departamento"
+                    value={department?.initials}
+                    iconHelp="far fa-question-circle"
+                    descriptionHelp='Iniciales del departamento que aparecerán en el documento'
 
                 />
                 <InputText
@@ -49,7 +51,8 @@ const DepartmentForm = (props: Props) => {
                     onChange={handleInputChange}
                     placeholder="500-0000/500-0000"
                     value={department?.phone}
-
+                    iconHelp="far fa-question-circle"
+                    descriptionHelp='Numero de teléfono del departamento que aparecerá en el documento'
                 />
                 <InputText
                     htmlId="shift"
@@ -57,7 +60,8 @@ const DepartmentForm = (props: Props) => {
                     onChange={handleInputChange}
                     placeholder="Nombre del jefe o director"
                     value={department?.shift}
-
+                    iconHelp="far fa-question-circle"
+                    descriptionHelp='Nombre del jefe, director o firmante que aparecerán en el documento'
                 />
                 <InputText
                     htmlId="jobTitle"
@@ -65,6 +69,8 @@ const DepartmentForm = (props: Props) => {
                     onChange={handleInputChange}
                     placeholder="Director de *****"
                     value={department?.jobTitle}
+                    iconHelp="far fa-question-circle"
+                    descriptionHelp='Puesto del jefe, director o firmante del departamento que aparecerá en el documento'
                 />
             </div>
             <div className="d-flex justify-content-around">
@@ -77,7 +83,7 @@ const DepartmentForm = (props: Props) => {
                      *  Validar usuarios: 
                      *  Este componente se reutiliza para los administradores y los usuarios 
                     */
-                    getLocalStorageUserDepartment()
+                    getLocalStorageUserDepartment() === 0
                         ?
                             < ButtonReset
                                 title="Limpiar campos"
@@ -86,7 +92,7 @@ const DepartmentForm = (props: Props) => {
                 }
             </div>
         </form>
-    )
-}
+    );
+};
 
-export default DepartmentForm
+export default DepartmentForm;

@@ -10,7 +10,7 @@ import { AlertConfirmQuestion, AlertError, AlertSuccess } from "src/utils/Alerts
 import { apiRequest } from "src/utils/apiRequest";
 import { clearDocument, readDocument } from "src/utils/documents";
 import swal from "sweetalert";
-import DepartmentInfo from '../screens/DepartmentInfoUser';
+import DepartmentInfoUser from '../screens/DepartmentInfoUser';
 import { DepartmentSchema } from '../helpers/interface/index';
 
 
@@ -279,7 +279,7 @@ export const saveDocumentTemplate = async (values, reset) => {
                 //await Swal.fire(message);
                 clearDocument();
                 reset();
-                return true
+                return true;
             } else {
                 const { message } = await response.json();
                 await AlertError(`No se pudo guardar la plantilla: ${message.text}`);
@@ -288,7 +288,7 @@ export const saveDocumentTemplate = async (values, reset) => {
     } catch (error) {
         await AlertError(`Error al guardar plantilla: ${error}`);
     }
-    return false
+    return false;
 };
 
 /**
@@ -305,7 +305,7 @@ export const deleteDocumentTemplate = async (id): Promise<boolean> => {
             if (response.ok) {
                 const { message } = await response.json();
                 //await Swal.fire(message);
-                return true
+                return true;
             } else {
                 const { message } = await response.json();
                 AlertError(`No de pudo borrar la plantilla: ${message.text}`);
@@ -316,7 +316,7 @@ export const deleteDocumentTemplate = async (id): Promise<boolean> => {
     } else {
         AlertSuccess("La acción a sido cancelada");
     }
-    return false
+    return false;
 };
 
 /**
@@ -338,7 +338,7 @@ export const loginAdmin = async (user: string, pass: string) => {
         await AlertError(`Error al iniciar como administrador: ${error}`);
     }
     return false;
-}
+};
 
 export const getDepartmentInfo = async (id: number) => {
     try {
@@ -353,10 +353,21 @@ export const getDepartmentInfo = async (id: number) => {
         await AlertError(`Error al obtener la información del departamento: ${error}`);
     }
     return false;
-}
+};
 
 export const DepartmentInfoSave = async (department: DepartmentSchema) => {
     try {
+
+        Object.keys(department).map((item) => {
+            if (department[item] === null  || department[item] === undefined ) {
+                department[item] = "";
+            }
+        });
+
+        console.log(department);
+         
+       
+
         const response = await apiRequest().post("save_department_info", { ...department });
         if (response.ok) {
             return await response.json();
@@ -368,7 +379,7 @@ export const DepartmentInfoSave = async (department: DepartmentSchema) => {
         await AlertError(`Error al obtener la información del departamento: ${error}`);
     }
     return false;
-}
+};
 
 export const DepartmentInfoDelete = async (id: number) => {
     try {
@@ -383,4 +394,4 @@ export const DepartmentInfoDelete = async (id: number) => {
         await AlertError(`Error al borrar la información del departamento: ${error}`);
     }
     return false;
-}
+};

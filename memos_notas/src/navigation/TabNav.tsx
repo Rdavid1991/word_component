@@ -7,23 +7,22 @@ import TabScreenButtons from './TabScreenButtons';
 
 
 const initialState = {
-    home       : false,
     addressees : false,
     employ     : false,
+    help       : false,
+    home       : false,
     template   : false,
-    help       : false
 };
 
 const sideNavInitial = {
-    left    : "-250px",
     display : "none",
+    left    : "-320px",
 
 };
 
 const TabNav = () => {
 
     const [sideNavToggle, setSideNavToggle] = useState(sideNavInitial);
-    const [menuState, setMenuState] = useState({ ...initialState, home: true });
     const [departmentName, setDepartmentName] = useState({
         name: ""
     });
@@ -39,7 +38,7 @@ const TabNav = () => {
             });
         })();
 
-        $('button[data-toggle="tab"]').on('shown.bs.tab', function (event) {
+        $('button[data-toggle="tab"]').on('shown.bs.tab', function () {
             setSideNavToggle(sideNavInitial);
         });
 
@@ -67,14 +66,16 @@ const TabNav = () => {
                 <div className="bar" ></div>
                 <div className="bar" ></div>
             </div>
-            <div id="mySidenav" className="sidenav" style={{ left: sideNavToggle.left }}>
-                <div className="side-nav-content">
+            <div id="mySidenav" className="sidenav" style={{
+                left: sideNavToggle.left,
+            }}>
+                <div className="side-nav-content" style={{ overflow: "auto" }}>
                     <div className="close">
                         <a id="closeNav" className="closebtn" onClick={close}>&times;</a>
                     </div>
 
                     <p className='font-weight-bold text-center'>Menu</p>
-                    <img className="w-100" src="./assets/logo.png" alt="" />
+                    <img className="w-100" src="./assets/logo.png" alt="MIDES_LOGO" />
                     <p className='font-weight-bold text-center' style={{ fontSize: "16px" }}>{departmentName.name}</p>
 
                     <TabScreenButtons />

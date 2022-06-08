@@ -3,44 +3,43 @@ import { context } from 'src/context/context';
 import { Space } from 'src/fragments';
 import { useForm } from 'src/hooks/useForm';
 import { deleteAddressees } from 'src/utils/SaveAndGet';
-import { AlertConfirmQuestion } from '../../utils/Alerts';
-import { AddresseesCreate } from './AddresseesCreate';
-import { AddresseesList } from './AddresseesList';
+import { AlertConfirmQuestion } from '../utils/Alerts';
+import { AddresseesCreate } from '../components/addressees/AddresseesCreate';
+import { AddresseesList } from '../components/addressees/AddresseesList';
+import { AddresseesSchema } from '../helpers/interface/index';
 
-const initialState = {
-    id         : "",
-    name       : "",
-    jobTitle   : "",
-    archetype  : "",
-    department : "",
-    edit       : false
+const initialState: AddresseesSchema = {
+    archetype  : undefined,
+    department : undefined,
+    edit       : false,
+    id         : undefined,
+    jobTitle   : undefined,
+    name       : undefined,
 };
 
-/**
- * 
- * @param {Object} props
- * @param {Array} props.addressee
- * @param {Function} props.fetchAddresses
- * @returns 
- */
-export const Addressees = ({ addressee, fetchAddresses }: any) => {
-    
+interface Props {
+    addressee: Array<typeof initialState>;
+    fetchAddresses: () => Promise<void>
+}
 
-    const { showLoader, departments } = useContext(context);
+export const Addressees = ({ addressee, fetchAddresses }: Props) => {
 
-    const [form, setForm, handleInputChange, reset]: any = useForm(initialState);
 
-    const handlerEdit = (idEdit) => {
+    const { departments } = useContext(context);
+
+    const [form, setForm, handleInputChange, reset] = useForm<typeof initialState>(initialState);
+
+    const handlerEdit = (idEdit : number) => {
 
         const found = addressee.find((a) => a.id == idEdit);
 
         setForm({
-            id         : found.id,
-            name       : found.name,
-            jobTitle   : found.jobTitle,
             archetype  : found.archetype,
             department : found.department,
-            edit       : true
+            edit       : true,
+            id         : found.id,
+            jobTitle   : found.jobTitle,
+            name       : found.name,
         });
         document.querySelector(".tab-content").scrollTo(0, 0);
     };
@@ -49,7 +48,7 @@ export const Addressees = ({ addressee, fetchAddresses }: any) => {
 
         const { id, name } = addressee.find((a) => a.id == idEdit);
 
-        const value= await AlertConfirmQuestion(
+        const value = await AlertConfirmQuestion(
             `Desea borrar a ${name}`
         );
         if (value) {
@@ -84,7 +83,7 @@ export const Addressees = ({ addressee, fetchAddresses }: any) => {
                     handlerEdit={handlerEdit}
                     handlerDelete={handlerDelete}
                 />
-        
+                <Space height={10} />
             </div>
         </>
     );

@@ -3,6 +3,7 @@ import { context } from 'src/context/context';
 import { InputText } from 'src/fragments';
 import { useForm } from 'src/hooks/useForm';
 import { localStorageAdminKey, localStorageKeyUser } from 'src/utils';
+import { AlertWarning } from 'src/utils/Alerts';
 import { loginAdmin } from '../utils/SaveAndGet';
 
 const initialState = {
@@ -14,9 +15,9 @@ const initialState = {
 const initialAdmin = {
     pass : "",
     user : "",
-}
+};
 
-const ModalInitialUser = ({ setShowModal } : any) => {
+const ModalInitialUser = ({ setShowModal }: any) => {
 
     const { departments } = useContext(context);
     const [values, setValues, handleInputChange, reset] = useForm<typeof initialState>(initialState);
@@ -29,7 +30,7 @@ const ModalInitialUser = ({ setShowModal } : any) => {
             if (!verifyData()) {
                 $('#initialUser').modal('show');
             }
-        })
+        });
     }, []);
 
     const verifyData = () => {
@@ -40,11 +41,16 @@ const ModalInitialUser = ({ setShowModal } : any) => {
             values.user.length > 0 &&
             new RegExp("@mides.gob.pa", "g").test(values.email) ||
             localStorage.hasOwnProperty(localStorageAdminKey)) {
-            return true
+            return true;
         } else {
-            return false
+            AlertWarning(`
+                ${arrayUser.length < 2 ? "Hace falta Nombre y/o Apellido" : ""}
+                <br>
+                ${!new RegExp("@mides.gob.pa", "g").test(values.email) ? "El correo debe ser el institucional ejemplo: <b>sucorreo@mides.gob.pa</b>"  : ""}\n
+            `);
+            return false;
         }
-    }
+    };
 
     const handleSave = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -61,7 +67,7 @@ const ModalInitialUser = ({ setShowModal } : any) => {
 
                 $('#initialUser').modal('hide');
                 setShowModal(false);
-                window.location.reload()
+                window.location.reload();
             }
 
         } else if (panel === 'admin') {
@@ -73,7 +79,7 @@ const ModalInitialUser = ({ setShowModal } : any) => {
             }));
 
             $('#initialUser').modal('hide');
-            window.location.reload()
+            window.location.reload();
         }
     };
 
@@ -162,7 +168,7 @@ const ModalInitialUser = ({ setShowModal } : any) => {
 
                                                         return item.id !== 0
                                                             ? <option key={index} value={item.id}>{item.name}</option>
-                                                            : null
+                                                            : null;
                                                     })
                                                 }
                                             </select>

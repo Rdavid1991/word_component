@@ -26,7 +26,7 @@ class Department extends ManagementDB
     public function save_department_info()
     {
 
-        if (isset($_POST["id"])) {
+        if (isset($_POST["id"]) && strlen($_POST["id"]) > 0) {
             $sql = "UPDATE [dbo].[department_owner] ";
             $sql .= "SET [name] = ?, ";
             $sql .= "[phone] = ?, ";

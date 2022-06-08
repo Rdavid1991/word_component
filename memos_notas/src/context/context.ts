@@ -14,7 +14,6 @@ export const context = createContext<ContextSchema>(null);
 
 interface FetchContextSchema {
     fetchTemplate: () => Promise<void>;
-    fetchNumbers: () => Promise<void>;
     data: {
         department: DepartmentSchema
         addressee: Array<AddresseesSchema>

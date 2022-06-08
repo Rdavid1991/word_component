@@ -1,4 +1,5 @@
 import { useContext } from 'react';
+import { Space } from 'src/fragments';
 import { useForm } from 'src/hooks/useForm';
 import { writeDocument } from 'src/utils/documents';
 import { deleteDocumentTemplate, getDocumentTemplate } from 'src/utils/SaveAndGet';
@@ -8,11 +9,11 @@ import { FetchContext } from '../context/context';
 import { TemplateInfoSchema } from '../helpers/interface/index';
 
 const initialTemplateInfoState: TemplateInfoSchema = {
+    department_owner_id : 0,
+    edit                : false,
+    id                  : 0,
     name                : "",
     type                : 0,
-    id                  : 0,
-    edit                : false,
-    department_owner_id : 0
 };
 
 interface Props {
@@ -28,7 +29,7 @@ export const Template = ({ templates }: Props) => {
 
         const templateFound = templates.find((template) => template.id === id);
         const template = await getDocumentTemplate(id);
-        
+
         setValues({
             ...values,
             ...templateFound,
@@ -70,6 +71,7 @@ export const Template = ({ templates }: Props) => {
                         handlerDelete={handlerDelete}
                     />
                 </div>
+                <Space height={10} />
             </div>
         </>
     );

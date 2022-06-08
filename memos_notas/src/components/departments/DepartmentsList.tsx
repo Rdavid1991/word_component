@@ -1,7 +1,6 @@
-import React, { ChangeEvent, useEffect, useState } from 'react'
+import React, { ChangeEvent, useEffect, useState } from 'react';
 import { InputText } from 'src/fragments';
 import { DepartmentSchema } from 'src/helpers/interface';
-import { getLocalStorageUserDepartment } from 'src/utils';
 
 interface Props {
     departments: Array<DepartmentSchema>;
@@ -11,7 +10,7 @@ interface Props {
 
 export const DepartmentList = (props: Props) => {
 
-    const { departments, handlerDelete, handlerEdit } = props
+    const { departments, handlerDelete, handlerEdit } = props;
 
     const [filtered, setFiltered] = useState<typeof departments>([]);
     const [search, setSearch] = useState("");
@@ -21,7 +20,7 @@ export const DepartmentList = (props: Props) => {
     }, [search, departments]);
 
     const handlerInputChange = ({ target }: ChangeEvent<HTMLInputElement>) => {
-        setSearch(target.value)
+        setSearch(target.value);
     };
 
     const handlerFilterSearch = () => {

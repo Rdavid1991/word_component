@@ -36,6 +36,7 @@ module.exports = {
                 },
             },
         ],
+        'no-debugger'                   : 'warn',
         'no-prototype-builtins'         : 0,
         'no-shadow'                     : 'off',
         'no-undef'                      : 'off',
@@ -45,6 +46,7 @@ module.exports = {
         'react/jsx-indent'              : ['warn', 4],
         'react/jsx-indent-props'        : ['warn', 4],
         "react/react-in-jsx-scope"      : 0,
+        'semi'                          : 'warn',
         'sort-keys'                     : 'warn',
     }
-}
+};

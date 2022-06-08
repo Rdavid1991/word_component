@@ -9,7 +9,7 @@ import SelectedNote from "../components/home/SelectedNote";
 import SelectedMemorandum from "src/components/home/SelectedMemorandum";
 
 export const Home = () => {
-    const { documents } = useContext(FetchContext).data
+    const { documents } = useContext(FetchContext).data;
     const [typeOfDocumentState, setTypeOfDocumentState] = useState(-1);
     const [selectedState, setSelectedState] = useState("");
 
@@ -45,9 +45,7 @@ export const Home = () => {
 
                         [Object.keys(typeOfDocuments)[3]]: <SelectedPermissionRequest {...{ setSelectedState }} />,
 
-                        [Object.keys(typeOfDocuments)[4]]: <HomeCompensatoryTimeRequest
-                            setSelectedState={setSelectedState}
-                        />
+                        [Object.keys(typeOfDocuments)[4]]: <HomeCompensatoryTimeRequest {...{setSelectedState}}/>
 
                     }[String(typeOfDocumentState)]
                 }

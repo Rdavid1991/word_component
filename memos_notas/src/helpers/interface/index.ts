@@ -1,4 +1,4 @@
-import { Addressees } from '../../components/addressees/Addressees';
+import { Addressees } from '../../screens/Addressees';
 import { Interface } from 'readline';
 export interface FunctionarySchema {
     id: string,
@@ -9,12 +9,13 @@ export interface FunctionarySchema {
 }
 
 export interface AddresseesSchema {
-    id: number,
-    name: string,
-    jobTitle: string,
-    archetype: string,
-    department: string,
-    department_owner_id: number
+    id?: number,
+    name?: string,
+    jobTitle?: string,
+    archetype?: string,
+    department?: string,
+    department_owner_id?: number
+    edit ?: boolean;
 }
 
 export interface TemplateSchema {

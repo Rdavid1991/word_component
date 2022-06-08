@@ -1,9 +1,8 @@
 import React, { ChangeEvent, FormEvent, useEffect, useState, useContext } from 'react';
 import { getLocalStorageUserName } from 'src/utils';
 import { useForm } from 'src/hooks/useForm';
-import { InputText, SelectOptions } from 'src/fragments';
+import { InputText } from 'src/fragments';
 import { initialStateSelectedMemorandumOrNote } from 'src/helpers/states/states';
-import { selectedMemorandumSubmit } from 'src/helpers/functions/selectedMemorandumSubmit';
 import { FetchContext } from '../../context/context';
 import { AddresseesSchema } from 'src/helpers/interface';
 import { selectedNoteSubmit } from '../../helpers/functions/selectedNoteSubmit';
@@ -47,7 +46,7 @@ const HasCopy = ({ addressee, handleSelectChange }: PropsHasCopy) => {
 
 const SelectedNote = ({ setSelectedState }: Props): JSX.Element => {
 
-    const { fetchNumbers, data } = useContext(FetchContext)
+    const { data } = useContext(FetchContext)
     const { addressee, functionaries } = data;
 
     const [form, setForm, handleInputChange, reset] = useForm<typeof initialStateSelectedMemorandumOrNote>(initialStateSelectedMemorandumOrNote);
@@ -77,7 +76,6 @@ const SelectedNote = ({ setSelectedState }: Props): JSX.Element => {
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         selectedNoteSubmit(functionaries, addressee, form, setSelectedState);
-        fetchNumbers();
         reset();
     }
 

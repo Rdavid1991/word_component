@@ -99,11 +99,12 @@ i {
 
 .sidenav {
   height: 100%;
-  width: 250px;
+  max-width: 320px;
+  width: 100%;
   position: fixed;
   z-index: 1;
   top: 0;
-  left: -250px;
+  left: -320px;
   background-color: rgba(255, 255, 255, 0);
   overflow-x: hidden;
   transition: 0.5s;
@@ -186,4 +187,10 @@ i {
 .tooltip-wrap {
   width: 250px;
   white-space: pre-wrap;
+}
+
+.line__divider {
+  border: solid 0.5px #7f7f7f7f;
+  width: 100%;
+  margin: 5px 0px 5px 0px;
 }

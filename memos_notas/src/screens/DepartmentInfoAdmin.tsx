@@ -1,42 +1,52 @@
-import React, { useContext, useRef, useState } from 'react'
+import { FormEvent, useContext } from 'react';
 import DepartmentForm from 'src/components/departments/DepartmentForm';
-import { context } from 'src/context/context'
-import { InputText } from 'src/fragments'
+import { context } from 'src/context/context';
 import { DepartmentSchema, Result } from 'src/helpers/interface';
-import { DepartmentInfoDelete } from 'src/utils/SaveAndGet';
+import { DepartmentInfoDelete, DepartmentInfoSave } from 'src/utils/SaveAndGet';
 import { DepartmentList } from '../components/departments/DepartmentsList';
 import { useForm } from '../hooks/useForm';
 import { AlertConfirmQuestion, AlertSuccess } from 'src/utils/Alerts';
 import { Space } from '../fragments/index';
 
-
-
-
 const DepartmentInfoAdmin = () => {
 
-    const {departments, fetchDepartments} = useContext(context)
+    const { departments, fetchDepartments } = useContext(context);
 
-    const [department, setDepartment, handleInputChange, reset] = useForm<DepartmentSchema>({})
+    const [department, setDepartment, handleInputChange, reset] = useForm<DepartmentSchema>({
+        id       : undefined,
+        initials : undefined,
+        jobTitle : undefined,
+        name     : undefined,
+        phone    : undefined,
+        shift    : undefined
+    });
 
     const handlerEdit = (id: number) => {
 
-        const found = departments.find((item) => item.id === id)
-        setDepartment({ ...found })
+        const found = departments.find((item) => item.id === id);
+        setDepartment({ ...found });
 
         document.querySelector(".tab-content").scrollTo(0, 0);
-    }
+    };
 
     const handlerDelete = async (id: number) => {
-    
-        const confirm = await AlertConfirmQuestion("¿Desea borrar departamento? se borrarán todas sus plantillas")
+
+        const confirm = await AlertConfirmQuestion("¿Desea borrar departamento? se borrarán todas sus plantillas");
 
         if (confirm) {
-            const result : Result = await DepartmentInfoDelete(id)
-            fetchDepartments()
-            AlertSuccess(result.message.text)
+            const result: Result = await DepartmentInfoDelete(id);
+            fetchDepartments();
+            AlertSuccess(result.message.text);
         }
-        
-    }
+    };
+
+    const handleSave = async (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        const result: Result = await DepartmentInfoSave(department);
+        reset();
+        fetchDepartments();
+        AlertSuccess(result.message.text);
+    };
 
     return (
         <>
@@ -49,13 +59,13 @@ const DepartmentInfoAdmin = () => {
                 </div>
             </div>
 
-            <DepartmentForm {...{ department, handleInputChange, reset }} />
+            <DepartmentForm {...{ department, handleInputChange, handleSave, reset }} />
 
             <DepartmentList {...{ departments, handlerDelete, handlerEdit }} />
 
             <Space height={10} />
         </>
-    )
-}
+    );
+};
 
-export default DepartmentInfoAdmin
+export default DepartmentInfoAdmin;

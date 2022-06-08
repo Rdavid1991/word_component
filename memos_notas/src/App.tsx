@@ -14,15 +14,15 @@ const App = () => {
     const [departments, setDepartments] = useState([]);
 
     useEffect(() => {
-        fetchDepartments()
+        fetchDepartments();
     }, []);
 
     const fetchDepartments = async () => {
         const { data } = await getDepartment();
         setDepartments(data);
-    }
+    };
 
-    const showLoader = useCallback((show: any) => {
+    const showLoader = useCallback((show: boolean) => {
         setLoader(show);
     }, [loader]);
 
@@ -47,4 +47,4 @@ const App = () => {
     );
 };
 
-export default App
+export default App;

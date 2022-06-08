@@ -46,7 +46,7 @@ export const DepartmentControls = {
     department_phone    : "Teléfono",
     shift_job_title     : "Puesto",
     shift_name          : "Jefe",
-}
+};
 
 export const typeOfDocuments = {
     0 : "Otros",
