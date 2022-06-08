@@ -14,21 +14,19 @@ import DepartmentInfoAdmin from 'src/screens/DepartmentInfoAdmin';
 
 
 const initialDataState: DataStateSchema = {
-    addressee     : [],
-    templateInfo  : [],
-    functionaries : [],
-    department    : {
-        id       : 0,
-        name     : "",
-        phone    : "",
-        shift    : "",
-        jobTitle : "",
+    addressee  : [],
+    department : {
+        id       : undefined,
+        initials : undefined,
+        jobTitle : undefined,
+        name     : undefined,
+        phone    : undefined,
+        shift    : undefined,
 
     },
-    numberState: {
-        note : 1,
-        memo : 1,
-    }
+    functionaries: [],
+
+    templateInfo: [],
 };
 
 export const TabNavContent = () => {
@@ -44,7 +42,6 @@ export const TabNavContent = () => {
 
             if (existUser()) {
 
-                const responseNumbers = await fetchData.fetchNumbers();
                 const responseTemplate = await fetchData.fetchTemplate();
                 const responseAddresses = await fetchData.fetchAddresses();
                 const responseFunctionary = await fetchData.fetchFunctionary();
@@ -54,7 +51,6 @@ export const TabNavContent = () => {
                     addressee     : responseAddresses,
                     department    : responseDepartment,
                     functionaries : responseFunctionary,
-                    numberState   : responseNumbers,
                     templateInfo  : responseTemplate,
                 });
                 setShowModal(false);

@@ -50,16 +50,11 @@ export interface TemplateInfoSchema {
     edit: boolean;
 }
 
-export interface Consecutive {
-    note: number,
-    memo: number,
-}
 
 export interface DataStateSchema {
     addressee: Array<AddresseesSchema>,
     templateInfo: Array<TemplateInfoSchema>,
     functionaries: Array<FunctionarySchema>,
-    numberState: Consecutive,
     department: DepartmentSchema
 }
 

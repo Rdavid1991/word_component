@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import { Space } from 'src/fragments';
+import { loadDocumentSelected } from 'src/helpers/documents/loadDocumentSelected';
 import { useForm } from 'src/hooks/useForm';
-import { writeDocument } from 'src/utils/documents';
 import { deleteDocumentTemplate, getDocumentTemplate } from 'src/utils/SaveAndGet';
 import TemplateCreate from '../components/templates/TemplateCreate';
 import TemplateList from '../components/templates/TemplateList';
@@ -36,7 +36,7 @@ export const Template = ({ templates }: Props) => {
             edit: true
         });
 
-        writeDocument(JSON.parse(template.data[0].doc));
+        loadDocumentSelected(JSON.parse(template.data[0].doc));
         document.querySelector(".tab-content").scrollTo(0, 0);
     };
 

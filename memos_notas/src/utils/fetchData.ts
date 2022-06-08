@@ -1,5 +1,5 @@
-import { getAddresses, getConsecutiveNumber, getDocumentInfoTemplate, getFunctionaries, getDepartmentInfo } from './SaveAndGet';
-import { Consecutive, DepartmentSchema } from '../helpers/interface/index';
+import { getAddresses, getDocumentInfoTemplate, getFunctionaries, getDepartmentInfo } from './SaveAndGet';
+import { DepartmentSchema } from '../helpers/interface/index';
 
 
 
@@ -10,27 +10,9 @@ const fetchData = {
         if (functionary) {
             const { data } = functionary;
             if (data.length > 0) {
-                return data
+                return data;
             } else {
-                return []
-            }
-        }
-    },
-
-    fetchNumbers: async (): Promise<Consecutive> => {
-        const consecutive = await getConsecutiveNumber();
-        if (consecutive) {
-            const { data } = consecutive;
-            if (data.length > 0) {
-                return {
-                    memo : data[0].memorandum,
-                    note : data[0].notes,
-                }
-            } else {
-                return {
-                    memo : 1,
-                    note : 1,
-                };
+                return [];
             }
         }
     },
@@ -42,7 +24,7 @@ const fetchData = {
             if (data.length >= 0) {
                 return data;
             } else {
-                return []
+                return [];
             }
         }
     },
@@ -55,7 +37,7 @@ const fetchData = {
             if (data.length >= 0) {
                 return (data.sort((first, second) => first.type - second.type));
             } else {
-                return []
+                return [];
             }
         }
     },
@@ -64,14 +46,17 @@ const fetchData = {
         if (templates) {
             const { data } = templates;
 
+            console.log({data});
+            
+
             if (data.length >= 0) {
                 return data[0];
             } else {
-                return {}
+                return {};
             }
         }
     }
 
-}
+};
 
-export default fetchData
+export default fetchData;

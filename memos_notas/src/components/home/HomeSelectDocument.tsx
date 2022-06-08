@@ -3,11 +3,12 @@ import { context } from 'src/context/context';
 import { TemplateInfoSchema } from 'src/helpers/interface';
 import { AlertError, AlertSuccess } from 'src/utils/Alerts';
 import { typeOfDocuments } from 'src/utils/constants';
-import { setInitialDocumentData, writeDocument } from 'src/utils/documents';
 import { getDocumentTemplate } from 'src/utils/SaveAndGet';
 import { selectedDocumentType } from '../../helpers/documents/sendDataToPermissionRequest';
 import { parametersOfDocuments } from '../../utils/parametersOfDocuments';
 import { FetchContext } from '../../context/context';
+import { loadDocumentSelected } from 'src/helpers/documents/loadDocumentSelected';
+import { setInitialDocumentData } from 'src/helpers/documents/setInitialDocumentData';
 
 interface Props {
     setTypeOfDocumentState: Dispatch<React.SetStateAction<number>>,
@@ -29,13 +30,15 @@ const HomeSelectDocument = ({ setTypeOfDocumentState, documents, setSelectedStat
 
         setTypeOfDocumentState(Number(selectedDocumentType(target)));
 
-        await writeDocument(JSON.parse(template.data[0].doc))
+        await loadDocumentSelected(JSON.parse(template.data[0].doc))
             .then(async () => {
-                await setInitialDocumentData(data.department)
+                await setInitialDocumentData(data.department);
                 await AlertSuccess("Documento cargado satisfactoriamente");
                 setControls(await parametersOfDocuments());
             })
             .catch(async (error) => {
+                console.error(error);
+                
                 await AlertError("No se puede cargar documento, revise si el documento actual no tiene controles bloqueados. " + error);
             });
 
