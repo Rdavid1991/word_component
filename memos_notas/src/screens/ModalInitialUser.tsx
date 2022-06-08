@@ -44,9 +44,9 @@ const ModalInitialUser = ({ setShowModal }: any) => {
             return true;
         } else {
             AlertWarning(`
-                ${arrayUser.length < 2 ? "Hace falta Nombre y/o Apellido" : ""}
+                ${arrayUser.length < 2 ? "Hace falta <b>Nombre y/o Apellido</b>" : ""}
                 <br>
-                ${!new RegExp("@mides.gob.pa", "g").test(values.email) ? "El correo debe ser el institucional ejemplo: <b>sucorreo@mides.gob.pa</b>"  : ""}\n
+                ${!new RegExp("@mides.gob.pa", "g").test(values.email) ? "El correo debe ser el institucional. Ejemplo: <b>sucorreo@mides.gob.pa</b>"  : ""}\n
             `);
             return false;
         }
@@ -84,7 +84,7 @@ const ModalInitialUser = ({ setShowModal }: any) => {
     };
 
     return (
-        <div className="modal fade" id="initialUser" tabIndex={-1} role="dialog" aria-labelledby="initialUserLabel" aria-hidden="true">
+        <div className="modal fade" id="initialUser" tabIndex={-1} role="dialog" aria-labelledby="initialUserLabel" data-backdrop="static" aria-hidden="true">
             <div className="modal-dialog" role="document">
                 <div className="modal-content">
                     <div className="modal-header">
