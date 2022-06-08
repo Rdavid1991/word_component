@@ -33,14 +33,18 @@ export const FunctionaryCreate = ({ handleInputChange, fetchFunctionary, values,
                     placeholder="Nombre del funcionario"
                     value={values.name}
                     required={true}
+                    iconHelp={true}
+                    descriptionHelp="Nombre del funcionario"
                 />
                 <InputText
                     htmlId="idCard"
-                    htmlLabel="Cedula"
+                    htmlLabel="Cédula"
                     onChange={handleInputChange}
                     placeholder="Cédula del funcionario"
                     value={values.idCard}
                     required={true}
+                    iconHelp={true}
+                    descriptionHelp="Cédula de identidad personal del funcionario"
                 />
                 <InputText
                     htmlId="jobTitle"
@@ -49,6 +53,8 @@ export const FunctionaryCreate = ({ handleInputChange, fetchFunctionary, values,
                     placeholder="Puesto del funcionario"
                     value={values.jobTitle}
                     required={true}
+                    iconHelp={true}
+                    descriptionHelp="Puesto al que esta asignado el funcionario"
                 />
                 <InputText
                     htmlId="position"
@@ -59,6 +65,8 @@ export const FunctionaryCreate = ({ handleInputChange, fetchFunctionary, values,
                     required={true}
                     pattern="[0-9]{3,}"
                     title="Solo acepta números"
+                    iconHelp={true}
+                    descriptionHelp="Numero de posición al cual esta asignado el funcionario"
                 />
                 <SelectDepartment {...{ values, handleInputChange, departments }} />
 
